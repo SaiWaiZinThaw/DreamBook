@@ -1,8 +1,13 @@
 import Animation from "../../public/img/Books Animation.png";
 import AppStore from "../../public/img/appstore.png";
 import GooglePLay from "../../public/img/googleplay.png";
+import BestSelf from "../../public/img/Best_Self.png";
+import { useState } from "react";
+import { BsEyeFill, BsHeart, BsHeartFill } from "react-icons/bs";
 
 const Hero = () => {
+   const [active, setActive] = useState(false);
+
   return (
     <div className="container">
     <div className="flex w-screen h-[600px]">
@@ -45,6 +50,92 @@ const Hero = () => {
      </div>
       
     </div>
+
+    <div className="w-screen h-[400px]">
+            <h1 className="flex justify-center items-center font-semibold text-2xl">Popular Books</h1>
+
+            <div className="relative transition overflow-hidden group">
+               <div className="gap-x-3 grid grid-cols-5 mx-8 mt-6 h-[280px]">
+                  <div className="bg-slate-100 shadow-2xl border rounded-lg">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                        <img src={BestSelf} alt="" />
+                           
+                      {/* This will change of code we get API */}
+                        <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
+                           <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                           {active ? (
+                              <BsHeartFill className="text-red-500" onClick={() => setActive(!active)} />
+                           ) : (
+                              <BsHeart className="text-slate-500" onClick={() => setActive(!active)} />
+                           )}
+                           </div>
+                           
+                        {/* Change div to link to= {"Book/id"}*/}
+                           <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                              <BsEyeFill className="text-slate-500"/>
+                           </div>
+                        </div>
+                     </div>
+                     
+                    
+
+                     <div className="ml-2">
+                        <h1 className="font-bold text-xl">Title</h1>
+                        <p className="font-normal text-gray-500 text-sm">Category</p>
+                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                     </div>
+
+                  </div>
+                  
+                  <div className="bg-slate-100 shadow-2xl border rounded-lg">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                        <img src={BestSelf} alt="" />
+                        
+                     </div>
+                     <div className="ml-2">
+                        <h1 className="font-bold text-xl">Title</h1>
+                        <p className="font-normal text-gray-500 text-sm">Category</p>
+                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                     </div>
+                  </div>
+
+                  <div className="bg-slate-100 shadow-2xl border rounded-lg">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                        <img src={BestSelf} alt="" />
+                     </div>
+                     <div className="ml-2">
+                        <h1 className="font-bold text-xl">Title</h1>
+                        <p className="font-normal text-gray-500 text-sm">Category</p>
+                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                     </div>
+                  </div>
+
+                  <div className="bg-slate-100 shadow-2xl border rounded-lg">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                        <img src={BestSelf} alt="" />
+                     </div>
+                     <div className="ml-2">
+                        <h1 className="font-bold text-xl">Title</h1>
+                        <p className="font-normal text-gray-500 text-sm">Category</p>
+                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                     </div>
+                  </div>
+
+                  <div className="bg-slate-100 shadow-2xl border rounded-lg">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                        <img src={BestSelf} alt="" />
+                     </div>
+                     <div className="ml-2">
+                        <h1 className="font-bold text-xl">Title</h1>
+                        <p className="font-normal text-gray-500 text-sm">Category</p>
+                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                     </div>
+                  </div>
+                  
+               </div>
+            </div>
+            
+         </div>
 </div>
   )
 }
