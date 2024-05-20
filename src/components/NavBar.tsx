@@ -1,65 +1,24 @@
-import { Button, ButtonGroup } from "@chakra-ui/react";
 import { Logo } from "../assets/index";
 import { HiMiniUserCircle } from "react-icons/hi2";
+import { Button } from "./ui/button";
 
 const NavBar = () => {
   return (
-    <div className="flex justify-between items-center shadow-slate-300 shadow-sm px-40 py-6 font-Inter">
+    <div className="fixed flex justify-between items-center shadow-slate-300 shadow-sm px-40 py-6 w-full font-Inter">
       <div className="w-[70px]">
         <img src={Logo} alt={Logo} className="w-full" />
       </div>
-      <nav>
-        <ButtonGroup variant="ghost" size="md" gap="5">
-          <Button
-            fontWeight={"medium"}
-            fontSize={"18px"}
-            colorScheme="black"
-            borderRadius="30px"
-            overflow="auto"
-            _hover={{ textDecoration: "none" }}
-            _active={{ colorScheme: "blue", bgSize: "md", fontWeight: "bold" }}
-          >
-            Home
-          </Button>
-          <Button
-            fontWeight={"medium"}
-            fontSize={"18px"}
-            colorScheme="black"
-            borderRadius="30px"
-            overflow="auto"
-            _hover={{ textDecoration: "none" }}
-            _active={{ colorScheme: "blue", bgSize: "md", fontWeight: "bold" }}
-          >
-            Library
-          </Button>
-          <Button
-            fontWeight={"medium"}
-            fontSize={"18px"}
-            colorScheme="black"
-            borderRadius="30px"
-            overflow="auto"
-            _hover={{ textDecoration: "none" }}
-            _active={{ colorScheme: "blue", bgSize: "md", fontWeight: "bold" }}
-          >
-            Book Crafting
-          </Button>
-        </ButtonGroup>
+      <nav className="flex items-center gap-5">
+        <Button variant={"ghost"}>Home</Button>
+        <Button variant={"ghost"}>Library</Button>
+        <Button variant={"ghost"}>Book Crafting</Button>
       </nav>
 
-      <div>
-        <ButtonGroup colorScheme="blue" size="lg" gap="2">
-          <Button
-            variant="link"
-            fontWeight="bold"
-            _hover={{ textDecoration: "none" }}
-            leftIcon={<HiMiniUserCircle className="text-[30px]" />}
-          >
-            Login
-          </Button>
-          <Button borderRadius="30px" overflow="auto">
-            Register
-          </Button>
-        </ButtonGroup>
+      <div className="flex items-center gap-2">
+        <Button variant={"ghost"} className="flex items-center gap-2">
+          <HiMiniUserCircle className="text-2xl" /> Login
+        </Button>
+        <Button size={"lg"}>Register</Button>
       </div>
     </div>
   );
