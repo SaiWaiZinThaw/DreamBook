@@ -9,7 +9,10 @@ import LatestBg from './Latest-Bg.png';
 import LatestBooks from './Latest-Books.png';
 import FeatureBg from './Feature.png';
 import Visit from './Visit.png';
-import HeroBg from './HeroBg.png'
-import Daisy from './daisy-pot-1.png'
+import HeroBg from './HeroBg.png';
+import Daisy from './daisy-pot-1.png';
+import LogoWhite from './Logo(White).png';
+import FooterImg from './Footer.png';
+import FooterLine from './FooterLine.png';
 
-export {Logo, Animation, AppStore, GooglePLay, BestSelf, AuthBackground, About, LatestBg, LatestBooks, FeatureBg, Visit, HeroBg, Daisy}
+export {Logo, FooterLine, LogoWhite, FooterImg, Animation, AppStore, GooglePLay, BestSelf, AuthBackground, About, LatestBg, LatestBooks, FeatureBg, Visit, HeroBg, Daisy}

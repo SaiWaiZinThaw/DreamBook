@@ -1,12 +1,28 @@
 import { Animation, AppStore, GooglePLay, BestSelf, About, LatestBg, LatestBooks, FeatureBg, Visit, Daisy, HeroBg } from "@/assets";
-import { BsEyeFill, BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsEyeFill, BsHeart, BsHeartFill, BsDash , BsPlus } from "react-icons/bs";
+import { FiHelpCircle } from 'react-icons/fi';
 import { useState } from "react";
+import '../App.css'
 
 const Hero = () => {
    const [active, setActive] = useState(false);
-
+   const [faqItems, setFaqItems] = useState([
+      { question: "What is Dream Book?", answer: "ToeTet.com is an online learning platform that offers courses in business, marketing, psychology and more taught by local trainers and experts in Myanmar language. Toetet.com also provides insider's notes which an summaries of popular books which practical tips and examples.", isOpen: false },
+      { question: "What do in Dream Book?", answer: "ToeTet.com is an online learning platform that offers courses in business, marketing, psychology and more taught by local trainers and experts in Myanmar language. Toetet.com also provides insider's notes which an summaries of popular books which practical tips and examples.", isOpen: false },
+      { question: "What is Toe Tet?", answer: "ToeTet.com is an online learning platform that offers courses in business, marketing, psychology and more taught by local trainers and experts in Myanmar language. Toetet.com also provides insider's notes which an summaries of popular books which practical tips and examples.", isOpen: false }
+    ]);
+  
+    const toggleItem = (index:any) => {
+      setFaqItems((prevItems) =>
+        prevItems.map((item, i) => ({
+          ...item,
+          isOpen: i === index ? !item.isOpen : item.isOpen
+        }))
+      );
+    };
   return (
-    <div className="px-0 container">
+    <div className="mx-0 px-0 container">
+      
         <div className="relative flex bg-slate-100 w-screen h-[600px]"  style={{backgroundImage: `url(${HeroBg})`}}>
             <div className="mt-[130px] ml-[125px] w-[700px] h-[300px]">
                 <h1 className="font-bold text-4xl">Discover <br /> Magic Of Books</h1>
@@ -276,20 +292,40 @@ const Hero = () => {
           
          </div>
 
-         <div className="bg-slate-500 mt-4 w-screen h-[440px]">
+         <div className="mt-4 w-screen h-[300px]">
             <h1 className="flex justify-center items-center font-extrabold text-xl">FAQs</h1>
-
-            <div className="mx-[50px] mt-[90px] h-[250px]">
-               <div className="border-slate-300 bg-slate-50 shadow-md border rounded-[6px] h-[60px]">
-                  <h1 className="">What is Dream Book?</h1>
-               </div>
-               <div className="border-slate-300 bg-slate-50 shadow-md mt-[30px] border rounded-[6px] h-[60px]">
-                  <h1>What Do in Dream Book</h1>
-               </div>
-               <div className="border-slate-300 bg-slate-50 shadow-md mt-[30px] border rounded-[6px] h-[60px]">
-                  <h1>What is Toe Tet?</h1>
-               </div>
+            
+            <div className="mx-[50px] mt-[50px]">
+          {faqItems.map((item, index) => (
+            <div key={index} >
+              {!item.isOpen && (
+                <div className="border-slate-300 bg-slate-50 shadow-lg mt-4 border rounded-[6px] h-[60px] font-semibold text-lg">
+                  <div className="flex justify-between">
+                    <div className="flex font-semibold text-lg">
+                      <FiHelpCircle className="mt-5 ml-5"/>
+                      <h1 className="mt-4 pl-3">{item.question}</h1>
+                    </div>
+                    <BsPlus className="mt-3 text-4xl" onClick={() => toggleItem(index)} />
+                  </div>
+                </div>
+              )}
+              {item.isOpen && (
+                <div className="border-slate-300 bg-slate-50 shadow-lg mt-[10px] border rounded-[6px] h-[165px] duration-700 delay-300">
+                  <div className="flex justify-between">
+                     <div className="flex font-semibold text-lg">
+                        <FiHelpCircle className="mt-5 ml-5"/>
+                        <h1 className="mt-4 pl-3"> What is Toe Tet?</h1>
+                     </div>
+                     <div>
+                        <BsDash className="mt-3 text-4xl" onClick={() => toggleItem(index)}/>
+                     </div>
+                  </div>
+                  <p className="mx-5 mt-4 font-medium text-md">{item.answer}</p>
+                </div>
+              )}
             </div>
+          ))}
+        </div>
          </div>
     </div>
   )
