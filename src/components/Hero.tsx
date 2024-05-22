@@ -276,8 +276,20 @@ const Hero = () => {
           
          </div>
 
-         <div className="bg-slate-500 w-screen h-[440px]">
+         <div className="bg-slate-500 mt-4 w-screen h-[440px]">
+            <h1 className="flex justify-center items-center font-extrabold text-xl">FAQs</h1>
 
+            <div className="mx-[50px] mt-[90px] h-[250px]">
+               <div className="border-slate-300 bg-slate-50 shadow-md border rounded-[6px] h-[60px]">
+                  <h1 className="">What is Dream Book?</h1>
+               </div>
+               <div className="border-slate-300 bg-slate-50 shadow-md mt-[30px] border rounded-[6px] h-[60px]">
+                  <h1>What Do in Dream Book</h1>
+               </div>
+               <div className="border-slate-300 bg-slate-50 shadow-md mt-[30px] border rounded-[6px] h-[60px]">
+                  <h1>What is Toe Tet?</h1>
+               </div>
+            </div>
          </div>
     </div>
   )
