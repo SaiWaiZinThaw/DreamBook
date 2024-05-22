@@ -1,10 +1,10 @@
 import "./App.css";
-import { Home } from "./pages";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
-    <div>
-      <Home/>
+    <div className="relative w-screen overflow-x-hidden">
+      <NavBar />;
     </div>
   );
 }

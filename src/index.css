@@ -1,5 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    :root {
+        --color-brand-darker: #163665;
+        --color-brand-dark: #265BA6;
+        --color-brand-default: #3A7AD5;
+        --color-brand-light: #89B0E6;
+        --color-brand-lighter: #CDDDF4;
+
+        --color-neutral-darker: #3D3D3D;
+        --color-neutral-dark: #666666;
+        --color-neutral-default: #1F1F1F;
+        --color-neutral-light: #B8B8B8;
+        --color-neutral-lighter: #E0E0E0;
+
+        --color-positive-darker: #315F1B;
+        --color-positive-dark: #417F25;
+        --color-positive-default: #55A630;
+        --color-positive-light: #A9DF90;
+        --color-positive-lighter: #DAF1D0;
+
+        --color-negative-darker: #7A0000;
+        --color-negative-dark: #A30000;
+        --color-negative-default: #D00000;
+        --color-negative-light: #FF7070;
+        --color-negative-lighter: #FFC2C2;
+
+        --color-warning-darker: #7A5F00;
+        --color-warning-dark: #CC9F00;
+        --color-warning-default: #FDC500;
+        --color-warning-light: #FFDF70;
+        --color-warning-lighter: #FFF1C2;
+
+        --radius : 25px
+    }
+}
