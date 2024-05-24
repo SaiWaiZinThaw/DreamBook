@@ -1,11 +1,15 @@
-import "./App.css";
-import { Home } from "./pages";
-import { AuthLayout } from "./pages/auth";
+import { Route, Routes, useRoutes } from 'react-router-dom'
+
+import { UserRouter } from './routers'
 
 function App() {
+  const UserRouting = useRoutes(UserRouter);
+
   return (
     <div>
-      <AuthLayout />
+       <Routes>
+        <Route path="/*" element={UserRouting}/>
+      </Routes>
     </div>
   );
 }
