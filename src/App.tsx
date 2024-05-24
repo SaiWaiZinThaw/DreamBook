@@ -1,10 +1,11 @@
 import "./App.css";
-import NavBar from "./components/NavBar";
+import { Home } from "./pages";
+import { AuthLayout } from "./pages/auth";
 
 function App() {
   return (
-    <div className="relative w-screen overflow-x-hidden">
-      <NavBar />;
+    <div>
+      <AuthLayout />
     </div>
   );
 }
