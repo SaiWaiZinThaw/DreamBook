@@ -1,5 +1,5 @@
 import { LibraryLayout } from "@/Layouts"
-import { NavBar } from "@/components"
+import { Footer, NavBar } from "@/components"
 
 
 const Library = () => {
@@ -7,6 +7,7 @@ const Library = () => {
     <div>
         <NavBar/>
         <LibraryLayout/>
+        <Footer/>
     </div>
   )
 }
