@@ -11,5 +11,7 @@ import FeatureBg from './Feature.png';
 import Visit from './Visit.png';
 import HeroBg from './HeroBg.png'
 import Daisy from './daisy-pot-1.png'
+import LoginBackground from "./LoginBackground.jpg"
+import LogoWhite from "./Logo_White.png"
 
-export {Logo, Animation, AppStore, GooglePLay, BestSelf, AuthBackground, About, LatestBg, LatestBooks, FeatureBg, Visit, HeroBg, Daisy}
+export {Logo, Animation, AppStore, GooglePLay, BestSelf, AuthBackground, About, LatestBg, LatestBooks, FeatureBg, Visit, HeroBg, Daisy, LoginBackground,LogoWhite}

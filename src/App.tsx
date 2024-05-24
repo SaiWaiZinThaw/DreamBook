@@ -1,10 +1,11 @@
 import "./App.css";
 import { Home } from "./pages";
+import { AuthLayout } from "./pages/auth";
 
 function App() {
   return (
     <div>
-      <Home/>
+      <AuthLayout />
     </div>
   );
 }
