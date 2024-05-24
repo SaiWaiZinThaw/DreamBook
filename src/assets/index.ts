@@ -14,7 +14,8 @@ import Daisy from './daisy-pot-1.png';
 import LogoWhite from './Logo(White).png';
 import FooterImg from './Footer.png';
 import FooterLine from './FooterLine.png';
-import LibraryHero from './Library.png';
-import LoginBackground from "./LoginBackground.jpg";
+import LibraryHero from './Library.png'
+import Sorting from './Sorting.png'
+import LoginBackground from './LoginBackground.jpg'
 
-export {Logo, FooterLine, LogoWhite, FooterImg, LibraryHero , Animation, AppStore, GooglePLay, BestSelf, AuthBackground, About, LatestBg, LatestBooks, FeatureBg, Visit, HeroBg, Daisy, LoginBackground}
+export {Logo, FooterLine, Sorting, LogoWhite, FooterImg, LibraryHero , Animation, AppStore, GooglePLay, BestSelf, AuthBackground, About, LatestBg, LatestBooks, FeatureBg, Visit, HeroBg, Daisy, LoginBackground}
