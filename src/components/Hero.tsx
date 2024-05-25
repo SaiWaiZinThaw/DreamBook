@@ -1,6 +1,24 @@
-import { Animation, AppStore, GooglePLay, BestSelf, About, LatestBg, LatestBooks, FeatureBg, Visit, Daisy, HeroBg } from "@/assets";
-import { BsEyeFill, BsHeart, BsHeartFill, BsDash , BsPlus } from "react-icons/bs";
-import { FiHelpCircle } from 'react-icons/fi';
+import {
+  Animation,
+  AppStore,
+  GooglePLay,
+  BestSelf,
+  About,
+  LatestBg,
+  LatestBooks,
+  FeatureBg,
+  Visit,
+  Daisy,
+  HeroBg,
+} from "@/assets";
+import {
+  BsEyeFill,
+  BsHeart,
+  BsHeartFill,
+  BsDash,
+  BsPlus,
+} from "react-icons/bs";
+import { FiHelpCircle } from "react-icons/fi";
 import { useState } from "react";
 import '../App.css'
 import { NavLink } from "react-router-dom";
@@ -42,47 +60,62 @@ const Hero = () => {
                 </div>
             </div>
 
-            <div className="mt-[90px] ml-[10px] w-[600px] h-[460px]">
-              <img src={Animation} alt="" className=""/> 
+        <div className="mt-[90px] ml-[10px] w-[600px] h-[460px]">
+          <img src={Animation} alt="" className="" />
 
-              <p className="flex justify-center items-center mt-4 font-medium text-2xl">Most Popular Books  This Week</p>
-              <div className="top-[452px] right-0 bottom-0 z-10 absolute">
-                <img src={Daisy} alt="" className="w-[170px] h-[170px]" />
-              </div>
-            </div>
+          <p className="flex justify-center items-center mt-4 font-medium text-2xl">
+            Most Popular Books This Week
+          </p>
+          <div className="top-[452px] right-0 bottom-0 z-10 absolute">
+            <img src={Daisy} alt="" className="w-[170px] h-[170px]" />
+          </div>
+        </div>
 
-            
-
-            {/* <div className="flex justify-center items-center ml-[10px] w-[600px]">
+        {/* <div className="flex justify-center items-center ml-[10px] w-[600px]">
               <img src={Animation} alt="" className="mt-[90px] ml-[50px]"/> 
               <p className="mt-4 font-medium text-2xl">Most Popular Books  This Week</p>
             </div>
 
           */}
+      </div>
 
+      <div className="flex justify-center gap-x-4 mt-[60px] w-screen h-[230px]">
+        <div
+          className="grid-col-1 bg-opacity-88 bg-no-repeat p-9 w-[400px] text-white"
+          style={{ backgroundImage: `url(${About})` }}
+        >
+          <h1 className="font-semibold text-xl">About Us</h1>
+          <p className="pt-2 font-light text-sm">Our Story</p>
+          <p className="pt-2 font-medium text-md">
+            Dedicated to Spreding the love of Literature
+          </p>
         </div>
+        <div
+          className="grid-col-1 bg-opacity-88 bg-no-repeat p-9 w-[400px] text-white"
+          style={{ backgroundImage: `url(${FeatureBg})` }}
+        >
+          <h1 className="font-semibold text-xl">Feactured</h1>
+          <p className="pt-2 font-thin text-sm">Explore</p>
+          <p className="pt-2 font-medium text-md">
+            Discover Your Favorite Books from Everywhere and at anytime
+          </p>
+        </div>
+        <div
+          className="grid-col-1 bg-opacity-88 bg-no-repeat p-9 w-[400px] text-white"
+          style={{ backgroundImage: `url(${Visit})` }}
+        >
+          <h1 className="font-semibold text-xl">Visit Now</h1>
+          <p className="pt-2 font-thin text-sm">Browse</p>
+          <p className="pt-2 font-medium text-md">
+            Experience the Magic of Books
+          </p>
+        </div>
+      </div>
 
-        <div className="flex justify-center gap-x-4 mt-[60px] w-screen h-[230px]">
-        <div className="grid-col-1 bg-opacity-88 bg-no-repeat p-9 w-[400px] text-white" style={{backgroundImage: `url(${About})`}}>
-               <h1 className="font-semibold text-xl">About Us</h1>
-               <p className="pt-2 font-light text-sm">Our Story</p>
-               <p className="pt-2 font-medium text-md">Dedicated to Spreding the love of Literature</p>
-            </div>
-            <div className="grid-col-1 bg-opacity-88 bg-no-repeat p-9 w-[400px] text-white" style={{backgroundImage: `url(${FeatureBg})`}}>
-               <h1 className="font-semibold text-xl">Feactured</h1>
-               <p className="pt-2 font-thin text-sm">Explore</p>
-               <p className="pt-2 font-medium text-md">Discover Your Favorite Books from Everywhere and at anytime</p>
-            </div>
-            <div className="grid-col-1 bg-opacity-88 bg-no-repeat p-9 w-[400px] text-white" style={{backgroundImage: `url(${Visit})`}}>
-               <h1 className="font-semibold text-xl">Visit Now</h1>
-               <p className="pt-2 font-thin text-sm">Browse</p>
-               <p className="pt-2 font-medium text-md">Experience the Magic of Books</p>
-            </div>
-      
-         </div>
-
-         <div className="w-screen h-[400px]">
-            <h1 className="flex justify-center items-center font-semibold text-2xl">Popular Books</h1>
+      <div className="w-screen h-[400px]">
+        <h1 className="flex justify-center items-center font-semibold text-2xl">
+          Popular Books
+        </h1>
 
             <div className="relative transition overflow-hidden group">
                <div className="gap-x-3 grid grid-cols-5 mx-8 mt-6 h-[280px]">
@@ -167,38 +200,52 @@ const Hero = () => {
             
          </div>
 
-         <div className="w-screen h-[250px]">
-            <div className="flex justify-between mx-8">
-               <h1 className="font-bold text-xl">Trending Category</h1>
-               {/* this must be link when we finish router */}
-               <a href="" className="font-medium text-md">View More &gt;</a>
+      <div className="w-screen h-[250px]">
+        <div className="flex justify-between mx-8">
+          <h1 className="font-bold text-xl">Trending Category</h1>
+          {/* this must be link when we finish router */}
+          <a href="" className="font-medium text-md">
+            View More &gt;
+          </a>
+        </div>
+        <div>
+          <div className="flex justify-center mx-8 mt-11 h-[50px]">
+            <div className="gap-x-6 grid grid-cols-3 w-full">
+              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
+                Digital Marketing
+              </h1>
+              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
+                Digital Marketing
+              </h1>
+              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
+                Digital Marketing
+              </h1>
             </div>
-            <div> 
-            
-            <div className="flex justify-center mx-8 mt-11 h-[50px]">
-               <div className="gap-x-6 grid grid-cols-3 w-full">
-                  <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">Digital Marketing</h1>
-                  <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">Digital Marketing</h1>
-                  <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">Digital Marketing</h1>
-               </div>
+          </div>
+          <div className="flex justify-center mx-8 mt-11 h-[50px]">
+            <div className="gap-x-6 grid grid-cols-3 w-full">
+              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
+                Digital Marketing
+              </h1>
+              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
+                Digital Marketing
+              </h1>
+              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
+                Digital Marketing
+              </h1>
             </div>
-            <div className="flex justify-center mx-8 mt-11 h-[50px]">
-               <div className="gap-x-6 grid grid-cols-3 w-full">
-                  <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">Digital Marketing</h1>
-                  <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">Digital Marketing</h1>
-                  <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">Digital Marketing</h1>
-               </div>
-            </div>
+          </div>
+        </div>
+      </div>
 
-            </div>
-         </div>
-
-         <div className="mt-[50px] w-screen h-[400px]">
-            <div className="flex justify-between mx-8">
-                  <h1 className="font-bold text-xl">Latest Books</h1>
-                  {/* this must be link when we finish router */}
-                  <a href="" className="font-medium text-md">View More &gt;</a>
-            </div>
+      <div className="mt-[50px] w-screen h-[400px]">
+        <div className="flex justify-between mx-8">
+          <h1 className="font-bold text-xl">Latest Books</h1>
+          {/* this must be link when we finish router */}
+          <a href="" className="font-medium text-md">
+            View More &gt;
+          </a>
+        </div>
 
             <div className="relative transition overflow-hidden group">
                <div className="gap-x-3 grid grid-cols-5 mx-8 mt-6 h-[280px]">
@@ -294,40 +341,47 @@ const Hero = () => {
                   
                </div>
 
-               <div className="pt-[35px]">
-                  <img src={LatestBooks} alt="" />
-               </div>
-            </div>
-          
-         </div>
+          <div className="pt-[35px]">
+            <img src={LatestBooks} alt="" />
+          </div>
+        </div>
+      </div>
 
-         <div className="mt-4 w-screen h-[300px]">
-            <h1 className="flex justify-center items-center font-extrabold text-xl">FAQs</h1>
-            
-            <div className="mx-[50px] mt-[50px]">
+      <div className="mt-4 w-screen h-[300px]">
+        <h1 className="flex justify-center items-center font-extrabold text-xl">
+          FAQs
+        </h1>
+
+        <div className="mx-[50px] mt-[50px]">
           {faqItems.map((item, index) => (
-            <div key={index} >
+            <div key={index}>
               {!item.isOpen && (
                 <div className="border-slate-300 bg-slate-50 shadow-lg mt-4 border rounded-[6px] h-[60px] font-semibold text-lg">
                   <div className="flex justify-between">
                     <div className="flex font-semibold text-lg">
-                      <FiHelpCircle className="mt-5 ml-5"/>
+                      <FiHelpCircle className="mt-5 ml-5" />
                       <h1 className="mt-4 pl-3">{item.question}</h1>
                     </div>
-                    <BsPlus className="mt-3 text-4xl" onClick={() => toggleItem(index)} />
+                    <BsPlus
+                      className="mt-3 text-4xl"
+                      onClick={() => toggleItem(index)}
+                    />
                   </div>
                 </div>
               )}
               {item.isOpen && (
                 <div className="border-slate-300 bg-slate-50 shadow-lg mt-[10px] border rounded-[6px] h-[165px] duration-700 delay-300">
                   <div className="flex justify-between">
-                     <div className="flex font-semibold text-lg">
-                        <FiHelpCircle className="mt-5 ml-5"/>
-                        <h1 className="mt-4 pl-3"> What is Toe Tet?</h1>
-                     </div>
-                     <div>
-                        <BsDash className="mt-3 text-4xl" onClick={() => toggleItem(index)}/>
-                     </div>
+                    <div className="flex font-semibold text-lg">
+                      <FiHelpCircle className="mt-5 ml-5" />
+                      <h1 className="mt-4 pl-3"> What is Toe Tet?</h1>
+                    </div>
+                    <div>
+                      <BsDash
+                        className="mt-3 text-4xl"
+                        onClick={() => toggleItem(index)}
+                      />
+                    </div>
                   </div>
                   <p className="mx-5 mt-4 font-medium text-md">{item.answer}</p>
                 </div>
@@ -335,9 +389,9 @@ const Hero = () => {
             </div>
           ))}
         </div>
-         </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

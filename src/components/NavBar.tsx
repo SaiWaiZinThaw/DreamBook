@@ -7,12 +7,9 @@ import { NavLink } from "react-router-dom";
 const NavBar = () => {
 
   return (
-    <div className="flex justify-between items-center shadow-slate-300 shadow-sm px-40 py-6 w-full h-[70px] font-Inter">
+    <div className="flex justify-between items-center bg-white shadow-slate-300 shadow-sm px-40 py-6 w-full h-[70px] font-Inter">
       <div className="w-[70px]">
-        <NavLink to="/">
-          <img src={Logo} alt={Logo} className="w-full" />
-        </NavLink>
-        
+        <img src={Logo} alt={Logo} className="w-full" />
       </div>
       <nav className="flex items-center gap-5">
         <NavLink to={"/"}>
@@ -30,10 +27,16 @@ const NavBar = () => {
       </nav>
 
       <div className="flex items-center gap-2">
-        <Button variant={"ghost"} className="flex items-center gap-2">
-          <HiMiniUserCircle className="text-2xl" /> Login
-        </Button>
-        <Button size={"lg"}>Register</Button>
+        <NavLink to='/login'>
+          <Button variant={"ghost"} className="flex items-center gap-2">
+            <HiMiniUserCircle className="text-2xl" /> Login
+          </Button>
+        </NavLink>
+
+        <NavLink to='/register'>
+          <Button size={"lg"}>Register</Button>
+        </NavLink>
+        
       </div>
     </div>
   );
