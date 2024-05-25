@@ -3,6 +3,7 @@ import { BsEyeFill, BsHeart, BsHeartFill, BsDash , BsPlus } from "react-icons/bs
 import { FiHelpCircle } from 'react-icons/fi';
 import { useState } from "react";
 import '../App.css'
+import { NavLink } from "react-router-dom";
 
 const Hero = () => {
    const [active, setActive] = useState(false);
@@ -20,6 +21,7 @@ const Hero = () => {
         }))
       );
     };
+    
   return (
     <div className="mx-0 px-0 container">
       
@@ -27,7 +29,11 @@ const Hero = () => {
             <div className="mt-[130px] ml-[125px] w-[700px] h-[300px]">
                 <h1 className="font-bold text-4xl">Discover <br /> Magic Of Books</h1>
                 <p className="pt-7 font-normal text-lg leading-[23px]">"Unlock worlds, one page at a time: Dive into the stories that <br /> shape us. Welcome to a sanctuary for book lovers, where <br /> words ignite passions and journeys never end."</p>
-                <button className="bg-blue-700 mt-12 p-[10px] rounded-[6px] w-60 text-white">Explore Now</button>
+
+                <NavLink to="/library">
+                  <button className="bg-blue-700 mt-12 p-[10px] rounded-[6px] w-60 text-white">Explore Now</button>
+                </NavLink>
+                
                 <p className="my-4 font-normal font-sans text-blue-300 text-sm">TRY ON MOBILE</p>
                 
                 <div className="flex gap-x-6">
@@ -80,8 +86,8 @@ const Hero = () => {
 
             <div className="relative transition overflow-hidden group">
                <div className="gap-x-3 grid grid-cols-5 mx-8 mt-6 h-[280px]">
-                  <div className="bg-slate-100 shadow-xl border rounded-lg">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                  <div className="bg-slate-100 shadow-xl border rounded-[8px]">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                         <img src={BestSelf} alt="" />
                            
                       {/* This will change of code we get API */}
@@ -111,8 +117,8 @@ const Hero = () => {
 
                   </div>
                   
-                  <div className="bg-slate-100 shadow-xl border rounded-lg">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                  <div className="bg-slate-100 shadow-xl border rounded-[8px]">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                         <img src={BestSelf} alt="" />
                         
                      </div>
@@ -123,8 +129,8 @@ const Hero = () => {
                      </div>
                   </div>
 
-                  <div className="bg-slate-100 shadow-xl border rounded-lg">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                  <div className="bg-slate-100 shadow-xl border rounded-[8px]">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                         <img src={BestSelf} alt="" />
                      </div>
                      <div className="ml-2">
@@ -134,8 +140,8 @@ const Hero = () => {
                      </div>
                   </div>
 
-                  <div className="bg-slate-100 shadow-xl border rounded-lg">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                  <div className="bg-slate-100 shadow-xl border rounded-[8px]">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                         <img src={BestSelf} alt="" />
                      </div>
                      <div className="ml-2">
@@ -145,8 +151,8 @@ const Hero = () => {
                      </div>
                   </div>
 
-                  <div className="bg-slate-100 shadow-xl border rounded-lg">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                  <div className="bg-slate-100 shadow-xl border rounded-[8px]">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                         <img src={BestSelf} alt="" />
                      </div>
                      <div className="ml-2">
@@ -196,8 +202,8 @@ const Hero = () => {
 
             <div className="relative transition overflow-hidden group">
                <div className="gap-x-3 grid grid-cols-5 mx-8 mt-6 h-[280px]">
-                  <div className="bg-slate-100 shadow-xl border rounded-lg">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                  <div className="bg-slate-100 shadow-xl border rounded-[8px]">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                         <img src={BestSelf} alt="" />
                            
                       {/* This will change of code we get API */}
@@ -227,8 +233,8 @@ const Hero = () => {
 
                   </div>
                   
-                  <div className="bg-slate-100 shadow-xl border rounded-lg">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                  <div className="bg-slate-100 shadow-xl border rounded-[8px]">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                         <img src={BestSelf} alt="" />
                         
                      </div>
@@ -239,8 +245,8 @@ const Hero = () => {
                      </div>
                   </div>
 
-                  <div className="bg-slate-100 shadow-xl border rounded-lg">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                  <div className="bg-slate-100 shadow-xl border rounded-[8px]">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                         <img src={BestSelf} alt="" />
                      </div>
                      <div className="ml-2">
@@ -250,8 +256,8 @@ const Hero = () => {
                      </div>
                   </div>
 
-                  <div className="bg-slate-100 shadow-xl border rounded-lg">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                  <div className="bg-slate-100 shadow-xl border rounded-[8px]">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                         <img src={BestSelf} alt="" />
                      </div>
                      <div className="ml-2">
@@ -261,8 +267,8 @@ const Hero = () => {
                      </div>
                   </div>
 
-                  <div className="bg-slate-100 shadow-xl border rounded-lg">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-md h-[160px]">
+                  <div className="bg-slate-100 shadow-xl border rounded-[8px]">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                         <img src={BestSelf} alt="" />
                      </div>
                      <div className="ml-2">
@@ -282,7 +288,10 @@ const Hero = () => {
                <div className="pt-[100px] pl-[125px] w-[700px] h-[300px] text-slate-100">
                   <p className="my-4 font-medium text-lg">latest collections</p> 
                   <h2 className="mt-5 font-bold text-4xl">The New Publishing Books</h2>
-                  <button className="bg-blue-700 mt-12 p-[10px] rounded-[6px] w-60 text-white">Explore Now</button>
+                  <NavLink to="/library">
+                     <button className="bg-blue-700 mt-12 p-[10px] rounded-[6px] w-60 text-white">Explore Now</button>
+                  </NavLink>
+                  
                </div>
 
                <div className="pt-[35px]">

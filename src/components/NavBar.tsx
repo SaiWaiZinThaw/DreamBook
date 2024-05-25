@@ -9,7 +9,10 @@ const NavBar = () => {
   return (
     <div className="flex justify-between items-center shadow-slate-300 shadow-sm px-40 py-6 w-full h-[70px] font-Inter">
       <div className="w-[70px]">
-        <img src={Logo} alt={Logo} className="w-full" />
+        <NavLink to="/">
+          <img src={Logo} alt={Logo} className="w-full" />
+        </NavLink>
+        
       </div>
       <nav className="flex items-center gap-5">
         <NavLink to={"/"}>

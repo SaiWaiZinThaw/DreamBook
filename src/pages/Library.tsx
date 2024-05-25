@@ -4,7 +4,7 @@ import { Footer, NavBar } from "@/components"
 
 const Library = () => {
   return (
-    <div>
+    <div className="overflow-x-hidden">
         <NavBar/>
         <LibraryLayout/>
         <Footer/>
