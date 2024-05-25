@@ -16,5 +16,6 @@ import FooterImg from './Footer.png';
 import FooterLine from './FooterLine.png';
 import LibraryHero from './Library.png'
 import Sorting from './Sorting.png'
+import LoginBackground from "./LoginBackground.jpg";
 
-export {Logo, FooterLine, Sorting, LogoWhite, FooterImg, LibraryHero , Animation, AppStore, GooglePLay, BestSelf, AuthBackground, About, LatestBg, LatestBooks, FeatureBg, Visit, HeroBg, Daisy}
+export {Logo, FooterLine, LoginBackground, Sorting, LogoWhite, FooterImg, LibraryHero , Animation, AppStore, GooglePLay, BestSelf, AuthBackground, About, LatestBg, LatestBooks, FeatureBg, Visit, HeroBg, Daisy}
