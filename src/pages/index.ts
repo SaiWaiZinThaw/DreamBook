@@ -1,4 +1,5 @@
 import Home from "./Home";
 import Library from "./Library";
+import CreateNewBook from "./CreateNewBook";
 
-export {Home, Library};
+export {Home, Library, CreateNewBook};
