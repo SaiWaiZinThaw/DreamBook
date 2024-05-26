@@ -62,7 +62,7 @@ const CreateBook = () => {
                     <div className="items-center gap-1.5 grid mx-[32px] pt-[60px] w-[603px] h-[74px]">
                         <Label htmlFor="category" className="font-semibold text-[16px]">Category</Label>
                         <div className="relative">
-                            <select id="category" className={`${selectedCategory ? "" : "text-slate-500 text-opacity-95"} border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold`} onChange={handleCategoryChange}>
+                            <select id="category" className={`${selectedCategory ? "" : "text-slate-500 text-sm text-opacity-95"} border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold`} onChange={handleCategoryChange}>
                                 <option value="" disabled selected>Select a category</option>
                                 {/* Mapping over categories array to dynamically generate options */}
                                 {categories.map((category, index) => (
