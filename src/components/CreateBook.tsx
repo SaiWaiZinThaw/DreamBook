@@ -4,18 +4,94 @@ import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { AiOutlineUser } from "react-icons/ai";
+import { FaBold, FaListUl, FaListOl, FaAlignLeft, FaAlignCenter, FaAlignRight  } from "react-icons/fa";
+import { FaUnderline } from "react-icons/fa";
+import { FaItalic } from "react-icons/fa6";
 import { useState } from "react";
+import { useEffect, useRef } from 'react';
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
 
 const CreateBook = () => {
     const navigate = useNavigate();
     const [selectedCategory, setSelectedCategory] = useState("");
-    
+    const [description, setDescription] = useState<string>("");
+    const quillRef = useRef<HTMLDivElement>(null);
+    const quillInstance = useRef<Quill | null>(null);
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+
     // This categories must use From API
     const categories = ["Fiction", "Non-fiction", "Science Fiction", "Mystery", "Thriller"];
 
     const handleCategoryChange = (event:any) => {
         setSelectedCategory(event.target.value);
     };
+
+    useEffect(() => {
+        if (quillRef.current) {
+            quillInstance.current = new Quill(quillRef.current, {
+                theme: 'snow',
+                modules: {
+                    toolbar: false
+                }
+            });
+
+            quillInstance.current.on('text-change', () => {
+                setDescription(quillInstance.current?.root.innerHTML || '');
+            });
+        }
+    }, []);
+
+    
+    const applyFormat = (format: string) => {
+        console.log('Applying format:', format);
+        if (quillInstance.current) {
+            const selection = quillInstance.current.getSelection();
+            if (selection) {
+                const [startIndex, length] = [selection.index, selection.length];
+                switch(format) {
+                    case 'bold':
+                    case 'italic':
+                    case 'underline':
+                        quillInstance.current.formatText(startIndex, length, format, true);
+                        break;
+                    case 'bullet':
+                        quillInstance.current.formatLine(startIndex, length, 'list', 'bullet');
+                        break;
+                    case 'ordered':
+                        quillInstance.current.formatLine(startIndex, length, 'list', 'ordered');
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    };
+    
+    
+    const alignLeft = () => {
+        if (quillInstance.current) {
+            quillInstance.current.format('align', false); // Remove existing alignment
+            quillInstance.current.format('align', 'left'); // Apply left alignment
+        }
+    };
+    
+    const alignCenter = () => {
+        if (quillInstance.current) {
+            quillInstance.current.format('align', false); // Remove existing alignment
+            quillInstance.current.format('align', 'center'); // Apply center alignment
+        }
+    };
+    
+    const alignRight = () => {
+        if (quillInstance.current) {
+            quillInstance.current.format('align', false); // Remove existing alignment
+            quillInstance.current.format('align', 'right'); // Apply right alignment
+        }
+    };
+    
+
+
 
   return (
     <div className="mx-0 px-0 container">
@@ -49,7 +125,7 @@ const CreateBook = () => {
                 </div>
             </div>
 
-            <div className="ml-[95px] w-[667px] h-[640px]">
+            <div className="ml-[95px] w-[667px]">
                 <div className="h-[581px]">
                     <div className="items-center gap-1.5 grid mx-[32px] pt-[30px] w-[603px] h-[74px]">
                         <Label htmlFor="title" className="font-semibold text-[16px]">Title</Label>
@@ -62,13 +138,18 @@ const CreateBook = () => {
                     <div className="items-center gap-1.5 grid mx-[32px] pt-[60px] w-[603px] h-[74px]">
                         <Label htmlFor="category" className="font-semibold text-[16px]">Category</Label>
                         <div className="relative">
-                            <select id="category" className={`${selectedCategory ? "" : "text-slate-500 text-sm text-opacity-95"} border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold`} onChange={handleCategoryChange}>
-                                <option value="" disabled selected>Select a category</option>
-                                {/* Mapping over categories array to dynamically generate options */}
-                                {categories.map((category, index) => (
-                                    <option key={index} value={category} className="font-extrabold">{category}</option>
-                                ))}
-                            </select>
+                        <select
+                            id="category"
+                            value={selectedCategory} // Use value prop instead of selected attribute
+                            className={`${selectedCategory ? "" : "text-slate-500 text-sm text-opacity-95"} border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold`}
+                            onChange={handleCategoryChange}
+                        >
+                            <option value="" disabled>Select a category</option>
+                            {/* Mapping over categories array to dynamically generate options */}
+                            {categories.map((category, index) => (
+                                <option key={index} value={category} className="font-extrabold">{category}</option>
+                            ))}
+                        </select>
                         </div>
                     </div>
 
@@ -76,6 +157,37 @@ const CreateBook = () => {
                         <Label htmlFor="keywords" className="font-semibold text-[16px]">Keywords</Label>
                         <Input type="text" id="keywords" className="border-slate-300 border"/>
                     </div>
+
+                    <div className="items-center gap-1.5 grid mx-[32px] pt-[120px] w-[603px] h-[176px]">
+                        <Label htmlFor="description" className="font-semibold text-[16px]">Description</Label>
+                        <div ref={quillRef} className="border-slate-300 border rounded w-full h-[200px]" />
+                        <div className="relative">
+                            <div className="bottom-0 absolute mb-[8px] ml-[25px]">
+                                <button onClick={() => applyFormat('bold')} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaBold className="w-[17px] h-[17px]"/></button>
+                                <button onClick={() => applyFormat('italic')} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaItalic className="w-[17px] h-[17px]"/></button>
+                                <button onClick={() => applyFormat('underline')} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaUnderline className="w-[17px] h-[17px]"/></button>
+                                <button onClick={alignLeft} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaAlignLeft className="w-[17px] h-[17px]"/></button>
+                                <button onClick={alignCenter} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaAlignCenter className="w-[17px] h-[17px]"/></button>
+                                <button onClick={alignRight} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaAlignRight className="w-[17px] h-[17px]"/></button>
+                                <button onClick={() => applyFormat('bullet')} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaListUl className="w-[17px] h-[17px]"/></button>
+                                <button onClick={() => applyFormat('ordered')} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaListOl className="w-[17px] h-[17px]"/></button>
+                            </div>
+                            <textarea
+                                ref={textareaRef}
+                                id="description"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                className="hidden"
+                                // style={{ whiteSpace: 'pre-wrap' }}
+                            />
+                        </div>
+                       
+                             
+                    </div>
+                </div>
+
+                <div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
+                    <button className="justify-center mx-[256px] text-white">Create Now</button>
                 </div>
             </div>
         </div>
