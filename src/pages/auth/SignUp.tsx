@@ -8,8 +8,10 @@ const SignUp = () => {
     e.preventDefault();
   };
   return (
-    <div className="flex flex-col items-center">
-      <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[180px]" />
+    <div className="flex flex-col items-center h-screen">
+      <button>
+        <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[180px]" />
+      </button>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center gap-8 w-[460px] font-Inter"
@@ -30,10 +32,10 @@ const SignUp = () => {
           Create an Account
         </Button>
         <div className="flex items-center gap-3">
-          <a className="text-white" href="#">
+          <span className="text-white cursor-default">
             Already have an account?
-          </a>
-          <a className="font-semibold text-white" href="#">
+          </span>
+          <a className="font-semibold text-white" href="/auth/login">
             Login
           </a>
         </div>

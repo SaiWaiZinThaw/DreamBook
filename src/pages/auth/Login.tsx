@@ -24,10 +24,10 @@ const Login = () => {
           Log in
         </Button>
         <div className="flex items-center gap-3">
-          <a className="text-white" href="#">
+          <span className="text-white cursor-default">
             Don't have an account?
-          </a>
-          <a className="font-semibold text-white" href="#">
+          </span>
+          <a className="font-semibold text-white" href="/auth/signup">
             Create an account
           </a>
         </div>

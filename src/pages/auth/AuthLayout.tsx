@@ -1,5 +1,6 @@
 import { LoginBackground } from "@/assets";
 import SignUp from "./SignUp";
+import { Outlet } from "react-router";
 SignUp;
 const LoginLayout = () => {
   return (
@@ -7,7 +8,7 @@ const LoginLayout = () => {
       className="flex justify-center items-center bg-cover p-20 w-full h-min-screen"
       style={{ backgroundImage: `url(${LoginBackground})` }}
     >
-      <SignUp />
+      <Outlet />
     </div>
   );
 };
