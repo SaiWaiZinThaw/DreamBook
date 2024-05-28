@@ -7,7 +7,7 @@ function App() {
   const AuthRouting = useRoutes(AuthRouter);
 
   return (
-    <div>
+    <div className="font-Inter">
       <Routes>
         <Route path="/*" element={UserRouting} />
         <Route path="/auth/*" element={AuthRouting} />
