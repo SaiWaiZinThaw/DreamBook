@@ -1,4 +1,5 @@
-import Home from "./Home";
-import Library from "./Library";
+import AuthLayout from "./AuthLayout";
+import Login from "./Login";
+import Signup from "./SignUp"
 
-export {Home, Library};
+export {AuthLayout,Login,Signup}
