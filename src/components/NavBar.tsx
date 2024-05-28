@@ -12,13 +12,13 @@ const NavBar = () => {
         <img src={Logo} alt={Logo} className="w-full" />
       </div>
       <nav className="flex items-center gap-5">
-        <NavLink to={"/"}>
+        <NavLink className={({isActive}) => isActive ? "bg-blue-300 p-[2px] rounded-md" : ""} to={"/"}>
           <Button variant={"ghost"}>Home</Button>
         </NavLink> 
-        <NavLink to={"/library"}>
+        <NavLink  className={({isActive}) => isActive ? "bg-blue-300 p-[2px] rounded-md" : ""} to={"/library"}>
           <Button variant={"ghost"}>Library</Button>
         </NavLink> 
-        <NavLink to={""}>
+        <NavLink  className={({isActive}) => isActive ? "bg-blue-300 p-[2px] rounded-md" : ""} to={"/book-create"}>
           <Button variant={"ghost"}>Book Crafting</Button>
         </NavLink> 
         

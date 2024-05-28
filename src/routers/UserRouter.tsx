@@ -1,6 +1,8 @@
 import { RouteObject } from "react-router-dom";
-import { Home, Library, SignUp } from "../pages";
+
+import { CreateNewBook, Home, Library, SignUp } from "../pages";
 import { Login } from "@/pages/auth";
+
 
 const UserRouter: RouteObject[] = [
   {
@@ -10,6 +12,10 @@ const UserRouter: RouteObject[] = [
   {
     path: "/library",
     element: <Library />,
+  },
+  {
+    path: "/book-create",
+    element: <CreateNewBook/>,
   },
   {
     path: "/login",
