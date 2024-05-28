@@ -9,7 +9,7 @@ const SignUp = () => {
   };
   return (
     <div className="flex flex-col items-center">
-      <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[280px]" />
+      <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[180px]" />
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center gap-8 w-[460px] font-Inter"
