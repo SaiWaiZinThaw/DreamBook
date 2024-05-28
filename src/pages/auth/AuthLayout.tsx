@@ -1,13 +1,13 @@
 import { LoginBackground } from "@/assets";
-import ProfileSetup from "./ProfileSetup";
-
+import SignUp from "./SignUp";
+SignUp;
 const LoginLayout = () => {
   return (
     <div
       className="flex justify-center items-center bg-cover p-20 w-full h-min-screen"
       style={{ backgroundImage: `url(${LoginBackground})` }}
     >
-      <ProfileSetup />
+      <SignUp />
     </div>
   );
 };

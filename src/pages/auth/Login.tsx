@@ -7,8 +7,8 @@ const Login = () => {
     e.preventDefault();
   };
   return (
-    <div className="flex flex-col items-center">
-      <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[280px]" />
+    <div className="flex flex-col items-center h-screen">
+      <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[180px]" />
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center gap-8 w-[460px] font-Inter"
