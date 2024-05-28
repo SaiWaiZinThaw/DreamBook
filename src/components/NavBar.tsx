@@ -12,13 +12,25 @@ const NavBar = () => {
         <img src={Logo} alt={Logo} className="w-full" />
       </div>
       <nav className="flex items-center gap-5">
-        <NavLink className={({isActive}) => isActive ? "bg-blue-300 p-[2px] rounded-md" : ""} to={"/"}>
+        <NavLink className={({ isActive }) =>
+            isActive
+              ? "bg-primary !text-primary-foreground h-10 w-32 rounded-md"
+              : "text-black"
+          } to={"/"}>
           <Button variant={"ghost"}>Home</Button>
         </NavLink> 
-        <NavLink  className={({isActive}) => isActive ? "bg-blue-300 p-[2px] rounded-md" : ""} to={"/library"}>
+        <NavLink  className={({ isActive }) =>
+            isActive
+              ? "bg-primary !text-primary-foreground h-10 w-32 rounded-md"
+              : "text-black"
+          } to={"/library"}>
           <Button variant={"ghost"}>Library</Button>
         </NavLink> 
-        <NavLink  className={({isActive}) => isActive ? "bg-blue-300 p-[2px] rounded-md" : ""} to={"/book-create"}>
+        <NavLink  className={({ isActive }) =>
+            isActive
+              ? "bg-primary !text-primary-foreground h-10 w-32 rounded-md"
+              : "text-black"
+          } to={"/book-create"}>
           <Button variant={"ghost"}>Book Crafting</Button>
         </NavLink> 
         
@@ -27,13 +39,13 @@ const NavBar = () => {
       </nav>
 
       <div className="flex items-center gap-2">
-        <NavLink to='/login'>
+        <NavLink to='/auth/login'>
           <Button variant={"ghost"} className="flex items-center gap-2">
             <HiMiniUserCircle className="text-2xl" /> Login
           </Button>
         </NavLink>
 
-        <NavLink to='/register'>
+        <NavLink to='/auth/signup'>
           <Button size={"lg"}>Register</Button>
         </NavLink>
         
