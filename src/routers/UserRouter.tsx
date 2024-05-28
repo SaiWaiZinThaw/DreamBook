@@ -1,6 +1,5 @@
 import { RouteObject } from "react-router-dom";
-import { Home, Library, SignUp } from "../pages";
-import { Login } from "@/pages/auth";
+import { Home, Library } from "../pages";
 
 const UserRouter: RouteObject[] = [
   {
@@ -10,14 +9,6 @@ const UserRouter: RouteObject[] = [
   {
     path: "/library",
     element: <Library />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <SignUp />,
   },
 ];
 

@@ -1,9 +1,5 @@
-
-
 const BookRouter = () => {
-  return (
-    <div>BookRouter</div>
-  )
-}
+  return <div>BookRouter</div>;
+};
 
-export default BookRouter
+export default BookRouter;
