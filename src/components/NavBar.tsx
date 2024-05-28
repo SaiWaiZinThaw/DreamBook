@@ -27,10 +27,16 @@ const NavBar = () => {
       </nav>
 
       <div className="flex items-center gap-2">
-        <Button variant={"ghost"} className="flex items-center gap-2">
-          <HiMiniUserCircle className="text-2xl" /> Login
-        </Button>
-        <Button size={"lg"}>Register</Button>
+        <NavLink to='/login'>
+          <Button variant={"ghost"} className="flex items-center gap-2">
+            <HiMiniUserCircle className="text-2xl" /> Login
+          </Button>
+        </NavLink>
+
+        <NavLink to='/register'>
+          <Button size={"lg"}>Register</Button>
+        </NavLink>
+        
       </div>
     </div>
   );
