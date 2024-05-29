@@ -1,11 +1,34 @@
 import { LogoWhite } from "@/assets";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useLogIn } from "@/hooks/useAuth";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const Login = () => {
+  const [accountData, setAccountData] = useState({
+    email: "",
+    password: "",
+  });
+  const LoginAccount = useLogIn();
+
+  useEffect(() => {
+    if (LoginAccount.isSuccess) {
+      console.log(LoginAccount.data);
+    }
+  }, [LoginAccount.isSuccess]);
+
+  useEffect(() => {
+    if (LoginAccount.isError) {
+      alert("Error");
+    }
+  }, [LoginAccount.isError]);
+
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
+    const data = { ...accountData };
+    LoginAccount.mutate(data);
+    console.log(data);
   };
   return (
     <div className="flex flex-col items-center">
@@ -17,8 +40,27 @@ const Login = () => {
           <h1 className="font-bold text-2xl text-white">Welcome Again!</h1>
           <h3 className="text-white">Please Login to your account</h3>
         </div>
-        <Input type="text" id="name" placeholder="Username" />
-        <Input type="password" id="password" placeholder="Password" />
+        <Input
+          type="email"
+          id="name"
+          placeholder="Email"
+          value={accountData.email}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setAccountData((prev) => ({ ...prev, email: event.target.value }));
+          }}
+        />
+        <Input
+          type="password"
+          id="password"
+          placeholder="Password"
+          value={accountData.password}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setAccountData((prev) => ({
+              ...prev,
+              password: event.target.value,
+            }));
+          }}
+        />
 
         <Button
           variant={"default"}

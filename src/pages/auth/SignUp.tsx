@@ -1,7 +1,7 @@
 import { LogoWhite } from "@/assets";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useSignUp } from "@/hooks/useSignUp";
+import { useSignUp } from "@/hooks/useAuth";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
