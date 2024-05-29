@@ -1,6 +1,8 @@
 import { RouteObject } from "react-router-dom";
+
 import { CreateNewBook, Home, Library } from "../pages";
 import { AuthLayout, Login, SignUp } from "@/pages/auth";
+
 
 const UserRouter: RouteObject[] = [
   {
@@ -11,6 +13,7 @@ const UserRouter: RouteObject[] = [
     path: "/library",
     element: <Library />,
   },
+
   {
     path: "/book-create",
     element: <CreateNewBook/>,
@@ -27,6 +30,7 @@ const UserRouter: RouteObject[] = [
     path: '/register/create-account',
     element: <AuthLayout/>,
   },
+
 ];
 
 export default UserRouter;

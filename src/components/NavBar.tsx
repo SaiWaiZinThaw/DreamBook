@@ -3,11 +3,10 @@ import { HiMiniUserCircle } from "react-icons/hi2";
 import { Button } from "./ui/button";
 import { NavLink } from "react-router-dom";
 
-
 const NavBar = () => {
-
   return (
     <div className="flex justify-between items-center bg-white shadow-slate-300 shadow-sm px-40 py-6 w-full h-[70px] font-Inter">
+
      <NavLink to={"/"}>
         <div className="w-[70px]">
           <img src={Logo} alt={Logo} className="w-full" />
@@ -38,9 +37,10 @@ const NavBar = () => {
         
         
         
-      </nav>
 
+      </nav>
       <div className="flex items-center gap-2">
+
         <NavLink to='/auth/login'>
           <Button variant={"ghost"} className="flex items-center gap-2">
             <HiMiniUserCircle className="text-2xl" /> Login
@@ -49,8 +49,8 @@ const NavBar = () => {
 
         <NavLink to='/auth/signup'>
           <Button size={"lg"}>Register</Button>
+
         </NavLink>
-        
       </div>
     </div>
   );
