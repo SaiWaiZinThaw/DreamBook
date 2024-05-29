@@ -1,7 +1,6 @@
-import { LoginBackground, LogoWhite } from "@/assets";
+import { LogoWhite } from "@/assets";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { NavLink } from "react-router-dom";
 
 const Login = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,14 +26,12 @@ const Login = () => {
           Log in
         </Button>
         <div className="flex items-center gap-3">
-          <p className="text-white">
+          <span className="text-white cursor-default">
             Don't have an account?
-          </p>
-          <NavLink to='/register'>
-            <a className="font-semibold text-white" href="#">
-              Create an account
-            </a>
-          </NavLink>
+          </span>
+          <a className="font-semibold text-white" href="/auth/signup">
+            Create an account
+          </a>
         </div>
       </form>
     </div>
