@@ -10,7 +10,9 @@ const SignUp = () => {
   };
   return (
     <div className="flex flex-col items-center" style={{backgroundImage: `url(${LoginBackground})`}}>
-      <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[280px]" />
+      <NavLink to={'/'}>
+        <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[280px]" />
+      </NavLink>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center gap-8 w-[460px] font-Inter"
@@ -27,9 +29,11 @@ const SignUp = () => {
           placeholder="Confirm Password"
         />
 
+       <NavLink to={'/register/create-account'}>
         <Button variant={"default"} size={"full"} text={"white"}>
-          Create an Account
-        </Button>
+            Create an Account
+          </Button>
+       </NavLink>
         <div className="flex items-center gap-3">
           <p className="text-white">
             Already have an account?

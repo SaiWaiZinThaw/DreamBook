@@ -260,7 +260,9 @@ const LibraryLayout = () => {
                 </div>
             </div>
 
-            <CategoryBooks/>
+            <div>
+                <CategoryBooks/>
+            </div>
         </div>
 
       
