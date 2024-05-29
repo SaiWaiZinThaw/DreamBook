@@ -1,6 +1,6 @@
 import AuthLayout from "./AuthLayout";
 import Login from "./Login";
-import Signup from "./SignUp"
+import SignUp from "./SignUp"
 
 
-export {AuthLayout,Login,Signup}
+export {AuthLayout,Login,SignUp}

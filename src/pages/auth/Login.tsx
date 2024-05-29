@@ -1,6 +1,7 @@
-import { LogoWhite } from "@/assets";
+import { LoginBackground, LogoWhite } from "@/assets";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { NavLink } from "react-router-dom";
 
 const Login = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
