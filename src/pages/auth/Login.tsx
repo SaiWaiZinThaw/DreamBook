@@ -1,10 +1,9 @@
 import { LogoWhite } from "@/assets";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
 import { useLogIn } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
-
+import { NavLink } from "react-router-dom";
 
 const Login = () => {
   const [accountData, setAccountData] = useState({
@@ -32,13 +31,11 @@ const Login = () => {
     console.log(data);
   };
   return (
-
     <div className="flex flex-col items-center">
       <NavLink to={"/"}>
         <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[280px]" />
       </NavLink>
       <form className="flex flex-col items-center gap-8 w-[460px] font-Inter">
-
         <div className="flex flex-col items-center gap-3">
           <h1 className="font-bold text-2xl text-white">Welcome Again!</h1>
           <h3 className="text-white">Please Login to your account</h3>
