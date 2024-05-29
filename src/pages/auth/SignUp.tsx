@@ -1,17 +1,18 @@
-import { LogoWhite } from "@/assets";
+import { LoginBackground, LogoWhite } from "@/assets";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const SignUp = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
   return (
-    <div className="flex flex-col items-center h-screen">
-      <button>
-        <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[180px]" />
-      </button>
+    <div className="flex flex-col items-center" style={{backgroundImage: `url(${LoginBackground})`}}>
+      <NavLink to={'/'}>
+        <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[280px]" />
+      </NavLink>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center gap-8 w-[460px] font-Inter"
@@ -28,9 +29,11 @@ const SignUp = () => {
           placeholder="Confirm Password"
         />
 
+       <NavLink to={'/register/create-account'}>
         <Button variant={"default"} size={"full"} text={"white"}>
-          Create an Account
-        </Button>
+            Create an Account
+          </Button>
+       </NavLink>
         <div className="flex items-center gap-3">
           <span className="text-white cursor-default">
             Already have an account?

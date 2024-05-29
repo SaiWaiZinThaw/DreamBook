@@ -1,3 +1,4 @@
 import LibraryLayout from "./LibraryLayout";
+import BookDashBoardLayout from "./BookDashBoardLayout";
 
-export {LibraryLayout}
+export {LibraryLayout, BookDashBoardLayout}
