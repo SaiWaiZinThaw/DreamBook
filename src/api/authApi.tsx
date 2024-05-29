@@ -9,7 +9,13 @@ export const SignUpAPi = async ({
   };
 }) => {
   const response: Response = await fetch(`${BaseURL}/auth/signup`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    mode: "no-cors",
     method: "POST",
+    redirect: "follow",
     body: JSON.stringify(data),
   });
 
