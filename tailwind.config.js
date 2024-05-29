@@ -9,6 +9,9 @@ module.exports = {
   ],
   prefix: "",
   theme: {
+    fontFamily:{
+      Inter: ["Inter", "sans-serif"]
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -17,9 +20,6 @@ module.exports = {
       },
     },
     extend: {
-      fontFamily:{
-        Inter: ["Inter", "sans-serif"]
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
