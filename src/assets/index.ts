@@ -16,6 +16,11 @@ import FooterImg from './Footer.png';
 import FooterLine from './FooterLine.png';
 import LibraryHero from './Library.png'
 import Sorting from './Sorting.png'
-import LoginBackground from './LoginBackground.jpg'
+import LoginBackground from './LoginBackground.jpg';
+import BookCraftImg from './BookCraft-img.png';
+import LightMenuBook from './light_menu-book-outline.png'
+import ChapterOutline from './Chapter_Outline.png';
+import LightCommentOutline from './light_comment-outline.png';
+import BookFloatAnimation from './book-float.png';
 
-export {Logo, FooterLine, Sorting, LogoWhite, FooterImg, LibraryHero , Animation, AppStore, GooglePLay, BestSelf, AuthBackground, About, LatestBg, LatestBooks, FeatureBg, Visit, HeroBg, Daisy, LoginBackground}
+export {Logo, FooterLine, LightMenuBook, Sorting, BookFloatAnimation, LightCommentOutline, ChapterOutline, LogoWhite, FooterImg, BookCraftImg , LibraryHero , Animation, AppStore, GooglePLay, BestSelf, AuthBackground, About, LatestBg, LatestBooks, FeatureBg, Visit, HeroBg, Daisy, LoginBackground}

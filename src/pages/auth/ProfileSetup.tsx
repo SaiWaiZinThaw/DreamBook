@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React from "react";
 import { countryCodes } from "@/variables";
+import { NavLink } from "react-router-dom";
 
 const ProfileSetup = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -11,7 +12,9 @@ const ProfileSetup = () => {
   };
   return (
     <div className="flex flex-col items-center">
-      <img src={LogoWhite} alt="LogoWhite" className="mb-16 w-[280px]" />
+      <NavLink to={'/'}>
+        <img src={LogoWhite} alt="LogoWhite" className="mb-16 w-[280px]" />
+      </NavLink>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center gap-8 w-[460px] font-Inter"

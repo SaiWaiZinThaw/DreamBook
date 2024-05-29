@@ -1,4 +1,4 @@
-import { Login, Signup } from "@/pages/auth";
+import { Login, SignUp } from "@/pages/auth";
 import LoginLayout from "@/pages/auth/AuthLayout";
 import { Navigate, RouteObject } from "react-router-dom";
 
@@ -17,7 +17,7 @@ const AuthRouter: RouteObject[] = [
       },
       {
         path: "/auth/signup",
-        element: <Signup />,
+        element: <SignUp />,
       },
     ],
   },

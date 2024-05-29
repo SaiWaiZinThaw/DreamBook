@@ -12,7 +12,7 @@ const CategoryBooks = () => {
   };
 
   return (
-    <div>
+    <div className="mx-0 px-0 container">
         <div className="flex mx-[45px] mt-4 w-[970px] h-[42px]">
             <img src={Sorting} alt="" onClick={handleRotateChange} style={{transform: `rotate(${rotation}deg)`}} className="cursor-pointer rotate-180"/>
 

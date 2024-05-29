@@ -389,7 +389,7 @@ const Hero = () => {
           {faqItems.map((item, index) => (
             <div key={index}>
               {!item.isOpen && (
-                <div className="border-slate-300 bg-slate-50 shadow-lg mt-4 border rounded-[6px] h-[60px] font-semibold text-lg">
+                <div onClick={() => toggleItem(index)} className="border-slate-300 bg-slate-50 shadow-lg mt-4 border rounded-[6px] h-[60px] font-semibold text-lg">
                   <div className="flex justify-between">
                     <div className="flex font-semibold text-lg">
                       <FiHelpCircle className="mt-5 ml-5" />
@@ -397,13 +397,13 @@ const Hero = () => {
                     </div>
                     <BsPlus
                       className="mt-3 text-4xl"
-                      onClick={() => toggleItem(index)}
+                      
                     />
                   </div>
                 </div>
               )}
               {item.isOpen && (
-                <div className="border-slate-300 bg-slate-50 shadow-lg mt-[10px] border rounded-[6px] h-[165px] duration-700 delay-300">
+                <div onClick={() => toggleItem(index)} className="border-slate-300 bg-slate-50 shadow-lg mt-[10px] border rounded-[6px] h-[165px] duration-700 delay-300">
                   <div className="flex justify-between">
                     <div className="flex font-semibold text-lg">
                       <FiHelpCircle className="mt-5 ml-5" />
@@ -412,7 +412,7 @@ const Hero = () => {
                     <div>
                       <BsDash
                         className="mt-3 text-4xl"
-                        onClick={() => toggleItem(index)}
+                        
                       />
                     </div>
                   </div>
