@@ -5,7 +5,7 @@ SignUp;
 const LoginLayout = () => {
   return (
     <div
-      className="flex justify-center items-center bg-cover p-20 w-full h-screen"
+      className="flex justify-center items-center bg-cover mt-0 w-full min-h-screen"
       style={{ backgroundImage: `url(${LoginBackground})` }}
     >
       <Outlet />

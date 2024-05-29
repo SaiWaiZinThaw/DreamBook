@@ -33,13 +33,11 @@ const SignUp = () => {
     console.log(data);
   };
   return (
-
-    <div className="flex flex-col items-center">
-      <NavLink to={"/"}>
-        <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[280px]" />
+    <div className="flex flex-col items-center gap-10">
+      <NavLink className="mt-0" to={"/"}>
+        <img src={LogoWhite} alt="LogoWhite" className="w-[280px]" />
       </NavLink>
-      <form className="flex flex-col items-center gap-8 w-[460px] font-Inter">
-
+      <form className="flex flex-col items-center gap-6 w-[460px] font-Inter">
         <div className="flex flex-col items-center gap-3">
           <h1 className="font-bold text-2xl text-white">Create an Account</h1>
           <h3 className="text-white">Get started to share books & reading</h3>
@@ -71,7 +69,7 @@ const SignUp = () => {
           placeholder="Confirm Password"
         />
 
-        <NavLink to={"/register/create-account"}>
+        <NavLink className={"w-full"} to={"/register/create-account"}>
           <Button
             variant={"default"}
             size={"full"}
