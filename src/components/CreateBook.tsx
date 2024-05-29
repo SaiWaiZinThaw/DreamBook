@@ -1,6 +1,6 @@
 import { BookCraftImg } from "@/assets";
 import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { AiOutlineUser } from "react-icons/ai";
@@ -44,29 +44,49 @@ const CreateBook = () => {
 
     
     const applyFormat = (format: string) => {
-        console.log('Applying format:', format);
         if (quillInstance.current) {
-            const selection = quillInstance.current.getSelection();
-            if (selection) {
-                const [startIndex, length] = [selection.index, selection.length];
-                switch(format) {
-                    case 'bold':
-                    case 'italic':
-                    case 'underline':
-                        quillInstance.current.formatText(startIndex, length, format, true);
-                        break;
-                    case 'bullet':
-                        quillInstance.current.formatLine(startIndex, length, 'list', 'bullet');
-                        break;
-                    case 'ordered':
-                        quillInstance.current.formatLine(startIndex, length, 'list', 'ordered');
-                        break;
-                    default:
-                        break;
+            const cursorPosition = quillInstance.current.getSelection()?.index;
+            if (cursorPosition !== null && cursorPosition !== undefined) {
+                // Check if the format is already applied
+                const isApplied = quillInstance.current.getFormat(cursorPosition)?.[format];
+                const isBulletApplied = quillInstance.current.getFormat(cursorPosition)?.list === 'bullet';
+                const isOrderedApplied = quillInstance.current.getFormat(cursorPosition)?.list === 'ordered';
+                if (isApplied) {
+                    quillInstance.current.format(format, false);
+                }
+                else if (isBulletApplied && format === 'bullet') {
+                    // If bullet format is already applied, remove it
+                    quillInstance.current.format('list', false);
+                } else if (isOrderedApplied && format === 'ordered') {
+                    // If ordered format is already applied, remove it
+                    quillInstance.current.format('list', false);
+                } else {
+                    // If format is not applied, apply it
+                    switch(format) {
+                        case 'bold':
+                            quillInstance.current.format('bold', true);
+                            break;
+                        case 'italic':
+                            quillInstance.current.format('italic', true);
+                            break;
+                        case 'underline':
+                            quillInstance.current.format('underline', true);
+                            break;
+                        case 'bullet':
+                            quillInstance.current.format('list', 'bullet');
+                            break;
+                        case 'ordered':
+                            quillInstance.current.format('list', 'ordered');
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
     };
+    
+    
     
     
     const alignLeft = () => {
@@ -94,7 +114,7 @@ const CreateBook = () => {
 
 
   return (
-    <div className="mx-0 px-0 container">
+    <div>
         <div className="flex mt-[42px] ml-[110px] w-[660px] h-[53px] text-md">
             <div className="flex my-[12.5px] w-[83px] h-[28px] text-blue-700 text-opacity-60 cursor-pointer" onClick={() => navigate(-1)}>
                 <FaArrowLeft className="mx-2 mt-1"/>
@@ -178,7 +198,6 @@ const CreateBook = () => {
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 className="hidden"
-                                // style={{ whiteSpace: 'pre-wrap' }}
                             />
                         </div>
                        
@@ -186,9 +205,11 @@ const CreateBook = () => {
                     </div>
                 </div>
 
-                <div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
-                    <button className="justify-center mx-[256px] text-white">Create Now</button>
-                </div>
+               <NavLink to={'/book-dashboard'}>
+                    <div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
+                        <button className="justify-center mx-[256px] text-white">Create Now</button>
+                    </div>
+               </NavLink>
             </div>
         </div>
         

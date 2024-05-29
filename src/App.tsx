@@ -1,14 +1,18 @@
-import { Route, Routes, useRoutes } from 'react-router-dom'
+import { Route, Routes, useRoutes } from "react-router-dom";
 
-import { UserRouter } from './routers'
+import { BookRouter, UserRouter } from './routers'
 
 function App() {
   const UserRouting = useRoutes(UserRouter);
+  const BookRouting = useRoutes(BookRouter);
 
   return (
     <div>
        <Routes>
         <Route path="/*" element={UserRouting}/>
+      </Routes>
+       <Routes>
+        <Route path="/*" element={BookRouting}/>
       </Routes>
     </div>
   );

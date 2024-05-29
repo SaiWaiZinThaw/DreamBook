@@ -1,29 +1,32 @@
 import { RouteObject } from "react-router-dom";
 import { CreateNewBook, Home, Library } from "../pages";
-import { Login, SignUp } from "@/pages/auth";
+import { AuthLayout, Login, SignUp } from "@/pages/auth";
 
 const UserRouter: RouteObject[] = [
   {
-    path: '/',
-    element: <Home/>,
+    path: "/",
+    element: <Home />,
   },
   {
-    path: '/library',
-    element: <Library/>,
+    path: "/library",
+    element: <Library />,
   },
   {
-    path: '/book-create',
+    path: "/book-create",
     element: <CreateNewBook/>,
   },
   {
-    path: '/login',
-    element: <Login/>
+    path: "/login",
+    element: <Login />,
   },
   {
     path: '/register',
     element: <SignUp/>,
-      
   },
-]
+  {
+    path: '/register/create-account',
+    element: <AuthLayout/>,
+  },
+];
 
-export default UserRouter
+export default UserRouter;
