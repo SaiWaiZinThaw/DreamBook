@@ -13,7 +13,7 @@ export const SignUpAPi = async ({
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    mode: "no-cors",
+    mode: "cors",
     method: "POST",
     redirect: "follow",
     body: JSON.stringify(data),
