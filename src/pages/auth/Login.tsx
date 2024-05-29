@@ -1,14 +1,17 @@
-import { LogoWhite } from "@/assets";
+import { LoginBackground, LogoWhite } from "@/assets";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { NavLink } from "react-router-dom";
 
 const Login = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
   return (
-    <div className="flex flex-col items-center h-screen">
-      <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[180px]" />
+    <div className="flex flex-col items-center" style={{backgroundImage: `url(${LoginBackground})`}}>
+      <NavLink to={'/'}>
+        <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[280px]" />
+      </NavLink>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center gap-8 w-[460px] font-Inter"

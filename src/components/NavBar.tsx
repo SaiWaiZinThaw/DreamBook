@@ -8,9 +8,11 @@ const NavBar = () => {
 
   return (
     <div className="flex justify-between items-center bg-white shadow-slate-300 shadow-sm px-40 py-6 w-full h-[70px] font-Inter">
-      <div className="w-[70px]">
-        <img src={Logo} alt={Logo} className="w-full" />
-      </div>
+     <NavLink to={"/"}>
+        <div className="w-[70px]">
+          <img src={Logo} alt={Logo} className="w-full" />
+        </div>
+     </NavLink>
       <nav className="flex items-center gap-5">
         <NavLink className={({ isActive }) =>
             isActive
