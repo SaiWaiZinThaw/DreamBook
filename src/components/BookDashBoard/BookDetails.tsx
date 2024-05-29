@@ -51,7 +51,7 @@ const BookDetails = () => {
   };
 
   return (
-    <div className="flex mx-0 px-0 container">
+    <div className="mx-0 px-0 container">
       <div className="flex">
         <div className="bg-primary bg-opacity-90 w-[296px] h-full">
           <div className="border-slate-300 border-b h-[80px]">
