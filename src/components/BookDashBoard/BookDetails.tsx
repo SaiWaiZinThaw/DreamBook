@@ -147,7 +147,7 @@ const BookDetails = () => {
                           <Button onClick={handleCancelClick} className="bg-white hover:bg-white text-slate-900 hover:text-slate-500">
                             Cancel
                           </Button>
-                          <Button onClick={handleSaveClick} className="bg-primary hover:bg-blue-400 text-slate-200">
+                          <Button onClick={handleSaveClick} className="bg-primary hover:bg-blue-400 text-slate-100 hover:text-slate-200">
                             Save
                           </Button>
                         </>
@@ -167,12 +167,12 @@ const BookDetails = () => {
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel className="border-none">Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={handleDeleteConfirm} className="text-slate-200">Yes!  Delete</AlertDialogAction>
+                                <AlertDialogAction onClick={handleDeleteConfirm} className="hover:bg-blue-400 text-slate-100 hover:text-slate-200">Yes!  Delete</AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
 
-                          <Button onClick={handleEditClick} className="bg-primary hover:bg-blue-400 text-slate-200">
+                          <Button onClick={handleEditClick} className="bg-primary hover:bg-blue-400 text-slate-100 hover:text-slate-200">
                             Edit
                           </Button>
                         </>
