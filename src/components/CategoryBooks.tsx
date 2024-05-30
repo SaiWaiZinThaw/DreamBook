@@ -12,7 +12,7 @@ const CategoryBooks = () => {
   };
 
   return (
-    <div className="mx-0 px-0 container">
+    <div className="mx-0 px-0 w-screen container">
         <div className="flex mx-[45px] mt-4 w-[970px] h-[42px]">
             <img src={Sorting} alt="" onClick={handleRotateChange} style={{transform: `rotate(${rotation}deg)`}} className="cursor-pointer rotate-180"/>
 
@@ -31,268 +31,232 @@ const CategoryBooks = () => {
             </div> 
         </div>
 
-        <div className="mt-[30px] ml-[35px] w-[990px] h-[924px]">
-          <div className="flex mb-[30px] w-[990px] h-[280px]">
+        <div className="mt-[30px] ml-[35px] overflow-hidden">
+            <div className="flex mb-[30px] w-[990px]">
            
-            <div className="bg-slate-100 shadow-xl border rounded-[8px] w-[232px] h-[280px]">
+               <div className="relative transition group">
+                  <div className="grid grid-cols-4">
+                     <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
                      <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                         <img src={BestSelf} alt="" />
-                           
-                      {/* This will change of code we get API */}
+
+                        {/* This will change of code we get API */}
                         <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                            <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                            {active ? (
-                              <BsHeartFill className="text-red-500" onClick={() => setActive(!active)} />
+                              <BsHeartFill
+                                 className="text-red-500"
+                                 onClick={() => setActive(!active)}
+                              />
                            ) : (
-                              <BsHeart className="text-slate-500" onClick={() => setActive(!active)} />
+                              <BsHeart
+                                 className="text-slate-500"
+                                 onClick={() => setActive(!active)}
+                              />
                            )}
                            </div>
-                           
-                        {/* Change div to link to= {"Book/id"}*/}
+
+                           {/* Change div to link to= {"Book/id"}*/}
                            <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                              <BsEyeFill className="text-slate-500"/>
+                           <BsEyeFill className="text-slate-500" />
                            </div>
                         </div>
                      </div>
-                     
+
                      <div className="ml-2">
                         <h1 className="font-bold text-xl">Title</h1>
                         <p className="font-normal text-gray-500 text-sm">Category</p>
                         <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                      </div>
+                     </div>
 
-            </div>
-            <div className="bg-slate-100 shadow-xl ml-[21px] border rounded-[8px] w-[232px] h-[280px]">
+                     <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
                      <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                         <img src={BestSelf} alt="" />
                      </div>
-                     
                      <div className="ml-2">
                         <h1 className="font-bold text-xl">Title</h1>
                         <p className="font-normal text-gray-500 text-sm">Category</p>
                         <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                      </div>
-
-            </div>
-            <div className="bg-slate-100 shadow-xl ml-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                        <img src={BestSelf} alt="" />
-                           
-                      {/* This will change of code we get API */}
-                        <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                           <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                           {active ? (
-                              <BsHeartFill className="text-red-500" onClick={() => setActive(!active)} />
-                           ) : (
-                              <BsHeart className="text-slate-500" onClick={() => setActive(!active)} />
-                           )}
-                           </div>
-                           
-                        {/* Change div to link to= {"Book/id"}*/}
-                           <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                              <BsEyeFill className="text-slate-500"/>
-                           </div>
-                        </div>
-                     </div>
-                     
-                    
-
-                     <div className="ml-2">
-                        <h1 className="font-bold text-xl">Title</h1>
-                        <p className="font-normal text-gray-500 text-sm">Category</p>
-                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                      </div>
 
-            </div>
-            <div className="bg-slate-100 shadow-xl ml-[21px] border rounded-[8px] w-[232px] h-[280px]">
+                     <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
                      <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                         <img src={BestSelf} alt="" />
                      </div>
-
                      <div className="ml-2">
                         <h1 className="font-bold text-xl">Title</h1>
                         <p className="font-normal text-gray-500 text-sm">Category</p>
                         <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                      </div>
+                     </div>
 
-            </div>
-          </div>
-          <div className="flex mb-[30px] w-[990px] h-[280px]">
+                     <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
+                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                        <img src={BestSelf} alt="" />
+                     </div>
+                     <div className="ml-2">
+                        <h1 className="font-bold text-xl">Title</h1>
+                        <p className="font-normal text-gray-500 text-sm">Category</p>
+                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                     </div>
+                     </div>
+                  </div>
+               </div>
            
-            <div className="bg-slate-100 shadow-xl border rounded-[8px] w-[232px] h-[280px]">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                        <img src={BestSelf} alt="" />
-                     </div>
-          
-                     <div className="ml-2">
-                        <h1 className="font-bold text-xl">Title</h1>
-                        <p className="font-normal text-gray-500 text-sm">Category</p>
-                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                     </div>
-
             </div>
-            <div className="bg-slate-100 shadow-xl ml-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                        <img src={BestSelf} alt="" />
-                     </div>
-  
-                     <div className="ml-2">
-                        <h1 className="font-bold text-xl">Title</h1>
-                        <p className="font-normal text-gray-500 text-sm">Category</p>
-                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                     </div>
 
-            </div>
-            <div className="bg-slate-100 shadow-xl ml-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                        <img src={BestSelf} alt="" />
-                     </div>
-                     
-                    
-
-                     <div className="ml-2">
-                        <h1 className="font-bold text-xl">Title</h1>
-                        <p className="font-normal text-gray-500 text-sm">Category</p>
-                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                     </div>
-
-            </div>
-            <div className="bg-slate-100 shadow-xl ml-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                        <img src={BestSelf} alt="" />
-                     </div>
-                     
-                     <div className="ml-2">
-                        <h1 className="font-bold text-xl">Title</h1>
-                        <p className="font-normal text-gray-500 text-sm">Category</p>
-                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                     </div>
-
-            </div>
-          </div>
-          <div className="flex mb-[30px] w-[990px] h-[280px]">
+            <div className="flex mb-[30px] w-[990px]">
            
-            <div className="bg-slate-100 shadow-xl border rounded-[8px] w-[232px] h-[280px]">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                        <img src={BestSelf} alt="" />
-                           
-                      {/* This will change of code we get API */}
-                        <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                           <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                           {active ? (
-                              <BsHeartFill className="text-red-500" onClick={() => setActive(!active)} />
-                           ) : (
-                              <BsHeart className="text-slate-500" onClick={() => setActive(!active)} />
-                           )}
-                           </div>
-                           
-                        {/* Change div to link to= {"Book/id"}*/}
-                           <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                              <BsEyeFill className="text-slate-500"/>
-                           </div>
-                        </div>
-                     </div>
-                     
-                    
+           <div className="relative transition group">
+              <div className="grid grid-cols-4">
+                 <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
+                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                    <img src={BestSelf} alt="" />
 
-                     <div className="ml-2">
-                        <h1 className="font-bold text-xl">Title</h1>
-                        <p className="font-normal text-gray-500 text-sm">Category</p>
-                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                     </div>
+                    {/* This will change of code we get API */}
+                    <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
+                       <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                       {active ? (
+                          <BsHeartFill
+                             className="text-red-500"
+                             onClick={() => setActive(!active)}
+                          />
+                       ) : (
+                          <BsHeart
+                             className="text-slate-500"
+                             onClick={() => setActive(!active)}
+                          />
+                       )}
+                       </div>
 
+                       {/* Change div to link to= {"Book/id"}*/}
+                       <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                       <BsEyeFill className="text-slate-500" />
+                       </div>
+                    </div>
+                 </div>
+
+                 <div className="ml-2">
+                    <h1 className="font-bold text-xl">Title</h1>
+                    <p className="font-normal text-gray-500 text-sm">Category</p>
+                    <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                 </div>
+                 </div>
+
+                 <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
+                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                    <img src={BestSelf} alt="" />
+                 </div>
+                 <div className="ml-2">
+                    <h1 className="font-bold text-xl">Title</h1>
+                    <p className="font-normal text-gray-500 text-sm">Category</p>
+                    <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                 </div>
+                 </div>
+
+                 <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
+                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                    <img src={BestSelf} alt="" />
+                 </div>
+                 <div className="ml-2">
+                    <h1 className="font-bold text-xl">Title</h1>
+                    <p className="font-normal text-gray-500 text-sm">Category</p>
+                    <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                 </div>
+                 </div>
+
+                 <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
+                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                    <img src={BestSelf} alt="" />
+                 </div>
+                 <div className="ml-2">
+                    <h1 className="font-bold text-xl">Title</h1>
+                    <p className="font-normal text-gray-500 text-sm">Category</p>
+                    <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                 </div>
+                 </div>
+              </div>
+           </div>
+       
             </div>
-            <div className="bg-slate-100 shadow-xl ml-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                        <img src={BestSelf} alt="" />
-                           
-                      {/* This will change of code we get API */}
-                        <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                           <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                           {active ? (
-                              <BsHeartFill className="text-red-500" onClick={() => setActive(!active)} />
-                           ) : (
-                              <BsHeart className="text-slate-500" onClick={() => setActive(!active)} />
-                           )}
-                           </div>
-                           
-                        {/* Change div to link to= {"Book/id"}*/}
-                           <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                              <BsEyeFill className="text-slate-500"/>
-                           </div>
-                        </div>
-                     </div>
-                     
-                    
 
-                     <div className="ml-2">
-                        <h1 className="font-bold text-xl">Title</h1>
-                        <p className="font-normal text-gray-500 text-sm">Category</p>
-                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                     </div>
+            <div className="flex mb-[30px] w-[990px]">
+           
+           <div className="relative transition group">
+              <div className="grid grid-cols-4">
+                 <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
+                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                    <img src={BestSelf} alt="" />
 
-            </div>
-            <div className="bg-slate-100 shadow-xl ml-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                        <img src={BestSelf} alt="" />
-                           
-                      {/* This will change of code we get API */}
-                        <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                           <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                           {active ? (
-                              <BsHeartFill className="text-red-500" onClick={() => setActive(!active)} />
-                           ) : (
-                              <BsHeart className="text-slate-500" onClick={() => setActive(!active)} />
-                           )}
-                           </div>
-                           
-                        {/* Change div to link to= {"Book/id"}*/}
-                           <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                              <BsEyeFill className="text-slate-500"/>
-                           </div>
-                        </div>
-                     </div>
-                     
-                    
+                    {/* This will change of code we get API */}
+                    <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
+                       <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                       {active ? (
+                          <BsHeartFill
+                             className="text-red-500"
+                             onClick={() => setActive(!active)}
+                          />
+                       ) : (
+                          <BsHeart
+                             className="text-slate-500"
+                             onClick={() => setActive(!active)}
+                          />
+                       )}
+                       </div>
 
-                     <div className="ml-2">
-                        <h1 className="font-bold text-xl">Title</h1>
-                        <p className="font-normal text-gray-500 text-sm">Category</p>
-                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                     </div>
+                       {/* Change div to link to= {"Book/id"}*/}
+                       <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                       <BsEyeFill className="text-slate-500" />
+                       </div>
+                    </div>
+                 </div>
 
-            </div>
-            <div className="bg-slate-100 shadow-xl ml-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                     <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                        <img src={BestSelf} alt="" />
-                           
-                      {/* This will change of code we get API */}
-                        <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                           <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                           {active ? (
-                              <BsHeartFill className="text-red-500" onClick={() => setActive(!active)} />
-                           ) : (
-                              <BsHeart className="text-slate-500" onClick={() => setActive(!active)} />
-                           )}
-                           </div>
-                           
-                        {/* Change div to link to= {"Book/id"}*/}
-                           <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                              <BsEyeFill className="text-slate-500"/>
-                           </div>
-                        </div>
-                     </div>
-                     
-                    
+                 <div className="ml-2">
+                    <h1 className="font-bold text-xl">Title</h1>
+                    <p className="font-normal text-gray-500 text-sm">Category</p>
+                    <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                 </div>
+                 </div>
 
-                     <div className="ml-2">
-                        <h1 className="font-bold text-xl">Title</h1>
-                        <p className="font-normal text-gray-500 text-sm">Category</p>
-                        <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                     </div>
+                 <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
+                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                    <img src={BestSelf} alt="" />
+                 </div>
+                 <div className="ml-2">
+                    <h1 className="font-bold text-xl">Title</h1>
+                    <p className="font-normal text-gray-500 text-sm">Category</p>
+                    <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                 </div>
+                 </div>
 
-            </div>
-          </div>
+                 <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
+                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                    <img src={BestSelf} alt="" />
+                 </div>
+                 <div className="ml-2">
+                    <h1 className="font-bold text-xl">Title</h1>
+                    <p className="font-normal text-gray-500 text-sm">Category</p>
+                    <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                 </div>
+                 </div>
+
+                 <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
+                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                    <img src={BestSelf} alt="" />
+                 </div>
+                 <div className="ml-2">
+                    <h1 className="font-bold text-xl">Title</h1>
+                    <p className="font-normal text-gray-500 text-sm">Category</p>
+                    <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                 </div>
+                 </div>
+              </div>
+           </div>
+       
+         </div>
+
         </div>
     </div>
   )

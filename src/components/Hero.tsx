@@ -144,7 +144,7 @@ const Hero = () => {
           Popular Books
         </h1>
 
-        <div className="relative transition overflow-hidden group">
+        <div className="relative transition group">
           <div className="gap-x-3 grid grid-cols-5 mx-8 mt-6 h-[280px]">
             <div className="bg-slate-100 shadow-xl border rounded-[8px]">
               <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
@@ -274,7 +274,7 @@ const Hero = () => {
           </a>
         </div>
 
-        <div className="relative transition overflow-hidden group">
+        <div className="relative transition group">
           <div className="gap-x-3 grid grid-cols-5 mx-8 mt-6 h-[280px]">
             <div className="bg-slate-100 shadow-xl border rounded-[8px]">
               <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
