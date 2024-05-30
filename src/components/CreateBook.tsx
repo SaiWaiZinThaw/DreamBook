@@ -19,6 +19,14 @@ const CreateBook = () => {
     const quillRef = useRef<HTMLDivElement>(null);
     const quillInstance = useRef<Quill | null>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const [isBoldActive, setIsBoldActive] = useState(false);
+    const [isItalicActive, setIsItalicActive] = useState(false);
+    const [isUnderlineActive, setIsUnderlineActive] = useState(false);
+    const [isLeftActive, setIsLeftActive] = useState(false);
+    const [isCenterActive, setIsCenterActive] = useState(false);
+    const [isRightActive, setIsRightActive] = useState(false);
+    const [isBulletActive, setIsBulletActive] = useState(false);
+    const [isOrderActive, setIsOrderActive] = useState(false);
 
     // This categories must use From API
     const categories = ["Fiction", "Non-fiction", "Science Fiction", "Mystery", "Thriller"];
@@ -87,12 +95,34 @@ const CreateBook = () => {
     };
     
     
-    
+    const handleBold = () => {
+        applyFormat('bold');
+        setIsBoldActive(!isBoldActive);
+    }
+
+    const handleItalic = () => {
+        applyFormat('italic');
+        setIsItalicActive(!isItalicActive);
+    }
+
+    const handleUnderline = () => {
+        applyFormat('underline');
+        setIsUnderlineActive(!isUnderlineActive);
+    }
+    const handleBullet = () => {
+        applyFormat('bullet')
+        setIsBulletActive(!isBulletActive);
+    }
+    const handleOrder = () => {
+        applyFormat('ordered')
+        setIsOrderActive(!isOrderActive);
+    }
     
     const alignLeft = () => {
         if (quillInstance.current) {
             quillInstance.current.format('align', false); // Remove existing alignment
             quillInstance.current.format('align', 'left'); // Apply left alignment
+            setIsLeftActive(!isLeftActive);
         }
     };
     
@@ -100,6 +130,7 @@ const CreateBook = () => {
         if (quillInstance.current) {
             quillInstance.current.format('align', false); // Remove existing alignment
             quillInstance.current.format('align', 'center'); // Apply center alignment
+            setIsCenterActive(!isCenterActive);
         }
     };
     
@@ -107,6 +138,7 @@ const CreateBook = () => {
         if (quillInstance.current) {
             quillInstance.current.format('align', false); // Remove existing alignment
             quillInstance.current.format('align', 'right'); // Apply right alignment
+            setIsRightActive(!isRightActive);
         }
     };
     
@@ -132,14 +164,14 @@ const CreateBook = () => {
                     <input type="file" className="hidden" id="fileInput"/>
                     <label htmlFor="fileInput" className="flex flex-col justify-center items-center cursor-pointer">
                         <img src={BookCraftImg} alt="" className="w-[48px] h-[48px]"/>
-                        <h3 className="ml-[23px] py-[10px] font-extrabold text-slate-500 text-sm">Drop your images here or browse JPG, JPEG or PNG</h3>
+                        <h3 className="flex px-[10px] py-[10px] font-extrabold text-slate-500 text-sm">Drop your images here or browse JPG, JPEG or PNG</h3>
                         <p className="mx-[33px] font-semibold text-[12px] text-slate-500">The size must be <br /> (123 x 123 ) px</p>
                     </label>
                 </div>
                 <div className="flex justify-center mx-[13px] mt-[16px] w-[173px] h-[27px]">
                     <input type="file" className="hidden" id="fileInput"/>
                     <label htmlFor="fileInput">
-                        <h1 className="font-extrabold text-primary text-xl">Select Book Cover</h1>
+                        <h1 className="font-extrabold text-lg text-primary">Select Book Cover</h1>
                     </label>
 
                 </div>
@@ -183,14 +215,14 @@ const CreateBook = () => {
                         <div ref={quillRef} className="border-slate-300 border rounded w-full h-[200px]" />
                         <div className="relative">
                             <div className="bottom-0 absolute mb-[8px] ml-[25px]">
-                                <button onClick={() => applyFormat('bold')} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaBold className="w-[17px] h-[17px]"/></button>
-                                <button onClick={() => applyFormat('italic')} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaItalic className="w-[17px] h-[17px]"/></button>
-                                <button onClick={() => applyFormat('underline')} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaUnderline className="w-[17px] h-[17px]"/></button>
-                                <button onClick={alignLeft} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaAlignLeft className="w-[17px] h-[17px]"/></button>
-                                <button onClick={alignCenter} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaAlignCenter className="w-[17px] h-[17px]"/></button>
-                                <button onClick={alignRight} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaAlignRight className="w-[17px] h-[17px]"/></button>
-                                <button onClick={() => applyFormat('bullet')} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaListUl className="w-[17px] h-[17px]"/></button>
-                                <button onClick={() => applyFormat('ordered')} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaListOl className="w-[17px] h-[17px]"/></button>
+                                <button onClick={handleBold} className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${isBoldActive ? 'bg-blue-500 text-slate-100' : ''}`}><FaBold className="w-[17px] h-[17px]"/></button>
+                                <button onClick={handleItalic} className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${isItalicActive ? 'bg-blue-500 text-slate-100' : ''}`}><FaItalic className="w-[17px] h-[17px]"/></button>
+                                <button onClick={handleUnderline} className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${isUnderlineActive ? 'bg-blue-500 text-slate-100' : ''}`}><FaUnderline className="w-[17px] h-[17px]"/></button>
+                                <button onClick={alignLeft} className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${isLeftActive ? 'bg-blue-500 text-slate-100' : ''}`}><FaAlignLeft className="w-[17px] h-[17px]"/></button>
+                                <button onClick={alignCenter} className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${isCenterActive ? 'bg-blue-500 text-slate-100' : ''}`}><FaAlignCenter className="w-[17px] h-[17px]"/></button>
+                                <button onClick={alignRight} className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${isRightActive ? 'bg-blue-500 text-slate-100' : ''}`}><FaAlignRight className="w-[17px] h-[17px]"/></button>
+                                <button onClick={handleBullet} className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${isBulletActive ? 'bg-blue-500 text-slate-100' : ''}`}><FaListUl className="w-[17px] h-[17px]"/></button>
+                                <button onClick={handleOrder} className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${isOrderActive ? 'bg-blue-500 text-slate-100' : ''}`}><FaListOl className="w-[17px] h-[17px]"/></button>
                             </div>
                             <textarea
                                 ref={textareaRef}
