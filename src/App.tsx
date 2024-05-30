@@ -7,12 +7,12 @@ function App() {
   const BookRouting = useRoutes(BookRouter);
 
   return (
-    <div>
-       <Routes>
-        <Route path="/*" element={UserRouting}/>
-      </Routes>
-       <Routes>
-        <Route path="/*" element={BookRouting}/>
+
+    <div className="font-Inter">
+      <Routes>
+        <Route path="/*" element={UserRouting} />
+        <Route path="/auth/*" element={AuthRouting} />
+
       </Routes>
     </div>
   );
