@@ -1,9 +1,7 @@
 import { LibraryHero } from "@/assets";
 import { CategoryBooks } from "@/components";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useFetchAllBooks } from "@/hooks/useFetchBook";
 import useFetchCategories from "@/hooks/useFetchCategories";
-import { getToken } from "@/services/authService";
 
 const LibraryLayout = () => {
   const { data, isLoading } = useFetchCategories();
