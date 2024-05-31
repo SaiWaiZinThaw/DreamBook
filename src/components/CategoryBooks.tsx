@@ -22,7 +22,7 @@ const CategoryBooks = () => {
 
         <Select>
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Theme" />
+            <SelectValue placeholder="Sort by default" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="default">Sort by default</SelectItem>

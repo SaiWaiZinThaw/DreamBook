@@ -1,10 +1,23 @@
 import { LibraryHero } from "@/assets";
 import { CategoryBooks } from "@/components";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useFetchAllBooks } from "@/hooks/useFetchBook";
 import useFetchCategories from "@/hooks/useFetchCategories";
+import { getToken } from "@/services/authService";
 
 const LibraryLayout = () => {
   const { data, isLoading } = useFetchCategories();
+  // const token = getToken();
+
+  // if (!token) {
+  //   return <div>Error: Unable to fetch books. Token is missing.</div>;
+  // }
+
+  // const { data: books, isLoading: isBooksLoading } = useFetchAllBooks(token);
+
+  // if (!isBooksLoading) {
+  //   console.log(books);
+  // }
 
   return (
     <div className="mx-0 px-0 container">
