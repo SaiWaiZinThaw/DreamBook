@@ -1,13 +1,16 @@
 import { LogoWhite } from "@/assets";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ButtonLoading } from "@/components/ui/loading-button";
 
 import { useSignUp } from "@/hooks/useAuth";
+import { login } from "@/services/authService";
 import React, { useEffect, useState } from "react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [accountData, setAccountData] = useState({
     email: "",
     password: "",
@@ -17,6 +20,10 @@ const SignUp = () => {
   useEffect(() => {
     if (createAccount.isSuccess) {
       console.log(createAccount.data);
+      const authToken = createAccount.data.access_token;
+      delete createAccount.data.access_token;
+      login(authToken);
+      navigate("/auth/profile-setup");
     }
   }, [createAccount.isSuccess]);
 
@@ -69,7 +76,7 @@ const SignUp = () => {
           placeholder="Confirm Password"
         />
 
-        <NavLink className={"w-full"} to={"/register/create-account"}>
+        {!createAccount.isPending ? (
           <Button
             variant={"default"}
             size={"full"}
@@ -79,7 +86,10 @@ const SignUp = () => {
           >
             Create an Account
           </Button>
-        </NavLink>
+        ) : (
+          <ButtonLoading />
+        )}
+
         <div className="flex items-center gap-3">
           <span className="text-white cursor-default">
             Already have an account?

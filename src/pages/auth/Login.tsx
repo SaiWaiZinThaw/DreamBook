@@ -3,9 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLogIn } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { login } from "@/services/authService";
+import { ButtonLoading } from "@/components/ui/loading-button";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [accountData, setAccountData] = useState({
     email: "",
     password: "",
@@ -15,6 +18,10 @@ const Login = () => {
   useEffect(() => {
     if (LoginAccount.isSuccess) {
       console.log(LoginAccount.data);
+      const authToken = LoginAccount.data.access_token;
+      delete LoginAccount.data.access_token;
+      login(authToken);
+      navigate("/");
     }
   }, [LoginAccount.isSuccess]);
 
@@ -62,14 +69,18 @@ const Login = () => {
           }}
         />
 
-        <Button
-          variant={"default"}
-          size={"full"}
-          text={"white"}
-          onClick={handleSubmit}
-        >
-          Log in
-        </Button>
+        {!LoginAccount.isPending ? (
+          <Button
+            variant={"default"}
+            size={"full"}
+            text={"white"}
+            onClick={handleSubmit}
+          >
+            Log in
+          </Button>
+        ) : (
+          <ButtonLoading />
+        )}
         <div className="flex items-center gap-3">
           <span className="text-white cursor-default">
             Don't have an account?
