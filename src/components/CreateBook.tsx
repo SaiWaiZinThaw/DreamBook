@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useEffect, useRef } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
+import useFetchCategories from "@/hooks/useFetchCategories";
 
 const CreateBook = () => {
     const navigate = useNavigate();
@@ -27,6 +28,7 @@ const CreateBook = () => {
     const [isRightActive, setIsRightActive] = useState(false);
     const [isBulletActive, setIsBulletActive] = useState(false);
     const [isOrderActive, setIsOrderActive] = useState(false);
+    const {data: fetchCategories} = useFetchCategories();
 
     // This categories must use From API
     const categories = ["Fiction", "Non-fiction", "Science Fiction", "Mystery", "Thriller"];
@@ -198,9 +200,16 @@ const CreateBook = () => {
                         >
                             <option value="" disabled>Select a category</option>
                             {/* Mapping over categories array to dynamically generate options */}
-                            {categories.map((category, index) => (
+                            
+                            {
+                                 fetchCategories?.map((category:any)=> (
+                                    <option key={category.categoryId} className="font-extrabold">{category.title}</option>
+                                 ))
+                            }
+
+                            {/* {categories.map((category, index) => (
                                 <option key={index} value={category} className="font-extrabold">{category}</option>
-                            ))}
+                            ))} */}
                         </select>
                         </div>
                     </div>
