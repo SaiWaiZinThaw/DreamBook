@@ -11,14 +11,7 @@ import {
   Daisy,
   HeroBg,
 } from "@/assets";
-import {
-  BsEyeFill,
-  BsHeart,
-  BsHeartFill,
-  BsDash,
-  BsPlus,
-} from "react-icons/bs";
-import { FiHelpCircle } from "react-icons/fi";
+import { BsEyeFill, BsHeart, BsHeartFill } from "react-icons/bs";
 import {
   Accordion,
   AccordionContent,
@@ -30,39 +23,11 @@ import { useState } from "react";
 import "../App.css";
 import { NavLink } from "react-router-dom";
 import useFetchCategories from "@/hooks/useFetchCategories";
+import { faqItems } from "@/variables";
 
 const Hero = () => {
   const [active, setActive] = useState(false);
   const { data: fetchCategories } = useFetchCategories();
-  const [faqItems, setFaqItems] = useState([
-    {
-      question: "What is Dream Book?",
-      answer:
-        "ToeTet.com is an online learning platform that offers courses in business, marketing, psychology and more taught by local trainers and experts in Myanmar language. Toetet.com also provides insider's notes which an summaries of popular books which practical tips and examples.",
-      isOpen: false,
-    },
-    {
-      question: "What do in Dream Book?",
-      answer:
-        "ToeTet.com is an online learning platform that offers courses in business, marketing, psychology and more taught by local trainers and experts in Myanmar language. Toetet.com also provides insider's notes which an summaries of popular books which practical tips and examples.",
-      isOpen: false,
-    },
-    {
-      question: "What is Toe Tet?",
-      answer:
-        "ToeTet.com is an online learning platform that offers courses in business, marketing, psychology and more taught by local trainers and experts in Myanmar language. Toetet.com also provides insider's notes which an summaries of popular books which practical tips and examples.",
-      isOpen: false,
-    },
-  ]);
-
-  const toggleItem = (index: any) => {
-    setFaqItems((prevItems) =>
-      prevItems.map((item, i) => ({
-        ...item,
-        isOpen: i === index ? !item.isOpen : item.isOpen,
-      }))
-    );
-  };
 
   return (
     <div className="mx-0 px-0 container">
