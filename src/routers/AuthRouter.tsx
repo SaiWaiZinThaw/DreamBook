@@ -1,5 +1,6 @@
 import { Login, SignUp } from "@/pages/auth";
 import LoginLayout from "@/pages/auth/AuthLayout";
+import ProfileSetup from "@/pages/auth/ProfileSetup";
 import { Navigate, RouteObject } from "react-router-dom";
 
 const AuthRouter: RouteObject[] = [
@@ -18,6 +19,10 @@ const AuthRouter: RouteObject[] = [
       {
         path: "/auth/signup",
         element: <SignUp />,
+      },
+      {
+        path: "/auth/profile-setup",
+        element: <ProfileSetup />,
       },
     ],
   },
