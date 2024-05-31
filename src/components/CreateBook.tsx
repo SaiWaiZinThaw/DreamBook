@@ -30,9 +30,6 @@ const CreateBook = () => {
     const [isOrderActive, setIsOrderActive] = useState(false);
     const {data: fetchCategories} = useFetchCategories();
 
-    // This categories must use From API
-    const categories = ["Fiction", "Non-fiction", "Science Fiction", "Mystery", "Thriller"];
-
     const handleCategoryChange = (event:any) => {
         setSelectedCategory(event.target.value);
     };
