@@ -3,7 +3,7 @@ import { Chapters } from "@/components/BookDashBoard"
 
 const ChaptersPage = () => {
   return (
-    <div>
+    <div className="overflow-hidden">
         <Chapters/>
     </div>
   )
