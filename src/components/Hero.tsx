@@ -11,54 +11,28 @@ import {
   Daisy,
   HeroBg,
 } from "@/assets";
+import { BsEyeFill, BsHeart, BsHeartFill } from "react-icons/bs";
 import {
-  BsEyeFill,
-  BsHeart,
-  BsHeartFill,
-  BsDash,
-  BsPlus,
-} from "react-icons/bs";
-import { FiHelpCircle } from "react-icons/fi";
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
 import { useState } from "react";
 import "../App.css";
 import { NavLink } from "react-router-dom";
+import useFetchCategories from "@/hooks/useFetchCategories";
+import { faqItems } from "@/variables";
 
 const Hero = () => {
   const [active, setActive] = useState(false);
-  const [faqItems, setFaqItems] = useState([
-    {
-      question: "What is Dream Book?",
-      answer:
-        "ToeTet.com is an online learning platform that offers courses in business, marketing, psychology and more taught by local trainers and experts in Myanmar language. Toetet.com also provides insider's notes which an summaries of popular books which practical tips and examples.",
-      isOpen: false,
-    },
-    {
-      question: "What do in Dream Book?",
-      answer:
-        "ToeTet.com is an online learning platform that offers courses in business, marketing, psychology and more taught by local trainers and experts in Myanmar language. Toetet.com also provides insider's notes which an summaries of popular books which practical tips and examples.",
-      isOpen: false,
-    },
-    {
-      question: "What is Toe Tet?",
-      answer:
-        "ToeTet.com is an online learning platform that offers courses in business, marketing, psychology and more taught by local trainers and experts in Myanmar language. Toetet.com also provides insider's notes which an summaries of popular books which practical tips and examples.",
-      isOpen: false,
-    },
-  ]);
-
-  const toggleItem = (index: any) => {
-    setFaqItems((prevItems) =>
-      prevItems.map((item, i) => ({
-        ...item,
-        isOpen: i === index ? !item.isOpen : item.isOpen,
-      }))
-    );
-  };
+  const { data: fetchCategories } = useFetchCategories();
 
   return (
     <div className="mx-0 px-0 container">
       <div
-        className="relative flex bg-slate-100 w-screen h-[600px]"
+        className="relative flex bg-slate-100 bg-cover w-screen h-[600px]"
         style={{ backgroundImage: `url(${HeroBg})` }}
       >
         <div className="mt-[130px] ml-[125px] w-[700px] h-[300px]">
@@ -144,7 +118,7 @@ const Hero = () => {
           Popular Books
         </h1>
 
-        <div className="relative transition overflow-hidden group">
+        <div className="relative transition group">
           <div className="gap-x-3 grid grid-cols-5 mx-8 mt-6 h-[280px]">
             <div className="bg-slate-100 shadow-xl border rounded-[8px]">
               <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
@@ -236,30 +210,25 @@ const Hero = () => {
           </a>
         </div>
         <div>
-          <div className="flex justify-center mx-8 mt-11 h-[50px]">
-            <div className="gap-x-6 grid grid-cols-3 w-full">
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-            </div>
-          </div>
-          <div className="flex justify-center mx-8 mt-11 h-[50px]">
-            <div className="gap-x-6 grid grid-cols-3 w-full">
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
+          <div className="flex justify-center mx-8 mt-11">
+            <div className="gap-6 grid grid-cols-3 w-full">
+              {fetchCategories &&
+                fetchCategories?.map(
+                  (category: any) =>
+                    category.priority === 1 && (
+                      <div
+                        key={category.categoryId}
+                        className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md"
+                      >
+                        <img
+                          src={category.icon}
+                          className="mr-[38px] ml-[12px] w-[35px] h-[35px]"
+                          alt=""
+                        />
+                        <h1 className="pt-[5px]">{category.title}</h1>
+                      </div>
+                    )
+                )}
             </div>
           </div>
         </div>
@@ -274,7 +243,7 @@ const Hero = () => {
           </a>
         </div>
 
-        <div className="relative transition overflow-hidden group">
+        <div className="relative transition group">
           <div className="gap-x-3 grid grid-cols-5 mx-8 mt-6 h-[280px]">
             <div className="bg-slate-100 shadow-xl border rounded-[8px]">
               <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
@@ -380,48 +349,18 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="mt-4 w-screen h-[300px]">
+      <div className="flex flex-col justify-center gap-4 mt-4 w-screen">
         <h1 className="flex justify-center items-center font-extrabold text-xl">
           FAQs
         </h1>
-
-        <div className="mx-[50px] mt-[50px]">
-          {faqItems.map((item, index) => (
-            <div key={index}>
-              {!item.isOpen && (
-                <div onClick={() => toggleItem(index)} className="border-slate-300 bg-slate-50 shadow-lg mt-4 border rounded-[6px] h-[60px] font-semibold text-lg">
-                  <div className="flex justify-between">
-                    <div className="flex font-semibold text-lg">
-                      <FiHelpCircle className="mt-5 ml-5" />
-                      <h1 className="mt-4 pl-3">{item.question}</h1>
-                    </div>
-                    <BsPlus
-                      className="mt-3 text-4xl"
-                      
-                    />
-                  </div>
-                </div>
-              )}
-              {item.isOpen && (
-                <div onClick={() => toggleItem(index)} className="border-slate-300 bg-slate-50 shadow-lg mt-[10px] border rounded-[6px] h-[165px] duration-700 delay-300">
-                  <div className="flex justify-between">
-                    <div className="flex font-semibold text-lg">
-                      <FiHelpCircle className="mt-5 ml-5" />
-                      <h1 className="mt-4 pl-3"> What is Toe Tet?</h1>
-                    </div>
-                    <div>
-                      <BsDash
-                        className="mt-3 text-4xl"
-                        
-                      />
-                    </div>
-                  </div>
-                  <p className="mx-5 mt-4 font-medium text-md">{item.answer}</p>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        {faqItems.map((item, index) => (
+          <Accordion key={index} type="single" collapsible>
+            <AccordionItem value={item.question}>
+              <AccordionTrigger>{item.question}</AccordionTrigger>
+              <AccordionContent>{item.answer}</AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        ))}
       </div>
     </div>
   );

@@ -124,9 +124,9 @@ const Chapters = () => {
         };
   
   return (
-    <div className="mx-0 px-0 container">
+    <div className="mx-0 px-0 w-screen container">
       <div className="flex">
-        <div className="bg-primary bg-opacity-90 w-[296px] h-[982px]">
+        <div className="bg-primary bg-opacity-90 w-[296px]">
           <div className="border-slate-300 border-b h-[80px]">
               <img src={FooterImg} alt=""  className="mx-[33.5px] py-[7.5px] w-[223px]"/>
           </div>
@@ -162,9 +162,9 @@ const Chapters = () => {
 
         <div className="flex flex-col">
             <div className="flex border-slate-300 border-b h-[80px]">
-              <h1 className="my-[20px] ml-[40px] font-extrabold text-xl">Chapters</h1>
+              <h1 className="my-[20px] pl-[40px] font-extrabold text-2xl">Chapters</h1>
 
-              <Tabs defaultValue="status" className="bg-slate-200 my-[13px] ml-[696px] rounded-[8px] w-[206px] h-[40px] text-slate-400">
+              <Tabs defaultValue="status" className="bg-slate-200 my-[13px] ml-[680px] rounded-[8px] w-[206px] h-[40px] text-slate-400">
                 <TabsList className="gap-x-2 w-full">
                   <TabsTrigger onClick={() => handleTabClick('draft')} value="draft" className={`bg-yellow-500 text-slate-100 rounded-[8px] w-[91px] h-[31px] ${activeTab === 'draft' ? 'bg-yellow-500 text-slate-100' : ''}`}>Draft</TabsTrigger>
                   <TabsTrigger onClick={() => handleTabClick('public')} value="public"  className={`bg-green-800 text-slate-100 rounded-[8px] w-[91px] h-[31px] ${activeTab === 'public' ? 'bg-green-800 text-slate-100' : ''}`}>Public</TabsTrigger>
