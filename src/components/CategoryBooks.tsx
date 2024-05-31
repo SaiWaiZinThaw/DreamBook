@@ -1,4 +1,5 @@
 import { BestSelf, Sorting } from "@/assets"
+// import useFetchCategories from "@/hooks/useFetchCategories";
 import { useState } from "react"
 import { BsHeartFill, BsHeart, BsEyeFill } from "react-icons/bs";
 import { IoIosSearch } from "react-icons/io";
@@ -6,10 +7,13 @@ import { IoIosSearch } from "react-icons/io";
 const CategoryBooks = () => {
   const [rotation, setRotation] = useState(0);
   const [active, setActive] = useState(false);
+//   const {data} = useFetchCategories();
 
   const handleRotateChange = () => {
     setRotation (rotation + 180);
   };
+
+  
 
   return (
     <div className="mx-0 px-0 w-screen container">

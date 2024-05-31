@@ -22,9 +22,11 @@ import { FiHelpCircle } from "react-icons/fi";
 import { useState } from "react";
 import "../App.css";
 import { NavLink } from "react-router-dom";
+import useFetchCategories from "@/hooks/useFetchCategories";
 
 const Hero = () => {
   const [active, setActive] = useState(false);
+  const {data: fetchCategories} = useFetchCategories();
   const [faqItems, setFaqItems] = useState([
     {
       question: "What is Dream Book?",
@@ -236,30 +238,20 @@ const Hero = () => {
           </a>
         </div>
         <div>
-          <div className="flex justify-center mx-8 mt-11 h-[50px]">
-            <div className="gap-x-6 grid grid-cols-3 w-full">
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-            </div>
-          </div>
-          <div className="flex justify-center mx-8 mt-11 h-[50px]">
-            <div className="gap-x-6 grid grid-cols-3 w-full">
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
+          <div className="flex justify-center mx-8 mt-11">
+            <div className="gap-6 grid grid-cols-3 w-full">
+              { fetchCategories && 
+                fetchCategories?.map((category:any)=> (
+                   category.priority === 1 &&  ( 
+                     <div key={category.categoryId} className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md">
+                      <img src={category.icon} className="mr-[38px] ml-[12px] w-[35px] h-[35px]" alt="" /> 
+                      <h1 className="pt-[5px]">{category.title}</h1>
+                      
+                  </div>
+                  )
+                 
+                ))
+              }
             </div>
           </div>
         </div>
