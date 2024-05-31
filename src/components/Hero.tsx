@@ -29,10 +29,40 @@ import {
 import { useState } from "react";
 import "../App.css";
 import { NavLink } from "react-router-dom";
-import { faqItems } from "@/variables";
+import useFetchCategories from "@/hooks/useFetchCategories";
 
 const Hero = () => {
   const [active, setActive] = useState(false);
+  const { data: fetchCategories } = useFetchCategories();
+  const [faqItems, setFaqItems] = useState([
+    {
+      question: "What is Dream Book?",
+      answer:
+        "ToeTet.com is an online learning platform that offers courses in business, marketing, psychology and more taught by local trainers and experts in Myanmar language. Toetet.com also provides insider's notes which an summaries of popular books which practical tips and examples.",
+      isOpen: false,
+    },
+    {
+      question: "What do in Dream Book?",
+      answer:
+        "ToeTet.com is an online learning platform that offers courses in business, marketing, psychology and more taught by local trainers and experts in Myanmar language. Toetet.com also provides insider's notes which an summaries of popular books which practical tips and examples.",
+      isOpen: false,
+    },
+    {
+      question: "What is Toe Tet?",
+      answer:
+        "ToeTet.com is an online learning platform that offers courses in business, marketing, psychology and more taught by local trainers and experts in Myanmar language. Toetet.com also provides insider's notes which an summaries of popular books which practical tips and examples.",
+      isOpen: false,
+    },
+  ]);
+
+  const toggleItem = (index: any) => {
+    setFaqItems((prevItems) =>
+      prevItems.map((item, i) => ({
+        ...item,
+        isOpen: i === index ? !item.isOpen : item.isOpen,
+      }))
+    );
+  };
 
   return (
     <div className="mx-0 px-0 container">
@@ -123,7 +153,7 @@ const Hero = () => {
           Popular Books
         </h1>
 
-        <div className="relative transition overflow-hidden group">
+        <div className="relative transition group">
           <div className="gap-x-3 grid grid-cols-5 mx-8 mt-6 h-[280px]">
             <div className="bg-slate-100 shadow-xl border rounded-[8px]">
               <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
@@ -215,30 +245,25 @@ const Hero = () => {
           </a>
         </div>
         <div>
-          <div className="flex justify-center mx-8 mt-11 h-[50px]">
-            <div className="gap-x-6 grid grid-cols-3 w-full">
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-            </div>
-          </div>
-          <div className="flex justify-center mx-8 mt-11 h-[50px]">
-            <div className="gap-x-6 grid grid-cols-3 w-full">
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
-              <h1 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] pl-[70px] border rounded-[10px] font-semibold text-md">
-                Digital Marketing
-              </h1>
+          <div className="flex justify-center mx-8 mt-11">
+            <div className="gap-6 grid grid-cols-3 w-full">
+              {fetchCategories &&
+                fetchCategories?.map(
+                  (category: any) =>
+                    category.priority === 1 && (
+                      <div
+                        key={category.categoryId}
+                        className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md"
+                      >
+                        <img
+                          src={category.icon}
+                          className="mr-[38px] ml-[12px] w-[35px] h-[35px]"
+                          alt=""
+                        />
+                        <h1 className="pt-[5px]">{category.title}</h1>
+                      </div>
+                    )
+                )}
             </div>
           </div>
         </div>
@@ -253,7 +278,7 @@ const Hero = () => {
           </a>
         </div>
 
-        <div className="relative transition overflow-hidden group">
+        <div className="relative transition group">
           <div className="gap-x-3 grid grid-cols-5 mx-8 mt-6 h-[280px]">
             <div className="bg-slate-100 shadow-xl border rounded-[8px]">
               <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">

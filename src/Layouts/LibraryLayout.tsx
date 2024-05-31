@@ -66,11 +66,11 @@ const LibraryLayout = () => {
         </div>
 
         <div className="flex mt-4">
-            <div className="border-slate-400 mt-2 border-r w-[1194px]">
+            <div className="border-slate-400 mt-2 border-r w-[400px]">
                 <h1 className="flex justify-center mt-[20px] font-extrabold text-2xl text-black">Categories</h1>
 
                 {/* If We Get Category API We Fix This With Loop */}
-                <div className="flex flex-col mx-[45px] mt-[30px] w-[200px] h-[410px]">
+                <div className="flex flex-col mx-[45px] mt-[30px] h-[410px]">
                 <label className="inline-flex items-center mb-[14px] cursor-pointer">
                 <input
                                 type="checkbox"
@@ -260,7 +260,7 @@ const LibraryLayout = () => {
                 </div>
             </div>
 
-            <div>
+            <div className="overflow-hidden">
                 <CategoryBooks/>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import BaseURL from "./ApiEndPoint";
+import BaseURL from "../services/ApiEndPoint";
 
 export const SignUpAPi = async ({
   data,
