@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useGetMe } from "@/hooks/useUser";
+import { getToken } from "@/services/authService";
 
 interface FileUploadProps {
   onFileChange: (file: File) => void;
 }
 
 export const FileUpload: React.FC<FileUploadProps> = ({ onFileChange }) => {
+  const token = getToken() || "";
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const { data, isLoading } = useGetMe();
+  const { data, isLoading } = useGetMe(token);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
