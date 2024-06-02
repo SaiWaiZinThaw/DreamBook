@@ -56,14 +56,14 @@ export const LoginAPi = async ({
 
 export const profileSetupApi = async ({ data }: { data: ProfileSetupData }) => {
   const token = getToken();
+
   const formData = new FormData();
 
   formData.append("name", data.name);
   if (data.profilePicture) {
     formData.append("profilePicture", data.profilePicture);
   }
-  formData.append("localNumber", data.localNumber || "");
-  formData.append("countryCode", data.countryCode || "");
+  formData.append("phoneNumber", data.phoneNumber || "");
   if (data.bio) {
     formData.append("bio", data.bio);
   }
