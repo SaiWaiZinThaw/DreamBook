@@ -13,6 +13,8 @@ import { getToken } from "@/services/authService";
 
 const ProfileSetup = () => {
   const profileSetup = useProfileSetup();
+  const [countryCode, setCountryCode] = useState("+95");
+  const [phoneNo, setPhoneNo] = useState("9794988331");
   const token = getToken() || "";
   const { data } = useGetMe(token);
 
@@ -21,8 +23,7 @@ const ProfileSetup = () => {
   const [profileData, setProfileData] = useState<ProfileSetupData>({
     name: "",
     profilePicture: undefined,
-    countryCode: "+1",
-    localNumber: "",
+    phoneNumber: `${countryCode}${phoneNo}`,
     bio: "",
     gender: "",
   });
@@ -34,8 +35,6 @@ const ProfileSetup = () => {
         name: data.name || "",
         bio: data.bio || "",
         gender: data.gender || "",
-        localNumber: data.localNumber || "",
-        countryCode: data.countryCode || "",
       }));
     }
   }, [data]);
@@ -43,12 +42,11 @@ const ProfileSetup = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     profileSetup.mutate(profileData);
-    navigate("/");
   };
 
   useEffect(() => {
     if (profileSetup.isSuccess) {
-      console.log(profileSetup.data);
+      navigate("/");
     }
   }, [profileSetup.isSuccess]);
 
@@ -74,12 +72,9 @@ const ProfileSetup = () => {
         <div className="flex items-center gap-5 w-full">
           <select
             className="flex justify-center items-center p-4 rounded-[5px] h-12"
-            value={profileData.countryCode}
+            value={countryCode}
             onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-              setProfileData((prev) => ({
-                ...prev,
-                countryCode: event.target.value,
-              }));
+              setCountryCode(event.target.value);
             }}
           >
             {countryCodes.map((code, index) => (
@@ -92,12 +87,9 @@ const ProfileSetup = () => {
             type="tel"
             id="phone"
             placeholder="Phone"
-            value={profileData.localNumber}
+            value={phoneNo}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setProfileData((prev) => ({
-                ...prev,
-                localNumber: event.target.value,
-              }));
+              setPhoneNo(event.target.value);
             }}
           />
         </div>
