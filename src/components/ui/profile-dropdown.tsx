@@ -74,21 +74,36 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
 
           <div className="flex flex-col gap-2 pb-2 text-sm">
             <div className="flex items-center gap-2 mx-4">
-              <Input className="w-3 h-3" type="checkbox" id="light" />
+              <Input
+                className="rounded-none w-3 h-3"
+                type="radio"
+                name="theme"
+                id="light"
+              />
               <label className="flex items-center gap-1" htmlFor="light">
                 Light Mode <CiLight className="text-xl" />
               </label>
             </div>
 
             <div className="flex items-center gap-2 mx-4">
-              <Input className="w-3 h-3" type="checkbox" id="dark" />
+              <Input
+                className="rounded-none w-3 h-3"
+                type="radio"
+                name="theme"
+                id="dark"
+              />
               <label className="flex items-center gap-1" htmlFor="dark">
                 Dark Mode <MdDarkMode />
               </label>
             </div>
 
             <div className="flex items-center gap-2 mx-4 pb-2 border-b border-border">
-              <Input className="w-3 h-3" type="checkbox" id="system" />
+              <Input
+                className="rounded-none w-3 h-3"
+                type="radio"
+                name="theme"
+                id="system"
+              />
               <label htmlFor="system">System</label>
             </div>
           </div>
