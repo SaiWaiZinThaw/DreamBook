@@ -13,6 +13,7 @@
 
     export type profileFetchData = {
         name: string;
+        email?: string;
         profilePicture?: string;
         phoneNumber?: string;
         bio?: string;

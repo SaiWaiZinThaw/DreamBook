@@ -1,8 +1,8 @@
 import { fetchMyProfile } from "@/api";
 import { useQuery } from "@tanstack/react-query";
 
-export const useGetMe = () =>
+export const useGetMe = (token: string) =>
   useQuery({
     queryKey: ["me"],
-    queryFn: () => fetchMyProfile(),
+    queryFn: () => fetchMyProfile(token),
   });

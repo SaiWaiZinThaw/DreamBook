@@ -35,7 +35,7 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },      
       colors: {
-        border: "hsl(var(--border))",
+        border: "#E0E0E0",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
@@ -46,7 +46,7 @@ module.exports = {
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          foreground: "#666666",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",

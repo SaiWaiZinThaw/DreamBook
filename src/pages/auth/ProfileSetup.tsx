@@ -9,12 +9,14 @@ import { useProfileSetup } from "@/hooks/useAuth";
 import { ProfileSetupData } from "@/types/types";
 import { useGetMe } from "@/hooks/useUser";
 import { ButtonLoading } from "@/components/ui/loading-button";
+import { getToken } from "@/services/authService";
 
 const ProfileSetup = () => {
   const profileSetup = useProfileSetup();
   const [countryCode, setCountryCode] = useState("+95");
   const [phoneNo, setPhoneNo] = useState("9794988331");
-  const { data } = useGetMe();
+  const token = getToken() || "";
+  const { data } = useGetMe(token);
 
   const navigate = useNavigate();
 
