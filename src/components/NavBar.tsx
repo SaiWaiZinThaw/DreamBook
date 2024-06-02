@@ -2,17 +2,15 @@ import { Logo } from "@/assets";
 import { HiMiniUserCircle } from "react-icons/hi2";
 import { Button } from "./ui/button";
 import { NavLink } from "react-router-dom";
-import { getToken, logout } from "@/services/authService";
+import { getToken } from "@/services/authService";
 import { useGetMe } from "@/hooks/useUser";
 import { GoHeart } from "react-icons/go";
+import ProfileDropdown from "./ui/profile-dropdown";
 
 const NavBar = () => {
   const token = getToken() || "";
-  const logoutHandler = () => {
-    logout();
-  };
 
-  const { data, isLoading } = useGetMe();
+  const { data, isLoading, isSuccess } = useGetMe(token);
 
   return (
     <div className="flex justify-between items-center bg-white shadow-slate-300 shadow-sm px-40 py-6 w-full h-[70px] font-Inter">
@@ -66,21 +64,11 @@ const NavBar = () => {
           </NavLink>
         </div>
       ) : (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <button>
             <GoHeart />
           </button>
-          {!isLoading && data && (
-            <div className="flex items-center gap-3">
-              <img
-                src={data.profilePicture}
-                alt={data.name}
-                className="rounded-full w-10 h-10"
-              />
-              <p className="font-bold">{data.name}</p>
-            </div>
-          )}
-          <Button onClick={logoutHandler}>Logout</Button>
+          {!isLoading && data && isSuccess && <ProfileDropdown data={data} />}
         </div>
       )}
     </div>
