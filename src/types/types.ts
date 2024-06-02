@@ -6,6 +6,8 @@
     export type ProfileSetupData = {
         name: string;
         profilePicture?: File;
+        countryCode: string;
+        localNumber: string;
         phoneNumber?: string;
         bio?: string;
         gender: string;}
@@ -15,7 +17,8 @@
         name: string;
         email?: string;
         profilePicture?: string;
-        phoneNumber?: string;
+        countryCode: string;
+        localNumber: string;
         bio?: string;
         gender: string;}
     
