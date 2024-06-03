@@ -1,4 +1,3 @@
-import { LogoWhite } from "@/assets";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ButtonLoading } from "@/components/ui/loading-button";
@@ -7,7 +6,7 @@ import { useSignUp } from "@/hooks/useAuth";
 import { login } from "@/services/authService";
 import React, { useEffect, useState } from "react";
 
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -40,10 +39,7 @@ const SignUp = () => {
     console.log(data);
   };
   return (
-    <div className="flex flex-col items-center gap-10">
-      <NavLink className="mt-0" to={"/"}>
-        <img src={LogoWhite} alt="LogoWhite" className="w-[280px]" />
-      </NavLink>
+    <div className="flex flex-col items-center gap-10 w-6/12 self-center">
       <form className="flex flex-col items-center gap-6 w-[460px] font-Inter">
         <div className="flex flex-col items-center gap-3">
           <h1 className="font-bold text-2xl text-white">Create an Account</h1>

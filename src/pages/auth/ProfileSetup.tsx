@@ -1,27 +1,27 @@
-import { LogoWhite } from "@/assets";
 import { FileUpload } from "@/components/ui/FileUpload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 import { countryCodes } from "@/variables";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useProfileSetup } from "@/hooks/useAuth";
 import { ProfileSetupData } from "@/types/types";
 import { useGetMe } from "@/hooks/useUser";
 import { ButtonLoading } from "@/components/ui/loading-button";
+import { getToken } from "@/services/authService";
 
 const ProfileSetup = () => {
   const profileSetup = useProfileSetup();
-  const [countryCode, setCountryCode] = useState("+95");
-  const [phoneNo, setPhoneNo] = useState("9794988331");
-  const { data } = useGetMe();
+  const token = getToken() || "";
+  const { data } = useGetMe(token);
 
   const navigate = useNavigate();
 
   const [profileData, setProfileData] = useState<ProfileSetupData>({
     name: "",
     profilePicture: undefined,
-    phoneNumber: `${countryCode}${phoneNo}`,
+    countryCode: "+1",
+    localNumber: "",
     bio: "",
     gender: "",
   });
@@ -33,6 +33,8 @@ const ProfileSetup = () => {
         name: data.name || "",
         bio: data.bio || "",
         gender: data.gender || "",
+        localNumber: data.localNumber || "",
+        countryCode: data.countryCode || "",
       }));
     }
   }, [data]);
@@ -40,11 +42,12 @@ const ProfileSetup = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     profileSetup.mutate(profileData);
+    navigate("/");
   };
 
   useEffect(() => {
     if (profileSetup.isSuccess) {
-      navigate("/");
+      console.log(profileSetup.data);
     }
   }, [profileSetup.isSuccess]);
 
@@ -56,13 +59,10 @@ const ProfileSetup = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <NavLink to={"/"}>
-        <img src={LogoWhite} alt="LogoWhite" className="mb-16 w-[280px]" />
-      </NavLink>
+    <div className="flex flex-col items-center pb-10">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center gap-8 w-[460px] font-Inter"
+        className="flex flex-col items-center gap-6 w-[460px] font-Inter"
       >
         <h1 className="font-bold text-2xl text-white">Create an account</h1>
         <FileUpload onFileChange={handleFileChange} />
@@ -70,9 +70,12 @@ const ProfileSetup = () => {
         <div className="flex items-center gap-5 w-full">
           <select
             className="flex justify-center items-center p-4 rounded-[5px] h-12"
-            value={countryCode}
+            value={profileData.countryCode}
             onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-              setCountryCode(event.target.value);
+              setProfileData((prev) => ({
+                ...prev,
+                countryCode: event.target.value,
+              }));
             }}
           >
             {countryCodes.map((code, index) => (
@@ -85,9 +88,12 @@ const ProfileSetup = () => {
             type="tel"
             id="phone"
             placeholder="Phone"
-            value={phoneNo}
+            value={profileData.localNumber}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setPhoneNo(event.target.value);
+              setProfileData((prev) => ({
+                ...prev,
+                localNumber: event.target.value,
+              }));
             }}
           />
         </div>

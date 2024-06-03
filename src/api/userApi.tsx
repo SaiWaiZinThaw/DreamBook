@@ -1,10 +1,7 @@
 import BaseURL from "@/services/ApiEndPoint";
-import { getToken } from "@/services/authService";
 import { profileFetchData } from "@/types/types";
 
-const token = getToken();
-
-export const fetchMyProfile = async () => {
+export const fetchMyProfile = async (token: string) => {
   const response: Response = await fetch(`${BaseURL}/user/me`, {
     headers: {
       Accept: "application/json",

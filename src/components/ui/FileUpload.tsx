@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useGetMe } from "@/hooks/useUser";
+import { getToken } from "@/services/authService";
 
 interface FileUploadProps {
   onFileChange: (file: File) => void;
 }
 
 export const FileUpload: React.FC<FileUploadProps> = ({ onFileChange }) => {
+  const token = getToken() || "";
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const { data, isLoading } = useGetMe();
+  const { data, isLoading } = useGetMe(token);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -28,9 +30,9 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileChange }) => {
           className="top-0 left-0 absolute opacity-0 hover:opacity-20 rounded-full w-full h-full text-white cursor-pointer"
           onChange={handleFileChange}
         />
-        {!isLoading && (
+        {!isLoading ? (
           <div
-            className="flex justify-center items-center border-[2px] bg-gray-200 hover:bg-opacity-25 border-blue-500 rounded-full w-[100px] h-[100px]"
+            className="flex justify-center items-center border-[2px] bg-gray-200 border-blue-500 rounded-full w-[100px] h-[100px]"
             style={{
               backgroundImage: imagePreview
                 ? `url(${imagePreview})`
@@ -41,6 +43,8 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileChange }) => {
               backgroundPosition: "center",
             }}
           ></div>
+        ) : (
+          <div className="flex justify-center items-center border-[2px] bg-gray-200 border-blue-500 rounded-full w-[100px] h-[100px]"></div>
         )}
       </div>
       <Label htmlFor="picture" className="font-Inter text-white">
