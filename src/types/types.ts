@@ -13,6 +13,18 @@ export type ProfileSetupData = {
     gender: string;}
 
 
+
+    
+
+    export type CreateBookData = {
+        title: string;
+        coverImage: File | string;
+        description: string;
+        keywords: string[];
+        status: string;
+        categoryId: string;
+    };
+   
 export type profileFetchData = {
     name: string;
     email?: string;
@@ -21,3 +33,4 @@ export type profileFetchData = {
     localNumber: string;
     bio?: string;
     gender: string;}
+
