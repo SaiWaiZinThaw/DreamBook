@@ -4,14 +4,13 @@ import { Button } from "./ui/button";
 import { NavLink } from "react-router-dom";
 import { getToken } from "@/services/authService";
 import { useGetMe } from "@/hooks/useUser";
-import { GoHeart } from "react-icons/go";
+import { FaHeart } from "react-icons/fa";
 import ProfileDropdown from "./ui/profile-dropdown";
 
 const NavBar = () => {
   const token = getToken() || "";
 
   const { data, isLoading, isSuccess } = useGetMe(token);
-
   return (
     <div className="flex justify-between items-center bg-white shadow-slate-300 shadow-sm px-40 py-6 w-full h-[70px] font-Inter">
       <NavLink to={"/"}>
@@ -66,7 +65,7 @@ const NavBar = () => {
       ) : (
         <div className="flex items-center gap-4">
           <button>
-            <GoHeart />
+            <FaHeart className="font-bold text-lg text-red-600" />
           </button>
           {!isLoading && data && isSuccess && <ProfileDropdown data={data} />}
         </div>
