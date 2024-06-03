@@ -16,6 +16,7 @@ import { CiLight } from "react-icons/ci";
 import { MdDarkMode } from "react-icons/md";
 import { logout } from "@/services/authService";
 import { CiLogout } from "react-icons/ci";
+import { NavLink } from "react-router-dom";
 
 const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
   const logoutHandler = () => {
@@ -50,12 +51,14 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
           <DropdownMenuLabel className="!border-none">
             <h3 className="font-bold text-[18px]">Account</h3>
           </DropdownMenuLabel>
-          <DropdownMenuItem>
-            <div className="flex items-center gap-3">
-              <FaUser />
-              <p>Profile</p>
-            </div>
-          </DropdownMenuItem>
+          <NavLink to="/me">
+            <DropdownMenuItem>
+              <div className="flex items-center gap-3">
+                <FaUser />
+                <p>Profile</p>
+              </div>
+            </DropdownMenuItem>
+          </NavLink>
           <DropdownMenuItem>
             <div className="flex items-center gap-3">
               <ImBooks className="text-lg" />

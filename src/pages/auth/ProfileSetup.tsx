@@ -1,10 +1,9 @@
-import { LogoWhite } from "@/assets";
 import { FileUpload } from "@/components/ui/FileUpload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 import { countryCodes } from "@/variables";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useProfileSetup } from "@/hooks/useAuth";
 import { ProfileSetupData } from "@/types/types";
 import { useGetMe } from "@/hooks/useUser";
@@ -60,13 +59,10 @@ const ProfileSetup = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <NavLink to={"/"}>
-        <img src={LogoWhite} alt="LogoWhite" className="mb-16 w-[280px]" />
-      </NavLink>
+    <div className="flex flex-col items-center pb-10">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center gap-8 w-[460px] font-Inter"
+        className="flex flex-col items-center gap-6 w-[460px] font-Inter"
       >
         <h1 className="font-bold text-2xl text-white">Create an account</h1>
         <FileUpload onFileChange={handleFileChange} />
