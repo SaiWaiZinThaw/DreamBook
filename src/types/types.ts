@@ -5,10 +5,9 @@ export type AuthData = {
 
 export type CreateBookData = {
         title: string;
-        coverImage: File;
+        coverImage: File | string;
         description: string;
         keywords: string[];
         status: string;
         categoryId: string;
-        token: string;
       };
