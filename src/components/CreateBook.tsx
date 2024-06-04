@@ -4,40 +4,18 @@ import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AiOutlineUser } from "react-icons/ai";
-import {
-  FaBold,
-  FaListUl,
-  FaListOl,
-  FaAlignLeft,
-  FaAlignCenter,
-  FaAlignRight,
-} from "react-icons/fa";
-import { FaUnderline } from "react-icons/fa";
-import { FaItalic } from "react-icons/fa6";
 import { useState } from "react";
-import { useEffect, useRef } from "react";
-import Quill from "quill";
+import { useEffect } from "react";
 import "quill/dist/quill.snow.css";
 import useFetchCategories from "@/hooks/useFetchCategories";
 import { getToken } from "@/services/authService";
 import useBookCreate from "@/hooks/useBookCreate";
 import { CreateBookData } from "@/types/types";
+import Description from "./Description";
 
 const CreateBook = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [description, setDescription] = useState<string>("");
-  const quillRef = useRef<HTMLDivElement>(null);
-  const quillInstance = useRef<Quill | null>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [isBoldActive, setIsBoldActive] = useState(false);
-  const [isItalicActive, setIsItalicActive] = useState(false);
-  const [isUnderlineActive, setIsUnderlineActive] = useState(false);
-  const [isLeftActive, setIsLeftActive] = useState(false);
-  const [isCenterActive, setIsCenterActive] = useState(false);
-  const [isRightActive, setIsRightActive] = useState(false);
-  const [isBulletActive, setIsBulletActive] = useState(false);
-  const [isOrderActive, setIsOrderActive] = useState(false);
   const [currentKeyword, setCurrentKeyword] = useState("");
   const { data: fetchCategories } = useFetchCategories();
   const createBookMutation = useBookCreate();
@@ -46,9 +24,10 @@ const CreateBook = () => {
     coverImage: "",
     description: "",
     keywords: [],
-    status: "",
+    status: "draft",
     categoryId: "",
   });
+  
 
   useEffect(() => {
     if (createBookMutation.isSuccess) {
@@ -66,6 +45,7 @@ const CreateBook = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    createBookMutation.mutate(formData);
     console.log(formData);
   };
 
@@ -89,12 +69,7 @@ const CreateBook = () => {
       title: event.target.value,
     }));
   };
-  const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      description: event.target.value,
-    }));
-  };
+
 
   const handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentKeyword(event.target.value);
@@ -109,114 +84,6 @@ const CreateBook = () => {
         keywords: [trimmedKeyword, ...prev.keywords ],
       }));
       setCurrentKeyword('');
-    }
-  };
-
-
-  useEffect(() => {
-    if (quillRef.current) {
-      quillInstance.current = new Quill(quillRef.current, {
-        theme: "snow",
-        modules: {
-          toolbar: false,
-        },
-      });
-
-      quillInstance.current.on("text-change", () => {
-        setDescription(quillInstance.current?.root.innerHTML || "");
-      });
-    }
-  }, []);
-
-  const applyFormat = (format: string) => {
-    if (quillInstance.current) {
-      const cursorPosition = quillInstance.current.getSelection()?.index;
-      if (cursorPosition !== null && cursorPosition !== undefined) {
-        // Check if the format is already applied
-        const isApplied =
-          quillInstance.current.getFormat(cursorPosition)?.[format];
-        const isBulletApplied =
-          quillInstance.current.getFormat(cursorPosition)?.list === "bullet";
-        const isOrderedApplied =
-          quillInstance.current.getFormat(cursorPosition)?.list === "ordered";
-        if (isApplied) {
-          quillInstance.current.format(format, false);
-        } else if (isBulletApplied && format === "bullet") {
-          // If bullet format is already applied, remove it
-          quillInstance.current.format("list", false);
-        } else if (isOrderedApplied && format === "ordered") {
-          // If ordered format is already applied, remove it
-          quillInstance.current.format("list", false);
-        } else {
-          // If format is not applied, apply it
-          switch (format) {
-            case "bold":
-              quillInstance.current.format("bold", true);
-              break;
-            case "italic":
-              quillInstance.current.format("italic", true);
-              break;
-            case "underline":
-              quillInstance.current.format("underline", true);
-              break;
-            case "bullet":
-              quillInstance.current.format("list", "bullet");
-              break;
-            case "ordered":
-              quillInstance.current.format("list", "ordered");
-              break;
-            default:
-              break;
-          }
-        }
-      }
-    }
-  };
-
-  const handleBold = () => {
-    applyFormat("bold");
-    setIsBoldActive(!isBoldActive);
-  };
-
-  const handleItalic = () => {
-    applyFormat("italic");
-    setIsItalicActive(!isItalicActive);
-  };
-
-  const handleUnderline = () => {
-    applyFormat("underline");
-    setIsUnderlineActive(!isUnderlineActive);
-  };
-  const handleBullet = () => {
-    applyFormat("bullet");
-    setIsBulletActive(!isBulletActive);
-  };
-  const handleOrder = () => {
-    applyFormat("ordered");
-    setIsOrderActive(!isOrderActive);
-  };
-
-  const alignLeft = () => {
-    if (quillInstance.current) {
-      quillInstance.current.format("align", false); // Remove existing alignment
-      quillInstance.current.format("align", "left"); // Apply left alignment
-      setIsLeftActive(!isLeftActive);
-    }
-  };
-
-  const alignCenter = () => {
-    if (quillInstance.current) {
-      quillInstance.current.format("align", false); // Remove existing alignment
-      quillInstance.current.format("align", "center"); // Apply center alignment
-      setIsCenterActive(!isCenterActive);
-    }
-  };
-
-  const alignRight = () => {
-    if (quillInstance.current) {
-      quillInstance.current.format("align", false); // Remove existing alignment
-      quillInstance.current.format("align", "right"); // Apply right alignment
-      setIsRightActive(!isRightActive);
     }
   };
 
@@ -238,12 +105,19 @@ const CreateBook = () => {
 
       <form className="flex" onSubmit={handleSubmit}>
         <div className="mt-[50px] ml-[110px] w-[199px] h-[327px]">
-          <div className="border-slate-500 pt-[55px] border border-dotted rounded-[8px] h-[284px]">
-            <label
+          <div className="h-[284px]">
+          {formData.coverImage instanceof File ? (
+              <img
+                src={URL.createObjectURL(formData.coverImage)}
+                alt="Uploaded Cover"
+                className="rounded-[8px] w-full h-full object-cover"
+              />
+            ) : (
+              <label
               htmlFor="fileInput"
-              className="flex flex-col justify-center items-center cursor-pointer"
+              className="flex flex-col justify-center items-center border-slate-500 border border-dotted rounded-[8px] h-[284px] cursor-pointer"
             >
-              <img src={BookCraftImg} alt="" className="w-[48px] h-[48px]" />
+              <img src={BookCraftImg} alt="" className="w-[48px] h-[48px] object-cover" />
               <h3 className="flex px-[10px] py-[10px] font-extrabold text-slate-500 text-sm">
                 Drop your images here or browse JPG, JPEG or PNG
               </h3>
@@ -251,6 +125,8 @@ const CreateBook = () => {
                 The size must be <br /> (123 x 123 ) px
               </p>
             </label>
+            )}
+
           </div>
           <div className="flex justify-center mx-[13px] mt-[16px] w-[173px] h-[27px]">
             <input
@@ -277,6 +153,7 @@ const CreateBook = () => {
               <div className="relative">
                 <Input
                   onChange={handleTitleChange}
+                  value={formData.title}
                   name="title"
                   type="text"
                   id="title"
@@ -316,10 +193,6 @@ const CreateBook = () => {
                       {category.title}
                     </option>
                   ))}
-
-                  {/* {categories.map((category, index) => (
-                                <option key={index} value={category} className="font-extrabold">{category}</option>
-                            ))} */}
                 </select>
               </div>
             </div>
@@ -353,92 +226,7 @@ const CreateBook = () => {
             </div>
 
             <div className="items-center gap-1.5 grid mx-[32px] pt-[120px] w-[603px] h-[176px]">
-              <Label
-                htmlFor="description"
-                className="font-semibold text-[16px]"
-              >
-                Description
-              </Label>
-              <div
-                ref={quillRef}
-                className="border-slate-300 border rounded w-full h-[200px]"
-              />
-              <div className="relative">
-                <div className="bottom-0 absolute mb-[8px] ml-[25px]">
-                  <button
-                    onClick={handleBold}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isBoldActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaBold className="w-[17px] h-[17px]" />
-                  </button>
-                  <button
-                    onClick={handleItalic}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isItalicActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaItalic className="w-[17px] h-[17px]" />
-                  </button>
-                  <button
-                    onClick={handleUnderline}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isUnderlineActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaUnderline className="w-[17px] h-[17px]" />
-                  </button>
-                  <button
-                    onClick={alignLeft}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isLeftActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaAlignLeft className="w-[17px] h-[17px]" />
-                  </button>
-                  <button
-                    onClick={alignCenter}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isCenterActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaAlignCenter className="w-[17px] h-[17px]" />
-                  </button>
-                  <button
-                    onClick={alignRight}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isRightActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaAlignRight className="w-[17px] h-[17px]" />
-                  </button>
-                  <button
-                    onClick={handleBullet}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isBulletActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaListUl className="w-[17px] h-[17px]" />
-                  </button>
-                  <button
-                    onClick={handleOrder}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isOrderActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaListOl className="w-[17px] h-[17px]" />
-                  </button>
-                </div>
-                <textarea
-                  ref={textareaRef}
-                  id="description"
-                  name="description"
-                  value={description}
-                  onChange = {handleDescriptionChange}
-                  className="hidden"
-                />
-              </div>
+                  <Description/>
             </div>
           </div>
 

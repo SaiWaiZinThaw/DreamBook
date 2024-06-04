@@ -39,7 +39,8 @@ export const CreateBookApi = async ({
     coverImage: File | string;
     description: string;
     keywords: string[];
-    categoryId: string;    
+    categoryId: string;   
+    status: string,
   }
   
 }) =>  {
@@ -50,6 +51,7 @@ export const CreateBookApi = async ({
   formData.append("description", data.description);
   data.keywords.forEach((keyword) => formData.append("keywords[]", keyword));
   formData.append("categoryId", data.categoryId);
+  formData.append("status", data.status);
 
 
   const response: Response = await fetch(`${BaseURL}/books`, {
