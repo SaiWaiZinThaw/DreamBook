@@ -1,4 +1,4 @@
 import fetchCategories from "./categoryApi";
-import { CreateBookApi } from "./createBookApi";
+import { fetchMyProfile } from "./userApi";
 
-export {fetchCategories, CreateBookApi};
+export {fetchCategories, fetchMyProfile}
