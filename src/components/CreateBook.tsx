@@ -106,11 +106,11 @@ const CreateBook = () => {
       const trimmedKeyword = currentKeyword.trim();
       setFormData((prev) => ({
         ...prev,
-        keywords: [trimmedKeyword, ...prev.keywords],
+        keywords: [trimmedKeyword, ...prev.keywords ],
       }));
       setCurrentKeyword('');
     }
-};
+  };
 
 
   useEffect(() => {

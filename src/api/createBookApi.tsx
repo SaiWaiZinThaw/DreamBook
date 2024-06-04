@@ -39,22 +39,22 @@ export const CreateBookApi = async ({
     coverImage: File | string;
     description: string;
     keywords: string[];
-    categoryId: string;
-    
+    categoryId: string;    
   }
   
-}) => {
-    const token = getToken();
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("coverImage", data.coverImage);
-    formData.append("description", data.description);
-    data.keywords.forEach((keyword) => formData.append("keywords[]", keyword));
-    formData.append("categoryId", data.categoryId);
+}) =>  {
+  const token = getToken();
+  const formData = new FormData();
+  formData.append("title", data.title);
+  formData.append("coverImage", data.coverImage);
+  formData.append("description", data.description);
+  data.keywords.forEach((keyword) => formData.append("keywords[]", keyword));
+  formData.append("categoryId", data.categoryId);
+
 
   const response: Response = await fetch(`${BaseURL}/books`, {
     headers: {
-        'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     mode: "cors",
     method: "POST",
