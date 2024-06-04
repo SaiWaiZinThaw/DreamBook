@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AiOutlineUser } from "react-icons/ai";
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 import "quill/dist/quill.snow.css";
 import useFetchCategories from "@/hooks/useFetchCategories";
@@ -15,7 +15,6 @@ import Description from "./Description";
 
 const CreateBook = () => {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [currentKeyword, setCurrentKeyword] = useState("");
   const { data: fetchCategories } = useFetchCategories();
   const createBookMutation = useBookCreate();
@@ -25,9 +24,8 @@ const CreateBook = () => {
     description: "",
     keywords: [],
     status: "draft",
-    categoryId: "",
+    categoryId: "8",
   });
-  
 
   useEffect(() => {
     if (createBookMutation.isSuccess) {
@@ -41,7 +39,6 @@ const CreateBook = () => {
       alert("Error");
     }
   }, [createBookMutation.isError]);
-
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,8 +56,17 @@ const CreateBook = () => {
     }
   };
 
-  const handleCategoryChange = (event: any) => {
-    setSelectedCategory(event.target.value);
+  const selectRef = useRef<HTMLSelectElement>(null);
+  const handleChange = () => {
+    if (selectRef) {
+      const selectedOption =
+        selectRef.current.options[selectRef.current.selectedIndex];
+      const selectedId = selectedOption.id;
+      setFormData((prev) => ({
+        ...prev,
+        categoryId: selectedId,
+      }));
+    }
   };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,20 +76,19 @@ const CreateBook = () => {
     }));
   };
 
-
   const handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentKeyword(event.target.value);
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && currentKeyword.trim()) {
+    if (event.key === "Enter" && currentKeyword.trim()) {
       event.preventDefault(); // Prevent form submission on Enter key press
       const trimmedKeyword = currentKeyword.trim();
       setFormData((prev) => ({
         ...prev,
-        keywords: [trimmedKeyword, ...prev.keywords ],
+        keywords: [trimmedKeyword, ...prev.keywords],
       }));
-      setCurrentKeyword('');
+      setCurrentKeyword("");
     }
   };
 
@@ -106,7 +111,7 @@ const CreateBook = () => {
       <form className="flex" onSubmit={handleSubmit}>
         <div className="mt-[50px] ml-[110px] w-[199px] h-[327px]">
           <div className="h-[284px]">
-          {formData.coverImage instanceof File ? (
+            {formData.coverImage instanceof File ? (
               <img
                 src={URL.createObjectURL(formData.coverImage)}
                 alt="Uploaded Cover"
@@ -114,19 +119,22 @@ const CreateBook = () => {
               />
             ) : (
               <label
-              htmlFor="fileInput"
-              className="flex flex-col justify-center items-center border-slate-500 border border-dotted rounded-[8px] h-[284px] cursor-pointer"
-            >
-              <img src={BookCraftImg} alt="" className="w-[48px] h-[48px] object-cover" />
-              <h3 className="flex px-[10px] py-[10px] font-extrabold text-slate-500 text-sm">
-                Drop your images here or browse JPG, JPEG or PNG
-              </h3>
-              <p className="mx-[33px] font-semibold text-[12px] text-slate-500">
-                The size must be <br /> (123 x 123 ) px
-              </p>
-            </label>
+                htmlFor="fileInput"
+                className="flex flex-col justify-center items-center border-slate-500 border border-dotted rounded-[8px] h-[284px] cursor-pointer"
+              >
+                <img
+                  src={BookCraftImg}
+                  alt=""
+                  className="w-[48px] h-[48px] object-cover"
+                />
+                <h3 className="flex px-[10px] py-[10px] font-extrabold text-slate-500 text-sm">
+                  Drop your images here or browse JPG, JPEG or PNG
+                </h3>
+                <p className="mx-[33px] font-semibold text-[12px] text-slate-500">
+                  The size must be <br /> (123 x 123 ) px
+                </p>
+              </label>
             )}
-
           </div>
           <div className="flex justify-center mx-[13px] mt-[16px] w-[173px] h-[27px]">
             <input
@@ -143,7 +151,7 @@ const CreateBook = () => {
             </label>
           </div>
         </div>
-       
+
         <div className="ml-[95px] w-[667px]">
           <div className="h-[581px]">
             <div className="items-center gap-1.5 grid mx-[32px] pt-[30px] w-[603px] h-[74px]">
@@ -172,23 +180,17 @@ const CreateBook = () => {
                 <select
                   name="category"
                   id="category"
-                  value={selectedCategory} 
-                  className={`${
-                    selectedCategory
-                      ? ""
-                      : "text-slate-500 text-sm text-opacity-95"
-                  } border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold`}
-                  onChange={handleCategoryChange}
+                  className={
+                    "border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold"
+                  }
+                  ref={selectRef}
+                  onChange={handleChange}
                 >
-                  <option value="" disabled>
-                    Select a category
-                  </option>
-                  {/* Mapping over categories array to dynamically generate options */}
-
                   {fetchCategories?.map((category: any) => (
                     <option
                       key={category.categoryId}
                       className="font-extrabold"
+                      id={category.categoryId}
                     >
                       {category.title}
                     </option>
@@ -210,7 +212,7 @@ const CreateBook = () => {
                 id="keywords"
                 className="border-slate-300 border"
               />
-               <div>
+              <div>
                 <ul className="flex space-x-2 mt-2">
                   {formData.keywords.map((keyword, index) => (
                     <li
@@ -222,11 +224,10 @@ const CreateBook = () => {
                   ))}
                 </ul>
               </div>
-            
             </div>
 
             <div className="items-center gap-1.5 grid mx-[32px] pt-[120px] w-[603px] h-[176px]">
-                  <Description/>
+              <Description />
             </div>
           </div>
 
