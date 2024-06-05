@@ -217,6 +217,7 @@ const Description = () => {
                   ref={textareaRef}
                   id="description"
                   name="description"
+                  value={description}
                   className="hidden"
                 />
             </div>
