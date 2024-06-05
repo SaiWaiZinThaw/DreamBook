@@ -2,21 +2,43 @@ import { BookCraftImg } from "@/assets";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { AiOutlineUser } from "react-icons/ai";
-import { useState } from "react";
-import { useEffect } from "react";
 import "quill/dist/quill.snow.css";
 import useFetchCategories from "@/hooks/useFetchCategories";
 import { getToken } from "@/services/authService";
 import useBookCreate from "@/hooks/useBookCreate";
 import { CreateBookData } from "@/types/types";
 import Description from "./Description";
+import { useState, useEffect, useRef } from "react";
+import Quill from "quill";
+import "quill/dist/quill.snow.css";
+import { Label } from "@/components/ui/label";
+import {
+    FaBold,
+    FaListUl,
+    FaListOl,
+    FaAlignLeft,
+    FaAlignCenter,
+    FaAlignRight,
+  } from "react-icons/fa";
+import { FaUnderline } from "react-icons/fa";
+import { FaItalic } from "react-icons/fa6";
 
 const CreateBook = () => {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [currentKeyword, setCurrentKeyword] = useState("");
+  const quillRef = useRef<HTMLDivElement>(null);
+  const quillInstance = useRef<Quill | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [isBoldActive, setIsBoldActive] = useState(false);
+  const [isItalicActive, setIsItalicActive] = useState(false);
+  const [isUnderlineActive, setIsUnderlineActive] = useState(false);
+  const [isLeftActive, setIsLeftActive] = useState(false);
+  const [isCenterActive, setIsCenterActive] = useState(false);
+  const [isRightActive, setIsRightActive] = useState(false);
+  const [isBulletActive, setIsBulletActive] = useState(false);
+  const [isOrderActive, setIsOrderActive] = useState(false);
+  const [description, setDescription] = useState<string>("");
   const { data: fetchCategories } = useFetchCategories();
   const createBookMutation = useBookCreate();
   const [formData, setFormData] = useState<CreateBookData>({
@@ -28,6 +50,112 @@ const CreateBook = () => {
     categoryId: "",
   });
   
+  useEffect(() => {
+    if (quillRef.current) {
+        quillInstance.current = new Quill(quillRef.current, {
+            theme: 'snow',
+            modules: {
+                toolbar: false
+            }
+        });
+        quillInstance.current.on('text-change', () => {
+          setFormData((prev) => ({
+            ...prev,
+            description: quillInstance.current!.root.innerHTML
+          }));
+        });
+
+        if (formData.description) {
+          quillInstance.current.clipboard.dangerouslyPasteHTML(formData.description);
+          // quillInstance.current.setContents(formData.description);
+        }
+    }
+}, [formData.description]);
+
+
+const applyFormat = (format: string) => {
+  if (quillInstance.current) {
+    const cursorPosition = quillInstance.current.getSelection()?.index;
+    if (cursorPosition !== null && cursorPosition !== undefined) {
+      const isApplied = quillInstance.current.getFormat(cursorPosition)?.[format];
+      const isBulletApplied = quillInstance.current.getFormat(cursorPosition)?.list === 'bullet';
+      const isOrderedApplied = quillInstance.current.getFormat(cursorPosition)?.list === 'ordered';
+      if (isApplied) {
+        quillInstance.current.format(format, false);
+      }
+      else if (isBulletApplied && format === 'bullet') {
+        quillInstance.current.format('list', false);
+      } else if (isOrderedApplied && format === 'ordered') {
+        quillInstance.current.format('list', false);
+      } else {
+        switch(format) {
+          case 'bold':
+            quillInstance.current.format('bold', true);
+            break;
+          case 'italic':
+            quillInstance.current.format('italic', true);
+            break;
+          case 'underline':
+            quillInstance.current.format('underline', true);
+            break;
+          case 'bullet':
+            quillInstance.current.format('list', 'bullet');
+            break;
+          case 'ordered':
+            quillInstance.current.format('list', 'ordered');
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
+};
+
+const handleBold = () => {
+  applyFormat("bold");
+  setIsBoldActive(!isBoldActive);
+};
+
+const handleItalic = () => {
+  applyFormat("italic");
+  setIsItalicActive(!isItalicActive);
+};
+
+const handleUnderline = () => {
+  applyFormat("underline");
+  setIsUnderlineActive(!isUnderlineActive);
+};
+const handleBullet = () => {
+  applyFormat("bullet");
+  setIsBulletActive(!isBulletActive);
+};
+const handleOrder = () => {
+  applyFormat("ordered");
+  setIsOrderActive(!isOrderActive);
+};
+
+const alignLeft = () => {
+  if (quillInstance.current) {
+    quillInstance.current.format('align', false);
+    quillInstance.current.format('align', 'left');
+  }
+};
+
+const alignCenter = () => {
+  if (quillInstance.current) {
+    quillInstance.current.format('align', false);
+    quillInstance.current.format('align', 'center');
+  }
+};
+
+const alignRight = () => {
+  if (quillInstance.current) {
+    quillInstance.current.format('align', false);
+    quillInstance.current.format('align', 'right');
+  }
+};
+
 
   useEffect(() => {
     if (createBookMutation.isSuccess) {
@@ -42,6 +170,18 @@ const CreateBook = () => {
     }
   }, [createBookMutation.isError]);
 
+   const selectRef = useRef<HTMLSelectElement>(null);
+  const handleChange = () => {
+    if (selectRef.current) {
+      const selectedOption =
+        selectRef.current.options[selectRef.current.selectedIndex];
+      const selectedId = selectedOption.id;
+      setFormData((prev) => ({
+        ...prev,
+        categoryId: selectedId,
+      }));
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,10 +199,6 @@ const CreateBook = () => {
     }
   };
 
-  const handleCategoryChange = (event: any) => {
-    setSelectedCategory(event.target.value);
-  };
-
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
       ...prev,
@@ -77,7 +213,7 @@ const CreateBook = () => {
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && currentKeyword.trim()) {
-      event.preventDefault(); // Prevent form submission on Enter key press
+      event.preventDefault();
       const trimmedKeyword = currentKeyword.trim();
       setFormData((prev) => ({
         ...prev,
@@ -164,7 +300,7 @@ const CreateBook = () => {
               </div>
             </div>
 
-            <div className="items-center gap-1.5 grid mx-[32px] pt-[60px] w-[603px] h-[74px]">
+             <div className="items-center gap-1.5 grid mx-[32px] pt-[60px] w-[603px] h-[74px]">
               <Label htmlFor="category" className="font-semibold text-[16px]">
                 Category
               </Label>
@@ -172,23 +308,17 @@ const CreateBook = () => {
                 <select
                   name="category"
                   id="category"
-                  value={selectedCategory} 
-                  className={`${
-                    selectedCategory
-                      ? ""
-                      : "text-slate-500 text-sm text-opacity-95"
-                  } border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold`}
-                  onChange={handleCategoryChange}
+                  className={
+                    "border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold"
+                  }
+                  ref={selectRef}
+                  onChange={handleChange}
                 >
-                  <option value="" disabled>
-                    Select a category
-                  </option>
-                  {/* Mapping over categories array to dynamically generate options */}
-
                   {fetchCategories?.map((category: any) => (
                     <option
                       key={category.categoryId}
                       className="font-extrabold"
+                      id={category.categoryId}
                     >
                       {category.title}
                     </option>
@@ -226,7 +356,97 @@ const CreateBook = () => {
             </div>
 
             <div className="items-center gap-1.5 grid mx-[32px] pt-[120px] w-[603px] h-[176px]">
-                  <Description/>
+            <Label
+                htmlFor="description"
+                className="font-semibold text-[16px]"
+            >
+                Description
+            </Label>
+            <div
+                ref={quillRef}
+                className="border-slate-300 border rounded w-full h-[200px]"
+            />
+            <div className="relative">
+                <div className="bottom-0 absolute mb-[8px] ml-[25px]">
+                  <button
+                    onClick={handleBold}
+                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                      isBoldActive ? "bg-blue-500 text-slate-100" : ""
+                    }`}
+                  >
+                    <FaBold className="w-[17px] h-[17px]" />
+                  </button>
+                  <button
+                    onClick={handleItalic}
+                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                      isItalicActive ? "bg-blue-500 text-slate-100" : ""
+                    }`}
+                  >
+                    <FaItalic className="w-[17px] h-[17px]" />
+                  </button>
+                  <button
+                    onClick={handleUnderline}
+                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                      isUnderlineActive ? "bg-blue-500 text-slate-100" : ""
+                    }`}
+                  >
+                    <FaUnderline className="w-[17px] h-[17px]" />
+                  </button>
+                  <button
+                    onClick={alignLeft}
+                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                      isLeftActive ? "bg-blue-500 text-slate-100" : ""
+                    }`}
+                  >
+                    <FaAlignLeft className="w-[17px] h-[17px]" />
+                  </button>
+                  <button
+                    onClick={alignCenter}
+                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                      isCenterActive ? "bg-blue-500 text-slate-100" : ""
+                    }`}
+                  >
+                    <FaAlignCenter className="w-[17px] h-[17px]" />
+                  </button>
+                  <button
+                    onClick={alignRight}
+                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                      isRightActive ? "bg-blue-500 text-slate-100" : ""
+                    }`}
+                  >
+                    <FaAlignRight className="w-[17px] h-[17px]" />
+                  </button>
+                  <button
+                    onClick={handleBullet}
+                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                      isBulletActive ? "bg-blue-500 text-slate-100" : ""
+                    }`}
+                  >
+                    <FaListUl className="w-[17px] h-[17px]" />
+                  </button>
+                  <button
+                    onClick={handleOrder}
+                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                      isOrderActive ? "bg-blue-500 text-slate-100" : ""
+                    }`}
+                  >
+                    <FaListOl className="w-[17px] h-[17px]" />
+                  </button>
+                </div>
+                <textarea
+                  ref={textareaRef}
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+                    setFormData((prev) => ({
+                    ...prev,
+                    description: event.target.value,
+                    }));
+                  }} 
+                  className="hidden"
+                />
+            </div>
             </div>
           </div>
 

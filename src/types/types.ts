@@ -34,3 +34,12 @@ export type profileFetchData = {
     bio?: string;
     gender: string;}
 
+
+export type createChapterData = {
+    title: string;
+    content: string;
+    status: string;
+    priority: number;
+    bookId: number;
+}
+
