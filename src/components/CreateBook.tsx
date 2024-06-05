@@ -13,13 +13,13 @@ import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { Label } from "@/components/ui/label";
 import {
-    FaBold,
-    FaListUl,
-    FaListOl,
-    FaAlignLeft,
-    FaAlignCenter,
-    FaAlignRight,
-  } from "react-icons/fa";
+  FaBold,
+  FaListUl,
+  FaListOl,
+  FaAlignLeft,
+  FaAlignCenter,
+  FaAlignRight,
+} from "react-icons/fa";
 import { FaUnderline } from "react-icons/fa";
 import { FaItalic } from "react-icons/fa6";
 import { useGetMe } from "@/hooks/useUser";
@@ -40,7 +40,7 @@ const CreateBook = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isOrderActive, setIsOrderActive] = useState(false);
   const token = getToken() || "";
-  const { data : fetchMyProfile} = useGetMe(token);
+  const { data: fetchMyProfile } = useGetMe(token);
   const { data: fetchCategories } = useFetchCategories();
   const createBookMutation = useBookCreate();
   const [formData, setFormData] = useState<CreateBookData>({
@@ -52,135 +52,135 @@ const CreateBook = () => {
     categoryId: "",
   });
 
-
-  
   useEffect(() => {
     if (quillRef.current) {
-        quillInstance.current = new Quill(quillRef.current, {
-            theme: 'snow',
-            modules: {
-                toolbar: false
-            }
-        });
-        quillRef.current.focus();
-        
-        quillInstance.current.on('text-change', () => {
-          setFormData((prev) => ({
-            ...prev,
-            description: quillInstance.current!.root.innerHTML
-          }));
-          
-        });
+      quillInstance.current = new Quill(quillRef.current, {
+        theme: "snow",
+        modules: {
+          toolbar: false,
+        },
+      });
+      quillRef.current.focus();
 
-        if (formData.description) {
-          quillInstance.current.clipboard.dangerouslyPasteHTML(formData.description);
-          // quillInstance.current.setContents(formData.description);
-          
-        }
-    }
-}, [formData.description && quillRef]);
+      quillInstance.current.on("text-change", () => {
+        setFormData((prev) => ({
+          ...prev,
+          description: quillInstance.current!.root.innerHTML,
+        }));
+      });
 
-
-const applyFormat = (format: string) => {
-  if (quillInstance.current) {
-    const cursorPosition = quillInstance.current.getSelection()?.index;
-    if (cursorPosition !== null && cursorPosition !== undefined) {
-      const isApplied = quillInstance.current.getFormat(cursorPosition)?.[format];
-      const isBulletApplied = quillInstance.current.getFormat(cursorPosition)?.list === 'bullet';
-      const isOrderedApplied = quillInstance.current.getFormat(cursorPosition)?.list === 'ordered';
-      if (isApplied) {
-        quillInstance.current.format(format, false);
-      }
-      else if (isBulletApplied && format === 'bullet') {
-        quillInstance.current.format('list', false);
-      } else if (isOrderedApplied && format === 'ordered') {
-        quillInstance.current.format('list', false);
-      } else {
-        switch(format) {
-          case 'bold':
-            quillInstance.current.format('bold', true);
-            break;
-          case 'italic':
-            quillInstance.current.format('italic', true);
-            break;
-          case 'underline':
-            quillInstance.current.format('underline', true);
-            break;
-          case 'bullet':
-            quillInstance.current.format('list', 'bullet');
-            break;
-          case 'ordered':
-            quillInstance.current.format('list', 'ordered');
-            break;
-          default:
-            break;
-        }
+      if (formData.description) {
+        quillInstance.current.clipboard.dangerouslyPasteHTML(
+          formData.description
+        );
+        // quillInstance.current.setContents(formData.description);
       }
     }
-  }
-};
+  }, [formData.description && quillRef]);
 
-const handleBold = () => {
-  applyFormat("bold");
-  setIsBoldActive(!isBoldActive);
-};
+  const applyFormat = (format: string) => {
+    if (quillInstance.current) {
+      const cursorPosition = quillInstance.current.getSelection()?.index;
+      if (cursorPosition !== null && cursorPosition !== undefined) {
+        const isApplied =
+          quillInstance.current.getFormat(cursorPosition)?.[format];
+        const isBulletApplied =
+          quillInstance.current.getFormat(cursorPosition)?.list === "bullet";
+        const isOrderedApplied =
+          quillInstance.current.getFormat(cursorPosition)?.list === "ordered";
+        if (isApplied) {
+          quillInstance.current.format(format, false);
+        } else if (isBulletApplied && format === "bullet") {
+          quillInstance.current.format("list", false);
+        } else if (isOrderedApplied && format === "ordered") {
+          quillInstance.current.format("list", false);
+        } else {
+          switch (format) {
+            case "bold":
+              quillInstance.current.format("bold", true);
+              break;
+            case "italic":
+              quillInstance.current.format("italic", true);
+              break;
+            case "underline":
+              quillInstance.current.format("underline", true);
+              break;
+            case "bullet":
+              quillInstance.current.format("list", "bullet");
+              break;
+            case "ordered":
+              quillInstance.current.format("list", "ordered");
+              break;
+            default:
+              break;
+          }
+        }
+      }
+    }
+  };
 
-const handleItalic = () => {
-  applyFormat("italic");
-  setIsItalicActive(!isItalicActive);
-};
+  const handleBold = () => {
+    applyFormat("bold");
+    setIsBoldActive(!isBoldActive);
+  };
 
-const handleUnderline = () => {
-  applyFormat("underline");
-  setIsUnderlineActive(!isUnderlineActive);
-};
-const handleBullet = () => {
-  applyFormat("bullet");
-  setIsBulletActive(!isBulletActive);
-};
-const handleOrder = () => {
-  applyFormat("ordered");
-  setIsOrderActive(!isOrderActive);
-};
+  const handleItalic = () => {
+    applyFormat("italic");
+    setIsItalicActive(!isItalicActive);
+  };
 
-const alignLeft = () => {
-  if (quillInstance.current) {
-    quillInstance.current.format('align', false);
-    quillInstance.current.format('align', 'left');
-  }
-};
+  const handleUnderline = () => {
+    applyFormat("underline");
+    setIsUnderlineActive(!isUnderlineActive);
+  };
+  const handleBullet = () => {
+    applyFormat("bullet");
+    setIsBulletActive(!isBulletActive);
+  };
+  const handleOrder = () => {
+    applyFormat("ordered");
+    setIsOrderActive(!isOrderActive);
+  };
 
-const alignCenter = () => {
-  if (quillInstance.current) {
-    quillInstance.current.format('align', false);
-    quillInstance.current.format('align', 'center');
-  }
-};
+  const alignLeft = () => {
+    if (quillInstance.current) {
+      quillInstance.current.format("align", false);
+      quillInstance.current.format("align", "left");
+    }
+  };
 
-const alignRight = () => {
-  if (quillInstance.current) {
-    quillInstance.current.format('align', false);
-    quillInstance.current.format('align', 'right');
-  }
-};
+  const alignCenter = () => {
+    if (quillInstance.current) {
+      quillInstance.current.format("align", false);
+      quillInstance.current.format("align", "center");
+    }
+  };
 
+  const alignRight = () => {
+    if (quillInstance.current) {
+      quillInstance.current.format("align", false);
+      quillInstance.current.format("align", "right");
+    }
+  };
 
   useEffect(() => {
-    if (createBookMutation.isSuccess && fetchMyProfile !== null || undefined) {
+    if (
+      (createBookMutation.isSuccess && fetchMyProfile !== null) ||
+      undefined
+    ) {
       console.log(createBookMutation.data);
       getToken();
-      navigate("/book-dashboard/book-details")
-      
+      navigate("/book-dashboard/book-details");
     }
-  }, [createBookMutation.isSuccess && fetchMyProfile !== null || undefined]);
+  }, [(createBookMutation.isSuccess && fetchMyProfile !== null) || undefined]);
 
   useEffect(() => {
     if (createBookMutation.isError) {
-      createBookMutation.error.message
+      createBookMutation.error.message;
     }
   }, [createBookMutation.isError]);
 
-   const selectRef = useRef<HTMLSelectElement>(null);
+  const selectRef = useRef<HTMLSelectElement>(null);
   const handleChange = () => {
     if (selectRef.current) {
       const selectedOption =
@@ -190,18 +190,18 @@ const alignRight = () => {
         ...prev,
         categoryId: selectedId,
       }));
-    }else{
-      setErrorMessage("Fill Your Profile Completely")
+    } else {
+      setErrorMessage("Fill Your Profile Completely");
     }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(fetchMyProfile) {
+    if (fetchMyProfile) {
       createBookMutation.mutate(formData);
       console.log(formData);
-    }else {
-      setErrorMessage("Fill Your Profile Data Completely"); 
+    } else {
+      setErrorMessage("Fill Your Profile Data Completely");
     }
   };
 
@@ -227,7 +227,7 @@ const alignRight = () => {
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && currentKeyword.trim()) {
+    if (event.key === "Enter" && currentKeyword.trim()) {
       event.preventDefault();
       const trimmedKeyword = currentKeyword.trim();
       setFormData((prev) => ({
@@ -318,7 +318,7 @@ const alignRight = () => {
               </div>
             </div>
 
-             <div className="items-center gap-1.5 grid mx-[32px] pt-[60px] w-[603px] h-[74px]">
+            <div className="items-center gap-1.5 grid mx-[32px] pt-[60px] w-[603px] h-[74px]">
               <Label htmlFor="category" className="font-semibold text-[16px]">
                 Category
               </Label>
@@ -332,7 +332,6 @@ const alignRight = () => {
                   ref={selectRef}
                   onChange={handleChange}
                 >
-                 
                   {fetchCategories?.map((category: any) => (
                     <option
                       key={category.categoryId}
@@ -374,19 +373,19 @@ const alignRight = () => {
             </div>
 
             <div className="items-center gap-1.5 grid mx-[32px] pt-[120px] w-[603px] h-[176px]">
-            <Label
+              <Label
                 htmlFor="description"
                 className="font-semibold text-[16px]"
-            >
+              >
                 Description
-            </Label>
-            <div
+              </Label>
+              <div
                 ref={quillRef}
                 className="border-slate-300 border rounded w-full h-[200px]"
-            />
-            <div className="relative">
+              />
+              <div className="relative">
                 <div className="bottom-0 absolute mb-[8px] ml-[25px]">
-                  <button 
+                  <button
                     onClick={handleBold}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isBoldActive ? "bg-blue-500 text-slate-100" : ""
@@ -458,30 +457,27 @@ const alignRight = () => {
                   value={formData.description}
                   onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
                     setFormData((prev) => ({
-                    ...prev,
-                    description: event.target.value,
+                      ...prev,
+                      description: event.target.value,
                     }));
-                  }} 
+                  }}
                   className="hidden"
                 />
-            </div>
+              </div>
             </div>
           </div>
-          {fetchMyProfile ? 
-            (<div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
-            <button
-              type="submit"
-              className="justify-center mx-[256px] text-white"
-            >
-              Create Now
-            </button>
-          </div>)
-
-          : 
-           ( 
-              errorMessage && <p className="text-red-500">{errorMessage}</p>
-            )
-          }
+          {fetchMyProfile ? (
+            <div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
+              <button
+                type="submit"
+                className="justify-center mx-[256px] text-white"
+              >
+                Create Now
+              </button>
+            </div>
+          ) : (
+            errorMessage && <p className="text-red-500">{errorMessage}</p>
+          )}
         </div>
       </form>
     </div>
