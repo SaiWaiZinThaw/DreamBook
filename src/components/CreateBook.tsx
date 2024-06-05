@@ -47,7 +47,7 @@ const CreateBook = () => {
     description: "",
     keywords: [],
     status: "draft",
-    categoryId: "",
+    categoryId: "8",
   });
   
   useEffect(() => {
@@ -206,7 +206,6 @@ const alignRight = () => {
     }));
   };
 
-
   const handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentKeyword(event.target.value);
   };
@@ -217,9 +216,9 @@ const alignRight = () => {
       const trimmedKeyword = currentKeyword.trim();
       setFormData((prev) => ({
         ...prev,
-        keywords: [trimmedKeyword, ...prev.keywords ],
+        keywords: [trimmedKeyword, ...prev.keywords],
       }));
-      setCurrentKeyword('');
+      setCurrentKeyword("");
     }
   };
 
@@ -242,7 +241,7 @@ const alignRight = () => {
       <form className="flex" onSubmit={handleSubmit}>
         <div className="mt-[50px] ml-[110px] w-[199px] h-[327px]">
           <div className="h-[284px]">
-          {formData.coverImage instanceof File ? (
+            {formData.coverImage instanceof File ? (
               <img
                 src={URL.createObjectURL(formData.coverImage)}
                 alt="Uploaded Cover"
@@ -250,19 +249,22 @@ const alignRight = () => {
               />
             ) : (
               <label
-              htmlFor="fileInput"
-              className="flex flex-col justify-center items-center border-slate-500 border border-dotted rounded-[8px] h-[284px] cursor-pointer"
-            >
-              <img src={BookCraftImg} alt="" className="w-[48px] h-[48px] object-cover" />
-              <h3 className="flex px-[10px] py-[10px] font-extrabold text-slate-500 text-sm">
-                Drop your images here or browse JPG, JPEG or PNG
-              </h3>
-              <p className="mx-[33px] font-semibold text-[12px] text-slate-500">
-                The size must be <br /> (123 x 123 ) px
-              </p>
-            </label>
+                htmlFor="fileInput"
+                className="flex flex-col justify-center items-center border-slate-500 border border-dotted rounded-[8px] h-[284px] cursor-pointer"
+              >
+                <img
+                  src={BookCraftImg}
+                  alt=""
+                  className="w-[48px] h-[48px] object-cover"
+                />
+                <h3 className="flex px-[10px] py-[10px] font-extrabold text-slate-500 text-sm">
+                  Drop your images here or browse JPG, JPEG or PNG
+                </h3>
+                <p className="mx-[33px] font-semibold text-[12px] text-slate-500">
+                  The size must be <br /> (123 x 123 ) px
+                </p>
+              </label>
             )}
-
           </div>
           <div className="flex justify-center mx-[13px] mt-[16px] w-[173px] h-[27px]">
             <input
@@ -279,7 +281,7 @@ const alignRight = () => {
             </label>
           </div>
         </div>
-       
+
         <div className="ml-[95px] w-[667px]">
           <div className="h-[581px]">
             <div className="items-center gap-1.5 grid mx-[32px] pt-[30px] w-[603px] h-[74px]">
@@ -314,6 +316,7 @@ const alignRight = () => {
                   ref={selectRef}
                   onChange={handleChange}
                 >
+                 
                   {fetchCategories?.map((category: any) => (
                     <option
                       key={category.categoryId}
@@ -340,7 +343,7 @@ const alignRight = () => {
                 id="keywords"
                 className="border-slate-300 border"
               />
-               <div>
+              <div>
                 <ul className="flex space-x-2 mt-2">
                   {formData.keywords.map((keyword, index) => (
                     <li
@@ -352,7 +355,6 @@ const alignRight = () => {
                   ))}
                 </ul>
               </div>
-            
             </div>
 
             <div className="items-center gap-1.5 grid mx-[32px] pt-[120px] w-[603px] h-[176px]">
