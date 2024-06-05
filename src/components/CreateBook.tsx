@@ -8,7 +8,6 @@ import useFetchCategories from "@/hooks/useFetchCategories";
 import { getToken } from "@/services/authService";
 import useBookCreate from "@/hooks/useBookCreate";
 import { CreateBookData } from "@/types/types";
-import Description from "./Description";
 import { useState, useEffect, useRef } from "react";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
@@ -23,6 +22,7 @@ import {
   } from "react-icons/fa";
 import { FaUnderline } from "react-icons/fa";
 import { FaItalic } from "react-icons/fa6";
+import { useGetMe } from "@/hooks/useUser";
 
 const CreateBook = () => {
   const navigate = useNavigate();
@@ -37,8 +37,10 @@ const CreateBook = () => {
   const [isCenterActive, setIsCenterActive] = useState(false);
   const [isRightActive, setIsRightActive] = useState(false);
   const [isBulletActive, setIsBulletActive] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [isOrderActive, setIsOrderActive] = useState(false);
-  const [description, setDescription] = useState<string>("");
+  const token = getToken() || "";
+  const { data : fetchMyProfile} = useGetMe(token);
   const { data: fetchCategories } = useFetchCategories();
   const createBookMutation = useBookCreate();
   const [formData, setFormData] = useState<CreateBookData>({
@@ -47,8 +49,10 @@ const CreateBook = () => {
     description: "",
     keywords: [],
     status: "draft",
-    categoryId: "8",
+    categoryId: "",
   });
+
+
   
   useEffect(() => {
     if (quillRef.current) {
@@ -58,19 +62,23 @@ const CreateBook = () => {
                 toolbar: false
             }
         });
+        quillRef.current.focus();
+        
         quillInstance.current.on('text-change', () => {
           setFormData((prev) => ({
             ...prev,
             description: quillInstance.current!.root.innerHTML
           }));
+          
         });
 
         if (formData.description) {
           quillInstance.current.clipboard.dangerouslyPasteHTML(formData.description);
           // quillInstance.current.setContents(formData.description);
+          
         }
     }
-}, [formData.description]);
+}, [formData.description && quillRef]);
 
 
 const applyFormat = (format: string) => {
@@ -158,15 +166,17 @@ const alignRight = () => {
 
 
   useEffect(() => {
-    if (createBookMutation.isSuccess) {
+    if (createBookMutation.isSuccess && fetchMyProfile !== null || undefined) {
       console.log(createBookMutation.data);
       getToken();
+      navigate("/book-dashboard/book-details")
+      
     }
-  }, [createBookMutation.isSuccess]);
+  }, [createBookMutation.isSuccess && fetchMyProfile !== null || undefined]);
 
   useEffect(() => {
     if (createBookMutation.isError) {
-      alert("Error");
+      createBookMutation.error.message
     }
   }, [createBookMutation.isError]);
 
@@ -180,13 +190,19 @@ const alignRight = () => {
         ...prev,
         categoryId: selectedId,
       }));
+    }else{
+      setErrorMessage("Fill Your Profile Completely")
     }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createBookMutation.mutate(formData);
-    console.log(formData);
+    if(fetchMyProfile) {
+      createBookMutation.mutate(formData);
+      console.log(formData);
+    }else {
+      setErrorMessage("Fill Your Profile Data Completely"); 
+    }
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -370,7 +386,7 @@ const alignRight = () => {
             />
             <div className="relative">
                 <div className="bottom-0 absolute mb-[8px] ml-[25px]">
-                  <button
+                  <button 
                     onClick={handleBold}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isBoldActive ? "bg-blue-500 text-slate-100" : ""
@@ -451,17 +467,21 @@ const alignRight = () => {
             </div>
             </div>
           </div>
-
-          {/* <NavLink to={'/book-dashboard'}> */}
-          <div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
+          {fetchMyProfile ? 
+            (<div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
             <button
               type="submit"
               className="justify-center mx-[256px] text-white"
             >
               Create Now
             </button>
-          </div>
-          {/* </NavLink> */}
+          </div>)
+
+          : 
+           ( 
+              errorMessage && <p className="text-red-500">{errorMessage}</p>
+            )
+          }
         </div>
       </form>
     </div>
