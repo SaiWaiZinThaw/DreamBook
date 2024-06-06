@@ -445,9 +445,6 @@ const alignRight = () => {
                                 <button onClick={() => applyFormat('ordered')} className="border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]"><FaListOl className="w-[17px] h-[17px]"/></button>
                             </div>
 
-                           
-
-
                             <textarea
                                 ref={textareaRef}
                                 id="content"
