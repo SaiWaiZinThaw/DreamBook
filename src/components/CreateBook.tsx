@@ -67,14 +67,19 @@ const CreateBook = () => {
         quillInstance.current.on('text-change', () => {
           setFormData((prev) => ({
             ...prev,
-            description: quillInstance.current!.root.innerHTML
+            description: quillInstance.current!.root.innerHTML || ""
           }));
           
+          setTimeout(() => {
+            const editorLength = quillInstance.current?.getLength() || 0;
+            quillInstance.current?.setSelection(editorLength, 0);
+        }, 0);
+        
         });
 
         if (formData.description) {
           quillInstance.current.clipboard.dangerouslyPasteHTML(formData.description);
-          // quillInstance.current.setContents(formData.description);
+          // quillInstance.current.setContents(Delta);
           
         }
     }
@@ -169,8 +174,11 @@ const alignRight = () => {
     if (createBookMutation.isSuccess && fetchMyProfile !== null || undefined) {
       console.log(createBookMutation.data);
       getToken();
-      navigate("/book-dashboard/book-details")
-      
+      // navigate("/book-dashboard/book-details/:bookId")
+      const createdBookId = createBookMutation.data?.bookId; // Accessing bookId from the data property
+    if (createdBookId) {
+      navigate(`/book-dashboard/book-details/${createdBookId}`);
+    }
     }
   }, [createBookMutation.isSuccess && fetchMyProfile !== null || undefined]);
 
@@ -387,6 +395,7 @@ const alignRight = () => {
             <div className="relative">
                 <div className="bottom-0 absolute mb-[8px] ml-[25px]">
                   <button 
+                    type="button"
                     onClick={handleBold}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isBoldActive ? "bg-blue-500 text-slate-100" : ""
@@ -395,6 +404,7 @@ const alignRight = () => {
                     <FaBold className="w-[17px] h-[17px]" />
                   </button>
                   <button
+                    type="button"
                     onClick={handleItalic}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isItalicActive ? "bg-blue-500 text-slate-100" : ""
@@ -403,6 +413,7 @@ const alignRight = () => {
                     <FaItalic className="w-[17px] h-[17px]" />
                   </button>
                   <button
+                    type="button"
                     onClick={handleUnderline}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isUnderlineActive ? "bg-blue-500 text-slate-100" : ""
@@ -411,6 +422,7 @@ const alignRight = () => {
                     <FaUnderline className="w-[17px] h-[17px]" />
                   </button>
                   <button
+                    type="button"
                     onClick={alignLeft}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isLeftActive ? "bg-blue-500 text-slate-100" : ""
@@ -419,6 +431,7 @@ const alignRight = () => {
                     <FaAlignLeft className="w-[17px] h-[17px]" />
                   </button>
                   <button
+                    type="button"
                     onClick={alignCenter}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isCenterActive ? "bg-blue-500 text-slate-100" : ""
@@ -427,6 +440,7 @@ const alignRight = () => {
                     <FaAlignCenter className="w-[17px] h-[17px]" />
                   </button>
                   <button
+                    type="button"
                     onClick={alignRight}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isRightActive ? "bg-blue-500 text-slate-100" : ""
@@ -435,6 +449,7 @@ const alignRight = () => {
                     <FaAlignRight className="w-[17px] h-[17px]" />
                   </button>
                   <button
+                    type="button"
                     onClick={handleBullet}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isBulletActive ? "bg-blue-500 text-slate-100" : ""
@@ -443,6 +458,7 @@ const alignRight = () => {
                     <FaListUl className="w-[17px] h-[17px]" />
                   </button>
                   <button
+                    type="button"
                     onClick={handleOrder}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isOrderActive ? "bg-blue-500 text-slate-100" : ""
@@ -467,21 +483,17 @@ const alignRight = () => {
             </div>
             </div>
           </div>
-          {fetchMyProfile ? 
-            (<div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
+          
+            <div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
             <button
               type="submit"
               className="justify-center mx-[256px] text-white"
             >
               Create Now
             </button>
-          </div>)
+          </div>
 
-          : 
-           ( 
-              errorMessage && <p className="text-red-500">{errorMessage}</p>
-            )
-          }
+          
         </div>
       </form>
     </div>

@@ -9,7 +9,7 @@ const BookRouter: RouteObject[] = [
     element: <BookDashBoardLayout/>,
   },
   {
-    path: '/book-dashboard/book-details',
+    path: '/book-dashboard/book-details/:bookId',
     element: <BookDetailsPage/>,
   },
   {

@@ -2,7 +2,7 @@ import { CreateBook, NavBar } from "@/components"
 
 const CreateNewBook = () => {
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-hidden">
         <NavBar/>
         <CreateBook/>
     </div>
