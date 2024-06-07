@@ -65,7 +65,7 @@ const NavBar = () => {
       ) : (
         <div className="flex items-center gap-4">
           <button>
-            <FaHeart className="font-bold text-lg text-red-600" />
+            <FaHeart className="text-lg font-bold text-red-600" />
           </button>
           {!isLoading && data && isSuccess && <ProfileDropdown data={data} />}
         </div>

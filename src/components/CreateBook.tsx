@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { AiOutlineUser } from "react-icons/ai";
 import "quill/dist/quill.snow.css";
-import useFetchCategories from "@/hooks/useFetchCategories";
+import { useFetchCategories } from "@/hooks/useFetchCategories";
 import { getToken } from "@/services/authService";
 import useBookCreate from "@/hooks/useBookCreate";
 import { CreateBookData } from "@/types/types";
@@ -291,7 +291,7 @@ const CreateBook = () => {
               id="fileInput"
             />
             <label htmlFor="fileInput">
-              <h1 className="font-extrabold text-lg text-primary">
+              <h1 className="text-lg font-extrabold text-primary">
                 Select Book Cover
               </h1>
             </label>
@@ -312,7 +312,7 @@ const CreateBook = () => {
                   type="text"
                   id="title"
                   placeholder="Title"
-                  className="border-slate-300 border"
+                  className="border border-slate-300"
                 />
                 <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" />
               </div>
@@ -356,14 +356,14 @@ const CreateBook = () => {
                 name="keywords"
                 type="text"
                 id="keywords"
-                className="border-slate-300 border"
+                className="border border-slate-300"
               />
               <div>
-                <ul className="flex space-x-2 mt-2">
+                <ul className="flex mt-2 space-x-2">
                   {formData.keywords.map((keyword, index) => (
                     <li
                       key={index}
-                      className="bg-gray-200 px-2 py-1 rounded-md"
+                      className="px-2 py-1 bg-gray-200 rounded-md"
                     >
                       {keyword}
                     </li>

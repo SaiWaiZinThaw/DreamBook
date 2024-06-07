@@ -1,5 +1,6 @@
 import { getToken } from "@/services/authService";
 import BaseURL from "../services/ApiEndPoint";
+import { categoryData } from "@/types/types";
 
 export const fetchCategories = async () => {
   const response: Response = await fetch(`${BaseURL}/categories`);
@@ -10,7 +11,7 @@ export const fetchCategories = async () => {
   return result as any[];
 };
 
-export const createInterestedCategories = async (data: { data: string[] }) => {
+export const createInterestedCategories = async (data: categoryData) => {
   const token = getToken();
   const response: Response = await fetch(`${BaseURL}/interested-categories`, {
     headers: {
