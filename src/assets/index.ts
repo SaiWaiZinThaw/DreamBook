@@ -22,5 +22,6 @@ import LightMenuBook from './light_menu-book-outline.png'
 import ChapterOutline from './Chapter_Outline.png';
 import LightCommentOutline from './light_comment-outline.png';
 import BookFloatAnimation from './book-float.png';
+import AuthLogo from './authLogo.png'
 
-export {Logo, FooterLine, LightMenuBook, Sorting, BookFloatAnimation, LightCommentOutline, ChapterOutline, LogoWhite, FooterImg, BookCraftImg , LibraryHero , Animation, AppStore, GooglePLay, BestSelf, AuthBackground, About, LatestBg, LatestBooks, FeatureBg, Visit, HeroBg, Daisy, LoginBackground}
+export {Logo, FooterLine, LightMenuBook, Sorting, BookFloatAnimation, LightCommentOutline, ChapterOutline, LogoWhite, FooterImg, BookCraftImg , LibraryHero , Animation, AppStore, GooglePLay, BestSelf, AuthBackground, About, LatestBg, LatestBooks, FeatureBg, Visit, HeroBg, Daisy, LoginBackground,AuthLogo}

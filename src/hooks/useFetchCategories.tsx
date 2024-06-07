@@ -1,6 +1,12 @@
-import {useQuery} from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { fetchCategories } from "@/api";
+import { createInterestedCategories } from "@/api/categoryApi";
+import { categoryData } from "@/types/types";
 
-const useFetchCategories = () => useQuery({queryKey:["category"], queryFn: fetchCategories });
+export const useFetchCategories = () =>
+  useQuery({ queryKey: ["category"], queryFn: fetchCategories });
 
-export default useFetchCategories;
+export const useInterestedCategories = () =>
+  useMutation({
+    mutationFn: (data: categoryData) => createInterestedCategories(data),
+  });

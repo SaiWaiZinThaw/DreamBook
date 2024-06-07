@@ -1,5 +1,6 @@
 import { Login, SignUp } from "@/pages/auth";
 import LoginLayout from "@/pages/auth/AuthLayout";
+import CategorySelect from "@/pages/auth/CategorySelect";
 import ProfileSetup from "@/pages/auth/ProfileSetup";
 import { Navigate, RouteObject } from "react-router-dom";
 
@@ -13,17 +14,18 @@ const AuthRouter: RouteObject[] = [
         element: <Navigate to="login" />,
       },
       {
-        path: "/auth/login",
+        path: "login",
         element: <Login />,
       },
       {
-        path: "/auth/signup",
+        path: "signup",
         element: <SignUp />,
       },
       {
-        path: "/auth/profile-setup",
+        path: "profile-setup",
         element: <ProfileSetup />,
       },
+      { path: "select-category", element: <CategorySelect /> },
     ],
   },
 ];
