@@ -12,6 +12,7 @@ import { useState, useEffect, useRef } from "react";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { Label } from "@/components/ui/label";
+import { BsX } from "react-icons/bs";
 import {
   FaBold,
   FaListUl,
@@ -23,6 +24,7 @@ import {
 import { FaUnderline } from "react-icons/fa";
 import { FaItalic } from "react-icons/fa6";
 import { useGetMe } from "@/hooks/useUser";
+import { Creating } from "./ui/loading-button";
 
 const CreateBook = () => {
   const navigate = useNavigate();
@@ -33,11 +35,13 @@ const CreateBook = () => {
   const [isBoldActive, setIsBoldActive] = useState(false);
   const [isItalicActive, setIsItalicActive] = useState(false);
   const [isUnderlineActive, setIsUnderlineActive] = useState(false);
-  const [isLeftActive, setIsLeftActive] = useState(false);
-  const [isCenterActive, setIsCenterActive] = useState(false);
-  const [isRightActive, setIsRightActive] = useState(false);
+  const [isLeftActive] = useState(false);
+  const [isCenterActive] = useState(false);
+  const [isRightActive] = useState(false);
   const [isBulletActive, setIsBulletActive] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [keywordError, setKeywordError] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [titleError, setTitleError] = useState(false);
   const [isOrderActive, setIsOrderActive] = useState(false);
   const token = getToken() || "";
   const { data: fetchMyProfile } = useGetMe(token);
@@ -54,29 +58,34 @@ const CreateBook = () => {
 
   useEffect(() => {
     if (quillRef.current) {
-      quillInstance.current = new Quill(quillRef.current, {
-        theme: "snow",
-        modules: {
-          toolbar: false,
-        },
-      });
-      quillRef.current.focus();
 
-      quillInstance.current.on("text-change", () => {
-        setFormData((prev) => ({
-          ...prev,
-          description: quillInstance.current!.root.innerHTML,
-        }));
-      });
+        quillInstance.current = new Quill(quillRef.current, {
+            theme: 'snow',
+            modules: {
+                toolbar: false
+            }
+        });
+        quillRef.current.focus();
+        
+        quillInstance.current.on('text-change', () => {
+          setFormData((prev) => ({
+            ...prev,
+            description: quillInstance.current!.root.innerHTML || ""
+          }));
+          
+          setTimeout(() => {
+            const editorLength = quillInstance.current?.getLength() || 0;
+            quillInstance.current?.setSelection(editorLength, 0);
+        }, 0);
+        
+        });
 
-      if (formData.description) {
-        quillInstance.current.clipboard.dangerouslyPasteHTML(
-          formData.description
-        );
-        // quillInstance.current.setContents(formData.description);
-      }
+        if (formData.description) {
+          quillInstance.current.clipboard.dangerouslyPasteHTML(formData.description); 
+        }
     }
-  }, [formData.description && quillRef]);
+}, [formData.description && quillRef]);
+
 
   const applyFormat = (format: string) => {
     if (quillInstance.current) {
@@ -170,7 +179,11 @@ const CreateBook = () => {
     ) {
       console.log(createBookMutation.data);
       getToken();
-      navigate("/book-dashboard/book-details");
+      const createdBookId = createBookMutation.data?.bookId;
+    if (createdBookId) {
+      navigate(`/book-dashboard/${createdBookId}`);
+    }
+
     }
   }, [(createBookMutation.isSuccess && fetchMyProfile !== null) || undefined]);
 
@@ -190,8 +203,7 @@ const CreateBook = () => {
         ...prev,
         categoryId: selectedId,
       }));
-    } else {
-      setErrorMessage("Fill Your Profile Completely");
+      setSelectedCategory(selectRef.current.value);
     }
   };
 
@@ -200,8 +212,10 @@ const CreateBook = () => {
     if (fetchMyProfile) {
       createBookMutation.mutate(formData);
       console.log(formData);
-    } else {
-      setErrorMessage("Fill Your Profile Data Completely");
+    }else if(formData.title.trim() === '') {
+      setTitleError(true);
+    }else if (formData.keywords.length === 0) {
+      setKeywordError(true);
     }
   };
 
@@ -220,10 +234,32 @@ const CreateBook = () => {
       ...prev,
       title: event.target.value,
     }));
+    if (event.target.value.trim() !== '') {
+      setTitleError(false);
+    }
+  };
+
+  const handleBlur = () => {
+    if (formData.title.trim() === '') {
+      setTitleError(true);
+    }
+    if (formData.keywords.length === 0) {
+      setKeywordError(true);
+    }
+  };
+
+  const handleDeleteKeyword = (indexToDelete:any) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      keywords: prevFormData.keywords.filter((_, index) => index !== indexToDelete)
+    }));
   };
 
   const handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentKeyword(event.target.value);
+    if (event.target.value.trim() !== '') {
+      setKeywordError(false);
+    }
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -291,11 +327,12 @@ const CreateBook = () => {
               id="fileInput"
             />
             <label htmlFor="fileInput">
-              <h1 className="text-lg font-extrabold text-primary">
+              <h1 className="font-extrabold text-lg text-primary">
                 Select Book Cover
               </h1>
             </label>
           </div>
+          
         </div>
 
         <div className="ml-[95px] w-[667px]">
@@ -312,10 +349,17 @@ const CreateBook = () => {
                   type="text"
                   id="title"
                   placeholder="Title"
-                  className="border border-slate-300"
+                  onBlur={handleBlur}
+                  className="border-slate-300 border"
+                  required
                 />
                 <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" />
               </div>
+              {titleError && (
+                <div className="ml-[10px] font-bold text-red-500 text-sm">
+                  <h1>* Please fill the title</h1>
+                </div>
+              )}
             </div>
 
             <div className="items-center gap-1.5 grid mx-[32px] pt-[60px] w-[603px] h-[74px]">
@@ -326,12 +370,15 @@ const CreateBook = () => {
                 <select
                   name="category"
                   id="category"
-                  className={
-                    "border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold"
-                  }
+                  className={`border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold ${
+                                selectedCategory === "" ? "text-slate-300" : "" }`}
                   ref={selectRef}
                   onChange={handleChange}
+                  defaultValue=""
                 >
+                 <option value="" disabled className="font-extrabold">
+                    Select Category
+                 </option>
                   {fetchCategories?.map((category: any) => (
                     <option
                       key={category.categoryId}
@@ -356,20 +403,26 @@ const CreateBook = () => {
                 name="keywords"
                 type="text"
                 id="keywords"
-                className="border border-slate-300"
+                className="border-slate-300 border"
+                required
               />
               <div>
-                <ul className="flex mt-2 space-x-2">
+                <ul className="absolute flex space-x-2 ml-4">
                   {formData.keywords.map((keyword, index) => (
                     <li
                       key={index}
-                      className="px-2 py-1 bg-gray-200 rounded-md"
+                      className="flex border-primary px-2 py-1 border border-opacity-55 rounded-md text-slate-600"
                     >
-                      {keyword}
+                      {keyword}<BsX onClick={() => handleDeleteKeyword(index)} className="mt-[5px] cursor-pointer" />
                     </li>
                   ))}
                 </ul>
               </div>
+              {keywordError && (
+                  <div className="ml-[10px] font-bold text-red-500 text-sm">
+                     * Please add at least one keyword
+                  </div>
+                )}
             </div>
 
             <div className="items-center gap-1.5 grid mx-[32px] pt-[120px] w-[603px] h-[176px]">
@@ -385,7 +438,10 @@ const CreateBook = () => {
               />
               <div className="relative">
                 <div className="bottom-0 absolute mb-[8px] ml-[25px]">
-                  <button
+
+                  <button 
+                    type="button"
+
                     onClick={handleBold}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isBoldActive ? "bg-blue-500 text-slate-100" : ""
@@ -394,6 +450,7 @@ const CreateBook = () => {
                     <FaBold className="w-[17px] h-[17px]" />
                   </button>
                   <button
+                    type="button"
                     onClick={handleItalic}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isItalicActive ? "bg-blue-500 text-slate-100" : ""
@@ -402,6 +459,7 @@ const CreateBook = () => {
                     <FaItalic className="w-[17px] h-[17px]" />
                   </button>
                   <button
+                    type="button"
                     onClick={handleUnderline}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isUnderlineActive ? "bg-blue-500 text-slate-100" : ""
@@ -410,6 +468,7 @@ const CreateBook = () => {
                     <FaUnderline className="w-[17px] h-[17px]" />
                   </button>
                   <button
+                    type="button"
                     onClick={alignLeft}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isLeftActive ? "bg-blue-500 text-slate-100" : ""
@@ -418,6 +477,7 @@ const CreateBook = () => {
                     <FaAlignLeft className="w-[17px] h-[17px]" />
                   </button>
                   <button
+                    type="button"
                     onClick={alignCenter}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isCenterActive ? "bg-blue-500 text-slate-100" : ""
@@ -426,6 +486,7 @@ const CreateBook = () => {
                     <FaAlignCenter className="w-[17px] h-[17px]" />
                   </button>
                   <button
+                    type="button"
                     onClick={alignRight}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isRightActive ? "bg-blue-500 text-slate-100" : ""
@@ -434,6 +495,7 @@ const CreateBook = () => {
                     <FaAlignRight className="w-[17px] h-[17px]" />
                   </button>
                   <button
+                    type="button"
                     onClick={handleBullet}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isBulletActive ? "bg-blue-500 text-slate-100" : ""
@@ -442,6 +504,7 @@ const CreateBook = () => {
                     <FaListUl className="w-[17px] h-[17px]" />
                   </button>
                   <button
+                    type="button"
                     onClick={handleOrder}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isOrderActive ? "bg-blue-500 text-slate-100" : ""
@@ -466,18 +529,26 @@ const CreateBook = () => {
               </div>
             </div>
           </div>
-          {fetchMyProfile ? (
-            <div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
-              <button
-                type="submit"
-                className="justify-center mx-[256px] text-white"
-              >
-                Create Now
-              </button>
-            </div>
-          ) : (
-            errorMessage && <p className="text-red-500">{errorMessage}</p>
-          )}
+
+          
+            {
+              !createBookMutation.isPending ? (
+                <div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
+                  <button
+                    type="submit"
+                    className="justify-center mx-[256px] text-white"
+                  >
+                    Create Now
+                  </button>
+                </div>
+              ): (
+                <div>
+                  <Creating/>
+                </div>
+              )
+            }
+
+          
         </div>
       </form>
     </div>

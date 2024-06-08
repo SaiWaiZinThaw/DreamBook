@@ -1,5 +1,5 @@
 const Fav = () => {
-  return <div className="flex items-center justify-center w-full"></div>;
+  return <div className="flex justify-center items-center w-full"></div>;
 };
 
 export default Fav;

@@ -24,7 +24,7 @@ const Info = () => {
     bio: "",
     gender: "male",
   });
-
+  
   useEffect(() => {
     if (data) {
       setProfileData((prev) => ({
@@ -62,15 +62,15 @@ const Info = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full ">
+    <div className="flex justify-center items-center w-full">
       <div className="flex flex-col items-center pb-10">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center gap-6 w-[460px] font-Inter"
         >
-          <h1 className="text-2xl font-bold text-white">Create an account</h1>
+          <h1 className="font-bold text-2xl text-white">Create an account</h1>
           <FileUpload onFileChange={handleFileChange} />
-          <Label htmlFor="picture" className="text-black font-Inter">
+          <Label htmlFor="picture" className="font-Inter text-black">
             Upload Photo
           </Label>
           <Input
@@ -85,10 +85,10 @@ const Info = () => {
               }));
             }}
           />
-          <div className="p-4 rounded-[5px] w-full h-12 text-opacity-50 font-semibold text-sm font-Inter bg-white  text-secondary-foreground border border-border">
+          <div className="bg-white p-4 border border-border rounded-[5px] w-full h-12 font-Inter font-semibold text-secondary-foreground text-sm text-opacity-50">
             {data!.email}
           </div>
-          <div className="flex items-center w-full gap-5">
+          <div className="flex items-center gap-5 w-full">
             <select
               className="flex justify-center items-center p-4 rounded-[5px] h-12"
               value={profileData.countryCode}
@@ -138,7 +138,7 @@ const Info = () => {
           <textarea
             name="bio"
             id="bio"
-            className="placeholder:opacity-70 p-4 rounded-[5px] w-full placeholder:text-black border border-border"
+            className="placeholder:opacity-70 p-4 border border-border rounded-[5px] w-full placeholder:text-black"
             placeholder="Bio"
             value={profileData.bio}
             onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
