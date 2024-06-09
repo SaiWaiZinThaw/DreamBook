@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { AiOutlineUser } from "react-icons/ai";
 import "quill/dist/quill.snow.css";
-import useFetchCategories from "@/hooks/useFetchCategories";
+import { useFetchCategories } from "@/hooks/useFetchCategories";
 import { getToken } from "@/services/authService";
 import useBookCreate from "@/hooks/useBookCreate";
 import { CreateBookData } from "@/types/types";
@@ -14,13 +14,13 @@ import "quill/dist/quill.snow.css";
 import { Label } from "@/components/ui/label";
 import { BsX } from "react-icons/bs";
 import {
-    FaBold,
-    FaListUl,
-    FaListOl,
-    FaAlignLeft,
-    FaAlignCenter,
-    FaAlignRight,
-  } from "react-icons/fa";
+  FaBold,
+  FaListUl,
+  FaListOl,
+  FaAlignLeft,
+  FaAlignCenter,
+  FaAlignRight,
+} from "react-icons/fa";
 import { FaUnderline } from "react-icons/fa";
 import { FaItalic } from "react-icons/fa6";
 import { useGetMe } from "@/hooks/useUser";
@@ -44,7 +44,7 @@ const CreateBook = () => {
   const [titleError, setTitleError] = useState(false);
   const [isOrderActive, setIsOrderActive] = useState(false);
   const token = getToken() || "";
-  const { data : fetchMyProfile} = useGetMe(token);
+  const { data: fetchMyProfile } = useGetMe(token);
   const { data: fetchCategories } = useFetchCategories();
   const createBookMutation = useBookCreate();
   const [formData, setFormData] = useState<CreateBookData>({
@@ -56,10 +56,9 @@ const CreateBook = () => {
     categoryId: "",
   });
 
-
-  
   useEffect(() => {
     if (quillRef.current) {
+
         quillInstance.current = new Quill(quillRef.current, {
             theme: 'snow',
             modules: {
@@ -88,108 +87,113 @@ const CreateBook = () => {
 }, [formData.description && quillRef]);
 
 
-const applyFormat = (format: string) => {
-  if (quillInstance.current) {
-    const cursorPosition = quillInstance.current.getSelection()?.index;
-    if (cursorPosition !== null && cursorPosition !== undefined) {
-      const isApplied = quillInstance.current.getFormat(cursorPosition)?.[format];
-      const isBulletApplied = quillInstance.current.getFormat(cursorPosition)?.list === 'bullet';
-      const isOrderedApplied = quillInstance.current.getFormat(cursorPosition)?.list === 'ordered';
-      if (isApplied) {
-        quillInstance.current.format(format, false);
-      }
-      else if (isBulletApplied && format === 'bullet') {
-        quillInstance.current.format('list', false);
-      } else if (isOrderedApplied && format === 'ordered') {
-        quillInstance.current.format('list', false);
-      } else {
-        switch(format) {
-          case 'bold':
-            quillInstance.current.format('bold', true);
-            break;
-          case 'italic':
-            quillInstance.current.format('italic', true);
-            break;
-          case 'underline':
-            quillInstance.current.format('underline', true);
-            break;
-          case 'bullet':
-            quillInstance.current.format('list', 'bullet');
-            break;
-          case 'ordered':
-            quillInstance.current.format('list', 'ordered');
-            break;
-          default:
-            break;
+  const applyFormat = (format: string) => {
+    if (quillInstance.current) {
+      const cursorPosition = quillInstance.current.getSelection()?.index;
+      if (cursorPosition !== null && cursorPosition !== undefined) {
+        const isApplied =
+          quillInstance.current.getFormat(cursorPosition)?.[format];
+        const isBulletApplied =
+          quillInstance.current.getFormat(cursorPosition)?.list === "bullet";
+        const isOrderedApplied =
+          quillInstance.current.getFormat(cursorPosition)?.list === "ordered";
+        if (isApplied) {
+          quillInstance.current.format(format, false);
+        } else if (isBulletApplied && format === "bullet") {
+          quillInstance.current.format("list", false);
+        } else if (isOrderedApplied && format === "ordered") {
+          quillInstance.current.format("list", false);
+        } else {
+          switch (format) {
+            case "bold":
+              quillInstance.current.format("bold", true);
+              break;
+            case "italic":
+              quillInstance.current.format("italic", true);
+              break;
+            case "underline":
+              quillInstance.current.format("underline", true);
+              break;
+            case "bullet":
+              quillInstance.current.format("list", "bullet");
+              break;
+            case "ordered":
+              quillInstance.current.format("list", "ordered");
+              break;
+            default:
+              break;
+          }
         }
       }
     }
-  }
-};
+  };
 
-const handleBold = () => {
-  applyFormat("bold");
-  setIsBoldActive(!isBoldActive);
-};
+  const handleBold = () => {
+    applyFormat("bold");
+    setIsBoldActive(!isBoldActive);
+  };
 
-const handleItalic = () => {
-  applyFormat("italic");
-  setIsItalicActive(!isItalicActive);
-};
+  const handleItalic = () => {
+    applyFormat("italic");
+    setIsItalicActive(!isItalicActive);
+  };
 
-const handleUnderline = () => {
-  applyFormat("underline");
-  setIsUnderlineActive(!isUnderlineActive);
-};
-const handleBullet = () => {
-  applyFormat("bullet");
-  setIsBulletActive(!isBulletActive);
-};
-const handleOrder = () => {
-  applyFormat("ordered");
-  setIsOrderActive(!isOrderActive);
-};
+  const handleUnderline = () => {
+    applyFormat("underline");
+    setIsUnderlineActive(!isUnderlineActive);
+  };
+  const handleBullet = () => {
+    applyFormat("bullet");
+    setIsBulletActive(!isBulletActive);
+  };
+  const handleOrder = () => {
+    applyFormat("ordered");
+    setIsOrderActive(!isOrderActive);
+  };
 
-const alignLeft = () => {
-  if (quillInstance.current) {
-    quillInstance.current.format('align', false);
-    quillInstance.current.format('align', 'left');
-  }
-};
+  const alignLeft = () => {
+    if (quillInstance.current) {
+      quillInstance.current.format("align", false);
+      quillInstance.current.format("align", "left");
+    }
+  };
 
-const alignCenter = () => {
-  if (quillInstance.current) {
-    quillInstance.current.format('align', false);
-    quillInstance.current.format('align', 'center');
-  }
-};
+  const alignCenter = () => {
+    if (quillInstance.current) {
+      quillInstance.current.format("align", false);
+      quillInstance.current.format("align", "center");
+    }
+  };
 
-const alignRight = () => {
-  if (quillInstance.current) {
-    quillInstance.current.format('align', false);
-    quillInstance.current.format('align', 'right');
-  }
-};
-
+  const alignRight = () => {
+    if (quillInstance.current) {
+      quillInstance.current.format("align", false);
+      quillInstance.current.format("align", "right");
+    }
+  };
 
   useEffect(() => {
-    if (createBookMutation.isSuccess && fetchMyProfile !== null || undefined) {
+    if (
+      (createBookMutation.isSuccess && fetchMyProfile !== null) ||
+      undefined
+    ) {
       console.log(createBookMutation.data);
       getToken();
       const createdBookId = createBookMutation.data?.bookId;
     if (createdBookId) {
       navigate(`/book-dashboard/${createdBookId}`);
     }
+
     }
-  }, [createBookMutation.isSuccess && fetchMyProfile !== null || undefined]);
+  }, [(createBookMutation.isSuccess && fetchMyProfile !== null) || undefined]);
 
   useEffect(() => {
     if (createBookMutation.isError) {
-      createBookMutation.error.message
+      createBookMutation.error.message;
     }
   }, [createBookMutation.isError]);
 
-   const selectRef = useRef<HTMLSelectElement>(null);
+  const selectRef = useRef<HTMLSelectElement>(null);
   const handleChange = () => {
     if (selectRef.current) {
       const selectedOption =
@@ -205,7 +209,7 @@ const alignRight = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(fetchMyProfile) {
+    if (fetchMyProfile) {
       createBookMutation.mutate(formData);
       console.log(formData);
     }else if(formData.title.trim() === '') {
@@ -259,7 +263,7 @@ const alignRight = () => {
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && currentKeyword.trim()) {
+    if (event.key === "Enter" && currentKeyword.trim()) {
       event.preventDefault();
       const trimmedKeyword = currentKeyword.trim();
       setFormData((prev) => ({
@@ -358,7 +362,7 @@ const alignRight = () => {
               )}
             </div>
 
-             <div className="items-center gap-1.5 grid mx-[32px] pt-[60px] w-[603px] h-[74px]">
+            <div className="items-center gap-1.5 grid mx-[32px] pt-[60px] w-[603px] h-[74px]">
               <Label htmlFor="category" className="font-semibold text-[16px]">
                 Category
               </Label>
@@ -422,20 +426,22 @@ const alignRight = () => {
             </div>
 
             <div className="items-center gap-1.5 grid mx-[32px] pt-[120px] w-[603px] h-[176px]">
-            <Label
+              <Label
                 htmlFor="description"
                 className="font-semibold text-[16px]"
-            >
+              >
                 Description
-            </Label>
-            <div
+              </Label>
+              <div
                 ref={quillRef}
                 className="border-slate-300 border rounded w-full h-[200px]"
-            />
-            <div className="relative">
+              />
+              <div className="relative">
                 <div className="bottom-0 absolute mb-[8px] ml-[25px]">
+
                   <button 
                     type="button"
+
                     onClick={handleBold}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isBoldActive ? "bg-blue-500 text-slate-100" : ""
@@ -514,15 +520,16 @@ const alignRight = () => {
                   value={formData.description}
                   onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
                     setFormData((prev) => ({
-                    ...prev,
-                    description: event.target.value,
+                      ...prev,
+                      description: event.target.value,
                     }));
-                  }} 
+                  }}
                   className="hidden"
                 />
-            </div>
+              </div>
             </div>
           </div>
+
           
             {
               !createBookMutation.isPending ? (

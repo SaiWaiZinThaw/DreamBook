@@ -1,6 +1,7 @@
 import { FileUpload } from "@/components/ui/FileUpload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import React, { useEffect, useState } from "react";
 import { countryCodes } from "@/variables";
 import { useNavigate } from "react-router-dom";
@@ -20,10 +21,10 @@ const ProfileSetup = () => {
   const [profileData, setProfileData] = useState<ProfileSetupData>({
     name: "",
     profilePicture: undefined,
-    countryCode: "+1",
+    countryCode: "+95",
     localNumber: "",
     bio: "",
-    gender: "",
+    gender: "male",
   });
 
   useEffect(() => {
@@ -42,12 +43,12 @@ const ProfileSetup = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     profileSetup.mutate(profileData);
-    navigate("/");
   };
 
   useEffect(() => {
     if (profileSetup.isSuccess) {
       console.log(profileSetup.data);
+      navigate("/auth/select-category");
     }
   }, [profileSetup.isSuccess]);
 
@@ -64,10 +65,12 @@ const ProfileSetup = () => {
         onSubmit={handleSubmit}
         className="flex flex-col items-center gap-6 w-[460px] font-Inter"
       >
-        <h1 className="font-bold text-2xl text-white">Create an account</h1>
+        <h1 className="text-2xl font-bold text-white">Create an account</h1>
         <FileUpload onFileChange={handleFileChange} />
-
-        <div className="flex items-center gap-5 w-full">
+        <Label htmlFor="picture" className="text-lg text-white font-Inter">
+          Upload Photo
+        </Label>
+        <div className="flex items-center w-full gap-5">
           <select
             className="flex justify-center items-center p-4 rounded-[5px] h-12"
             value={profileData.countryCode}
@@ -109,12 +112,10 @@ const ProfileSetup = () => {
             }));
           }}
         />
-
         <select
           className="flex justify-center items-center p-4 rounded-[5px] w-full h-12 text-sm"
           value={profileData.gender}
           onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-            console.log(profileData);
             setProfileData((prev) => ({
               ...prev,
               gender: event.target.value,
@@ -123,8 +124,8 @@ const ProfileSetup = () => {
         >
           <option value="male">Male</option>
           <option value="female">Female</option>
+          <option value="rather not to say">Rather not to say</option>
         </select>
-
         <textarea
           name="bio"
           id="bio"
@@ -138,7 +139,6 @@ const ProfileSetup = () => {
             }));
           }}
         ></textarea>
-
         {!profileSetup.isPending ? (
           <Button variant={"default"} size={"full"} text={"white"}>
             Create an Account

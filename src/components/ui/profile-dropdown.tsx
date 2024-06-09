@@ -16,10 +16,13 @@ import { CiLight } from "react-icons/ci";
 import { MdDarkMode } from "react-icons/md";
 import { logout } from "@/services/authService";
 import { CiLogout } from "react-icons/ci";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
+  const navigate = useNavigate();
+
   const logoutHandler = () => {
+    navigate("/");
     logout();
   };
   return (
@@ -29,7 +32,7 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
           <img
             src={data.profilePicture}
             alt={data.name}
-            className="rounded-full w-10 h-10"
+            className="w-10 h-10 rounded-full"
           />
           <FaAngleDown />
         </DropdownMenuTrigger>
@@ -39,11 +42,11 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               <img
                 src={data.profilePicture}
                 alt={data.name}
-                className="rounded-full w-8 h-8"
+                className="w-10 h-10 rounded-full"
               />
               <div className="flex flex-col">
-                <p className="font-bold">{data.name}</p>
-                <p className="opacity-50 text-xs">{data.email}</p>
+                <p className="text-lg font-bold">{data.name}</p>
+                <p className="text-sm opacity-50">{data.email}</p>
               </div>
             </div>
           </DropdownMenuLabel>
@@ -78,7 +81,7 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
           <div className="flex flex-col gap-2 pb-2 text-sm">
             <div className="flex items-center gap-2 mx-4">
               <Input
-                className="rounded-none w-3 h-3"
+                className="w-3 h-3 rounded-none"
                 type="radio"
                 name="theme"
                 id="light"
@@ -90,7 +93,7 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
 
             <div className="flex items-center gap-2 mx-4">
               <Input
-                className="rounded-none w-3 h-3"
+                className="w-3 h-3 rounded-none"
                 type="radio"
                 name="theme"
                 id="dark"
@@ -100,9 +103,9 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               </label>
             </div>
 
-            <div className="flex items-center gap-2 mx-4 pb-2 border-b border-border">
+            <div className="flex items-center gap-2 pb-2 mx-4 border-b border-border">
               <Input
-                className="rounded-none w-3 h-3"
+                className="w-3 h-3 rounded-none"
                 type="radio"
                 name="theme"
                 id="system"
@@ -115,7 +118,7 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               onClick={logoutHandler}
               className="flex items-center gap-1 font-medium text-primary"
             >
-              <CiLogout className="font-bold text-lg" />
+              <CiLogout className="text-lg font-bold" />
               Log Out
             </button>
           </DropdownMenuLabel>
