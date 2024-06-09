@@ -10,3 +10,11 @@ export function ButtonLoading() {
     </Button>
   );
 }
+export function Creating() {
+  return (
+    <Button className="mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center" disabled>
+      <Loader2 className="mr-2 h-4 animate-spin" />
+      Creating, Please Wait!
+    </Button>
+  );
+}

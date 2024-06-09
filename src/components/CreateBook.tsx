@@ -12,6 +12,7 @@ import { useState, useEffect, useRef } from "react";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { Label } from "@/components/ui/label";
+import { BsX } from "react-icons/bs";
 import {
     FaBold,
     FaListUl,
@@ -23,6 +24,7 @@ import {
 import { FaUnderline } from "react-icons/fa";
 import { FaItalic } from "react-icons/fa6";
 import { useGetMe } from "@/hooks/useUser";
+import { Creating } from "./ui/loading-button";
 
 const CreateBook = () => {
   const navigate = useNavigate();
@@ -33,11 +35,13 @@ const CreateBook = () => {
   const [isBoldActive, setIsBoldActive] = useState(false);
   const [isItalicActive, setIsItalicActive] = useState(false);
   const [isUnderlineActive, setIsUnderlineActive] = useState(false);
-  const [isLeftActive, setIsLeftActive] = useState(false);
-  const [isCenterActive, setIsCenterActive] = useState(false);
-  const [isRightActive, setIsRightActive] = useState(false);
+  const [isLeftActive] = useState(false);
+  const [isCenterActive] = useState(false);
+  const [isRightActive] = useState(false);
   const [isBulletActive, setIsBulletActive] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [keywordError, setKeywordError] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [titleError, setTitleError] = useState(false);
   const [isOrderActive, setIsOrderActive] = useState(false);
   const token = getToken() || "";
   const { data : fetchMyProfile} = useGetMe(token);
@@ -78,9 +82,7 @@ const CreateBook = () => {
         });
 
         if (formData.description) {
-          quillInstance.current.clipboard.dangerouslyPasteHTML(formData.description);
-          // quillInstance.current.setContents(Delta);
-          
+          quillInstance.current.clipboard.dangerouslyPasteHTML(formData.description); 
         }
     }
 }, [formData.description && quillRef]);
@@ -174,10 +176,9 @@ const alignRight = () => {
     if (createBookMutation.isSuccess && fetchMyProfile !== null || undefined) {
       console.log(createBookMutation.data);
       getToken();
-      // navigate("/book-dashboard/book-details/:bookId")
-      const createdBookId = createBookMutation.data?.bookId; // Accessing bookId from the data property
+      const createdBookId = createBookMutation.data?.bookId;
     if (createdBookId) {
-      navigate(`/book-dashboard/book-details/${createdBookId}`);
+      navigate(`/book-dashboard/${createdBookId}`);
     }
     }
   }, [createBookMutation.isSuccess && fetchMyProfile !== null || undefined]);
@@ -198,8 +199,7 @@ const alignRight = () => {
         ...prev,
         categoryId: selectedId,
       }));
-    }else{
-      setErrorMessage("Fill Your Profile Completely")
+      setSelectedCategory(selectRef.current.value);
     }
   };
 
@@ -208,8 +208,10 @@ const alignRight = () => {
     if(fetchMyProfile) {
       createBookMutation.mutate(formData);
       console.log(formData);
-    }else {
-      setErrorMessage("Fill Your Profile Data Completely"); 
+    }else if(formData.title.trim() === '') {
+      setTitleError(true);
+    }else if (formData.keywords.length === 0) {
+      setKeywordError(true);
     }
   };
 
@@ -228,10 +230,32 @@ const alignRight = () => {
       ...prev,
       title: event.target.value,
     }));
+    if (event.target.value.trim() !== '') {
+      setTitleError(false);
+    }
+  };
+
+  const handleBlur = () => {
+    if (formData.title.trim() === '') {
+      setTitleError(true);
+    }
+    if (formData.keywords.length === 0) {
+      setKeywordError(true);
+    }
+  };
+
+  const handleDeleteKeyword = (indexToDelete:any) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      keywords: prevFormData.keywords.filter((_, index) => index !== indexToDelete)
+    }));
   };
 
   const handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentKeyword(event.target.value);
+    if (event.target.value.trim() !== '') {
+      setKeywordError(false);
+    }
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -304,6 +328,7 @@ const alignRight = () => {
               </h1>
             </label>
           </div>
+          
         </div>
 
         <div className="ml-[95px] w-[667px]">
@@ -320,10 +345,17 @@ const alignRight = () => {
                   type="text"
                   id="title"
                   placeholder="Title"
+                  onBlur={handleBlur}
                   className="border-slate-300 border"
+                  required
                 />
                 <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" />
               </div>
+              {titleError && (
+                <div className="ml-[10px] font-bold text-red-500 text-sm">
+                  <h1>* Please fill the title</h1>
+                </div>
+              )}
             </div>
 
              <div className="items-center gap-1.5 grid mx-[32px] pt-[60px] w-[603px] h-[74px]">
@@ -334,13 +366,15 @@ const alignRight = () => {
                 <select
                   name="category"
                   id="category"
-                  className={
-                    "border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold"
-                  }
+                  className={`border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold ${
+                                selectedCategory === "" ? "text-slate-300" : "" }`}
                   ref={selectRef}
                   onChange={handleChange}
+                  defaultValue=""
                 >
-                 
+                 <option value="" disabled className="font-extrabold">
+                    Select Category
+                 </option>
                   {fetchCategories?.map((category: any) => (
                     <option
                       key={category.categoryId}
@@ -366,19 +400,25 @@ const alignRight = () => {
                 type="text"
                 id="keywords"
                 className="border-slate-300 border"
+                required
               />
               <div>
-                <ul className="flex space-x-2 mt-2">
+                <ul className="absolute flex space-x-2 ml-4">
                   {formData.keywords.map((keyword, index) => (
                     <li
                       key={index}
-                      className="bg-gray-200 px-2 py-1 rounded-md"
+                      className="flex border-primary px-2 py-1 border border-opacity-55 rounded-md text-slate-600"
                     >
-                      {keyword}
+                      {keyword}<BsX onClick={() => handleDeleteKeyword(index)} className="mt-[5px] cursor-pointer" />
                     </li>
                   ))}
                 </ul>
               </div>
+              {keywordError && (
+                  <div className="ml-[10px] font-bold text-red-500 text-sm">
+                     * Please add at least one keyword
+                  </div>
+                )}
             </div>
 
             <div className="items-center gap-1.5 grid mx-[32px] pt-[120px] w-[603px] h-[176px]">
@@ -484,14 +524,22 @@ const alignRight = () => {
             </div>
           </div>
           
-            <div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
-            <button
-              type="submit"
-              className="justify-center mx-[256px] text-white"
-            >
-              Create Now
-            </button>
-          </div>
+            {
+              !createBookMutation.isPending ? (
+                <div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
+                  <button
+                    type="submit"
+                    className="justify-center mx-[256px] text-white"
+                  >
+                    Create Now
+                  </button>
+                </div>
+              ): (
+                <div>
+                  <Creating/>
+                </div>
+              )
+            }
 
           
         </div>
