@@ -10,7 +10,6 @@ export const createChapterApi = async ({
         content: string,
         status: string,
         priority: number,
-        bookId: number,
     };
   }) => {
     const token = getToken();

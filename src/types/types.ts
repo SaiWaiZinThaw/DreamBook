@@ -37,7 +37,6 @@ export type createChapterData = {
   content: string;
   status: string;
   priority: number;
-  bookId: number;
 };
 
 export type categoryData = {

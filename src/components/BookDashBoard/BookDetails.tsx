@@ -34,11 +34,10 @@
 //   console.log(bookId);
 //   const token = getToken() || "";
 //   const { data: fetchABookAuthor}  = useFetchABookAuthor(token, parseInt(bookId!))
-//   console.log(fetchABookAuthor)
 //   const updateBook = useUpdateBook(parseInt(bookId!));
 //   const [updateData, setUpdateData] = useState<updateBookType>({
 //     title: "",
-//     coverImage: "",
+//     coverImage: undefined,
 //     description: "",
 //     keywords: [],
 //     status: "draft",
@@ -112,13 +111,13 @@
 //           ...prev,
 //           ...data,
 //         }));
-//         setIsEditing(false); 
-//         const fileInput = document.getElementById("fileInput");
-//         if (fileInput) {
-//           fileInput.value = "";
-//         }
+//         // const fileInput = document.getElementById("fileInput");
+//         // if (fileInput) {
+//         //   fileInput.value = "";
+//         // }
 //       },
 //     });
+//     setIsEditing(false); 
 //     console.log(updateData);
 
    
@@ -447,6 +446,7 @@ import { useFetchABookAuthor } from "@/hooks/useFetchABookAuthor";
 import { getToken } from "@/services/authService";
 import { BsX } from "react-icons/bs";
 import { updateBookType } from "@/types/types";
+import Swal from "sweetalert2";
 
 const BookDetails = () => {
   const navigate = useNavigate();
@@ -458,7 +458,6 @@ const BookDetails = () => {
   const updateBook = useUpdateBook(parseInt(bookId!));
   const token = getToken() || "";
   const { data: fetchABookAuthor}  = useFetchABookAuthor(token, parseInt(bookId!))
-  // console.log(fetchABookAuthor)
   const [isOn, setIsOn] = useState(true);
   const[updateData, setUpdateData] = useState<updateBookType>({
     title: "",
@@ -478,7 +477,19 @@ const BookDetails = () => {
         status: fetchABookAuthor.status || "",
       }))
     }
-  }, [fetchABookAuthor])
+  }, [fetchABookAuthor]);
+
+     useEffect(() => {
+     if (updateBook.isSuccess) {
+      console.log("changed")
+      //  Swal.fire({
+      //    icon: "success",
+      //    title: "Your Book is Updated",
+      //    showConfirmButton: false,
+      //    timer: 1500,
+      //  });
+     }
+   }, [updateBook.isSuccess]);
 
      const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
        if (event.target.files) {
@@ -529,9 +540,21 @@ const BookDetails = () => {
   const handleSaveClick = (e:any) => {
     e.preventDefault();
     updateBook.mutate(updateData);
+    console.log("changed")
+    // updateBook.mutate(updateData, {
+    //   onSuccess: (data) => {
+    //     setUpdateData((prev) => ({
+    //       ...prev,
+    //       ...data
+    //     }))
+    //     const fileInput = document.getElementById("fileInput");
+    //     if(fileInput) {
+    //       fileInput.value = "";
+    //     }
+    //   }
+    // });
     console.log(updateData)
-    // Logic to save changes
-    setIsEditing(false); // Set edit mode to false
+    setIsEditing(false);
   };
 
   // Function to handle delete confirmation
@@ -738,8 +761,8 @@ const BookDetails = () => {
                   <div className="mx-8 mt-[32px] w-[232px] h-[289px]">
                       <h1 className="flex justify-center mb-[18.5px] font-bold text-xl">Cover Image</h1>
 
-                      {/* <div className="border-slate-500 border border-dotted rounded-[8px] h-[252px]">
-                                               {
+                      <div className="border-slate-500 border border-dotted rounded-[8px] h-[252px]">
+                         {
                            isEditing ? (
                            <div>
                               <label htmlFor="fileInput" >
@@ -759,7 +782,7 @@ const BookDetails = () => {
                              className="hidden" 
                              onChange={handleFileChange} 
                            />
-                      </div> */}
+                      </div>
                   </div>
 
                   <div className="mx-8 mt-[84px] w-[232px] h-[314px]">
@@ -767,11 +790,27 @@ const BookDetails = () => {
 
                     <div className="bg-slate-100 shadow-xl border rounded-[8px] w-[232px] h-[280px]">
                      <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                        <img src={fetchABookAuthor?.coverImage} alt="" className="w-[86px] h-[129px]"/>
+                     {
+                           isEditing ? (
+                           <div>
+                            {updateData.coverImage && (
+                             <img src={URL.createObjectURL(updateData.coverImage)} alt="Upload Image" className="mx-[52.5px] my-[15px] rounded-[8px] w-[86px] h-[129px]"/>
+                            )}
+                           </div>
+                           ): (
+                             <img src={fetchABookAuthor?.coverImage} alt="" className="w-[86px] h-[129px]"/>
+                           )
+                         }
                      </div>
                      
                      <div className="ml-2">
-                        <h1 className="font-bold text-xl">{fetchABookAuthor?.title}</h1>
+                        {
+                          isEditing ? (
+                            <h1 className="font-bold text-xl">{updateData.title}</h1>
+                          ): (
+                            <h1 className="font-bold text-xl">{fetchABookAuthor?.title}</h1>
+                          )
+                        }
                         <p className="font-normal text-gray-500 text-sm">{fetchABookAuthor?.category.title}</p>
                         <h2 className="mt-3 font-medium text-md">{fetchABookAuthor?.user.name}</h2>
                      </div>
