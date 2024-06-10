@@ -404,7 +404,6 @@ const CreateBook = () => {
                 type="text"
                 id="keywords"
                 className="border-slate-300 border"
-                required
               />
               <div>
                 <ul className="absolute flex space-x-2 ml-4">

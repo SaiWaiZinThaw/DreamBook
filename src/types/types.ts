@@ -43,3 +43,11 @@ export type createChapterData = {
 export type categoryData = {
   categoryIds: string[];
 };
+
+export type updateBookType = {
+  title:string;
+  coverImage?: File;
+  description: string; 
+  keywords:string[]; 
+  status:string;
+}
