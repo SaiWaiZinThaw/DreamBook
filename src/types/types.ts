@@ -51,6 +51,7 @@ export type Book = {
   description: string;
   slug: string;
   keywords: string[];
+  status: string;
   user: {
     name: string;
     profilePicture: string;
