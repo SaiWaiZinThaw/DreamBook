@@ -16,7 +16,7 @@ const CategoryBooks = () => {
   //   const {data} = useFetchCategories();
 
   return (
-    <div className="mx-0 px-0 w-screen container">
+    <div className="container w-screen px-0 mx-0">
       <div className="flex gap-3 mx-[45px] mt-4 w-[970px] h-[42px]">
         <img src={Sorting} alt="sorting" />
 
@@ -50,7 +50,7 @@ const CategoryBooks = () => {
 
                   {/* This will change of code we get API */}
                   <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                    <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                    <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                       {active ? (
                         <BsHeartFill
                           className="text-red-500"
@@ -65,15 +65,15 @@ const CategoryBooks = () => {
                     </div>
 
                     {/* Change div to link to= {"Book/id"}*/}
-                    <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                    <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                       <BsEyeFill className="text-slate-500" />
                     </div>
                   </div>
                 </div>
 
                 <div className="ml-2">
-                  <h1 className="font-bold text-xl">Title</h1>
-                  <p className="font-normal text-gray-500 text-sm">Category</p>
+                  <h1 className="text-xl font-bold">Title</h1>
+                  <p className="text-sm font-normal text-gray-500">Category</p>
                   <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                 </div>
               </div>
@@ -83,8 +83,8 @@ const CategoryBooks = () => {
                   <img src={BestSelf} alt="" />
                 </div>
                 <div className="ml-2">
-                  <h1 className="font-bold text-xl">Title</h1>
-                  <p className="font-normal text-gray-500 text-sm">Category</p>
+                  <h1 className="text-xl font-bold">Title</h1>
+                  <p className="text-sm font-normal text-gray-500">Category</p>
                   <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                 </div>
               </div>
@@ -94,8 +94,8 @@ const CategoryBooks = () => {
                   <img src={BestSelf} alt="" />
                 </div>
                 <div className="ml-2">
-                  <h1 className="font-bold text-xl">Title</h1>
-                  <p className="font-normal text-gray-500 text-sm">Category</p>
+                  <h1 className="text-xl font-bold">Title</h1>
+                  <p className="text-sm font-normal text-gray-500">Category</p>
                   <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                 </div>
               </div>
@@ -105,8 +105,8 @@ const CategoryBooks = () => {
                   <img src={BestSelf} alt="" />
                 </div>
                 <div className="ml-2">
-                  <h1 className="font-bold text-xl">Title</h1>
-                  <p className="font-normal text-gray-500 text-sm">Category</p>
+                  <h1 className="text-xl font-bold">Title</h1>
+                  <p className="text-sm font-normal text-gray-500">Category</p>
                   <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                 </div>
               </div>
@@ -123,7 +123,7 @@ const CategoryBooks = () => {
 
                   {/* This will change of code we get API */}
                   <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                    <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                    <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                       {active ? (
                         <BsHeartFill
                           className="text-red-500"
@@ -138,15 +138,15 @@ const CategoryBooks = () => {
                     </div>
 
                     {/* Change div to link to= {"Book/id"}*/}
-                    <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                    <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                       <BsEyeFill className="text-slate-500" />
                     </div>
                   </div>
                 </div>
 
                 <div className="ml-2">
-                  <h1 className="font-bold text-xl">Title</h1>
-                  <p className="font-normal text-gray-500 text-sm">Category</p>
+                  <h1 className="text-xl font-bold">Title</h1>
+                  <p className="text-sm font-normal text-gray-500">Category</p>
                   <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                 </div>
               </div>
@@ -156,8 +156,8 @@ const CategoryBooks = () => {
                   <img src={BestSelf} alt="" />
                 </div>
                 <div className="ml-2">
-                  <h1 className="font-bold text-xl">Title</h1>
-                  <p className="font-normal text-gray-500 text-sm">Category</p>
+                  <h1 className="text-xl font-bold">Title</h1>
+                  <p className="text-sm font-normal text-gray-500">Category</p>
                   <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                 </div>
               </div>
@@ -167,8 +167,8 @@ const CategoryBooks = () => {
                   <img src={BestSelf} alt="" />
                 </div>
                 <div className="ml-2">
-                  <h1 className="font-bold text-xl">Title</h1>
-                  <p className="font-normal text-gray-500 text-sm">Category</p>
+                  <h1 className="text-xl font-bold">Title</h1>
+                  <p className="text-sm font-normal text-gray-500">Category</p>
                   <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                 </div>
               </div>
@@ -178,8 +178,8 @@ const CategoryBooks = () => {
                   <img src={BestSelf} alt="" />
                 </div>
                 <div className="ml-2">
-                  <h1 className="font-bold text-xl">Title</h1>
-                  <p className="font-normal text-gray-500 text-sm">Category</p>
+                  <h1 className="text-xl font-bold">Title</h1>
+                  <p className="text-sm font-normal text-gray-500">Category</p>
                   <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                 </div>
               </div>
@@ -196,7 +196,7 @@ const CategoryBooks = () => {
 
                   {/* This will change of code we get API */}
                   <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                    <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                    <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                       {active ? (
                         <BsHeartFill
                           className="text-red-500"
@@ -211,15 +211,15 @@ const CategoryBooks = () => {
                     </div>
 
                     {/* Change div to link to= {"Book/id"}*/}
-                    <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                    <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                       <BsEyeFill className="text-slate-500" />
                     </div>
                   </div>
                 </div>
 
                 <div className="ml-2">
-                  <h1 className="font-bold text-xl">Title</h1>
-                  <p className="font-normal text-gray-500 text-sm">Category</p>
+                  <h1 className="text-xl font-bold">Title</h1>
+                  <p className="text-sm font-normal text-gray-500">Category</p>
                   <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                 </div>
               </div>
@@ -229,8 +229,8 @@ const CategoryBooks = () => {
                   <img src={BestSelf} alt="" />
                 </div>
                 <div className="ml-2">
-                  <h1 className="font-bold text-xl">Title</h1>
-                  <p className="font-normal text-gray-500 text-sm">Category</p>
+                  <h1 className="text-xl font-bold">Title</h1>
+                  <p className="text-sm font-normal text-gray-500">Category</p>
                   <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                 </div>
               </div>
@@ -240,8 +240,8 @@ const CategoryBooks = () => {
                   <img src={BestSelf} alt="" />
                 </div>
                 <div className="ml-2">
-                  <h1 className="font-bold text-xl">Title</h1>
-                  <p className="font-normal text-gray-500 text-sm">Category</p>
+                  <h1 className="text-xl font-bold">Title</h1>
+                  <p className="text-sm font-normal text-gray-500">Category</p>
                   <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                 </div>
               </div>
@@ -251,8 +251,8 @@ const CategoryBooks = () => {
                   <img src={BestSelf} alt="" />
                 </div>
                 <div className="ml-2">
-                  <h1 className="font-bold text-xl">Title</h1>
-                  <p className="font-normal text-gray-500 text-sm">Category</p>
+                  <h1 className="text-xl font-bold">Title</h1>
+                  <p className="text-sm font-normal text-gray-500">Category</p>
                   <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
                 </div>
               </div>
