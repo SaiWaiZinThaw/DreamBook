@@ -43,3 +43,33 @@ export type createChapterData = {
 export type categoryData = {
   categoryIds: string[];
 };
+
+export type Book = {
+  bookId: string;
+  title: string;
+  coverImage: string;
+  description: string;
+  slug: string;
+  keywords: string[];
+  user: {
+    name: string;
+    profilePicture: string;
+  };
+  category: {
+    categoryId: string;
+    title: string;
+    icon: string;
+    priority: string;
+  };
+};
+
+export type fetchBookData = {
+  items: Book[];
+  meta: {
+    currentPage: string;
+    itemCount: string;
+    itemsPerPage: string;
+    totalItems: string;
+    totalPages: string;
+  };
+};
