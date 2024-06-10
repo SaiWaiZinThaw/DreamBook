@@ -44,6 +44,7 @@ export type categoryData = {
   categoryIds: string[];
 };
 
+
 export type updateBookType = {
   title: string;
   coverImage?: File;

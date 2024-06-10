@@ -7,8 +7,10 @@ import {
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { useEffect, useState } from "react";
+
 import { Input } from "@/components/ui/input";
 import { useUpdateBook } from "@/hooks/useFetchABookAuthor";
+
 import { Label } from "@/components/ui/label";
 import { AiOutlineUser } from "react-icons/ai";
 import {
@@ -32,16 +34,20 @@ import { BookCoverChange } from "./BookCoverChange";
 const BookDetails = () => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
+
   const [currentKeyword, setCurrentKeyword] = useState("");
   const [keywords, setKeywords] = useState<string[]>([]);
   const { bookId } = useParams();
   const updateBook = useUpdateBook(parseInt(bookId!));
+
   const token = getToken() || "";
   const { data: fetchABookAuthor } = useFetchABookAuthor(
     token,
     parseInt(bookId!)
   );
+
   // console.log(fetchABookAuthor)
+
   const [isOn, setIsOn] = useState(true);
   const [updateData, setUpdateData] = useState<updateBookType>({
     title: "",
@@ -244,6 +250,7 @@ const BookDetails = () => {
                 Public
               </button>
             </div>
+
           </div>
 
           <div className="flex">
@@ -254,6 +261,7 @@ const BookDetails = () => {
                     Title
                   </Label>
                   <div className="relative">
+
                     {isEditing ? (
                       <Input
                         type="text"
@@ -374,8 +382,10 @@ const BookDetails = () => {
                       {fetchABookAuthor?.description}
                     </p>
                   )}
+
                 </div>
               </div>
+
 
               <div className="flex mt-[130px] ml-[390px] rounded-[8px] h-[43px]">
                 <div className="">
@@ -461,6 +471,7 @@ const BookDetails = () => {
                     />
                   )}
                 </div>
+
               </div>
 
               <div className="mx-8 mt-[84px] w-[232px] h-[314px]">
