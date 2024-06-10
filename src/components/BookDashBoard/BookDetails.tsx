@@ -7,6 +7,10 @@ import {
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { useEffect, useState } from "react";
+
+import { Input } from "@/components/ui/input";
+import { useUpdateBook } from "@/hooks/useFetchABookAuthor";
+
 import { Label } from "@/components/ui/label";
 import { AiOutlineUser } from "react-icons/ai";
 import {
@@ -24,20 +28,84 @@ import { Button } from "@/components/ui/button";
 import { useFetchABookAuthor } from "@/hooks/useFetchABookAuthor";
 import { getToken } from "@/services/authService";
 import { BsX } from "react-icons/bs";
+import { updateBookType } from "@/types/types";
+import { BookCoverChange } from "./BookCoverChange";
 
 const BookDetails = () => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
+
+  const [currentKeyword, setCurrentKeyword] = useState("");
   const [keywords, setKeywords] = useState<string[]>([]);
   const { bookId } = useParams();
-  console.log(bookId);
+  const updateBook = useUpdateBook(parseInt(bookId!));
+
   const token = getToken() || "";
   const { data: fetchABookAuthor } = useFetchABookAuthor(
     token,
     parseInt(bookId!)
   );
-  console.log(fetchABookAuthor);
+
+  // console.log(fetchABookAuthor)
+
   const [isOn, setIsOn] = useState(true);
+  const [updateData, setUpdateData] = useState<updateBookType>({
+    title: "",
+    coverImage: undefined,
+    description: "",
+    keywords: [],
+    status: "",
+  });
+
+  useEffect(() => {
+    if (isOn) {
+      setUpdateData((prev) => ({
+        ...prev,
+        status: "draft",
+      }));
+      updateBook.mutate(updateData);
+    } else {
+      setUpdateData((prev) => ({
+        ...prev,
+        status: "published",
+      }));
+      updateBook.mutate(updateData);
+    }
+  }, [isOn]);
+
+  useEffect(() => {
+    if (fetchABookAuthor) {
+      setUpdateData((prev) => ({
+        ...prev,
+        title: fetchABookAuthor.title || "",
+        description: fetchABookAuthor.description || "",
+        keywords: fetchABookAuthor.keywords || [],
+        status: fetchABookAuthor.status || "",
+      }));
+    }
+  }, [fetchABookAuthor]);
+
+  const handleFileChange = (file: File) => {
+    setUpdateData((prev) => ({
+      ...prev,
+      coverImage: file,
+    }));
+  };
+
+  const handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentKeyword(event.target.value);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && currentKeyword.trim()) {
+      event.preventDefault();
+      const trimmedKeyword = currentKeyword.trim();
+      const newKeywords = [trimmedKeyword, ...keywords];
+      setKeywords(newKeywords);
+      setUpdateData((prev) => ({ ...prev, keywords: newKeywords }));
+      setCurrentKeyword("");
+    }
+  };
 
   const toggleButton = () => {
     setIsOn(!isOn);
@@ -60,7 +128,10 @@ const BookDetails = () => {
   };
 
   // Function to handle save button click
-  const handleSaveClick = () => {
+  const handleSaveClick = (e: any) => {
+    e.preventDefault();
+    updateBook.mutate(updateData);
+    console.log(updateData);
     // Logic to save changes
     setIsEditing(false); // Set edit mode to false
   };
@@ -180,12 +251,6 @@ const BookDetails = () => {
               </button>
             </div>
 
-            {/* <Tabs defaultValue="draft" className="bg-slate-200 my-[13px] ml-[650px] rounded-[8px] w-[206px] h-[40px] text-slate-400">
-            <TabsList className="w-full gap-x-2">
-              <TabsTrigger onClick={() => handleTabClick('draft')} value="draft" className={`bg-yellow-500 text-slate-100 rounded-[8px] w-[91px] h-[31px] ${activeTab === 'draft' ? 'bg-yellow-500 text-slate-100' : ''}`}>Draft</TabsTrigger>
-              <TabsTrigger onClick={() => handleTabClick('public')} value="public"  className={`bg-green-800 text-slate-100 rounded-[8px] w-[91px] h-[31px] ${activeTab === 'public' ? 'bg-green-800 text-slate-100' : ''}`}>Public</TabsTrigger>
-            </TabsList>
-          </Tabs> */}
           </div>
 
           <div className="flex">
@@ -196,13 +261,32 @@ const BookDetails = () => {
                     Title
                   </Label>
                   <div className="relative">
+
+                    {isEditing ? (
+                      <Input
+                        type="text"
+                        onChange={(
+                          event: React.ChangeEvent<HTMLInputElement>
+                        ) => {
+                          setUpdateData((prev) => ({
+                            ...prev,
+                            title: event.target.value,
+                          }));
+                        }}
+                        value={updateData.title}
+                        id="title"
+                        className="text-black border border-slate-300"
+                      />
+                    ) : (
+                      <h1
+                        id="title"
+                        className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] h-[45px] font-semibold text-black"
+                      >
+                        {fetchABookAuthor?.title}
+                      </h1>
+                    )}
                     {/* <Input  type="text" id="title" placeholder={fetchABookAuthor.title}  className="text-black border border-slate-300"/> */}
-                    <h1
-                      id="title"
-                      className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] h-[45px] font-semibold text-black"
-                    >
-                      {fetchABookAuthor?.title}
-                    </h1>
+                    {/* <h1 id="title" className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] h-[45px] font-semibold text-black">{fetchABookAuthor?.title}</h1> */}
                     <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" />
                   </div>
                 </div>
@@ -231,25 +315,45 @@ const BookDetails = () => {
                   >
                     Keywords
                   </Label>
-                  <h1
-                    id="keywords"
-                    className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] h-[52px] font-semibold text-black"
-                  >
-                    <ul className="flex space-x-2">
+                  {isEditing ? (
+                    <div className="w-[603px]">
+                      <Input
+                        type="text"
+                        id="keywords"
+                        value={currentKeyword}
+                        onChange={handleKeywordChange}
+                        onKeyPress={handleKeyPress}
+                        className="py-[8.5px] rounded-[5px] h-[45px] font-semibold text-black"
+                      />
+                    </div>
+                  ) : (
+                    <div className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] h-[45px] font-semibold text-black">
                       {keywords.map((keyword, index) => (
-                        <li
+                        <span
                           key={index}
-                          className="flex border-primary p-[3px] pl-2 border border-opacity-55 rounded-md text-slate-600"
+                          className="inline-block px-3 py-1 mb-2 mr-2 text-sm font-semibold bg-gray-200 rounded-full text-slate-950"
                         >
                           {keyword}
-                          <BsX
-                            onClick={() => handleDeleteKeyword(index)}
-                            className="mt-[5px] cursor-pointer"
-                          />
-                        </li>
+                        </span>
                       ))}
-                    </ul>
-                  </h1>
+                    </div>
+                  )}
+
+                  {isEditing && (
+                    <div className="flex">
+                      {keywords.map((keyword, index) => (
+                        <div key={index} className="flex items-center">
+                          <span className="flex px-3 py-1 mb-2 mr-2 text-sm font-semibold bg-gray-200 rounded-full text-slate-950">
+                            {keyword}
+                            <BsX
+                              onClick={() => handleDeleteKeyword(index)}
+                              className="mt-[5px] cursor-pointer"
+                            />
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="items-center gap-1.5 grid mx-[32px] pt-[120px] w-[603px] h-[176px]">
@@ -259,11 +363,29 @@ const BookDetails = () => {
                   >
                     Description
                   </Label>
-                  <p className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]">
-                    {fetchABookAuthor?.description}
-                  </p>
+                  {isEditing ? (
+                    <textarea
+                      onChange={(
+                        event: React.ChangeEvent<HTMLTextAreaElement>
+                      ) => {
+                        setUpdateData((prev) => ({
+                          ...prev,
+                          description: event.target.value,
+                        }));
+                      }}
+                      value={updateData.description}
+                      id="description"
+                      className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]"
+                    />
+                  ) : (
+                    <p className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]">
+                      {fetchABookAuthor?.description}
+                    </p>
+                  )}
+
                 </div>
               </div>
+
 
               <div className="flex mt-[130px] ml-[390px] rounded-[8px] h-[43px]">
                 <div className="">
@@ -336,13 +458,20 @@ const BookDetails = () => {
                 </h1>
 
                 <div className="border-slate-500 border border-dotted rounded-[8px] h-[252px]">
-                  <input type="file" className="hidden" id="fileInput" />
-                  <img
-                    src={fetchABookAuthor?.coverImage}
-                    alt=""
-                    className="mx-[52.5px] my-[30px] w-[127px] h-[191px]"
-                  />
+                  {isEditing && fetchABookAuthor ? (
+                    <BookCoverChange
+                      onFileChange={handleFileChange}
+                      coverImage={fetchABookAuthor.coverImage}
+                    />
+                  ) : (
+                    <img
+                      src={fetchABookAuthor?.coverImage}
+                      alt=""
+                      className="mx-[52.5px] my-[30px] w-[127px] h-[191px]"
+                    />
+                  )}
                 </div>
+
               </div>
 
               <div className="mx-8 mt-[84px] w-[232px] h-[314px]">
