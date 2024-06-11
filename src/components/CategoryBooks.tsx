@@ -1,4 +1,4 @@
-import { BestSelf, Sorting } from "@/assets";
+import { Sorting } from "@/assets";
 // import useFetchCategories from "@/hooks/useFetchCategories";
 import { useState } from "react";
 import { BsHeartFill, BsHeart, BsEyeFill } from "react-icons/bs";
@@ -10,323 +10,140 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
+import { Input } from "@/components/ui/input";
+import { useFetchAllBooks } from "@/hooks/useFetchBook";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { useParams } from "react-router-dom";
 const CategoryBooks = () => {
   const [active, setActive] = useState(false);
-  //   const {data} = useFetchCategories();
-
+  const { page } = useParams();
+  const pageNumber = parseInt(page!);
+  const { data, isLoading } = useFetchAllBooks(pageNumber);
   return (
-    <div className="container w-screen px-0 mx-0">
-      <div className="flex gap-3 mx-[45px] mt-4 w-[970px] h-[42px]">
-        <img src={Sorting} alt="sorting" />
+    <div className="flex flex-col w-full min-h-screen px-0 mx-0 ">
+      <div className="flex justify-between mx-[45px] mt-4 h-[42px]">
+        <div className="flex items-center gap-3">
+          <img src={Sorting} alt="sorting" />
 
-        <Select>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Sort by default" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="default">Sort by default</SelectItem>
-            <SelectItem value="random">Sort by random</SelectItem>
-            <SelectItem value="latest">Sort by Latest</SelectItem>
-            <SelectItem value="A-Z">Sort by A-Z</SelectItem>
-          </SelectContent>
-        </Select>
+          <Select>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Sort by default" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="default">Sort by default</SelectItem>
+              <SelectItem value="random">Sort by random</SelectItem>
+              <SelectItem value="latest">Sort by Latest</SelectItem>
+              <SelectItem value="A-Z">Sort by A-Z</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-        <div className="flex border-slate-400 ml-[262px] border rounded-[8px] w-[480px] h-[42px]">
-          <IoIosSearch className="my-[7px] ml-[12px] w-[28px] h-[28px] text-slate-400" />
-          <h4 className="my-[7px] ml-[4px] w-[46px] h-[23px] text-lg text-slate-400">
-            Search
-          </h4>
+        <div className="flex justify-self-end w-[380px] h-[32px]">
+          <Input
+            icon={<IoIosSearch className="text-2xl" />}
+            placeholder="Search"
+            className="!border-black rounded-[8px] w-[380px] h-[42px]"
+          />
         </div>
       </div>
 
-      <div className="mt-[30px] ml-[35px] overflow-hidden">
-        <div className="flex mb-[30px] w-[990px]">
-          <div className="relative transition group">
-            <div className="grid grid-cols-4">
-              <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                  <img src={BestSelf} alt="" />
-
-                  {/* This will change of code we get API */}
-                  <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                    <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
-                      {active ? (
-                        <BsHeartFill
-                          className="text-red-500"
-                          onClick={() => setActive(!active)}
-                        />
-                      ) : (
-                        <BsHeart
-                          className="text-slate-500"
-                          onClick={() => setActive(!active)}
-                        />
-                      )}
-                    </div>
-
-                    {/* Change div to link to= {"Book/id"}*/}
-                    <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
-                      <BsEyeFill className="text-slate-500" />
-                    </div>
-                  </div>
+      <div className="grid w-full grid-cols-4 gap-8 p-10 ">
+        {!isLoading &&
+          data &&
+          data.items.map((book) => (
+            <div
+              key={book.title}
+              className="bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] w-[232px] h-[280px] relative group"
+            >
+              <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
+                <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                  {active ? (
+                    <BsHeartFill
+                      className="text-red-500 cursor-pointer"
+                      onClick={() => setActive(!active)}
+                    />
+                  ) : (
+                    <BsHeart
+                      className="cursor-pointer text-slate-500"
+                      onClick={() => setActive(!active)}
+                    />
+                  )}
                 </div>
 
-                <div className="ml-2">
-                  <h1 className="text-xl font-bold">Title</h1>
-                  <p className="text-sm font-normal text-gray-500">Category</p>
-                  <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                  <BsEyeFill className="text-slate-500" />
                 </div>
               </div>
-
-              <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                  <img src={BestSelf} alt="" />
-                </div>
-                <div className="ml-2">
-                  <h1 className="text-xl font-bold">Title</h1>
-                  <p className="text-sm font-normal text-gray-500">Category</p>
-                  <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                </div>
+              <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                <img
+                  src={book.coverImage}
+                  alt={book.coverImage}
+                  className=" h-[140px] max-w-[120px]"
+                />
               </div>
 
-              <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                  <img src={BestSelf} alt="" />
+              <div className="flex flex-col justify-center gap-1 ml-2">
+                <h1 className="font-bold text-[15px] h-6 line-clamp-1">
+                  {book.title}
+                </h1>
+                <div className="flex items-center gap-2">
+                  <img
+                    src={book.category.icon}
+                    alt={book.category.title}
+                    className="w-6"
+                  />
+                  <p className="text-[12px] font-Inter text-secondary-foreground">
+                    {book.category.title}
+                  </p>
                 </div>
-                <div className="ml-2">
-                  <h1 className="text-xl font-bold">Title</h1>
-                  <p className="text-sm font-normal text-gray-500">Category</p>
-                  <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                </div>
-              </div>
-
-              <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                  <img src={BestSelf} alt="" />
-                </div>
-                <div className="ml-2">
-                  <h1 className="text-xl font-bold">Title</h1>
-                  <p className="text-sm font-normal text-gray-500">Category</p>
-                  <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
+                <div className="flex items-center gap-3 mt-1">
+                  <img
+                    src={book.user.profilePicture}
+                    alt={book.user.name}
+                    className="w-6 h-6 rounded-full"
+                  />
+                  <h2 className="text-[13px] text-black">
+                    By {book.user.name}
+                  </h2>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div className="flex mb-[30px] w-[990px]">
-          <div className="relative transition group">
-            <div className="grid grid-cols-4">
-              <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                  <img src={BestSelf} alt="" />
-
-                  {/* This will change of code we get API */}
-                  <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                    <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
-                      {active ? (
-                        <BsHeartFill
-                          className="text-red-500"
-                          onClick={() => setActive(!active)}
-                        />
-                      ) : (
-                        <BsHeart
-                          className="text-slate-500"
-                          onClick={() => setActive(!active)}
-                        />
-                      )}
-                    </div>
-
-                    {/* Change div to link to= {"Book/id"}*/}
-                    <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
-                      <BsEyeFill className="text-slate-500" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="ml-2">
-                  <h1 className="text-xl font-bold">Title</h1>
-                  <p className="text-sm font-normal text-gray-500">Category</p>
-                  <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                </div>
-              </div>
-
-              <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                  <img src={BestSelf} alt="" />
-                </div>
-                <div className="ml-2">
-                  <h1 className="text-xl font-bold">Title</h1>
-                  <p className="text-sm font-normal text-gray-500">Category</p>
-                  <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                </div>
-              </div>
-
-              <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                  <img src={BestSelf} alt="" />
-                </div>
-                <div className="ml-2">
-                  <h1 className="text-xl font-bold">Title</h1>
-                  <p className="text-sm font-normal text-gray-500">Category</p>
-                  <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                </div>
-              </div>
-
-              <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                  <img src={BestSelf} alt="" />
-                </div>
-                <div className="ml-2">
-                  <h1 className="text-xl font-bold">Title</h1>
-                  <p className="text-sm font-normal text-gray-500">Category</p>
-                  <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex mb-[30px] w-[990px]">
-          <div className="relative transition group">
-            <div className="grid grid-cols-4">
-              <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                  <img src={BestSelf} alt="" />
-
-                  {/* This will change of code we get API */}
-                  <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                    <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
-                      {active ? (
-                        <BsHeartFill
-                          className="text-red-500"
-                          onClick={() => setActive(!active)}
-                        />
-                      ) : (
-                        <BsHeart
-                          className="text-slate-500"
-                          onClick={() => setActive(!active)}
-                        />
-                      )}
-                    </div>
-
-                    {/* Change div to link to= {"Book/id"}*/}
-                    <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
-                      <BsEyeFill className="text-slate-500" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="ml-2">
-                  <h1 className="text-xl font-bold">Title</h1>
-                  <p className="text-sm font-normal text-gray-500">Category</p>
-                  <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                </div>
-              </div>
-
-              <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                  <img src={BestSelf} alt="" />
-                </div>
-                <div className="ml-2">
-                  <h1 className="text-xl font-bold">Title</h1>
-                  <p className="text-sm font-normal text-gray-500">Category</p>
-                  <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                </div>
-              </div>
-
-              <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                  <img src={BestSelf} alt="" />
-                </div>
-                <div className="ml-2">
-                  <h1 className="text-xl font-bold">Title</h1>
-                  <p className="text-sm font-normal text-gray-500">Category</p>
-                  <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                </div>
-              </div>
-
-              <div className="bg-slate-100 shadow-xl mr-[21px] border rounded-[8px] w-[232px] h-[280px]">
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                  <img src={BestSelf} alt="" />
-                </div>
-                <div className="ml-2">
-                  <h1 className="text-xl font-bold">Title</h1>
-                  <p className="text-sm font-normal text-gray-500">Category</p>
-                  <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          ))}
+      </div>
+      <div className="w-full mt-auto">
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious href={`${pageNumber - 1}`} />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="/library/1">{pageNumber}</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="/library/2">
+                {pageNumber + 1}
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="/library/3">
+                {pageNumber + 2}
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext href={`${pageNumber + 1}`} />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );
 };
 
 export default CategoryBooks;
-
-// import { useState } from "react";
-// import BookItem from "./BookItem";
-
-// const CategoryBooks = ({ books }) => {
-//   const [rotation, setRotation] = useState(0);
-//   const [activeBooks, setActiveBooks] = useState({});
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const itemsPerPage = 8; // Adjust as needed
-
-//   const handleRotateChange = () => {
-//     setRotation(rotation + 180);
-//   };
-
-//   const toggleActive = (bookId) => {
-//     setActiveBooks((prevActiveBooks) => ({
-//       ...prevActiveBooks,
-//       [bookId]: !prevActiveBooks[bookId],
-//     }));
-//   };
-
-//   // Calculate index range for the current page
-//   const indexOfLastItem = currentPage * itemsPerPage;
-//   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-//   const currentBooks = books.slice(indexOfFirstItem, indexOfLastItem);
-
-//   // Change page
-//   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-//   return (
-//     <div>
-//       {/* Sorting and search UI */}
-//       <div>
-//         {/* Sorting and search UI */}
-//       </div>
-
-//       {/* Books section */}
-//       <div>
-//         {currentBooks.map((book) => (
-//           <BookItem
-//             key={book.id}
-//             book={book}
-//             active={activeBooks[book.id]}
-//             toggleActive={() => toggleActive(book.id)}
-//           />
-//         ))}
-//       </div>
-
-//       {/* Pagination */}
-//       <ul className="pagination">
-//         {Array.from({ length: Math.ceil(books.length / itemsPerPage) }).map(
-//           (_, index) => (
-//             <li key={index} className="page-item">
-//               <button onClick={() => paginate(index + 1)} className="page-link">
-//                 {index + 1}
-//               </button>
-//             </li>
-//           )
-//         )}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default CategoryBooks;

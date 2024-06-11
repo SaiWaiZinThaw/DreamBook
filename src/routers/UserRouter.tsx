@@ -10,7 +10,7 @@ const UserRouter: RouteObject[] = [
     element: <Home />,
   },
   {
-    path: "/library",
+    path: "/library/:page",
     element: <Library />,
   },
 

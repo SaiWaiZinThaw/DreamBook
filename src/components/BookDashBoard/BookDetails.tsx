@@ -34,7 +34,6 @@ import { BookCoverChange } from "./BookCoverChange";
 const BookDetails = () => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
-
   const [currentKeyword, setCurrentKeyword] = useState("");
   const [keywords, setKeywords] = useState<string[]>([]);
   const { bookId } = useParams();
@@ -58,16 +57,26 @@ const BookDetails = () => {
   });
 
   useEffect(() => {
+    if (fetchABookAuthor?.status === "draft") {
+      setIsOn(true);
+      console.log(isOn);
+    } else if (fetchABookAuthor?.status === "published") {
+      setIsOn(false);
+      console.log(isOn);
+    }
+  }, [fetchABookAuthor?.status]);
+
+  useEffect(() => {
     if (isOn) {
       setUpdateData((prev) => ({
         ...prev,
-        status: "draft",
+        status: "published",
       }));
       updateBook.mutate(updateData);
     } else {
       setUpdateData((prev) => ({
         ...prev,
-        status: "published",
+        status: "draft",
       }));
       updateBook.mutate(updateData);
     }
@@ -250,7 +259,6 @@ const BookDetails = () => {
                 Public
               </button>
             </div>
-
           </div>
 
           <div className="flex">
@@ -261,7 +269,6 @@ const BookDetails = () => {
                     Title
                   </Label>
                   <div className="relative">
-
                     {isEditing ? (
                       <Input
                         type="text"
@@ -382,10 +389,8 @@ const BookDetails = () => {
                       {fetchABookAuthor?.description}
                     </p>
                   )}
-
                 </div>
               </div>
-
 
               <div className="flex mt-[130px] ml-[390px] rounded-[8px] h-[43px]">
                 <div className="">
@@ -471,7 +476,6 @@ const BookDetails = () => {
                     />
                   )}
                 </div>
-
               </div>
 
               <div className="mx-8 mt-[84px] w-[232px] h-[314px]">

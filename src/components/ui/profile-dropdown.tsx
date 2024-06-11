@@ -52,34 +52,38 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuLabel className="!border-none">
-            <h3 className="font-bold text-[18px]">Account</h3>
+            <h3 className="font-bold text-[18px] px-2">Account</h3>
           </DropdownMenuLabel>
-          <NavLink to="/me">
+          <NavLink to="/me/info">
             <DropdownMenuItem>
-              <div className="flex items-center gap-3">
-                <FaUser />
+              <div className="flex items-center gap-1 px-2">
+                <FaUser className="text-[16px]" />
                 <p>Profile</p>
               </div>
             </DropdownMenuItem>
           </NavLink>
-          <DropdownMenuItem>
-            <div className="flex items-center gap-3">
-              <ImBooks className="text-lg" />
-              <p>Book Lists</p>
-            </div>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <div className="flex items-center gap-3">
-              <GoHeart />
-              <p>Favorite Books</p>
-            </div>
-          </DropdownMenuItem>
+          <NavLink to="/me/books">
+            <DropdownMenuItem>
+              <div className="flex items-center gap-1 px-2">
+                <ImBooks className="text-[16px]" />
+                <p>Book Lists</p>
+              </div>
+            </DropdownMenuItem>
+          </NavLink>
+          <NavLink to="/me/fav">
+            <DropdownMenuItem>
+              <div className="flex items-center gap-1 px-2">
+                <GoHeart className="text-[16px]" />
+                <p>Favorite Books</p>
+              </div>
+            </DropdownMenuItem>
+          </NavLink>
           <DropdownMenuLabel className="!border-none">
-            <h3 className="font-bold text-[18px]">Theme</h3>
+            <h3 className="font-bold text-[18px] px-2">Theme</h3>
           </DropdownMenuLabel>
 
           <div className="flex flex-col gap-2 pb-2 text-sm">
-            <div className="flex items-center gap-2 mx-4">
+            <div className="flex items-center gap-2 px-2 mx-4">
               <Input
                 className="w-3 h-3 rounded-none"
                 type="radio"
@@ -91,7 +95,7 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               </label>
             </div>
 
-            <div className="flex items-center gap-2 mx-4">
+            <div className="flex items-center gap-2 px-2 mx-4">
               <Input
                 className="w-3 h-3 rounded-none"
                 type="radio"
@@ -103,7 +107,7 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               </label>
             </div>
 
-            <div className="flex items-center gap-2 pb-2 mx-4 border-b border-border">
+            <div className="flex items-center gap-2 px-2 pb-2 mx-4 border-b border-border">
               <Input
                 className="w-3 h-3 rounded-none"
                 type="radio"

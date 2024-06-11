@@ -176,8 +176,6 @@ const CreateBook = () => {
       (createBookMutation.isSuccess && fetchMyProfile !== null) ||
       undefined
     ) {
-      console.log(createBookMutation.data);
-      getToken();
       const createdBookId = createBookMutation.data?.bookId;
       if (createdBookId) {
         navigate(`/book-dashboard/${createdBookId}`);
@@ -403,9 +401,7 @@ const CreateBook = () => {
                 name="keywords"
                 type="text"
                 id="keywords"
-
-                className="border-slate-300 border"
-
+                className="border border-slate-300"
               />
               <div>
                 <ul className="absolute flex ml-4 space-x-2">
