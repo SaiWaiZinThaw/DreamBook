@@ -1,3 +1,4 @@
+import { fetchBookData } from "@/types/types";
 import BaseURL from "../services/ApiEndPoint";
 
 const fetchBook = async (token: string) => {
@@ -15,7 +16,7 @@ const fetchBook = async (token: string) => {
   if (!response.ok) {
     throw new Error();
   }
-  return result as any[];
+  return result as fetchBookData;
 };
 
 export default fetchBook;
