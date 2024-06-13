@@ -45,7 +45,7 @@ const Hero = () => {
             <br /> words ignite passions and journeys never end."
           </p>
 
-          <NavLink to="/library">
+          <NavLink to="/library/1">
             <button className="bg-blue-700 mt-12 p-[10px] rounded-[6px] w-60 text-white">
               Explore Now
             </button>

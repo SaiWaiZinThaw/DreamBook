@@ -27,7 +27,7 @@ const ProfileLayout = () => {
   }, [!token]);
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <NavBar />
       <div className="flex w-full h-screen">
         <div className="border-2 shadow-sm p-8 pt-16 shoadw-border border-r-border w-[480px] h-full flex flex-col gap-10">
