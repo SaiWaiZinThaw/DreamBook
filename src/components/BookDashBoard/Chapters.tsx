@@ -1,12 +1,4 @@
-import {
-  BookFloatAnimation,
-  ChapterOutline,
-  FooterImg,
-  LightCommentOutline,
-  LightMenuBook,
-} from "@/assets";
-import { NavLink, useNavigate } from "react-router-dom";
-import { FaArrowLeft } from "react-icons/fa";
+import { BookFloatAnimation } from "@/assets";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import "./animation-style.css";
@@ -20,143 +12,92 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { BsPlus } from "react-icons/bs";
+import { HiOutlineDotsVertical } from "react-icons/hi";
 import "quill/dist/quill.snow.css";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import useChapterCreate from "@/hooks/useChapterCreate";
 import { createChapterData } from "@/types/types";
 import { getToken } from "@/services/authService";
 import ChapterForm from "./ChapterForm";
+import { useParams } from "react-router-dom";
+import {
+  useDeleteChapter,
+  useFetchAuthorAChapter,
+} from "@/hooks/useFetchAuthorChapter";
 
 const Chapters = () => {
-  const navigate = useNavigate();
-
   const [activeTab, setActiveTab] = useState(null);
   const createChapterMutation = useChapterCreate();
-
+  const { bookID } = useParams();
   const [chapterData, setChapterData] = useState<createChapterData>({
     title: "",
     content: "",
     status: "draft",
     priority: 0,
-    bookId: 1,
+    bookId: 0,
   });
-  // const [savedChapters, setSavedChapters] = useState([]);
+
+  const deleteChapter = useDeleteChapter();
+
+  const deleteHandler = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    const chapter = event.currentTarget.closest(".chapter");
+    const chapterId = chapter?.id;
+    deleteChapter.mutate(chapterId!);
+  };
+
+  const { data, isLoading } = useFetchAuthorAChapter(bookID!);
+  if (!isLoading) {
+    console.log(data);
+  }
+
+  useEffect(() => {
+    if (deleteChapter.isSuccess) {
+      alert("success");
+    }
+  }, [deleteChapter.isSuccess]);
 
   useEffect(() => {
     if (createChapterMutation.isSuccess) {
-      console.log(createChapterMutation.data);
       getToken();
     }
   }, [createChapterMutation.isSuccess]);
 
   useEffect(() => {
     if (createChapterMutation.isError) {
-      alert("Error");
+      alert(createChapterMutation.error);
     }
   }, [createChapterMutation.isError]);
 
   const handleButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    const data = { ...chapterData };
+    const data = { ...chapterData, bookId: parseInt(bookID!) };
+    console.log(bookID);
     createChapterMutation.mutate(data);
-    console.log(data);
   };
 
   const handleTabClick = (value: any) => {
     setActiveTab(value === activeTab ? null : value);
   };
 
-  // In this Section, Save the chapter content to the state or perform any necessary actions
-  // const handleSaveChapter = () => {
-  //   setSavedChapters([...savedChapters, content]);
-  // };
-
   return (
-    <div className="container w-screen px-0 mx-0">
-      <div className="flex">
-        <div className="bg-primary bg-opacity-90 w-[296px]">
-          <div className="border-slate-300 border-b h-[80px]">
-            <img
-              src={FooterImg}
-              alt=""
-              className="mx-[33.5px] py-[7.5px] w-[223px]"
-            />
-          </div>
-
-          <div className="mt-[54px]">
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "bg-slate-300 bg-opacity-50 flex w-[296px]" : ""
-              }
-              to={"/book-dashboard/book-details"}
-            >
-              <div className="flex mb-[8px] py-[13.5px] pl-[16px] h-[56px]">
-                <img
-                  src={LightMenuBook}
-                  alt=""
-                  className="mr-[8px] w-[24px] h-[31px]"
-                />
-                <h1 className="text-lg font-semibold text-slate-100">
-                  Book Details
-                </h1>
-              </div>
-            </NavLink>
-
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "bg-slate-300 bg-opacity-50 flex w-[296px]" : ""
-              }
-              to={"/book-dashboard/chapters"}
-            >
-              <div className="flex mb-[8px] py-[13.5px] pl-[16px] h-[56px]">
-                <img
-                  src={ChapterOutline}
-                  alt=""
-                  className="mr-[8px] w-[24px] h-[24px]"
-                />
-                <h1 className="text-lg font-semibold text-slate-100">
-                  Chapters
-                </h1>
-              </div>
-            </NavLink>
-
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "bg-slate-300 bg-opacity-50 flex w-[296px]" : ""
-              }
-              to={"/book-dashboard/comments"}
-            >
-              <div className="flex mb-[8px] py-[13.5px] pl-[16px] h-[56px]">
-                <img
-                  src={LightCommentOutline}
-                  alt=""
-                  className="mr-[8px] w-[24px] h-[24px]"
-                />
-                <h1 className="text-lg font-semibold text-slate-100">
-                  Comments
-                </h1>
-              </div>
-            </NavLink>
-          </div>
-
-          <div
-            className="flex border-slate-300 mt-[607px] pt-[23px] pl-[19px] border-t h-[71px] text-white cursor-pointer"
-            onClick={() => navigate(-1)}
-          >
-            <FaArrowLeft className="mt-[4px] mr-[8px] w-[20px] h-[20px]" />
-            <h1 className="text-lg font-medium">Exit to Booklists</h1>
-          </div>
-        </div>
-
-        <div className="flex flex-col">
-          <div className="flex border-slate-300 border-b h-[80px]">
+    <div className="w-full h-screen ">
+      <div className="w-full px-0 mx-0">
+        <div className="flex flex-col w-full">
+          <div className="w-full flex border-slate-300 border-b h-[80px]">
             <h1 className="my-[20px] pl-[40px] font-extrabold text-2xl">
               Chapters
             </h1>
 
             <Tabs
               defaultValue="status"
-              className="bg-slate-200 my-[13px] ml-[680px] rounded-[8px] w-[206px] h-[40px] text-slate-400"
+              className="bg-[#E0E0E0] my-[13px] ml-[680px] rounded-[8px] w-[206px] h-[40px] text-slate-400"
             >
               <TabsList className="w-full gap-x-2">
                 <TabsTrigger
@@ -180,70 +121,137 @@ const Chapters = () => {
               </TabsList>
             </Tabs>
           </div>
-
-          <div className="flex flex-col h-[142px]">
-            <div className="top-[340px] left-[612px] absolute ml-[250px] transform -translate-x-1/2 -translate-y-1/2">
-              <img
-                src={BookFloatAnimation}
-                alt=""
-                className="mb-[10px] w-[88px] h-[79px] book-animation"
-              />
-              <span id="Shadow"></span>
-            </div>
-
-            <div className="flex flex-col h-[142px]">
-              <div className="top-[340px] left-[612px] absolute ml-[250px] transform -translate-x-1/2 -translate-y-1/2">
-                <img
-                  src={BookFloatAnimation}
-                  alt=""
-                  className="mb-[10px] w-[88px] h-[79px] book-animation"
-                />
-                <span id="Shadow"></span>
-              </div>
-
-              <h1 className="mt-[330px] mb-4 ml-[490px] font-normal text-2xl">
-                Craft a Chapter
-              </h1>
-              <p className="ml-[330px] font-normal text-lg text-slate-500 text-opacity-75">
-                Could you please draft a comprehensive chapter for the book?
-              </p>
-
-              <div>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button
-                      className="flex bg-primary hover:bg-blue-500 mt-[24px] ml-[455px] border-none w-[235px] h-[52px] text-lg text-slate-100 hover:text-slate-200"
-                      variant="outline"
-                    >
-                      <BsPlus className="text-4xl" />
-                      Create New Chapter
-                    </Button>
-                  </DialogTrigger>
-
-                  <DialogContent className="bg-slate-50">
-                    <DialogHeader className="flex items-center justify-center">
-                      <DialogTitle className="text-xl font-bold">
-                        Creating A Chapter
-                      </DialogTitle>
-                    </DialogHeader>
-                    <ChapterForm
-                      chapterData={chapterData}
-                      setChapterData={setChapterData}
-                    />
-                    <DialogFooter className="ml-[683px] w-[135px] h-[43px]">
-                      <Button
-                        onClick={handleButton}
-                        type="submit"
-                        className="hover:bg-blue-500 text-slate-200 hover:text-300"
-                      >
-                        Save
-                      </Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-              </div>
-            </div>
+          <div className="flex flex-col justify-center w-full px-8 py-4">
+            {data &&
+              !isLoading &&
+              data.map((chapter) => (
+                <div
+                  key={chapter.chapterId}
+                  className="chapter flex flex-col justify-center p-4 m-3 border border-border shadow-secondary-foreground shadow-sm rounded-[8px]"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-primary">
+                      {chapter.title}
+                    </span>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <HiOutlineDotsVertical className="text-xl" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="flex flex-col items-center justify-center">
+                        <DropdownMenuItem className="border-b text-primary border-border">
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          id={chapter.chapterId}
+                          className="text-red-500 chapter"
+                          onClick={deleteHandler}
+                        >
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                  <div className="px-4 line-clamp-1">{chapter.content}</div>
+                </div>
+              ))}
           </div>
+          {!data && !isLoading ? (
+            <div className="flex flex-col h-[142px]">
+              <div className="flex flex-col h-[142px]">
+                <div className="top-[340px] left-[612px] absolute ml-[250px] transform -translate-x-1/2 -translate-y-1/2">
+                  <img
+                    src={BookFloatAnimation}
+                    alt=""
+                    className="mb-[10px] w-[88px] h-[79px] book-animation"
+                  />
+                  <span id="Shadow"></span>
+                </div>
+
+                <h1 className="mt-[330px] mb-4 ml-[490px] font-normal text-2xl">
+                  Craft a Chapter
+                </h1>
+                <p className="ml-[330px] font-normal text-lg text-slate-500 text-opacity-75">
+                  Could you please draft a comprehensive chapter for the book?
+                </p>
+
+                <div>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button
+                        className="flex bg-primary hover:bg-blue-500 mt-[24px] ml-[455px] border-none w-[225px] h-[52px] text-lg text-slate-100 hover:text-slate-200 rounded-[5px]"
+                        variant="outline"
+                      >
+                        <BsPlus className="text-4xl" />
+                        Create New Chapter
+                      </Button>
+                    </DialogTrigger>
+
+                    <DialogContent className="bg-slate-50">
+                      <DialogHeader className="flex items-center justify-center">
+                        <DialogTitle className="text-xl font-bold">
+                          Creating A Chapter
+                        </DialogTitle>
+                      </DialogHeader>
+                      <ChapterForm
+                        chapterData={chapterData}
+                        setChapterData={setChapterData}
+                      />
+                      <DialogFooter className="ml-[683px] w-[135px] h-[43px]">
+                        <Button
+                          onClick={handleButton}
+                          type="submit"
+                          className="hover:bg-blue-500 text-slate-200 hover:text-300 "
+                        >
+                          Save
+                        </Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              </div>
+            </div>
+          ) : (
+            !isLoading && (
+              <div className="flex flex-col h-[142px]">
+                <div className="flex flex-col h-[142px]">
+                  <div>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button
+                          className="flex gap-1 bg-primary hover:bg-blue-500 mt-[24px] ml-[455px] border-none w-[150px] h-[44px] text-slate-100 hover:text-slate-200 rounded-[5px]"
+                          variant="outline"
+                        >
+                          <BsPlus className="text-xl" />
+                          New Chapter
+                        </Button>
+                      </DialogTrigger>
+
+                      <DialogContent className="bg-slate-50">
+                        <DialogHeader className="flex items-center justify-center">
+                          <DialogTitle className="text-xl font-bold">
+                            Creating A Chapter
+                          </DialogTitle>
+                        </DialogHeader>
+                        <ChapterForm
+                          chapterData={chapterData}
+                          setChapterData={setChapterData}
+                        />
+                        <DialogFooter className="ml-[683px] w-[135px] h-[43px]">
+                          <Button
+                            onClick={handleButton}
+                            type="submit"
+                            className="hover:bg-blue-500 text-slate-200 hover:text-300 "
+                          >
+                            Save
+                          </Button>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                </div>
+              </div>
+            )
+          )}
         </div>
       </div>
     </div>

@@ -44,7 +44,6 @@ export type categoryData = {
   categoryIds: string[];
 };
 
-
 export type updateBookType = {
   title: string;
   coverImage?: File;
@@ -71,6 +70,8 @@ export type Book = {
     icon: string;
     priority: string;
   };
+  favoriteCount: number;
+  isFavorite: string;
 };
 
 export type fetchBookData = {
@@ -83,3 +84,14 @@ export type fetchBookData = {
     totalPages: string;
   };
 };
+
+export type Chapter = {
+  chapterId: string;
+  title: string;
+  content: string;
+  priority: number;
+  status: string;
+  book: Book[];
+};
+
+export type fetchChapterData = Chapter[];
