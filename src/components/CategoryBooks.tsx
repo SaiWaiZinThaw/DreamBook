@@ -29,6 +29,7 @@ const CategoryBooks = () => {
   const viewBook = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
     const book = event.currentTarget.closest(".book")!;
     const bookId = book.id;
+    console.log(bookId!);
   };
   return (
     <div className="flex flex-col w-full min-h-screen px-0 mx-0 ">
