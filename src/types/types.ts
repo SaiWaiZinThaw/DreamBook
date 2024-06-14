@@ -63,6 +63,7 @@ export type Book = {
   user: {
     name: string;
     profilePicture: string;
+    userId: string;
   };
   category: {
     categoryId: string;
@@ -95,3 +96,8 @@ export type Chapter = {
 };
 
 export type fetchChapterData = Chapter[];
+
+export type commentData = {
+  comment: string;
+  bookId: number;
+};
