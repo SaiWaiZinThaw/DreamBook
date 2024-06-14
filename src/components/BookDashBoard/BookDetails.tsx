@@ -37,8 +37,6 @@ const BookDetails = () => {
     parseInt(bookID!)
   );
 
-  // console.log(fetchABookAuthor)
-
   const [isOn, setIsOn] = useState(true);
   const [updateData, setUpdateData] = useState<updateBookType>({
     title: "",
