@@ -178,7 +178,7 @@ const CreateBook = () => {
     ) {
       const createdBookId = createBookMutation.data?.bookId;
       if (createdBookId) {
-        navigate(`/book-dashboard/${createdBookId}`);
+        navigate(`/book-dashboard/${createdBookId}/book-details`);
       }
     }
   }, [(createBookMutation.isSuccess && fetchMyProfile !== null) || undefined]);
