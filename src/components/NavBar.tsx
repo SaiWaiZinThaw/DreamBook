@@ -64,8 +64,12 @@ const NavBar = () => {
         </div>
       ) : (
         <div className="flex items-center gap-4">
-          <NavLink to="/me/fav">
+          <NavLink
+            className="flex flex-col items-center justify-end"
+            to="/me/fav"
+          >
             <FaHeart className="text-lg font-bold text-red-600" />
+            <span className="text-sm font-semibold">Fav Books</span>
           </NavLink>
           {!isLoading && data && isSuccess && <ProfileDropdown data={data} />}
         </div>

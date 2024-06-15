@@ -1,10 +1,10 @@
 import { deleteChapter, getAuthorChapter } from "@/api/getChapter";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-export const useFetchAuthorAChapter = (bookId: string) =>
+export const useFetchAuthorAChapter = (bookSlug: string) =>
   useQuery({
     queryKey: ["authorChapter"],
-    queryFn: () => getAuthorChapter(bookId),
+    queryFn: () => getAuthorChapter(bookSlug),
   });
 
 export const useDeleteChapter = () =>

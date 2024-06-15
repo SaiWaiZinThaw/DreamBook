@@ -3,9 +3,9 @@ import { getToken } from "@/services/authService";
 import { fetchChapterData } from "@/types/types";
 
 const token = getToken();
-export const getAuthorChapter = async (bookId: string) => {
+export const getAuthorChapter = async (bookSlug: string) => {
   const response: Response = await fetch(
-    `${BaseURL}/chapters/author?book_id=${bookId}`,
+    `${BaseURL}/chapters/author?slug=${bookSlug}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

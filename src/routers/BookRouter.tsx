@@ -12,15 +12,15 @@ const BookRouter: RouteObject[] = [
     element: <BookDashBoardLayout />,
     children: [
       {
-        path: ":bookID/book-details",
+        path: ":bookSlug/book-details",
         element: <BookDetailsPage />,
       },
       {
-        path: ":bookID/chapters",
+        path: ":bookSlug/chapters",
         element: <ChaptersPage />,
       },
       {
-        path: ":bookID/comments",
+        path: ":bookSlug/comments",
         element: <CommentsPage />,
       },
     ],
