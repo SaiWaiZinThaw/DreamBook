@@ -44,10 +44,10 @@ const BookDetails = () => {
   });
 
   useEffect(() => {
-    if (fetchABookAuthor?.status === "draft") {
+    if (fetchABookAuthor?.status === "Draft") {
       setIsOn(true);
       console.log(isOn);
-    } else if (fetchABookAuthor?.status === "published") {
+    } else if (fetchABookAuthor?.status === "Published") {
       setIsOn(false);
       console.log(isOn);
     }
@@ -57,13 +57,13 @@ const BookDetails = () => {
     if (isOn) {
       setUpdateData((prev) => ({
         ...prev,
-        status: "published",
+        status: "Published",
       }));
       updateBook.mutate(updateData);
     } else {
       setUpdateData((prev) => ({
         ...prev,
-        status: "draft",
+        status: "D  raft",
       }));
       updateBook.mutate(updateData);
     }

@@ -52,7 +52,7 @@ const CreateBook = () => {
     coverImage: "",
     description: "",
     keywords: [],
-    status: "draft",
+    status: "Draft",
     categoryId: "",
   });
 
