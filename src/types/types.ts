@@ -37,7 +37,7 @@ export type createChapterData = {
   content: string;
   status: string;
   priority: number;
-  bookId: number;
+  slug: string;
 };
 
 export type categoryData = {
@@ -99,5 +99,5 @@ export type fetchChapterData = Chapter[];
 
 export type commentData = {
   comment: string;
-  bookId: number;
+  slug: string;
 };

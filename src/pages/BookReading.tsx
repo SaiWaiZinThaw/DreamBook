@@ -8,17 +8,17 @@ import parse from "html-react-parser";
 import { useCreateComment } from "@/hooks/useComment";
 
 const BookReading: React.FC = () => {
-  const { bookID } = useParams<{ bookID: string }>();
+  const { bookSlug } = useParams();
   const [comment, setComment] = useState({
     comment: "",
-    bookId: 0,
+    slug: "",
   });
   const token = getToken() || "";
   const createComment = useCreateComment();
 
   const { data: fetchABookAuthor, isLoading } = useFetchABookAuthor(
     token,
-    parseInt(bookID!)
+    bookSlug!
   );
 
   const createCommentHandler = () => {
@@ -100,7 +100,7 @@ const BookReading: React.FC = () => {
                   onChange={(event) => {
                     setComment({
                       comment: event.target.value,
-                      bookId: parseInt(bookID!),
+                      slug: bookSlug!,
                     });
                   }}
                   className="w-full h-20 border px-4 py-2 text-sm border-border rounded-[12px]"

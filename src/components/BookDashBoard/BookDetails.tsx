@@ -28,14 +28,11 @@ const BookDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentKeyword, setCurrentKeyword] = useState("");
   const [keywords, setKeywords] = useState<string[]>([]);
-  const { bookID } = useParams();
-  const updateBook = useUpdateBook(parseInt(bookID!));
+  const { bookSlug } = useParams();
+  const updateBook = useUpdateBook(bookSlug!);
 
   const token = getToken() || "";
-  const { data: fetchABookAuthor } = useFetchABookAuthor(
-    token,
-    parseInt(bookID!)
-  );
+  const { data: fetchABookAuthor } = useFetchABookAuthor(token, bookSlug!);
 
   const [isOn, setIsOn] = useState(true);
   const [updateData, setUpdateData] = useState<updateBookType>({

@@ -1,17 +1,12 @@
 import { getToken } from "@/services/authService";
 import BaseURL from "../services/ApiEndPoint";
+import { createChapterData } from "@/types/types";
 const token = getToken();
 
 export const createChapterApi = async ({
   data,
 }: {
-  data: {
-    title: string;
-    content: string;
-    status: string;
-    priority: number;
-    bookId: number;
-  };
+  data: createChapterData;
 }) => {
   const response: Response = await fetch(`${BaseURL}/chapters`, {
     headers: {
