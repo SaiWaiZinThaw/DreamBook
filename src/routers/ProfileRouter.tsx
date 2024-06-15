@@ -4,6 +4,7 @@ import ChangePassword from "@/pages/profile/ChangePassword";
 import Fav from "@/pages/profile/Fav";
 import History from "@/pages/profile/History";
 import Info from "@/pages/profile/Info";
+import Restore from "@/pages/profile/Restore";
 import { Navigate, RouteObject } from "react-router-dom";
 
 const ProfileRouter: RouteObject[] = [
@@ -23,6 +24,7 @@ const ProfileRouter: RouteObject[] = [
       { path: "fav", element: <Fav /> },
       { path: "history", element: <History /> },
       { path: "change-password", element: <ChangePassword /> },
+      { path: "restore", element: <Restore/> },
     ],
   },
 ];

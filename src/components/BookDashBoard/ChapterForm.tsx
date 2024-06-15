@@ -173,7 +173,7 @@ const ChapterForm: React.FC<ChapterFormProps> = ({
           }}
           id="title"
           placeholder="Title"
-          className="border border-slate-300"
+          className="border-slate-300 border"
         />
       </div>
       <div className="items-center gap-1.5 grid mx-[32px]">

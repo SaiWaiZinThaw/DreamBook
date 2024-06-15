@@ -82,3 +82,12 @@ export type fetchBookData = {
     totalPages: string;
   };
 };
+
+export type softDeleteData = {
+  bookId: number;
+  token: string;
+}
+export type restoreData = {
+  bookId: number;
+  token: string;
+}

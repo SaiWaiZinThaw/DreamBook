@@ -1,3 +1,4 @@
+
 import { Sorting } from "@/assets";
 import { IoIosSearch } from "react-icons/io";
 import {
@@ -24,9 +25,9 @@ const Books = () => {
   return (
     <div className="w-full">
       <div className="p-10">
-        <div className="flex items-center h-[50px] justify-between">
+        <div className="flex justify-between items-center h-[50px]">
           <div className="flex items-center gap-3">
-            <img src={Sorting} alt="sorting" className=" h-[50px]" />
+            <img src={Sorting} alt="sorting" className="h-[50px]" />
             <Select>
               <SelectTrigger className="w-[180px] h-[50px]">
                 <SelectValue placeholder="Sort by default" />
@@ -48,7 +49,7 @@ const Books = () => {
             </div>
           </div>
           <NavLink to="/book-create" className="h-full">
-            <Button className="w-[150px] flex items-center gap-5 rounded-[8px] h-full ">
+            <Button className="flex items-center gap-5 rounded-[8px] w-[150px] h-full">
               <FaPlus /> Create Book
             </Button>
           </NavLink>
@@ -59,10 +60,10 @@ const Books = () => {
             data.items.map((book) => (
               <div
                 key={book.title}
-                className="bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] w-[232px] h-[280px] relative group"
+                className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] w-[232px] h-[280px] group"
               >
                 <div className="group-hover:right-[20px] top-[64px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                     {active ? (
                       <BsHeartFill
                         className="text-red-500"
@@ -76,7 +77,7 @@ const Books = () => {
                     )}
                   </div>
 
-                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                     <BsEyeFill className="text-slate-500" />
                   </div>
                 </div>
@@ -84,13 +85,13 @@ const Books = () => {
                   <img
                     src={book.coverImage}
                     alt={book.coverImage}
-                    className=" h-[140px]"
+                    className="h-[140px]"
                   />
                 </div>
 
                 <div className="ml-2">
-                  <h1 className="text-xl font-bold">{book.title}</h1>
-                  <p className="text-sm font-normal text-gray-500">
+                  <h1 className="font-bold text-xl">{book.title}</h1>
+                  <p className="font-normal text-gray-500 text-sm">
                     {book.category.title}
                   </p>
                   <h2 className="mt-3 font-medium text-md">{book.user.name}</h2>
