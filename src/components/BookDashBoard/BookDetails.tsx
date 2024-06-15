@@ -22,7 +22,8 @@ import { useFetchABookAuthor } from "@/hooks/useFetchABookAuthor";
 import { getToken } from "@/services/authService";
 import { BsX } from "react-icons/bs";
 import { updateBookType } from "@/types/types";
-import { BookCoverChange } from "./BookCoverChange";
+import { BookCoverChange, BookCoverPreview } from "./BookCoverChange";
+import { useSoftDeleteBook } from "@/hooks/useDeleteBook";
 
 const BookDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -30,7 +31,7 @@ const BookDetails = () => {
   const [keywords, setKeywords] = useState<string[]>([]);
   const { bookSlug } = useParams();
   const updateBook = useUpdateBook(bookSlug!);
-
+  const {mutate: softDeleteBook} = useSoftDeleteBook();
   const token = getToken() || "";
   const { data: fetchABookAuthor } = useFetchABookAuthor(token, bookSlug!);
 
@@ -40,7 +41,8 @@ const BookDetails = () => {
     coverImage: undefined,
     description: "",
     keywords: [],
-    status: "",
+    status: "draft",
+    slug: "",
   });
 
   useEffect(() => {
@@ -77,6 +79,7 @@ const BookDetails = () => {
         description: fetchABookAuthor.description || "",
         keywords: fetchABookAuthor.keywords || [],
         status: fetchABookAuthor.status || "",
+        slug: fetchABookAuthor.slug || "",
       }));
     }
   }, [fetchABookAuthor]);
@@ -133,9 +136,16 @@ const BookDetails = () => {
   };
 
   // Function to handle delete confirmation
-  const handleDeleteConfirm = () => {
-    // Logic to delete book
-    // navigate(-1); // Example: Navigate back
+  const handleDeleteConfirm = (bookSlug: string) => {
+    softDeleteBook(bookSlug, {
+      onSuccess: () => {
+        console.log("Book is soft delete")
+      },
+      onError: (error) => {
+        console.log("Error to delete", error)
+      }
+    })
+    
   };
 
   const handleDeleteKeyword = (indexToDelete: any) => {
@@ -145,7 +155,7 @@ const BookDetails = () => {
   };
 
   return (
-    <div className="container w-full h-full px-0 mx-0">
+    <div className="mx-0 px-0 w-full h-full container">
       <div className="flex border-slate-300 border-b h-[80px]">
         <h1 className="my-[20px] pl-[40px] font-extrabold text-2xl">
           Book Details
@@ -172,7 +182,7 @@ const BookDetails = () => {
         </div>
       </div>
       <div className="flex h-full">
-        <div className="border-slate-300 ml-[12px] border-r w-[667px] ">
+        <div className="border-slate-300 ml-[12px] border-r w-[667px]">
           <div className="h-[581px]">
             <div className="items-center gap-1.5 grid mx-[32px] pt-[30px] w-[603px] h-[74px]">
               <Label htmlFor="title" className="font-semibold text-[16px]">
@@ -190,7 +200,7 @@ const BookDetails = () => {
                     }}
                     value={updateData.title}
                     id="title"
-                    className="text-black border border-slate-300"
+                    className="border-slate-300 border text-black"
                   />
                 ) : (
                   <h1
@@ -200,7 +210,7 @@ const BookDetails = () => {
                     {fetchABookAuthor?.title}
                   </h1>
                 )}
-                {/* <Input  type="text" id="title" placeholder={fetchABookAuthor.title}  className="text-black border border-slate-300"/> */}
+                {/* <Input  type="text" id="title" placeholder={fetchABookAuthor.title}  className="border-slate-300 border text-black"/> */}
                 {/* <h1 id="title" className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] h-[45px] font-semibold text-black">{fetchABookAuthor?.title}</h1> */}
                 <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" />
               </div>
@@ -240,7 +250,7 @@ const BookDetails = () => {
                   {keywords.map((keyword, index) => (
                     <span
                       key={index}
-                      className="inline-block px-3 py-1 mb-2 mr-2 text-sm font-semibold bg-gray-200 rounded-full text-slate-950"
+                      className="inline-block bg-gray-200 mr-2 mb-2 px-3 py-1 rounded-full font-semibold text-slate-950 text-sm"
                     >
                       {keyword}
                     </span>
@@ -252,7 +262,7 @@ const BookDetails = () => {
                 <div className="flex">
                   {keywords.map((keyword, index) => (
                     <div key={index} className="flex items-center">
-                      <span className="flex px-3 py-1 mb-2 mr-2 text-sm font-semibold bg-gray-200 rounded-full text-slate-950">
+                      <span className="flex bg-gray-200 mr-2 mb-2 px-3 py-1 rounded-full font-semibold text-slate-950 text-sm">
                         {keyword}
                         <BsX
                           onClick={() => handleDeleteKeyword(index)}
@@ -320,9 +330,9 @@ const BookDetails = () => {
                         Delete
                       </Button>
                     </AlertDialogTrigger>
-                    <AlertDialogContent className="rounded-none bg-slate-50">
+                    <AlertDialogContent className="bg-slate-50 rounded-none">
                       <AlertDialogHeader>
-                        <AlertDialogTitle className="text-xl font-extrabold text-red-600">
+                        <AlertDialogTitle className="font-extrabold text-red-600 text-xl">
                           Are you sure want to delete?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
@@ -335,7 +345,7 @@ const BookDetails = () => {
                           Cancel
                         </AlertDialogCancel>
                         <AlertDialogAction
-                          onClick={handleDeleteConfirm}
+                          onClick={() => handleDeleteConfirm(fetchABookAuthor?.slug!)}
                           className="hover:bg-blue-400 rounded-[8px] text-slate-100 hover:text-slate-200"
                         >
                           Yes! Delete
@@ -393,8 +403,8 @@ const BookDetails = () => {
               </div>
 
               <div className="ml-2">
-                <h1 className="text-xl font-bold">{fetchABookAuthor?.title}</h1>
-                <p className="text-sm font-normal text-gray-500">
+                <h1 className="font-bold text-xl">{fetchABookAuthor?.title}</h1>
+                <p className="font-normal text-gray-500 text-sm">
                   {fetchABookAuthor?.category.title}
                 </p>
                 <h2 className="mt-3 font-medium text-md">
@@ -410,3 +420,4 @@ const BookDetails = () => {
 };
 
 export default BookDetails;
+

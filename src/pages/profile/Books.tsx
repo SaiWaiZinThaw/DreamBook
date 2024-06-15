@@ -1,3 +1,4 @@
+
 import { Sorting } from "@/assets";
 import { IoIosSearch } from "react-icons/io";
 import {
@@ -25,9 +26,9 @@ const Books = () => {
   return (
     <div className="w-full">
       <div className="p-10">
-        <div className="flex items-center h-[50px] justify-between">
+        <div className="flex justify-between items-center h-[50px]">
           <div className="flex items-center gap-3">
-            <img src={Sorting} alt="sorting" className=" h-[50px]" />
+            <img src={Sorting} alt="sorting" className="h-[50px]" />
             <Select>
               <SelectTrigger className="w-[180px] h-[50px]">
                 <SelectValue placeholder="Sort by default" />
@@ -49,21 +50,21 @@ const Books = () => {
             </div>
           </div>
           <NavLink to="/book-create" className="h-full">
-            <Button className="w-[150px] flex items-center gap-5 rounded-[8px] h-full ">
+            <Button className="flex items-center gap-5 rounded-[8px] w-[150px] h-full">
               <FaPlus /> Create Book
             </Button>
           </NavLink>
         </div>
-        <div className="grid grid-cols-4 gap-4 p-10">
+        <div className="gap-4 grid grid-cols-4 p-10">
           {!isLoading &&
             data &&
             data.items.map((book) => (
               <div
                 key={book.title}
-                className="bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] w-[232px] h-[280px] relative group"
+                className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] w-[232px] h-[280px] group"
               >
                 <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                     {active ? (
                       <BsHeartFill
                         className="text-red-500 cursor-pointer"
@@ -71,16 +72,16 @@ const Books = () => {
                       />
                     ) : (
                       <BsHeart
-                        className="cursor-pointer text-slate-500"
+                        className="text-slate-500 cursor-pointer"
                         onClick={() => setActive(!active)}
                       />
                     )}
                   </div>
 
-                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                     <BsEyeFill className="text-slate-500" />
                   </div>
-                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                     <HiPencil className="text-slate-500" />
                   </div>
                 </div>
@@ -88,12 +89,12 @@ const Books = () => {
                   <img
                     src={book.coverImage}
                     alt={book.coverImage}
-                    className=" h-[140px] max-w-[120px]"
+                    className="max-w-[120px] h-[140px]"
                   />
                 </div>
 
                 <div className="flex flex-col justify-center gap-1 ml-2">
-                  <h1 className="font-bold text-[15px] h-6 line-clamp-1">
+                  <h1 className="line-clamp-1 h-6 font-bold text-[15px]">
                     {book.title}
                   </h1>
                   <div className="flex items-center gap-2">
@@ -102,7 +103,7 @@ const Books = () => {
                       alt={book.category.title}
                       className="w-6"
                     />
-                    <p className="text-[12px] font-Inter text-secondary-foreground">
+                    <p className="font-Inter text-[12px] text-secondary-foreground">
                       {book.category.title}
                     </p>
                   </div>
@@ -110,7 +111,7 @@ const Books = () => {
                     <img
                       src={book.user.profilePicture}
                       alt={book.user.name}
-                      className="w-6 h-6 rounded-full"
+                      className="rounded-full w-6 h-6"
                     />
                     <h2 className="text-[13px] text-black">
                       By {book.user.name}

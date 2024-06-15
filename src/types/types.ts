@@ -50,6 +50,7 @@ export type updateBookType = {
   description: string;
   keywords: string[];
   status: string;
+  slug?: string;
 };
 
 export type Book = {

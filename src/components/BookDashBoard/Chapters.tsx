@@ -86,10 +86,10 @@ const Chapters = () => {
   };
 
   return (
-    <div className="w-full h-screen ">
-      <div className="w-full px-0 mx-0">
+    <div className="w-full h-screen">
+      <div className="mx-0 px-0 w-full">
         <div className="flex flex-col w-full">
-          <div className="w-full flex border-slate-300 border-b h-[80px]">
+          <div className="flex border-slate-300 border-b w-full h-[80px]">
             <h1 className="my-[20px] pl-[40px] font-extrabold text-2xl">
               Chapters
             </h1>
@@ -98,7 +98,7 @@ const Chapters = () => {
               defaultValue="status"
               className="bg-[#E0E0E0] my-[13px] ml-[680px] rounded-[8px] w-[206px] h-[40px] text-slate-400"
             >
-              <TabsList className="w-full gap-x-2">
+              <TabsList className="gap-x-2 w-full">
                 <TabsTrigger
                   onClick={() => handleTabClick("draft")}
                   value="draft"
@@ -120,15 +120,15 @@ const Chapters = () => {
               </TabsList>
             </Tabs>
           </div>
-          <div className="flex flex-col justify-center w-full px-8 py-4">
+          <div className="flex flex-col justify-center px-8 py-4 w-full">
             {data &&
               !isLoading &&
               data.map((chapter) => (
                 <div
                   key={chapter.chapterId}
-                  className="chapter flex flex-col justify-center p-4 m-3 border border-border shadow-secondary-foreground shadow-sm rounded-[8px]"
+                  className="flex flex-col justify-center shadow-secondary-foreground shadow-sm m-3 p-4 border border-border rounded-[8px] chapter"
                 >
-                  <div className="flex items-center justify-between">
+                  <div className="flex justify-between items-center">
                     <span className="font-semibold text-primary">
                       {chapter.title}
                     </span>
@@ -136,8 +136,8 @@ const Chapters = () => {
                       <DropdownMenuTrigger>
                         <HiOutlineDotsVertical className="text-xl" />
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent className="flex flex-col items-center justify-center">
-                        <DropdownMenuItem className="border-b text-primary border-border">
+                      <DropdownMenuContent className="flex flex-col justify-center items-center">
+                        <DropdownMenuItem className="border-b border-border text-primary">
                           Edit
                         </DropdownMenuItem>
                         <DropdownMenuItem
@@ -177,7 +177,7 @@ const Chapters = () => {
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button
-                        className="flex bg-primary hover:bg-blue-500 mt-[24px] ml-[455px] border-none w-[225px] h-[52px] text-lg text-slate-100 hover:text-slate-200 rounded-[5px]"
+                        className="flex bg-primary hover:bg-blue-500 mt-[24px] ml-[455px] border-none rounded-[5px] w-[225px] h-[52px] text-lg text-slate-100 hover:text-slate-200"
                         variant="outline"
                       >
                         <BsPlus className="text-4xl" />
@@ -186,8 +186,8 @@ const Chapters = () => {
                     </DialogTrigger>
 
                     <DialogContent className="bg-slate-50">
-                      <DialogHeader className="flex items-center justify-center">
-                        <DialogTitle className="text-xl font-bold">
+                      <DialogHeader className="flex justify-center items-center">
+                        <DialogTitle className="font-bold text-xl">
                           Creating A Chapter
                         </DialogTitle>
                       </DialogHeader>
@@ -199,7 +199,7 @@ const Chapters = () => {
                         <Button
                           onClick={handleButton}
                           type="submit"
-                          className="hover:bg-blue-500 text-slate-200 hover:text-300 "
+                          className="hover:bg-blue-500 text-slate-200 hover:text-300"
                         >
                           Save
                         </Button>
@@ -217,7 +217,7 @@ const Chapters = () => {
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button
-                          className="flex gap-1 bg-primary hover:bg-blue-500 mt-[24px] ml-[455px] border-none w-[150px] h-[44px] text-slate-100 hover:text-slate-200 rounded-[5px]"
+                          className="flex gap-1 bg-primary hover:bg-blue-500 mt-[24px] ml-[455px] border-none rounded-[5px] w-[150px] h-[44px] text-slate-100 hover:text-slate-200"
                           variant="outline"
                         >
                           <BsPlus className="text-xl" />
@@ -226,8 +226,8 @@ const Chapters = () => {
                       </DialogTrigger>
 
                       <DialogContent className="bg-slate-50">
-                        <DialogHeader className="flex items-center justify-center">
-                          <DialogTitle className="text-xl font-bold">
+                        <DialogHeader className="flex justify-center items-center">
+                          <DialogTitle className="font-bold text-xl">
                             Creating A Chapter
                           </DialogTitle>
                         </DialogHeader>
@@ -239,7 +239,7 @@ const Chapters = () => {
                           <Button
                             onClick={handleButton}
                             type="submit"
-                            className="hover:bg-blue-500 text-slate-200 hover:text-300 "
+                            className="hover:bg-blue-500 text-slate-200 hover:text-300"
                           >
                             Save
                           </Button>

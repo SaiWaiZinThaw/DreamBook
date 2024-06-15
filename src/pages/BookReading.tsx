@@ -28,42 +28,42 @@ const BookReading: React.FC = () => {
   return (
     <div>
       <NavBar />
-      <div className="flex w-full min-h-screen px-20 ">
-        <div className="flex-col w-10/12 h-full px-10 pt-20 border-r border-border">
+      <div className="flex px-20 w-full min-h-screen">
+        <div className="flex-col px-10 pt-20 border-r border-border w-10/12 h-full">
           {/* <button className="text-primary">
         <HiArrowNarrowLeft /> Back
       </button> */}
           {fetchABookAuthor && !isLoading && (
-            <div className="flex flex-col w-full  gap-[20px]  h-full ">
-              <div className="px-20 flex w-full gap-[100px] pb-20">
-                <div className="w-[280px] h-[280px] rounded-full bg-blue-200 flex items-center justify-center">
+            <div className="flex flex-col gap-[20px] w-full h-full">
+              <div className="flex gap-[100px] px-20 pb-20 w-full">
+                <div className="flex justify-center items-center bg-blue-200 rounded-full w-[280px] h-[280px]">
                   <img
                     src={fetchABookAuthor.coverImage}
                     alt={fetchABookAuthor.title}
-                    className="w-[210px] shadow-lg shadow-secondary-foreground"
+                    className="shadow-lg shadow-secondary-foreground w-[210px]"
                   />
                 </div>
-                <div className="flex flex-col justify-center w-[400px] gap-3">
-                  <h1 className="text-3xl font-extrabold">
+                <div className="flex flex-col justify-center gap-3 w-[400px]">
+                  <h1 className="font-extrabold text-3xl">
                     {fetchABookAuthor.title}
                   </h1>
                   <div className="flex items-center gap-2">
                     <img
                       src={fetchABookAuthor.user.profilePicture}
                       alt={fetchABookAuthor.user.name}
-                      className="w-[30px] h-[30px] rounded-full"
+                      className="rounded-full w-[30px] h-[30px]"
                     />
                     <span className="text-[15px]">
                       By {fetchABookAuthor.user.name}
                     </span>
                   </div>
                   <div className="flex gap-3 mt-[20px]">
-                    <span className="text-lg font-bold">Category:</span>
+                    <span className="font-bold text-lg">Category:</span>
                     <div className="flex items-center gap-2">
                       <img
                         src={fetchABookAuthor.category.icon}
                         alt={fetchABookAuthor.category.title}
-                        className="w-[25px] h-[25px] rounded-full"
+                        className="rounded-full w-[25px] h-[25px]"
                       />
                       <span className="text-sm">
                         {fetchABookAuthor.category.title}
@@ -71,7 +71,7 @@ const BookReading: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <span className="text-lg font-bold">Keywords:</span>
+                    <span className="font-bold text-lg">Keywords:</span>
                     <div className="flex items-center gap-1">
                       {fetchABookAuthor.keywords.map((keyword, index) => (
                         <span key={index} className="text-sm">
@@ -87,8 +87,8 @@ const BookReading: React.FC = () => {
                   <Button size={"full"}> Start Reading</Button>
                 </div>
               </div>
-              <div className="flex flex-col gap-5 px-20 min-h-[200px] border-b border-border">
-                <h1 className="text-2xl font-bold">Book Overview</h1>
+              <div className="flex flex-col gap-5 px-20 border-b border-border min-h-[200px]">
+                <h1 className="font-bold text-2xl">Book Overview</h1>
                 <div className="text-lg">
                   {parse(fetchABookAuthor.description)}
                 </div>
@@ -103,7 +103,7 @@ const BookReading: React.FC = () => {
                       slug: bookSlug!,
                     });
                   }}
-                  className="w-full h-20 border px-4 py-2 text-sm border-border rounded-[12px]"
+                  className="px-4 py-2 border border-border rounded-[12px] w-full h-20 text-sm"
                 ></textarea>
                 <Button
                   onClick={createCommentHandler}

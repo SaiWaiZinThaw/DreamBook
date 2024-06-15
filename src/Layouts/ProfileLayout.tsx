@@ -2,7 +2,7 @@ import { NavBar } from "@/components";
 import { useGetMe } from "@/hooks/useUser";
 import { getToken, logout } from "@/services/authService";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { FaUser } from "react-icons/fa";
+import { FaTrashAlt, FaUser } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa6";
 import { ImBooks } from "react-icons/im";
 import { GoHeart } from "react-icons/go";
@@ -29,8 +29,8 @@ const ProfileLayout = () => {
   return (
     <div className="w-full">
       <NavBar />
-      <div className="flex w-full h-screen">
-        <div className="border-2 shadow-sm p-8 pt-16 shoadw-border border-r-border w-[480px] h-full flex flex-col gap-10">
+      <div className="flex w-full">
+        <div className="flex flex-col gap-10 border-2 shadow-sm p-8 pt-16 shoadw-border border-r-border w-[480px]">
           {!isLoading && data && (
             <div className="flex items-center gap-4 profile">
               <img
@@ -38,7 +38,7 @@ const ProfileLayout = () => {
                 alt={data.profilePicture}
                 className="rounded-full w-[65px] h-[65px]"
               />
-              <span className="text-lg font-bold">{data.name}</span>
+              <span className="font-bold text-lg">{data.name}</span>
             </div>
           )}
 
@@ -51,7 +51,7 @@ const ProfileLayout = () => {
                   : "text-black flex items-center justify-between p-5 rounded-[8px]"
               }
             >
-              <div className="flex items-center gap-3 ">
+              <div className="flex items-center gap-3">
                 <FaUser /> Personal Information
               </div>
               <FaAngleRight />
@@ -65,7 +65,7 @@ const ProfileLayout = () => {
                   : "text-black flex items-center justify-between p-5 rounded-[8px]"
               }
             >
-              <div className="flex items-center gap-3 ">
+              <div className="flex items-center gap-3">
                 <ImBooks className="text-xl" /> Book Lists
               </div>
               <FaAngleRight />
@@ -79,7 +79,7 @@ const ProfileLayout = () => {
                   : "text-black flex items-center justify-between p-5 rounded-[8px]"
               }
             >
-              <div className="flex items-center gap-3 ">
+              <div className="flex items-center gap-3">
                 <GoHeart className="text-xl" /> Favorite Books
               </div>
               <FaAngleRight />
@@ -93,7 +93,7 @@ const ProfileLayout = () => {
                   : "text-black flex items-center justify-between p-5 rounded-[8px]"
               }
             >
-              <div className="flex items-center gap-3 ">
+              <div className="flex items-center gap-3">
                 <IoMdBookmarks className="text-xl" /> History
               </div>
               <FaAngleRight />
@@ -107,8 +107,15 @@ const ProfileLayout = () => {
                   : "text-black flex items-center justify-between p-5 rounded-[8px]"
               }
             >
-              <div className="flex items-center gap-3 ">
+              <div className="flex items-center gap-3">
                 <FaUser /> Change Password
+              </div>
+              <FaAngleRight />
+            </NavLink>
+
+            <NavLink to={"/me/restore"} className={({isActive}) => isActive ? "bg-primary !text-primary-foreground p-5 rounded-[8px] flex items-center justify-between" : "text-black flex items-center justify-between p-5 rounded-[8px]"}>
+              <div className="flex items-center gap-3">
+              <FaTrashAlt /> Recently deleted
               </div>
               <FaAngleRight />
             </NavLink>
@@ -116,9 +123,9 @@ const ProfileLayout = () => {
 
           <button
             onClick={LogOut}
-            className="flex items-center justify-center gap-3 p-4 font-bold border-t border-border text-secondary-foreground"
+            className="flex justify-center items-center gap-3 p-4 border-t border-border font-bold text-secondary-foreground"
           >
-            <CiLogout className="text-2xl font-bold" /> Sign Out
+            <CiLogout className="font-bold text-2xl" /> Sign Out
           </button>
         </div>
         <Outlet />
