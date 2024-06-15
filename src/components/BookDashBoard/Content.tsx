@@ -4,13 +4,13 @@ import "quill/dist/quill.snow.css";
 import { createChapterData } from "@/types/types";
 import { Label } from "@/components/ui/label";
 import {
-    FaBold,
-    FaListUl,
-    FaListOl,
-    FaAlignLeft,
-    FaAlignCenter,
-    FaAlignRight,
-  } from "react-icons/fa";
+  FaBold,
+  FaListUl,
+  FaListOl,
+  FaAlignLeft,
+  FaAlignCenter,
+  FaAlignRight,
+} from "react-icons/fa";
 import { FaUnderline } from "react-icons/fa";
 import { FaItalic } from "react-icons/fa6";
 
@@ -31,7 +31,7 @@ const Content = () => {
     content: "",
     status: "draft",
     priority: 0,
-    bookId: 1,
+    slug: "",
   });
 
   useEffect(() => {
@@ -45,26 +45,26 @@ const Content = () => {
 
       quillRef.current.focus();
 
-      quillInstance.current.on('text-change', () => {
+      quillInstance.current.on("text-change", () => {
         setChapterData((prev) => ({
           ...prev,
-          content: quillInstance.current!.root.innerHTML || ""
+          content: quillInstance.current!.root.innerHTML || "",
         }));
-        
+
         setTimeout(() => {
           const editorLength = quillInstance.current?.getLength() || 0;
           quillInstance.current?.setSelection(editorLength, 0);
-      }, 0);
-      
+        }, 0);
       });
 
       if (chapterData.content) {
-        quillInstance.current.clipboard.dangerouslyPasteHTML(chapterData.content);
+        quillInstance.current.clipboard.dangerouslyPasteHTML(
+          chapterData.content
+        );
         // quillInstance.current.setContents(Delta);
-        
       }
-  }
-}, [chapterData.content && quillRef]);
+    }
+  }, [chapterData.content && quillRef]);
 
   const applyFormat = (format: string) => {
     if (quillInstance.current) {
@@ -160,99 +160,96 @@ const Content = () => {
 
   return (
     <div>
-        <Label
-                htmlFor="content"
-                className="font-semibold text-[16px]"
-            >
-                Content
-            </Label>
-            <div
-                ref={quillRef}
-                className="border-slate-300 bg-white border rounded w-full h-[200px]"
-            />
-            <div className="relative">
-                <div className="bottom-0 absolute mb-[8px] ml-[25px]">
-                  <button
-                    onClick={handleBold}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isBoldActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaBold className="w-[17px] h-[17px]" />
-                  </button>
-                  <button
-                    onClick={handleItalic}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isItalicActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaItalic className="w-[17px] h-[17px]" />
-                  </button>
-                  <button
-                    onClick={handleUnderline}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isUnderlineActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaUnderline className="w-[17px] h-[17px]" />
-                  </button>
-                  <button
-                    onClick={alignLeft}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isLeftActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaAlignLeft className="w-[17px] h-[17px]" />
-                  </button>
-                  <button
-                    onClick={alignCenter}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isCenterActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaAlignCenter className="w-[17px] h-[17px]" />
-                  </button>
-                  <button
-                    onClick={alignRight}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isRightActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaAlignRight className="w-[17px] h-[17px]" />
-                  </button>
-                  <button
-                    onClick={handleBullet}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isBulletActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaListUl className="w-[17px] h-[17px]" />
-                  </button>
-                  <button
-                    onClick={handleOrder}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
-                      isOrderActive ? "bg-blue-500 text-slate-100" : ""
-                    }`}
-                  >
-                    <FaListOl className="w-[17px] h-[17px]" />
-                  </button>
-                </div>
-                <textarea
-                              ref={textareaRef}
-                              id="content"
-                              name="content"
-                              value={chapterData.content}
-                              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-                                setChapterData((prev) => ({
-                                ...prev,
-                                content: event.target.value,
-                                }));
-                              }} 
-                              className="hidden"
-                            />
-            </div>    
+      <Label htmlFor="content" className="font-semibold text-[16px]">
+        Content
+      </Label>
+      <div
+        ref={quillRef}
+        className="border-slate-300 bg-white border rounded w-full h-[200px]"
+      />
+      <div className="relative">
+        <div className="bottom-0 absolute mb-[8px] ml-[25px]">
+          <button
+            onClick={handleBold}
+            className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+              isBoldActive ? "bg-blue-500 text-slate-100" : ""
+            }`}
+          >
+            <FaBold className="w-[17px] h-[17px]" />
+          </button>
+          <button
+            onClick={handleItalic}
+            className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+              isItalicActive ? "bg-blue-500 text-slate-100" : ""
+            }`}
+          >
+            <FaItalic className="w-[17px] h-[17px]" />
+          </button>
+          <button
+            onClick={handleUnderline}
+            className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+              isUnderlineActive ? "bg-blue-500 text-slate-100" : ""
+            }`}
+          >
+            <FaUnderline className="w-[17px] h-[17px]" />
+          </button>
+          <button
+            onClick={alignLeft}
+            className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+              isLeftActive ? "bg-blue-500 text-slate-100" : ""
+            }`}
+          >
+            <FaAlignLeft className="w-[17px] h-[17px]" />
+          </button>
+          <button
+            onClick={alignCenter}
+            className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+              isCenterActive ? "bg-blue-500 text-slate-100" : ""
+            }`}
+          >
+            <FaAlignCenter className="w-[17px] h-[17px]" />
+          </button>
+          <button
+            onClick={alignRight}
+            className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+              isRightActive ? "bg-blue-500 text-slate-100" : ""
+            }`}
+          >
+            <FaAlignRight className="w-[17px] h-[17px]" />
+          </button>
+          <button
+            onClick={handleBullet}
+            className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+              isBulletActive ? "bg-blue-500 text-slate-100" : ""
+            }`}
+          >
+            <FaListUl className="w-[17px] h-[17px]" />
+          </button>
+          <button
+            onClick={handleOrder}
+            className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+              isOrderActive ? "bg-blue-500 text-slate-100" : ""
+            }`}
+          >
+            <FaListOl className="w-[17px] h-[17px]" />
+          </button>
+        </div>
+        <textarea
+          ref={textareaRef}
+          id="content"
+          name="content"
+          value={chapterData.content}
+          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+            setChapterData((prev) => ({
+              ...prev,
+              content: event.target.value,
+            }));
+          }}
+          className="hidden"
+        />
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Content;
