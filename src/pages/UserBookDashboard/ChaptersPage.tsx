@@ -1,11 +1,9 @@
-import { BookDashBoardLayout } from "@/Layouts"
 import { Chapters } from "@/components/BookDashBoard"
 
 
 const ChaptersPage = () => {
   return (
-    <div>
-        <BookDashBoardLayout/>
+    <div className="overflow-hidden">
         <Chapters/>
     </div>
   )

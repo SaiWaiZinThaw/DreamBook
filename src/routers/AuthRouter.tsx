@@ -1,6 +1,8 @@
-import { Login, Signup } from "@/pages/auth";
+import { Login, SignUp } from "@/pages/auth";
 import LoginLayout from "@/pages/auth/AuthLayout";
-import { RouteObject } from "react-router-dom";
+import CategorySelect from "@/pages/auth/CategorySelect";
+import ProfileSetup from "@/pages/auth/ProfileSetup";
+import { Navigate, RouteObject } from "react-router-dom";
 
 const AuthRouter: RouteObject[] = [
   {
@@ -8,13 +10,22 @@ const AuthRouter: RouteObject[] = [
     element: <LoginLayout />,
     children: [
       {
-        path: "/auth/login",
+        index: true,
+        element: <Navigate to="login" />,
+      },
+      {
+        path: "login",
         element: <Login />,
       },
       {
-        path: "/auth/signup",
-        element: <Signup />,
+        path: "signup",
+        element: <SignUp />,
       },
+      {
+        path: "profile-setup",
+        element: <ProfileSetup />,
+      },
+      { path: "select-category", element: <CategorySelect /> },
     ],
   },
 ];
