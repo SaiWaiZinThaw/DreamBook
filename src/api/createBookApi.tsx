@@ -9,20 +9,20 @@ export const CreateBookApi = async ({
     coverImage: File | string;
     description: string;
     keywords: string[];
-    categoryId: string;   
-    status: string,
-  }
-  
-}) =>  {
+    categoryId: string;
+    status: string;
+  };
+}) => {
   const token = getToken();
+  const keyWords: string[] = [];
+  data.keywords.forEach((keyword) => keyWords.push(keyword));
   const formData = new FormData();
   formData.append("title", data.title);
   formData.append("coverImage", data.coverImage);
   formData.append("description", data.description);
-  data.keywords.forEach((keyword) => formData.append("keywords[]", keyword));
+  formData.append("keywords", JSON.stringify(keyWords));
   formData.append("categoryId", data.categoryId);
   formData.append("status", data.status);
-
 
   const response: Response = await fetch(`${BaseURL}/books`, {
     headers: {

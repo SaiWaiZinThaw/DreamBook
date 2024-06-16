@@ -1,9 +1,9 @@
 import { getToken } from "@/services/authService";
 import BaseURL from "../services/ApiEndPoint";
 
-export const softDeleteBook = async (bookId: string) => {
+export const softDeleteBook = async (bookSlug: string) => {
     const token = getToken();
-    const response: Response = await fetch(`${BaseURL}/books/soft/${bookId}`, {
+    const response: Response = await fetch(`${BaseURL}/books/soft/${bookSlug}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },

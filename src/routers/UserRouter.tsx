@@ -15,7 +15,7 @@ const UserRouter: RouteObject[] = [
     element: <Library />,
   },
   {
-    path: "/book/:bookID",
+    path: "/book/:bookSlug",
     element: <BookReading />,
   },
 

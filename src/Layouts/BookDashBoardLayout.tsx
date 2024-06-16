@@ -9,7 +9,7 @@ import { FaArrowLeft } from "react-icons/fa";
 
 const BookDashBoardLayout = () => {
   const navigate = useNavigate();
-  const { bookID } = useParams();
+  const { bookSlug } = useParams();
 
   return (
     <div className="flex w-full px-0 mx-0 ">
@@ -28,7 +28,7 @@ const BookDashBoardLayout = () => {
                   ? "bg-slate-300 bg-opacity-50 flex w-[296px] items-center py-[22.5px] pl-[16px] "
                   : "flex items-center py-[22.5px] pl-[16px] "
               }
-              to={`/book-dashboard/${bookID}/book-details`}
+              to={`/book-dashboard/${bookSlug}/book-details`}
             >
               <img
                 src={LightMenuBook}
@@ -46,7 +46,7 @@ const BookDashBoardLayout = () => {
                   ? "bg-slate-300 bg-opacity-50 flex w-[296px] items-center py-[22.5px] pl-[16px] "
                   : "flex items-center py-[22.5px] pl-[16px] "
               }
-              to={`/book-dashboard/${bookID}/chapters`}
+              to={`/book-dashboard/${bookSlug}/chapters`}
             >
               <img
                 src={ChapterOutline}
@@ -62,7 +62,7 @@ const BookDashBoardLayout = () => {
                   ? "bg-slate-300 bg-opacity-50 flex w-[296px] items-center py-[22.5px] pl-[16px] "
                   : "flex items-center py-[22.5px] pl-[16px] "
               }
-              to={`/book-dashboard/${bookID}/comments`}
+              to={`/book-dashboard/${bookSlug}/comments`}
             >
               <img
                 src={LightCommentOutline}

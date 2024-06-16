@@ -53,7 +53,7 @@ const CreateBook = () => {
     coverImage: "",
     description: "",
     keywords: [],
-    status: "draft",
+    status: "Draft",
     categoryId: "",
   });
 
@@ -178,9 +178,9 @@ const CreateBook = () => {
       (createBookMutation.isSuccess && fetchMyProfile !== null) ||
       undefined
     ) {
-      const createdBookId = createBookMutation.data?.bookId;
-      if (createdBookId) {
-        navigate(`/book-dashboard/${createdBookId}/book-details`);
+      const createdBookSlug = createBookMutation.data?.slug;
+      if (createdBookSlug) {
+        navigate(`/book-dashboard/${createdBookSlug}/book-details`);
       }
     }
   }, [(createBookMutation.isSuccess && fetchMyProfile !== null) || undefined]);

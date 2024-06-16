@@ -29,17 +29,11 @@ const BookDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentKeyword, setCurrentKeyword] = useState("");
   const [keywords, setKeywords] = useState<string[]>([]);
-  const { bookID } = useParams();
-  const updateBook = useUpdateBook(parseInt(bookID!));
+  const { bookSlug } = useParams();
+  const updateBook = useUpdateBook(bookSlug!);
   const {mutate: softDeleteBook} = useSoftDeleteBook();
-
   const token = getToken() || "";
-  const { data: fetchABookAuthor } = useFetchABookAuthor(
-    token,
-    parseInt(bookID!)
-  );
-
-  console.log(fetchABookAuthor)
+  const { data: fetchABookAuthor } = useFetchABookAuthor(token, bookSlug!);
 
   const [isOn, setIsOn] = useState(true);
   const [updateData, setUpdateData] = useState<updateBookType>({
@@ -47,7 +41,7 @@ const BookDetails = () => {
     coverImage: undefined,
     description: "",
     keywords: [],
-    status: "",
+    status: "draft",
     slug: "",
   });
 
@@ -142,8 +136,8 @@ const BookDetails = () => {
   };
 
   // Function to handle delete confirmation
-  const handleDeleteConfirm = (bookId: string) => {
-    softDeleteBook(bookId, {
+  const handleDeleteConfirm = (bookSlug: string) => {
+    softDeleteBook(bookSlug, {
       onSuccess: () => {
         console.log("Book is soft delete")
       },

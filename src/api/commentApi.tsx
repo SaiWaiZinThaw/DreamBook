@@ -22,9 +22,9 @@ export const createComment = async ({ data }: { data: commentData }) => {
   return result;
 };
 
-export const getComments = async (bookId: string) => {
+export const getComments = async (bookSlug: string) => {
   const response: Response = await fetch(
-    `${BaseURL}/comments?book_id=${bookId}`,
+    `${BaseURL}/comments?slug=${bookSlug}`,
     {
       headers: {
         Accept: "application/json",
@@ -34,7 +34,7 @@ export const getComments = async (bookId: string) => {
       mode: "cors",
       method: "GET",
       redirect: "follow",
-      body: JSON.stringify(bookId),
+      body: JSON.stringify(bookSlug),
     }
   );
   const result = await response.json();
