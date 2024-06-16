@@ -345,7 +345,7 @@ const BookDetails = () => {
                           Cancel
                         </AlertDialogCancel>
                         <AlertDialogAction
-                          onClick={() => handleDeleteConfirm(fetchABookAuthor?.slug)}
+                          onClick={() => handleDeleteConfirm(fetchABookAuthor?.slug!)}
                           className="hover:bg-blue-400 rounded-[8px] text-slate-100 hover:text-slate-200"
                         >
                           Yes! Delete
