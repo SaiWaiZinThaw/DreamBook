@@ -1,35 +1,102 @@
-import { LogoWhite } from "@/assets";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useLogIn } from "@/hooks/useAuth";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "@/services/authService";
+import { ButtonLoading } from "@/components/ui/loading-button";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Swal from "sweetalert2";
+import PasswordVisible from "@/components/PasswordVisible";
 
 const Login = () => {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const LoginSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(3).max(20),
+  });
+
+  type LoginSchemaType = z.infer<typeof LoginSchema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginSchemaType>({
+    resolver: zodResolver(LoginSchema),
+    mode: "all",
+  });
+
+  const navigate = useNavigate();
+  const LoginAccount = useLogIn();
+
+  useEffect(() => {
+    if (LoginAccount.isSuccess) {
+      console.log(LoginAccount.data);
+      const authToken = LoginAccount.data.access_token;
+      delete LoginAccount.data.access_token;
+      login(authToken);
+      navigate("/");
+    }
+  }, [LoginAccount.isSuccess]);
+
+  useEffect(() => {
+    if (LoginAccount.isError) {
+      Swal.fire({
+        title: "Error!",
+        text: "Invalid Credentials",
+        confirmButtonText: "Okay",
+      });
+    }
+  }, [LoginAccount.isError]);
+
+  const onSubmit = (data: LoginSchemaType) => {
+    LoginAccount.mutate(data);
+    console.log(data);
   };
+
   return (
-    <div className="flex flex-col items-center" style={{backgroundImage: `url(${LoginBackground})`}}>
-      <NavLink to={'/'}>
-        <img src={LogoWhite} alt="LogoWhite" className="mb-20 w-[280px]" />
-      </NavLink>
+    <div className="flex flex-col items-center gap-10 justify-self-center">
       <form
-        onSubmit={handleSubmit}
-        className="flex flex-col items-center gap-8 w-[460px] font-Inter"
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col items-center gap-6 w-[460px] font-Inter"
       >
         <div className="flex flex-col items-center gap-3">
-          <h1 className="font-bold text-2xl text-white">Welcome Again!</h1>
+          <h1 className="text-2xl font-bold text-white">Welcome Again!</h1>
           <h3 className="text-white">Please Login to your account</h3>
         </div>
-        <Input type="text" id="name" placeholder="Username" />
-        <Input type="password" id="password" placeholder="Password" />
 
-        <Button variant={"default"} size={"full"} text={"white"}>
-          Log in
-        </Button>
+        {errors.email && errors.password && (
+          <p className="font-bold text-red-600">
+            Email & password are required
+          </p>
+        )}
+
+        <Input
+          type="email"
+          id="email"
+          placeholder="Email"
+          {...register("email")}
+        />
+
+        <PasswordVisible register={register} error={errors.password?.message} />
+
+        {!LoginAccount.isPending ? (
+          <Button variant={"default"} size={"full"} text={"white"}>
+            Log in
+          </Button>
+        ) : (
+          <ButtonLoading />
+        )}
         <div className="flex items-center gap-3">
           <span className="text-white cursor-default">
             Don't have an account?
           </span>
-          <a className="font-semibold text-white" href="/auth/signup">
+          <a
+            className="font-semibold text-white hover:text-primary"
+            href="/auth/signup"
+          >
             Create an account
           </a>
         </div>
