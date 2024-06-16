@@ -35,7 +35,7 @@ const NavBar = () => {
               ? "bg-primary !text-primary-foreground h-10 w-32 rounded-md"
               : "text-black"
           }
-          to={"/library"}
+          to={"/library/1"}
         >
           <Button variant={"ghost"}>Library</Button>
         </NavLink>
@@ -64,9 +64,9 @@ const NavBar = () => {
         </div>
       ) : (
         <div className="flex items-center gap-4">
-          <button>
+          <NavLink to="/me/fav">
             <FaHeart className="text-lg font-bold text-red-600" />
-          </button>
+          </NavLink>
           {!isLoading && data && isSuccess && <ProfileDropdown data={data} />}
         </div>
       )}

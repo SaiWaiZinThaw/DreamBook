@@ -1,14 +1,11 @@
-import { BookDashBoardLayout } from "@/Layouts"
-import { Comments } from "@/components/BookDashBoard"
-
+import { Comments } from "@/components/BookDashBoard";
 
 const CommentsPage = () => {
   return (
     <div>
-        <BookDashBoardLayout/>
-        <Comments/>
+      <Comments />
     </div>
-  )
-}
+  );
+};
 
-export default CommentsPage
+export default CommentsPage;

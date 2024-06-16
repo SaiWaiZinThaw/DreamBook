@@ -37,12 +37,12 @@ export type createChapterData = {
   content: string;
   status: string;
   priority: number;
+  bookId: number;
 };
 
 export type categoryData = {
   categoryIds: string[];
 };
-
 
 export type updateBookType = {
   title: string;
@@ -50,6 +50,7 @@ export type updateBookType = {
   description: string;
   keywords: string[];
   status: string;
+  slug: string;
 };
 
 export type Book = {
@@ -63,6 +64,7 @@ export type Book = {
   user: {
     name: string;
     profilePicture: string;
+    userId: string;
   };
   category: {
     categoryId: string;
@@ -70,6 +72,8 @@ export type Book = {
     icon: string;
     priority: string;
   };
+  favoriteCount: number;
+  isFavorite: string;
 };
 
 export type fetchBookData = {
@@ -83,11 +87,18 @@ export type fetchBookData = {
   };
 };
 
-export type softDeleteData = {
+export type Chapter = {
+  chapterId: string;
+  title: string;
+  content: string;
+  priority: number;
+  status: string;
+  book: Book[];
+};
+
+export type fetchChapterData = Chapter[];
+
+export type commentData = {
+  comment: string;
   bookId: number;
-  token: string;
-}
-export type restoreData = {
-  bookId: number;
-  token: string;
-}
+};

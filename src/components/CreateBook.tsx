@@ -178,13 +178,10 @@ const CreateBook = () => {
       (createBookMutation.isSuccess && fetchMyProfile !== null) ||
       undefined
     ) {
-      console.log(createBookMutation.data);
-      getToken();
       const createdBookId = createBookMutation.data?.bookId;
-    if (createdBookId) {
-      navigate(`/book-dashboard/${createdBookId}`);
-    }
-
+      if (createdBookId) {
+        navigate(`/book-dashboard/${createdBookId}/book-details`);
+      }
     }
   }, [(createBookMutation.isSuccess && fetchMyProfile !== null) || undefined]);
 

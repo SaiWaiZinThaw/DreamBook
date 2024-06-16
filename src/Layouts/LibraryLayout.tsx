@@ -5,20 +5,8 @@ import { useFetchCategories } from "@/hooks/useFetchCategories";
 
 const LibraryLayout = () => {
   const { data, isLoading } = useFetchCategories();
-  // const token = getToken();
-
-  // if (!token) {
-  //   return <div>Error: Unable to fetch books. Token is missing.</div>;
-  // }
-
-  // const { data: books, isLoading: isBooksLoading } = useFetchAllBooks(token);
-
-  // if (!isBooksLoading) {
-  //   console.log(books);
-  // }
-
   return (
-    <div className="container px-0 mx-0">
+    <div className="container w-screen px-0 mx-0">
       <div
         className="flex flex-col justify-center items-center bg-cover bg-no-repeat w-screen h-[370px] text-white"
         style={{ backgroundImage: `url(${LibraryHero})` }}

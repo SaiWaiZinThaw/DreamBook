@@ -4,10 +4,11 @@ import { useMutation } from "@tanstack/react-query";
 
 export const useSoftDeleteBook = () => 
     useMutation ({
-        mutationFn: (bookId :number) => softDeleteBook(bookId)
+        mutationFn: (bookId: string) => softDeleteBook(bookId)
     })
 
 export const useHardDeleteBook = () => 
     useMutation ({
-        mutationFn: (bookId :number) => hardDeleteBook(bookId)
+        mutationFn: (bookId: string) => hardDeleteBook(bookId)
     })
+

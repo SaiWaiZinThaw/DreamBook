@@ -10,23 +10,20 @@ const BookRouter: RouteObject[] = [
   {
     path: "/book-dashboard",
     element: <BookDashBoardLayout />,
-  },
-  {
-    path: '/book-dashboard/:bookId',
-    element: <BookDetailsPage/>,
-  },
-  {
-    path: '/book-dashboard/:bookId/book-details',
-    element: <BookDetailsPage/>,
-
-  },
-  {
-    path: "/book-dashboard/chapters",
-    element: <ChaptersPage />,
-  },
-  {
-    path: "/book-dashboard/comments",
-    element: <CommentsPage />,
+    children: [
+      {
+        path: ":bookID/book-details",
+        element: <BookDetailsPage />,
+      },
+      {
+        path: ":bookID/chapters",
+        element: <ChaptersPage />,
+      },
+      {
+        path: ":bookID/comments",
+        element: <CommentsPage />,
+      },
+    ],
   },
 ];
 

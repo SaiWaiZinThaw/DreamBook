@@ -1,7 +1,7 @@
 import { getToken } from "@/services/authService";
 import BaseURL from "../services/ApiEndPoint";
 
-const restoreBook = async (bookId: number) => {
+const restoreBook = async (bookId: string) => {
     const token = getToken();
 
     const response: Response = await fetch(`${BaseURL}/books/restore/${bookId}`, {

@@ -1,9 +1,9 @@
 import { getToken } from "@/services/authService";
 import BaseURL from "../services/ApiEndPoint";
 
-export const softDeleteBook = async (bookId: number) => {
+export const softDeleteBook = async (bookId: string) => {
     const token = getToken();
-    const response: Response = await fetch(`${BaseURL}/books/soft/${bookId.toString()}`, {
+    const response: Response = await fetch(`${BaseURL}/books/soft/${bookId}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -19,9 +19,9 @@ export const softDeleteBook = async (bookId: number) => {
       return response.status;
 };
 
-export const hardDeleteBook = async (bookId: number) => {
+export const hardDeleteBook = async (bookId: string) => {
     const token = getToken();
-    const response: Response = await fetch(`${BaseURL}/books/hard/${bookId.toString()}`, {
+    const response: Response = await fetch(`${BaseURL}/books/hard/${bookId}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
