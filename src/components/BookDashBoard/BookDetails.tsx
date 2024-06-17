@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { useUpdateBook } from "@/hooks/useFetchABookAuthor";
-
+import ReactQuill from 'react-quill';
 import { Label } from "@/components/ui/label";
 import { AiOutlineUser } from "react-icons/ai";
 import {
@@ -24,6 +24,8 @@ import { BsX } from "react-icons/bs";
 import { updateBookType } from "@/types/types";
 import { BookCoverChange } from "./BookCoverChange";
 import { useSoftDeleteBook } from "@/hooks/useDeleteBook";
+import DOMPurify from "dompurify";
+import 'react-quill/dist/quill.snow.css';
 
 const BookDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -151,6 +153,10 @@ const BookDetails = () => {
     setKeywords((prevKeywords) =>
       prevKeywords.filter((_, index) => index !== indexToDelete)
     );
+  };
+
+  const quillModules = {
+    toolbar: false,
   };
 
   return (
@@ -281,21 +287,47 @@ const BookDetails = () => {
               >
                 Description
               </Label>
+              {/* <ReactQuill
+                value={updateData.description}
+                onChange={(content) => {
+                  const sanitizedContent = DOMPurify.sanitize(content);
+                  setUpdateData((prev) => ({
+                    ...prev,
+                    description: sanitizedContent,
+                  }));
+                }}
+                className="rounded-[5px] h-[290px]"
+                modules={quillModules}
+                readOnly={!isEditing}
+              /> */}
               {isEditing ? (
-                <textarea
-                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-                    setUpdateData((prev) => ({
-                      ...prev,
-                      description: event.target.value,
-                    }));
-                  }}
-                  value={updateData.description}
-                  id="description"
-                  className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]"
-                />
+                 <ReactQuill
+                 value={updateData.description}
+                 onChange={(content) => {
+                   const sanitizedContent = DOMPurify.sanitize(content);
+                   setUpdateData((prev) => ({
+                     ...prev,
+                     description: sanitizedContent,
+                   }));
+                 }}
+                 className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]"
+                 modules={quillModules}
+               />
+                // <textarea
+                //   onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+                //     const sanitizedValue = DOMPurify.sanitize(event.target.value);
+                //     setUpdateData((prev) => ({
+                //       ...prev,
+                //       description: sanitizedValue,
+                //     }));
+                //   }}
+                //   value={updateData.description}
+                //   id="description"
+                //   className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]"
+                // />
               ) : (
                 <p className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]">
-                  {fetchABookAuthor?.description}
+                  <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(fetchABookAuthor?.description!) }} />
                 </p>
               )}
             </div>

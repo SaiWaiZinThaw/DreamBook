@@ -25,7 +25,7 @@ import { FaUnderline } from "react-icons/fa";
 import { FaItalic } from "react-icons/fa6";
 import { useGetMe } from "@/hooks/useUser";
 import { Creating } from "./ui/loading-button";
-
+import DOMPurify from 'dompurify';
 
 const CreateBook = () => {
   const navigate = useNavigate();
@@ -36,9 +36,9 @@ const CreateBook = () => {
   const [isBoldActive, setIsBoldActive] = useState(false);
   const [isItalicActive, setIsItalicActive] = useState(false);
   const [isUnderlineActive, setIsUnderlineActive] = useState(false);
-  const [isLeftActive] = useState(false);
-  const [isCenterActive] = useState(false);
-  const [isRightActive] = useState(false);
+  const [isLeftActive, setIsLeftActive] = useState(false);
+  const [isCenterActive, setIsCenterActive] = useState(false);
+  const [isRightActive, setIsRightActive] = useState(false);
   const [isBulletActive, setIsBulletActive] = useState(false);
   const [keywordError, setKeywordError] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -69,9 +69,10 @@ const CreateBook = () => {
         quillRef.current.focus();
         
         quillInstance.current.on('text-change', () => {
+          const sanitizedHtml = DOMPurify.sanitize(quillInstance.current!.root.innerHTML || "");
           setFormData((prev) => ({
             ...prev,
-            description: quillInstance.current!.root.innerHTML || ""
+            description: sanitizedHtml,
           }));
           
           setTimeout(() => {
@@ -82,7 +83,8 @@ const CreateBook = () => {
         });
 
         if (formData.description) {
-          quillInstance.current.clipboard.dangerouslyPasteHTML(formData.description); 
+          const sanitizedHtml = DOMPurify.sanitize(formData.description);
+          quillInstance.current.clipboard.dangerouslyPasteHTML(sanitizedHtml); 
         }
     }
 }, [formData.description && quillRef]);
@@ -514,15 +516,16 @@ const CreateBook = () => {
                   ref={textareaRef}
                   id="description"
                   name="description"
+                  placeholder="Description"
                   value={formData.description}
-                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+                  onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,
-                      description: event.target.value,
-                    }));
-                  }}
+                      description: DOMPurify.sanitize(e.target.value),
+                    }))}
                   className="hidden"
                 />
+                
               </div>
             </div>
           </div>
@@ -548,6 +551,7 @@ const CreateBook = () => {
           
         </div>
       </form>
+      
     </div>
   );
 };

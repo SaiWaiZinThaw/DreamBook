@@ -33,11 +33,11 @@ import {
 const Chapters = () => {
   const [activeTab, setActiveTab] = useState(null);
   const createChapterMutation = useChapterCreate();
-  const { bookSlug } = useParams();
+  const { bookID } = useParams();
   const [chapterData, setChapterData] = useState<createChapterData>({
     title: "",
     content: "",
-    status: "Draft",
+    status: "draft",
     priority: 0,
     slug: "",
   });
@@ -52,7 +52,7 @@ const Chapters = () => {
     deleteChapter.mutate(chapterId!);
   };
 
-  const { data, isLoading } = useFetchAuthorAChapter(bookSlug!);
+  const { data, isLoading } = useFetchAuthorAChapter(bookID!);
   if (!isLoading) {
     console.log(data);
   }
@@ -77,7 +77,8 @@ const Chapters = () => {
 
   const handleButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    const data = { ...chapterData, slug: bookSlug! };
+    const data = { ...chapterData, bookId: parseInt(bookID!) };
+    console.log(bookID);
     createChapterMutation.mutate(data);
   };
 
@@ -123,7 +124,7 @@ const Chapters = () => {
           <div className="flex flex-col justify-center px-8 py-4 w-full">
             {data &&
               !isLoading &&
-              data.map((chapter) => (
+              data.map((chapter:any) => (
                 <div
                   key={chapter.chapterId}
                   className="flex flex-col justify-center shadow-secondary-foreground shadow-sm m-3 p-4 border border-border rounded-[8px] chapter"
