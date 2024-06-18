@@ -304,7 +304,7 @@ const BookDetails = () => {
               {isEditing ? (
                  <ReactQuill
                  value={updateData.description}
-                 onChange={(content, delta, source, editor) => {
+                 onChange={(content) => {
                    const sanitizedContent = DOMPurify.sanitize(content);
                    setUpdateData((prev) => ({
                      ...prev,
