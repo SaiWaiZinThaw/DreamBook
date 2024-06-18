@@ -32,7 +32,7 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
           <img
             src={data.profilePicture}
             alt={data.name}
-            className="w-10 h-10 rounded-full"
+            className="rounded-full w-10 h-10"
           />
           <FaAngleDown />
         </DropdownMenuTrigger>
@@ -42,17 +42,17 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               <img
                 src={data.profilePicture}
                 alt={data.name}
-                className="w-10 h-10 rounded-full"
+                className="rounded-full w-10 h-10"
               />
               <div className="flex flex-col">
-                <p className="text-lg font-bold">{data.name}</p>
-                <p className="text-sm opacity-50">{data.email}</p>
+                <p className="font-bold text-lg">{data.name}</p>
+                <p className="opacity-50 text-sm">{data.email}</p>
               </div>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuLabel className="!border-none">
-            <h3 className="font-bold text-[18px] px-2">Account</h3>
+            <h3 className="px-2 font-bold text-[18px]">Account</h3>
           </DropdownMenuLabel>
           <NavLink to="/me/info">
             <DropdownMenuItem>
@@ -79,13 +79,13 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
             </DropdownMenuItem>
           </NavLink>
           <DropdownMenuLabel className="!border-none">
-            <h3 className="font-bold text-[18px] px-2">Theme</h3>
+            <h3 className="px-2 font-bold text-[18px]">Theme</h3>
           </DropdownMenuLabel>
 
           <div className="flex flex-col gap-2 pb-2 text-sm">
-            <div className="flex items-center gap-2 px-2 mx-4">
+            <div className="flex items-center gap-2 mx-4 px-2">
               <Input
-                className="w-3 h-3 rounded-none"
+                className="rounded-none w-3 h-3"
                 type="radio"
                 name="theme"
                 id="light"
@@ -95,9 +95,9 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               </label>
             </div>
 
-            <div className="flex items-center gap-2 px-2 mx-4">
+            <div className="flex items-center gap-2 mx-4 px-2">
               <Input
-                className="w-3 h-3 rounded-none"
+                className="rounded-none w-3 h-3"
                 type="radio"
                 name="theme"
                 id="dark"
@@ -107,9 +107,9 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               </label>
             </div>
 
-            <div className="flex items-center gap-2 px-2 pb-2 mx-4 border-b border-border">
+            <div className="flex items-center gap-2 mx-4 px-2 pb-2 border-b border-border">
               <Input
-                className="w-3 h-3 rounded-none"
+                className="rounded-none w-3 h-3"
                 type="radio"
                 name="theme"
                 id="system"
@@ -122,7 +122,7 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               onClick={logoutHandler}
               className="flex items-center gap-1 font-medium text-primary"
             >
-              <CiLogout className="text-lg font-bold" />
+              <CiLogout className="font-bold text-lg" />
               Log Out
             </button>
           </DropdownMenuLabel>

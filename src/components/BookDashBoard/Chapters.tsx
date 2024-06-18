@@ -37,7 +37,7 @@ const Chapters = () => {
   const [chapterData, setChapterData] = useState<createChapterData>({
     title: "",
     content: "",
-    status: "draft",
+    status: "Draft",
     priority: 0,
     slug: "",
   });

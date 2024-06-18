@@ -17,6 +17,7 @@ import { useFetchABook } from "@/hooks/useFetchBook";
 import { HiPencil } from "react-icons/hi";
 import { getToken } from "@/services/authService";
 import { useState } from "react";
+
 const Books = () => {
   const token = getToken() || "";
   const [active, setActive] = useState(false);
@@ -24,9 +25,9 @@ const Books = () => {
   const { data, isLoading } = useFetchABook(token);
 
   return (
-    <div className="w-full">
-      <div className="p-10">
-        <div className="flex justify-between items-center h-[50px]">
+    <div className="w-screen overflow-hidden">
+      <div className="p-4">
+        <div className="flex justify-between items-center mb-4 h-[50px]">
           <div className="flex items-center gap-3">
             <img src={Sorting} alt="sorting" className="h-[50px]" />
             <Select>
@@ -55,7 +56,7 @@ const Books = () => {
             </Button>
           </NavLink>
         </div>
-        <div className="gap-4 grid grid-cols-4 p-10">
+        <div className="gap-4 grid grid-cols-4">
           {!isLoading &&
             data &&
             data.items.map((book) => (
@@ -81,9 +82,11 @@ const Books = () => {
                   <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                     <BsEyeFill className="text-slate-500" />
                   </div>
-                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                    <HiPencil className="text-slate-500" />
-                  </div>
+                  <NavLink to={`/book-dashboard/${book.slug!}/book-details`}>
+                    <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                      <HiPencil className="text-slate-500" />
+                    </div>
+                  </NavLink>
                 </div>
                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                   <img
