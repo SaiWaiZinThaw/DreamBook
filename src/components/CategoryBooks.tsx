@@ -32,7 +32,7 @@ const CategoryBooks = () => {
     console.log(bookId!);
   };
   return (
-    <div className="flex flex-col w-full min-h-screen px-0 mx-0 ">
+    <div className="flex flex-col mx-0 px-0 w-full min-h-screen">
       <div className="flex justify-between mx-[45px] mt-4 h-[42px]">
         <div className="flex items-center gap-3">
           <img src={Sorting} alt="sorting" />
@@ -59,17 +59,17 @@ const CategoryBooks = () => {
         </div>
       </div>
 
-      <div className="grid w-full grid-cols-4 gap-8 p-10 ">
+      <div className="gap-8 grid grid-cols-4 p-10 w-full">
         {!isLoading &&
           data &&
           data.items.map((book) => (
             <div
               key={book.title}
               id={book.bookId}
-              className="book bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] w-[232px] h-[280px] relative group"
+              className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] w-[232px] h-[280px] book group"
             >
               <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                   {active ? (
                     <BsHeartFill
                       className="text-red-500 cursor-pointer"
@@ -77,15 +77,15 @@ const CategoryBooks = () => {
                     />
                   ) : (
                     <BsHeart
-                      className="cursor-pointer text-slate-500"
+                      className="text-slate-500 cursor-pointer"
                       onClick={() => setActive(!active)}
                     />
                   )}
                 </div>
 
-                <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                   <BsEyeFill
-                    className="cursor-pointer text-slate-500"
+                    className="text-slate-500 cursor-pointer"
                     onClick={viewBook}
                   />
                 </div>
@@ -94,12 +94,12 @@ const CategoryBooks = () => {
                 <img
                   src={book.coverImage}
                   alt={book.coverImage}
-                  className=" h-[140px] max-w-[120px]"
+                  className="max-w-[120px] h-[140px]"
                 />
               </div>
 
               <div className="flex flex-col justify-center gap-1 ml-2">
-                <h1 className="font-bold text-[15px] h-6 line-clamp-1">
+                <h1 className="line-clamp-1 h-6 font-bold text-[15px]">
                   {book.title}
                 </h1>
                 <div className="flex items-center gap-2">
@@ -108,7 +108,7 @@ const CategoryBooks = () => {
                     alt={book.category.title}
                     className="w-6"
                   />
-                  <p className="text-[12px] font-Inter text-secondary-foreground">
+                  <p className="font-Inter text-[12px] text-secondary-foreground">
                     {book.category.title}
                   </p>
                 </div>
@@ -116,7 +116,7 @@ const CategoryBooks = () => {
                   <img
                     src={book.user.profilePicture}
                     alt={book.user.name}
-                    className="w-6 h-6 rounded-full"
+                    className="rounded-full w-6 h-6"
                   />
                   <h2 className="text-[13px] text-black">
                     By {book.user.name}
@@ -126,7 +126,7 @@ const CategoryBooks = () => {
             </div>
           ))}
       </div>
-      <div className="w-full mt-auto">
+      <div className="mt-auto w-full">
         <Pagination>
           <PaginationContent>
             <PaginationItem>

@@ -72,6 +72,7 @@ const CategorySelect = () => {
             </div>
           </div>
         ))}
+      
       <Button className="col-span-2" size={"full"} type="submit">
         Finish
       </Button>

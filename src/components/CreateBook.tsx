@@ -318,7 +318,7 @@ const CreateBook = () => {
               </label>
             )}
           </div>
-          <div className="flex justify-center mx-[13px] mt-[16px] w-[173px] h-[27px]">
+          <div className="flex justify-center mt-[16px] h-[27px]">
             <input
               onChange={handleFileChange}
               name="coverImage"
@@ -327,7 +327,7 @@ const CreateBook = () => {
               id="fileInput"
             />
             <label htmlFor="fileInput">
-              <h1 className="font-extrabold text-lg text-primary">
+              <h1 className="font-extrabold text-[19px] text-primary">
                 Select Book Cover
               </h1>
             </label>
@@ -350,7 +350,6 @@ const CreateBook = () => {
                   id="title"
                   placeholder="Title"
                   onBlur={handleBlur}
-                  className="border-slate-300 border"
                   required
                 />
                 <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" />
@@ -403,7 +402,6 @@ const CreateBook = () => {
                 name="keywords"
                 type="text"
                 id="keywords"
-                className="border-slate-300 border"
               />
               <div>
                 <ul className="absolute flex space-x-2 ml-4">
