@@ -8,13 +8,21 @@ import React, { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+interface Errors {
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+}
+
 const SignUp = () => {
   const navigate = useNavigate();
   const [accountData, setAccountData] = useState({
     email: "",
     password: "",
   });
+  const [confirmPassword, setConfirmPassword] = useState("");
   const createAccount = useSignUp();
+  const [errors, setErrors] = useState<Errors>({})
 
   useEffect(() => {
     if (createAccount.isSuccess) {
@@ -26,6 +34,17 @@ const SignUp = () => {
     }
   }, [createAccount.isSuccess]);
 
+  // useEffect(() => {
+  //   if (createAccount.isError) {
+  //     const errorResponse = createAccount.error?.response?.data;
+  //     if (errorResponse?.message === "Email already exists") {
+  //       setErrors({ email: "Email is already exists!" });
+  //     } else {
+  //       alert("Error");
+  //     }
+  //   }
+  // }, [createAccount.isError]);
+
   useEffect(() => {
     if (createAccount.isError) {
       alert("Error");
@@ -34,13 +53,40 @@ const SignUp = () => {
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    const data = { ...accountData };
-    createAccount.mutate(data);
-    console.log(data);
+
+    const validationErrors:{email?: string; password?: string; confirmPassword?: string} = {}
+
+    if(!accountData.email) {
+      validationErrors.email = "* Email is required !"
+    } else if(!/\S+@\S+\.\S+/.test(accountData.email)){
+      validationErrors.email = "Invalid Email !"
+    }
+
+    if(!accountData.password) {
+      validationErrors.password = "* Password is required !"
+    }else if(accountData.password.length < 8) {
+      validationErrors.password = "Password must be at least 8 characters !"
+    }
+
+    if(confirmPassword !== accountData.password) {
+      validationErrors.confirmPassword = "Password does not match !"
+    }
+
+    setErrors(validationErrors);
+
+    if(Object.keys(validationErrors).length === 0) {
+      const payload = {
+        email: accountData.email,
+        password: accountData.password,
+      };
+      createAccount.mutate(payload);
+      console.log(payload);
+    }
   };
+
   return (
     <div className="flex flex-col items-center gap-10 w-6/12 self-center">
-      <form className="flex flex-col items-center gap-6 w-[460px] font-Inter">
+      <form className="flex flex-col items-center gap-5 w-[460px] font-Inter">
         <div className="flex flex-col items-center gap-3">
           <h1 className="font-bold text-2xl text-white">Create an Account</h1>
           <h3 className="text-white">Get started to share books & reading</h3>
@@ -54,6 +100,7 @@ const SignUp = () => {
             setAccountData((prev) => ({ ...prev, email: event.target.value }));
           }}
         />
+        {errors.email && <span className="font-bold text-red-500 text-sm">{errors.email}</span>}
         <Input
           type="password"
           id="password"
@@ -66,11 +113,17 @@ const SignUp = () => {
             }));
           }}
         />
+        {errors.password && <span className="font-bold text-red-500 text-sm">{errors.password}</span>}
         <Input
           type="password"
           id="ConfirmPassword"
           placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setConfirmPassword(event.target.value);
+          }}
         />
+        {errors.confirmPassword && <span className="font-bold text-red-500 text-sm">{errors.confirmPassword}</span>}
 
         {!createAccount.isPending ? (
           <Button
