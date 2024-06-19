@@ -1,5 +1,4 @@
 import { Sorting } from "@/assets";
-// import useFetchCategories from "@/hooks/useFetchCategories";
 import { useState } from "react";
 import { BsHeartFill, BsHeart, BsEyeFill } from "react-icons/bs";
 import { IoIosSearch } from "react-icons/io";
