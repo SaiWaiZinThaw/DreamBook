@@ -25,7 +25,7 @@ import { FaUnderline } from "react-icons/fa";
 import { FaItalic } from "react-icons/fa6";
 import { useGetMe } from "@/hooks/useUser";
 import { Creating } from "./ui/loading-button";
-import DOMPurify from 'dompurify';
+import DOMPurify from "dompurify";
 
 const CreateBook = () => {
   const navigate = useNavigate();
@@ -36,9 +36,9 @@ const CreateBook = () => {
   const [isBoldActive, setIsBoldActive] = useState(false);
   const [isItalicActive, setIsItalicActive] = useState(false);
   const [isUnderlineActive, setIsUnderlineActive] = useState(false);
-  const [isLeftActive] = useState(false);
-  const [isCenterActive] = useState(false);
-  const [isRightActive] = useState(false);
+  const isLeftActive = false;
+  const isCenterActive = false;
+  const isRightActive = false;
   const [isBulletActive, setIsBulletActive] = useState(false);
   const [keywordError, setKeywordError] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -59,36 +59,35 @@ const CreateBook = () => {
 
   useEffect(() => {
     if (quillRef.current) {
+      quillInstance.current = new Quill(quillRef.current, {
+        theme: "snow",
+        modules: {
+          toolbar: false,
+        },
+      });
+      quillRef.current.focus();
 
-        quillInstance.current = new Quill(quillRef.current, {
-            theme: 'snow',
-            modules: {
-                toolbar: false
-            }
-        });
-        quillRef.current.focus();
-        
-        quillInstance.current.on('text-change', () => {
-          const sanitizedHtml = DOMPurify.sanitize(quillInstance.current!.root.innerHTML || "");
-          setFormData((prev) => ({
-            ...prev,
-            description: sanitizedHtml,
-          }));
-          
-          setTimeout(() => {
-            const editorLength = quillInstance.current?.getLength() || 0;
-            quillInstance.current?.setSelection(editorLength, 0);
+      quillInstance.current.on("text-change", () => {
+        const sanitizedHtml = DOMPurify.sanitize(
+          quillInstance.current!.root.innerHTML || ""
+        );
+        setFormData((prev) => ({
+          ...prev,
+          description: sanitizedHtml,
+        }));
+
+        setTimeout(() => {
+          const editorLength = quillInstance.current?.getLength() || 0;
+          quillInstance.current?.setSelection(editorLength, 0);
         }, 0);
-        
-        });
+      });
 
-        if (formData.description) {
-          const sanitizedHtml = DOMPurify.sanitize(formData.description);
-          quillInstance.current.clipboard.dangerouslyPasteHTML(sanitizedHtml); 
-        }
+      if (formData.description) {
+        const sanitizedHtml = DOMPurify.sanitize(formData.description);
+        quillInstance.current.clipboard.dangerouslyPasteHTML(sanitizedHtml);
+      }
     }
-}, [formData.description && quillRef]);
-
+  }, [formData.description && quillRef]);
 
   const applyFormat = (format: string) => {
     if (quillInstance.current) {
@@ -212,9 +211,9 @@ const CreateBook = () => {
     if (fetchMyProfile) {
       createBookMutation.mutate(formData);
       console.log(formData);
-    }else if(formData.title.trim() === '') {
+    } else if (formData.title.trim() === "") {
       setTitleError(true);
-    }else if (formData.keywords.length === 0) {
+    } else if (formData.keywords.length === 0) {
       setKeywordError(true);
     }
   };
@@ -234,13 +233,13 @@ const CreateBook = () => {
       ...prev,
       title: event.target.value,
     }));
-    if (event.target.value.trim() !== '') {
+    if (event.target.value.trim() !== "") {
       setTitleError(false);
     }
   };
 
   const handleBlur = () => {
-    if (formData.title.trim() === '') {
+    if (formData.title.trim() === "") {
       setTitleError(true);
     }
     if (formData.keywords.length === 0) {
@@ -248,16 +247,18 @@ const CreateBook = () => {
     }
   };
 
-  const handleDeleteKeyword = (indexToDelete:any) => {
+  const handleDeleteKeyword = (indexToDelete: any) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      keywords: prevFormData.keywords.filter((_, index) => index !== indexToDelete)
+      keywords: prevFormData.keywords.filter(
+        (_, index) => index !== indexToDelete
+      ),
     }));
   };
 
   const handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentKeyword(event.target.value);
-    if (event.target.value.trim() !== '') {
+    if (event.target.value.trim() !== "") {
       setKeywordError(false);
     }
   };
@@ -332,7 +333,6 @@ const CreateBook = () => {
               </h1>
             </label>
           </div>
-          
         </div>
 
         <div className="ml-[95px] w-[667px]">
@@ -370,14 +370,15 @@ const CreateBook = () => {
                   name="category"
                   id="category"
                   className={`border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold ${
-                                selectedCategory === "" ? "text-slate-300" : "" }`}
+                    selectedCategory === "" ? "text-slate-300" : ""
+                  }`}
                   ref={selectRef}
                   onChange={handleChange}
                   defaultValue=""
                 >
-                 <option value="" disabled className="font-extrabold">
+                  <option value="" disabled className="font-extrabold">
                     Select Category
-                 </option>
+                  </option>
                   {fetchCategories?.map((category: any) => (
                     <option
                       key={category.categoryId}
@@ -404,22 +405,26 @@ const CreateBook = () => {
                 id="keywords"
               />
               <div>
-                <ul className="absolute flex space-x-2 ml-4">
+                <ul className="absolute flex ml-4 space-x-2">
                   {formData.keywords.map((keyword, index) => (
                     <li
                       key={index}
-                      className="flex border-primary px-2 py-1 border border-opacity-55 rounded-md text-slate-600"
+                      className="flex px-2 py-1 border rounded-md border-primary border-opacity-55 text-slate-600"
                     >
-                      {keyword}<BsX onClick={() => handleDeleteKeyword(index)} className="mt-[5px] cursor-pointer" />
+                      {keyword}
+                      <BsX
+                        onClick={() => handleDeleteKeyword(index)}
+                        className="mt-[5px] cursor-pointer"
+                      />
                     </li>
                   ))}
                 </ul>
               </div>
               {keywordError && (
-                  <div className="ml-[10px] font-bold text-red-500 text-sm">
-                     * Please add at least one keyword
-                  </div>
-                )}
+                <div className="ml-[10px] font-bold text-red-500 text-sm">
+                  * Please add at least one keyword
+                </div>
+              )}
             </div>
 
             <div className="items-center gap-1.5 grid mx-[32px] pt-[120px] w-[603px] h-[176px]">
@@ -435,10 +440,8 @@ const CreateBook = () => {
               />
               <div className="relative">
                 <div className="bottom-0 absolute mb-[8px] ml-[25px]">
-
-                  <button 
+                  <button
                     type="button"
-
                     onClick={handleBold}
                     className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
                       isBoldActive ? "bg-blue-500 text-slate-100" : ""
@@ -520,36 +523,30 @@ const CreateBook = () => {
                     setFormData((prev) => ({
                       ...prev,
                       description: DOMPurify.sanitize(e.target.value),
-                    }))}
+                    }))
+                  }
                   className="hidden"
                 />
-                
               </div>
             </div>
           </div>
 
-          
-            {
-              !createBookMutation.isPending ? (
-                <div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
-                  <button
-                    type="submit"
-                    className="justify-center mx-[256px] text-white"
-                  >
-                    Create Now
-                  </button>
-                </div>
-              ): (
-                <div>
-                  <Creating/>
-                </div>
-              )
-            }
-
-          
+          {!createBookMutation.isPending ? (
+            <div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
+              <button
+                type="submit"
+                className="justify-center mx-[256px] text-white"
+              >
+                Create Now
+              </button>
+            </div>
+          ) : (
+            <div>
+              <Creating />
+            </div>
+          )}
         </div>
       </form>
-      
     </div>
   );
 };

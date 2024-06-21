@@ -2,7 +2,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useUpdateBook } from "@/hooks/useFetchABookAuthor";
-import ReactQuill from 'react-quill';
+
+import ReactQuill from "react-quill";
+
 import { Label } from "@/components/ui/label";
 import { AiOutlineUser } from "react-icons/ai";
 import {
@@ -24,7 +26,7 @@ import { updateBookType } from "@/types/types";
 import { BookCoverChange } from "./BookCoverChange";
 import { useSoftDeleteBook } from "@/hooks/useDeleteBook";
 import DOMPurify from "dompurify";
-import 'react-quill/dist/quill.snow.css';
+import "react-quill/dist/quill.snow.css";
 
 const BookDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -49,10 +51,8 @@ const BookDetails = () => {
   useEffect(() => {
     if (fetchABookAuthor?.status === "Draft") {
       setIsOn(true);
-      console.log(isOn);
     } else if (fetchABookAuthor?.status === "Published") {
       setIsOn(false);
-      console.log(isOn);
     }
   }, [fetchABookAuthor?.status]);
 
@@ -82,6 +82,9 @@ const BookDetails = () => {
         status: fetchABookAuthor.status || "",
         slug: fetchABookAuthor.slug || "",
       }));
+      if (fetchABookAuthor.keywords) {
+        setKeywords(fetchABookAuthor.keywords);
+      }
     }
   }, [fetchABookAuthor]);
 
@@ -111,11 +114,13 @@ const BookDetails = () => {
     setIsOn(!isOn);
   };
 
+
   useEffect(() => {
     if (fetchABookAuthor?.keywords) {
       setKeywords(fetchABookAuthor.keywords);
     }
   }, [fetchABookAuthor]);
+
 
   const handleEditClick = () => {
     setIsEditing(true); 
@@ -125,11 +130,13 @@ const BookDetails = () => {
     setIsEditing(false);
   };
 
+
   const handleSaveClick = (e: any) => {
     e.preventDefault();
     updateBook.mutate(updateData);
     console.log(updateData);
     setIsEditing(false);
+
   };
 
   const handleDeleteConfirm = (bookSlug: string) => {
@@ -145,7 +152,7 @@ const BookDetails = () => {
     });
   };
 
-  const handleDeleteKeyword = (indexToDelete: any) => {
+  const handleDeleteKeyword = (indexToDelete: number) => {
     setKeywords((prevKeywords) =>
       prevKeywords.filter((_, index) => index !== indexToDelete)
     );
@@ -156,7 +163,7 @@ const BookDetails = () => {
   };
 
   return (
-    <div className="mx-0 px-0 w-full h-full container">
+    <div className="container w-full h-full px-0 mx-0">
       <div className="flex border-slate-300 border-b h-[80px]">
         <h1 className="my-[20px] pl-[40px] font-extrabold text-2xl">
           Book Details
@@ -201,7 +208,7 @@ const BookDetails = () => {
                     }}
                     value={updateData.title}
                     id="title"
-                    className="border-slate-300 border text-black"
+                    className="text-black border border-slate-300"
                   />
                 ) : (
                   <h1
@@ -224,7 +231,8 @@ const BookDetails = () => {
                   id="category"
                   className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] h-[45px] font-semibold text-black"
                 >
-                  {fetchABookAuthor?.category.title}
+                  {fetchABookAuthor?.category?.title! ||
+                    "Category Not Available"}
                 </h1>
               </div>
             </div>
@@ -249,7 +257,7 @@ const BookDetails = () => {
                   {keywords.map((keyword, index) => (
                     <span
                       key={index}
-                      className="inline-block bg-gray-200 mr-2 mb-2 px-3 py-1 rounded-full font-semibold text-slate-950 text-sm"
+                      className="inline-block px-3 py-1 mb-2 mr-2 text-sm font-semibold bg-gray-200 rounded-full text-slate-950"
                     >
                       {keyword}
                     </span>
@@ -261,7 +269,7 @@ const BookDetails = () => {
                 <div className="flex">
                   {keywords.map((keyword, index) => (
                     <div key={index} className="flex items-center">
-                      <span className="flex bg-gray-200 mr-2 mb-2 px-3 py-1 rounded-full font-semibold text-slate-950 text-sm">
+                      <span className="flex px-3 py-1 mb-2 mr-2 text-sm font-semibold bg-gray-200 rounded-full text-slate-950">
                         {keyword}
                         <BsX
                           onClick={() => handleDeleteKeyword(index)}
@@ -281,48 +289,26 @@ const BookDetails = () => {
               >
                 Description
               </Label>
-              {/* <ReactQuill
-                value={updateData.description}
-                onChange={(content) => {
-                  const sanitizedContent = DOMPurify.sanitize(content);
-                  setUpdateData((prev) => ({
-                    ...prev,
-                    description: sanitizedContent,
-                  }));
-                }}
-                className="rounded-[5px] h-[290px]"
-                modules={quillModules}
-                readOnly={!isEditing}
-              /> */}
+
               {isEditing ? (
-                 <ReactQuill
-                 value={updateData.description}
-                 onChange={(content) => {
-                   const sanitizedContent = DOMPurify.sanitize(content);
-                   setUpdateData((prev) => ({
-                     ...prev,
-                     description: sanitizedContent,
-                   }));
-                 }}
-                 className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]"
-                 modules={quillModules}
-               />
-                // <textarea
-                //   onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-                //     const sanitizedValue = DOMPurify.sanitize(event.target.value);
-                //     setUpdateData((prev) => ({
-                //       ...prev,
-                //       description: sanitizedValue,
-                //     }));
-                //   }}
-                //   value={updateData.description}
-                //   id="description"
-                //   className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]"
-                // />
+                <ReactQuill
+                  value={updateData.description}
+                  onChange={(content) => {
+                    const sanitizedContent = DOMPurify.sanitize(content);
+                    setUpdateData((prev) => ({
+                      ...prev,
+                      description: sanitizedContent,
+                    }));
+                  }}
+                  className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]"
+                  modules={quillModules}
+                />
               ) : (
+
                 <div className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]">
                   <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(fetchABookAuthor?.description!) }} />
                 </div>
+
               )}
             </div>
           </div>
@@ -355,9 +341,9 @@ const BookDetails = () => {
                         Delete
                       </Button>
                     </AlertDialogTrigger>
-                    <AlertDialogContent className="bg-slate-50 rounded-none">
+                    <AlertDialogContent className="rounded-none bg-slate-50">
                       <AlertDialogHeader>
-                        <AlertDialogTitle className="font-extrabold text-red-600 text-xl">
+                        <AlertDialogTitle className="text-xl font-extrabold text-red-600">
                           Are you sure want to delete?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
@@ -371,7 +357,7 @@ const BookDetails = () => {
                         </AlertDialogCancel>
                         <AlertDialogAction
                           onClick={() =>
-                            handleDeleteConfirm(fetchABookAuthor?.slug!)
+                            handleDeleteConfirm(fetchABookAuthor!.slug!)
                           }
                           className="hover:bg-blue-400 rounded-[8px] text-slate-100 hover:text-slate-200"
                         >
@@ -400,10 +386,10 @@ const BookDetails = () => {
             </h1>
 
             <div className="border-slate-500 border border-dotted rounded-[8px] h-[252px]">
-              {isEditing && fetchABookAuthor ? (
+              {isEditing ? (
                 <BookCoverChange
                   onFileChange={handleFileChange}
-                  coverImage={fetchABookAuthor.coverImage}
+                  coverImage={fetchABookAuthor!.coverImage}
                 />
               ) : (
                 <img
@@ -430,6 +416,7 @@ const BookDetails = () => {
               </div>
 
               <div className="ml-2">
+
                 <h1 className="font-bold text-[15px]">{fetchABookAuthor?.title}</h1>
                 <p className="flex mt-1 font-Inter font-normal text-[12px] text-gray-500">
                   <img src={fetchABookAuthor?.category.icon} alt="" className="mr-2 w-[20px] h-[20px]"/>
@@ -438,6 +425,7 @@ const BookDetails = () => {
                 <h2 className="flex my-2 font-bold text-[13px]">
                   <img src={fetchABookAuthor?.user.profilePicture} alt="" className="mr-2 rounded-full w-[20px] h-[20px]"/>
                   By {fetchABookAuthor?.user.name}
+
                 </h2>
               </div>
             </div>

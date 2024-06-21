@@ -1,4 +1,3 @@
-
 import { Sorting } from "@/assets";
 import { IoIosSearch } from "react-icons/io";
 import {
@@ -12,17 +11,23 @@ import { BsHeartFill, BsHeart, BsEyeFill } from "react-icons/bs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FaPlus } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
-import { useFetchABook } from "@/hooks/useFetchBook";
+import { NavLink, useNavigate } from "react-router-dom";
 import { HiPencil } from "react-icons/hi";
 import { getToken } from "@/services/authService";
 import { useState } from "react";
+
+import { useFetchAllBookAuthor } from "@/hooks/useFetchABookAuthor";
 
 const Books = () => {
   const token = getToken() || "";
   const [active, setActive] = useState(false);
 
-  const { data, isLoading } = useFetchABook(token);
+  const { data, isLoading } = useFetchAllBookAuthor(token);
+  const navigate = useNavigate();
+
+  const editHandler = (bookSlug: string) => {
+    navigate(`/book-dashboard/${bookSlug}/book-details`);
+  };
 
   return (
     <div className="w-screen overflow-hidden">
@@ -56,16 +61,18 @@ const Books = () => {
             </Button>
           </NavLink>
         </div>
-        <div className="gap-4 grid grid-cols-4">
+        <div className="grid grid-cols-2 gap-2 p-10 lg:grid-cols-4 lg:gap-4">
           {!isLoading &&
             data &&
+            data.items &&
             data.items.map((book) => (
               <div
                 key={book.title}
-                className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] w-[232px] h-[280px] group"
+                id={book.slug}
+                className="relative book bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] max-w-[232px] h-[280px] group"
               >
                 <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                     {active ? (
                       <BsHeartFill
                         className="text-red-500 cursor-pointer"
@@ -73,20 +80,21 @@ const Books = () => {
                       />
                     ) : (
                       <BsHeart
-                        className="text-slate-500 cursor-pointer"
+                        className="cursor-pointer text-slate-500"
                         onClick={() => setActive(!active)}
                       />
                     )}
                   </div>
 
-                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                    <BsEyeFill className="text-slate-500" />
+                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                    <BsEyeFill className="cursor-pointer text-slate-500" />
                   </div>
-                  <NavLink to={`/book-dashboard/${book.slug!}/book-details`}>
-                    <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                      <HiPencil className="text-slate-500" />
-                    </div>
-                  </NavLink>
+                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                    <HiPencil
+                      className="cursor-pointer text-slate-500"
+                      onClick={() => editHandler(book.slug)}
+                    />
+                  </div>
                 </div>
                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                   <img
@@ -114,7 +122,7 @@ const Books = () => {
                     <img
                       src={book.user.profilePicture}
                       alt={book.user.name}
-                      className="rounded-full w-6 h-6"
+                      className="w-6 h-6 rounded-full"
                     />
                     <h2 className="font-medium text-[13px] text-black">
                       By {book.user.name}

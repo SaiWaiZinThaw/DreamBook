@@ -85,10 +85,12 @@ const Info = () => {
               }));
             }}
           />
+
           <div className="bg-white p-4 border border-border rounded-[5px] w-full h-12 font-Inter font-semibold text-secondary-foreground text-sm text-opacity-50">
             {data?.email}
           </div>
           <div className="flex items-center gap-5 w-full">
+
             <select
               className="flex justify-center items-center p-4 rounded-[5px] h-12"
               value={profileData.countryCode}
