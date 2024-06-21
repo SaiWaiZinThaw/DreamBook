@@ -25,10 +25,8 @@ const Books = () => {
   const { data, isLoading } = useFetchAllBookAuthor(token);
   const navigate = useNavigate();
 
-  const editHandler = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
-    const book = event.currentTarget.closest(".book")!;
-    const bookId = book.id;
-    navigate(`/book-dashboard/${bookId}/book-details`);
+  const editHandler = (bookSlug: string) => {
+    navigate(`/book-dashboard/${bookSlug}/book-details`);
   };
 
   return (
@@ -94,7 +92,7 @@ const Books = () => {
                   <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                     <HiPencil
                       className="cursor-pointer text-slate-500"
-                      onClick={editHandler}
+                      onClick={() => editHandler(book.slug)}
                     />
                   </div>
                 </div>
