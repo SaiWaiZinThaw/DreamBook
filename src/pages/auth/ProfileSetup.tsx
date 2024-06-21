@@ -27,6 +27,8 @@ const ProfileSetup = () => {
     gender: "male",
   });
 
+  const [errors, setErrors] = useState<{ name?: string; localNumber?: string }>({});
+
   useEffect(() => {
     if (data) {
       setProfileData((prev) => ({
@@ -42,7 +44,26 @@ const ProfileSetup = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    profileSetup.mutate(profileData);
+    
+    const validationErrors: {name?: string; localNumber?: string} = {};
+    if(!profileData.name) {
+      validationErrors.name = "* Fill Your Username"
+    }else if(profileData.name.length > 25){
+      validationErrors.name = "Username must be maximum 25 characters !"
+    }
+
+    setErrors(validationErrors);
+
+    if(Object.keys(validationErrors).length === 0) {
+      profileSetup.mutate(profileData, {
+        onError: (error:any) => {
+          if(error.response && error.response.data){
+            setErrors(error.response.data.errors)
+          }
+        }
+      });
+
+    }
   };
 
   useEffect(() => {
@@ -65,12 +86,12 @@ const ProfileSetup = () => {
         onSubmit={handleSubmit}
         className="flex flex-col items-center gap-6 w-[460px] font-Inter"
       >
-        <h1 className="text-2xl font-bold text-white">Create an account</h1>
+        <h1 className="font-bold text-2xl text-white">Create an account</h1>
         <FileUpload onFileChange={handleFileChange} />
-        <Label htmlFor="picture" className="text-lg text-white font-Inter">
+        <Label htmlFor="picture" className="font-Inter text-lg text-white">
           Upload Photo
         </Label>
-        <div className="flex items-center w-full gap-5">
+        <div className="flex items-center gap-5 w-full">
           <select
             className="flex justify-center items-center p-4 rounded-[5px] h-12"
             value={profileData.countryCode}
@@ -99,6 +120,9 @@ const ProfileSetup = () => {
               }));
             }}
           />
+          {errors.localNumber && (
+          <p className="text-red-500 text-sm">{errors.localNumber}</p>
+        )}
         </div>
         <Input
           type="text"
@@ -112,6 +136,9 @@ const ProfileSetup = () => {
             }));
           }}
         />
+         {errors.name && (
+          <p className="text-red-500 text-sm">{errors.name}</p>
+        )}
         <select
           className="flex justify-center items-center p-4 rounded-[5px] w-full h-12 text-sm"
           value={profileData.gender}

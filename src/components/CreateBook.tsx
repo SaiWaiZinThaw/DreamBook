@@ -25,7 +25,7 @@ import { FaUnderline } from "react-icons/fa";
 import { FaItalic } from "react-icons/fa6";
 import { useGetMe } from "@/hooks/useUser";
 import { Creating } from "./ui/loading-button";
-
+import DOMPurify from 'dompurify';
 
 const CreateBook = () => {
   const navigate = useNavigate();
@@ -36,9 +36,9 @@ const CreateBook = () => {
   const [isBoldActive, setIsBoldActive] = useState(false);
   const [isItalicActive, setIsItalicActive] = useState(false);
   const [isUnderlineActive, setIsUnderlineActive] = useState(false);
-  const [isLeftActive] = useState(false);
-  const [isCenterActive] = useState(false);
-  const [isRightActive] = useState(false);
+  const [isLeftActive, setIsLeftActive] = useState(false);
+  const [isCenterActive, setIsCenterActive] = useState(false);
+  const [isRightActive, setIsRightActive] = useState(false);
   const [isBulletActive, setIsBulletActive] = useState(false);
   const [keywordError, setKeywordError] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -69,9 +69,10 @@ const CreateBook = () => {
         quillRef.current.focus();
         
         quillInstance.current.on('text-change', () => {
+          const sanitizedHtml = DOMPurify.sanitize(quillInstance.current!.root.innerHTML || "");
           setFormData((prev) => ({
             ...prev,
-            description: quillInstance.current!.root.innerHTML || ""
+            description: sanitizedHtml,
           }));
           
           setTimeout(() => {
@@ -82,7 +83,8 @@ const CreateBook = () => {
         });
 
         if (formData.description) {
-          quillInstance.current.clipboard.dangerouslyPasteHTML(formData.description); 
+          const sanitizedHtml = DOMPurify.sanitize(formData.description);
+          quillInstance.current.clipboard.dangerouslyPasteHTML(sanitizedHtml); 
         }
     }
 }, [formData.description && quillRef]);
@@ -316,7 +318,7 @@ const CreateBook = () => {
               </label>
             )}
           </div>
-          <div className="flex justify-center mx-[13px] mt-[16px] w-[173px] h-[27px]">
+          <div className="flex justify-center mt-[16px] h-[27px]">
             <input
               onChange={handleFileChange}
               name="coverImage"
@@ -325,7 +327,7 @@ const CreateBook = () => {
               id="fileInput"
             />
             <label htmlFor="fileInput">
-              <h1 className="font-extrabold text-lg text-primary">
+              <h1 className="font-extrabold text-[19px] text-primary">
                 Select Book Cover
               </h1>
             </label>
@@ -348,7 +350,6 @@ const CreateBook = () => {
                   id="title"
                   placeholder="Title"
                   onBlur={handleBlur}
-                  className="border-slate-300 border"
                   required
                 />
                 <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" />
@@ -401,7 +402,6 @@ const CreateBook = () => {
                 name="keywords"
                 type="text"
                 id="keywords"
-                className="border-slate-300 border"
               />
               <div>
                 <ul className="absolute flex space-x-2 ml-4">
@@ -514,15 +514,16 @@ const CreateBook = () => {
                   ref={textareaRef}
                   id="description"
                   name="description"
+                  placeholder="Description"
                   value={formData.description}
-                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+                  onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,
-                      description: event.target.value,
-                    }));
-                  }}
+                      description: DOMPurify.sanitize(e.target.value),
+                    }))}
                   className="hidden"
                 />
+                
               </div>
             </div>
           </div>
@@ -548,6 +549,7 @@ const CreateBook = () => {
           
         </div>
       </form>
+      
     </div>
   );
 };

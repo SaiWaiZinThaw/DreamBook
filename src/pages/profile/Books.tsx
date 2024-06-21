@@ -15,7 +15,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { HiPencil } from "react-icons/hi";
 import { getToken } from "@/services/authService";
 import { useState } from "react";
+]
 import { useFetchAllBookAuthor } from "@/hooks/useFetchABookAuthor";
+
 const Books = () => {
   const token = getToken() || "";
   const [active, setActive] = useState(false);
@@ -30,9 +32,9 @@ const Books = () => {
   };
 
   return (
-    <div className="w-full">
-      <div className="p-10">
-        <div className="flex justify-between items-center h-[50px]">
+    <div className="w-screen overflow-hidden">
+      <div className="p-4">
+        <div className="flex justify-between items-center mb-4 h-[50px]">
           <div className="flex items-center gap-3">
             <img src={Sorting} alt="sorting" className="h-[50px]" />
             <Select>
@@ -62,6 +64,7 @@ const Books = () => {
           </NavLink>
         </div>
         <div className="grid grid-cols-2 gap-2 p-10 lg:grid-cols-4 lg:gap-4">
+
           {!isLoading &&
             data &&
             data.items &&
@@ -95,6 +98,7 @@ const Books = () => {
                       onClick={editHandler}
                     />
                   </div>
+
                 </div>
                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                   <img

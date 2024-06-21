@@ -2,6 +2,9 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useUpdateBook } from "@/hooks/useFetchABookAuthor";
+
+import ReactQuill from 'react-quill';
+
 import { Label } from "@/components/ui/label";
 import { AiOutlineUser } from "react-icons/ai";
 import {
@@ -22,6 +25,8 @@ import { BsX } from "react-icons/bs";
 import { updateBookType } from "@/types/types";
 import { BookCoverChange } from "./BookCoverChange";
 import { useSoftDeleteBook } from "@/hooks/useDeleteBook";
+import DOMPurify from "dompurify";
+import 'react-quill/dist/quill.snow.css';
 
 const BookDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -147,12 +152,14 @@ const BookDetails = () => {
     );
   };
 
-  if (isLoading || !fetchABookAuthor) {
-    return <div>Loading...</div>;
-  }
+
+  const quillModules = {
+    toolbar: false,
+  };
+
 
   return (
-    <div className="container w-full h-full px-0 mx-0">
+    <div className="mx-0 px-0 w-full h-full container">
       <div className="flex border-slate-300 border-b h-[80px]">
         <h1 className="my-[20px] pl-[40px] font-extrabold text-2xl">
           Book Details
@@ -197,7 +204,7 @@ const BookDetails = () => {
                     }}
                     value={updateData.title}
                     id="title"
-                    className="text-black border border-slate-300"
+                    className="border-slate-300 border text-black"
                   />
                 ) : (
                   <h1
@@ -245,7 +252,7 @@ const BookDetails = () => {
                   {keywords.map((keyword, index) => (
                     <span
                       key={index}
-                      className="inline-block px-3 py-1 mb-2 mr-2 text-sm font-semibold bg-gray-200 rounded-full text-slate-950"
+                      className="inline-block bg-gray-200 mr-2 mb-2 px-3 py-1 rounded-full font-semibold text-slate-950 text-sm"
                     >
                       {keyword}
                     </span>
@@ -257,7 +264,7 @@ const BookDetails = () => {
                 <div className="flex">
                   {keywords.map((keyword, index) => (
                     <div key={index} className="flex items-center">
-                      <span className="flex px-3 py-1 mb-2 mr-2 text-sm font-semibold bg-gray-200 rounded-full text-slate-950">
+                      <span className="flex bg-gray-200 mr-2 mb-2 px-3 py-1 rounded-full font-semibold text-slate-950 text-sm">
                         {keyword}
                         <BsX
                           onClick={() => handleDeleteKeyword(index)}
@@ -277,21 +284,49 @@ const BookDetails = () => {
               >
                 Description
               </Label>
+              {/* <ReactQuill
+                value={updateData.description}
+                onChange={(content) => {
+                  const sanitizedContent = DOMPurify.sanitize(content);
+                  setUpdateData((prev) => ({
+                    ...prev,
+                    description: sanitizedContent,
+                  }));
+                }}
+                className="rounded-[5px] h-[290px]"
+                modules={quillModules}
+                readOnly={!isEditing}
+              /> */}
               {isEditing ? (
-                <textarea
-                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-                    setUpdateData((prev) => ({
-                      ...prev,
-                      description: event.target.value,
-                    }));
-                  }}
-                  value={updateData.description}
-                  id="description"
-                  className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]"
-                />
+                 <ReactQuill
+                 value={updateData.description}
+                 onChange={(content) => {
+                   const sanitizedContent = DOMPurify.sanitize(content);
+                   setUpdateData((prev) => ({
+                     ...prev,
+                     description: sanitizedContent,
+                   }));
+                 }}
+                 className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]"
+                 modules={quillModules}
+               />
+                // <textarea
+                //   onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
+                //     const sanitizedValue = DOMPurify.sanitize(event.target.value);
+                //     setUpdateData((prev) => ({
+                //       ...prev,
+                //       description: sanitizedValue,
+                //     }));
+                //   }}
+                //   value={updateData.description}
+                //   id="description"
+                //   className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]"
+                // />
               ) : (
                 <p className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]">
-                  {fetchABookAuthor.description}
+
+                  <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(fetchABookAuthor?.description!) }} />
+
                 </p>
               )}
             </div>
@@ -325,9 +360,9 @@ const BookDetails = () => {
                         Delete
                       </Button>
                     </AlertDialogTrigger>
-                    <AlertDialogContent className="rounded-none bg-slate-50">
+                    <AlertDialogContent className="bg-slate-50 rounded-none">
                       <AlertDialogHeader>
-                        <AlertDialogTitle className="text-xl font-extrabold text-red-600">
+                        <AlertDialogTitle className="font-extrabold text-red-600 text-xl">
                           Are you sure want to delete?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
@@ -400,9 +435,10 @@ const BookDetails = () => {
               </div>
 
               <div className="ml-2">
-                <h1 className="text-xl font-bold">{fetchABookAuthor.title}</h1>
-                <p className="text-sm font-normal text-gray-500">
-                  {fetchABookAuthor.category?.title || "Category Not Available"}
+
+                <h1 className="font-bold text-xl">{fetchABookAuthor?.title}</h1>
+                <p className="font-normal text-gray-500 text-sm">
+                  {fetchABookAuthor?.category.title}
                 </p>
                 <h2 className="mt-3 font-medium text-md">
                   {fetchABookAuthor.user?.name || "Author Not Available"}
