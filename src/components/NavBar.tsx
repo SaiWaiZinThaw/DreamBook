@@ -35,7 +35,7 @@ const NavBar = () => {
               ? "bg-primary !text-primary-foreground h-10 w-32 rounded-md"
               : "text-black"
           }
-          to={"/library/1"}
+          to={"/library"}
         >
           <Button variant={"ghost"}>Library</Button>
         </NavLink>

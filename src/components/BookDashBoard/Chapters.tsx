@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import useChapterCreate from "@/hooks/useChapterCreate";
 import { createChapterData } from "@/types/types";
-import { getToken } from "@/services/authService";
 import ChapterForm from "./ChapterForm";
 import { useParams } from "react-router-dom";
 import {
@@ -43,6 +42,7 @@ const Chapters = () => {
   });
 
   const deleteChapter = useDeleteChapter();
+  const [open, setOpen] = useState(false);
 
   const deleteHandler = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -52,7 +52,9 @@ const Chapters = () => {
     deleteChapter.mutate(chapterId!);
   };
 
-  const { data, isLoading } = useFetchAuthorAChapter(bookID!);
+
+  const { data, isLoading, refetch } = useFetchAuthorAChapter(bookSlug!);
+
   if (!isLoading) {
     console.log(data);
   }
@@ -60,12 +62,21 @@ const Chapters = () => {
   useEffect(() => {
     if (deleteChapter.isSuccess) {
       alert("success");
+      refetch();
     }
   }, [deleteChapter.isSuccess]);
 
   useEffect(() => {
     if (createChapterMutation.isSuccess) {
-      getToken();
+      setChapterData({
+        title: "",
+        content: "",
+        status: "Draft",
+        priority: 0,
+        slug: "",
+      });
+      setOpen(false);
+      refetch();
     }
   }, [createChapterMutation.isSuccess]);
 
@@ -88,7 +99,7 @@ const Chapters = () => {
 
   return (
     <div className="w-full h-screen">
-      <div className="mx-0 px-0 w-full">
+      <div className="w-full px-0 mx-0">
         <div className="flex flex-col w-full">
           <div className="flex border-slate-300 border-b w-full h-[80px]">
             <h1 className="my-[20px] pl-[40px] font-extrabold text-2xl">
@@ -99,7 +110,7 @@ const Chapters = () => {
               defaultValue="status"
               className="bg-[#E0E0E0] my-[13px] ml-[680px] rounded-[8px] w-[206px] h-[40px] text-slate-400"
             >
-              <TabsList className="gap-x-2 w-full">
+              <TabsList className="w-full gap-x-2">
                 <TabsTrigger
                   onClick={() => handleTabClick("draft")}
                   value="draft"
@@ -121,7 +132,7 @@ const Chapters = () => {
               </TabsList>
             </Tabs>
           </div>
-          <div className="flex flex-col justify-center px-8 py-4 w-full">
+          <div className="flex flex-col justify-center w-full px-8 py-4">
             {data &&
               !isLoading &&
               data.map((chapter:any) => (
@@ -129,7 +140,7 @@ const Chapters = () => {
                   key={chapter.chapterId}
                   className="flex flex-col justify-center shadow-secondary-foreground shadow-sm m-3 p-4 border border-border rounded-[8px] chapter"
                 >
-                  <div className="flex justify-between items-center">
+                  <div className="flex items-center justify-between">
                     <span className="font-semibold text-primary">
                       {chapter.title}
                     </span>
@@ -137,7 +148,7 @@ const Chapters = () => {
                       <DropdownMenuTrigger>
                         <HiOutlineDotsVertical className="text-xl" />
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent className="flex flex-col justify-center items-center">
+                      <DropdownMenuContent className="flex flex-col items-center justify-center">
                         <DropdownMenuItem className="border-b border-border text-primary">
                           Edit
                         </DropdownMenuItem>
@@ -175,11 +186,12 @@ const Chapters = () => {
                 </p>
 
                 <div>
-                  <Dialog>
+                  <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
                       <Button
                         className="flex bg-primary hover:bg-blue-500 mt-[24px] ml-[455px] border-none rounded-[5px] w-[225px] h-[52px] text-lg text-slate-100 hover:text-slate-200"
                         variant="outline"
+                        onClick={() => setOpen(true)}
                       >
                         <BsPlus className="text-4xl" />
                         Create New Chapter
@@ -187,8 +199,8 @@ const Chapters = () => {
                     </DialogTrigger>
 
                     <DialogContent className="bg-slate-50">
-                      <DialogHeader className="flex justify-center items-center">
-                        <DialogTitle className="font-bold text-xl">
+                      <DialogHeader className="flex items-center justify-center">
+                        <DialogTitle className="text-xl font-bold">
                           Creating A Chapter
                         </DialogTitle>
                       </DialogHeader>
@@ -227,8 +239,8 @@ const Chapters = () => {
                       </DialogTrigger>
 
                       <DialogContent className="bg-slate-50">
-                        <DialogHeader className="flex justify-center items-center">
-                          <DialogTitle className="font-bold text-xl">
+                        <DialogHeader className="flex items-center justify-center">
+                          <DialogTitle className="text-xl font-bold">
                             Creating A Chapter
                           </DialogTitle>
                         </DialogHeader>

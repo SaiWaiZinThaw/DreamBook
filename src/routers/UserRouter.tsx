@@ -3,7 +3,9 @@ import { RouteObject } from "react-router-dom";
 import { CreateNewBook, Home, Library } from "../pages";
 import { AuthLayout, Login, SignUp } from "@/pages/auth";
 import AuthHOC from "./AuthHOC";
-import BookReading from "@/pages/BookReading";
+import BookReading from "@/pages/BookReading/BookReading";
+import ChapterReading from "@/pages/BookReading/ChapterReading";
+import BookReadingLayout from "@/pages/BookReading/BookReadingLayout";
 
 const UserRouter: RouteObject[] = [
   {
@@ -11,12 +13,22 @@ const UserRouter: RouteObject[] = [
     element: <Home />,
   },
   {
-    path: "/library/:page",
+    path: "/library/*",
     element: <Library />,
   },
   {
     path: "/book/:bookSlug",
-    element: <BookReading />,
+    element: <BookReadingLayout />,
+    children: [
+      {
+        index: true,
+        element: <BookReading />,
+      },
+      {
+        path: "chapter/:chapterId",
+        element: <ChapterReading />,
+      },
+    ],
   },
 
   {

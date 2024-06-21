@@ -1,5 +1,3 @@
-import { Sorting } from "@/assets";
-// import useFetchCategories from "@/hooks/useFetchCategories";
 import { useState } from "react";
 import { BsHeartFill, BsHeart, BsEyeFill } from "react-icons/bs";
 import { IoIosSearch } from "react-icons/io";
@@ -11,82 +9,114 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { useFetchAllBooks } from "@/hooks/useFetchBook";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { useParams } from "react-router-dom";
-const CategoryBooks = () => {
+import { useNavigate } from "react-router-dom";
+import { Book, fetchBookData } from "@/types/types";
+import { Sorting } from "@/assets";
+import { useAddFavorite } from "@/hooks/useFavorites";
+
+interface CategoryBooksProps {
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setSortBy: React.Dispatch<React.SetStateAction<string>>;
+  booksData: fetchBookData | undefined;
+  isBooksLoading: boolean;
+}
+
+const CategoryBooks: React.FC<CategoryBooksProps> = ({
+  search,
+  setSearch,
+  setSortBy,
+  booksData,
+  isBooksLoading,
+}) => {
   const [active, setActive] = useState(false);
-  const { page } = useParams();
-  const pageNumber = parseInt(page!);
-  const { data, isLoading } = useFetchAllBooks(pageNumber);
-  const viewBook = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
-    const book = event.currentTarget.closest(".book")!;
-    const bookId = book.id;
-    console.log(bookId!);
+  const navigate = useNavigate();
+
+  const addFavorite = useAddFavorite();
+
+  const handleSortChange = (value: string) => {
+    setSortBy(value);
   };
+
+  const viewBook = (bookSlug: string) => {
+    navigate(`/book/${bookSlug}`);
+  };
+
+  if (!isBooksLoading) {
+    console.log(booksData);
+  }
+
   return (
-    <div className="flex flex-col mx-0 px-0 w-full min-h-screen">
-      <div className="flex justify-between mx-[45px] mt-4 h-[42px]">
-        <div className="flex items-center gap-3">
+
+    <div className="flex flex-col w-full min-h-screen px-10 mx-0">
+      <div className="flex justify-between  mt-4 h-[42px] w-full">
+        <div className="flex items-center w-full gap-3">
+
           <img src={Sorting} alt="sorting" />
 
-          <Select>
+          <Select onValueChange={handleSortChange}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Sort by default" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="default">Sort by default</SelectItem>
               <SelectItem value="random">Sort by random</SelectItem>
               <SelectItem value="latest">Sort by Latest</SelectItem>
-              <SelectItem value="A-Z">Sort by A-Z</SelectItem>
+              <SelectItem value="a-z">Sort by A-Z</SelectItem>
+              <SelectItem value="z-a">Sort by Z-A</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
-        <div className="flex justify-self-end w-[380px] h-[32px]">
-          <Input
-            icon={<IoIosSearch className="text-2xl" />}
-            placeholder="Search"
-            className="!border-black rounded-[8px] w-[380px] h-[42px]"
-          />
-        </div>
+        <Input
+          icon={<IoIosSearch className="text-2xl" />}
+          placeholder="Search"
+          value={search}
+          className="!border-black rounded-[8px] w-[280px] h-[42px]"
+          onChange={(event) => {
+            setSearch(event.target.value);
+          }}
+        />
       </div>
 
-      <div className="gap-8 grid grid-cols-4 p-10 w-full">
-        {!isLoading &&
-          data &&
-          data.items.map((book) => (
+      <div className="grid w-full grid-cols-4 gap-8 p-10">
+        {!isBooksLoading &&
+          booksData &&
+          booksData.items.map((book: Book) => (
+
             <div
-              key={book.title}
+              key={book.bookId}
               id={book.bookId}
               className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] w-[232px] h-[280px] book group"
             >
               <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                  {active ? (
+
+                <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                  {book.isFavorite ? (
+
                     <BsHeartFill
                       className="text-red-500 cursor-pointer"
                       onClick={() => setActive(!active)}
                     />
                   ) : (
                     <BsHeart
-                      className="text-slate-500 cursor-pointer"
-                      onClick={() => setActive(!active)}
+
+                      className="cursor-pointer text-slate-500"
+                      onClick={() =>
+                        addFavorite.mutate({
+                          slug: book.slug,
+                        })
+                      }
+
                     />
                   )}
                 </div>
 
                 <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                   <BsEyeFill
-                    className="text-slate-500 cursor-pointer"
-                    onClick={viewBook}
+
+                    className="cursor-pointer text-slate-500"
+                    onClick={() => viewBook(book.slug)}
+
                   />
                 </div>
               </div>
@@ -94,7 +124,9 @@ const CategoryBooks = () => {
                 <img
                   src={book.coverImage}
                   alt={book.coverImage}
-                  className="max-w-[120px] h-[140px]"
+
+                  className="h-[140px] max-w-[120px]"
+
                 />
               </div>
 
@@ -126,33 +158,7 @@ const CategoryBooks = () => {
             </div>
           ))}
       </div>
-      <div className="mt-auto w-full">
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href={`${pageNumber - 1}`} />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href={`${pageNumber}`}>
-                {pageNumber}
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href={`${pageNumber + 1}`}>
-                {pageNumber + 1}
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href={`${pageNumber + 2}`}>
-                {pageNumber + 2}
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href={`${pageNumber + 1}`} />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </div>
+
     </div>
   );
 };

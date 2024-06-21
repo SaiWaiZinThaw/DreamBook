@@ -75,7 +75,7 @@ const BookDashBoardLayout = () => {
 
           <div
             className="flex border-slate-300 mt-[607px] pt-[23px] pl-[19px] border-t h-[71px] text-white cursor-pointer"
-            onClick={() => navigate("/")}
+            onClick={() => navigate(`/me/books`)}
           >
             <FaArrowLeft className="mt-[4px] mr-[8px] w-[20px] h-[20px]" />
             <h1 className="text-lg font-medium">Exit to Booklists</h1>

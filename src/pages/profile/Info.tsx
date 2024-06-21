@@ -85,9 +85,11 @@ const Info = () => {
               }));
             }}
           />
-          <div className="bg-white p-4 border border-border rounded-[5px] w-full h-12 font-Inter font-semibold text-secondary-foreground text-sm text-opacity-50">
-            {data!.email}
-          </div>
+          {data && data.email && (
+            <div className="bg-white p-4 border border-border rounded-[5px] w-full h-12 font-Inter font-semibold text-secondary-foreground text-sm text-opacity-50">
+              {data!.email}
+            </div>
+          )}
           <div className="flex items-center w-full gap-5">
             <select
               className="flex justify-center items-center p-4 rounded-[5px] h-12"

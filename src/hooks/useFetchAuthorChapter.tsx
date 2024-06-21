@@ -5,6 +5,9 @@ export const useFetchAuthorAChapter = (bookSlug: string) =>
   useQuery({
     queryKey: ["authorChapter"],
     queryFn: () => getAuthorChapter(bookSlug),
+    retry(failureCount, error) {
+      return error.message === "404" && failureCount == 1 ? false : true;
+    },
   });
 
 export const useDeleteChapter = () =>
