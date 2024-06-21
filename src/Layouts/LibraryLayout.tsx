@@ -124,16 +124,18 @@ const LibraryLayout = () => {
             isBooksLoading={isBooksLoading}
           />
 
-          <Stack spacing={1}>
-            <Pagination
-              color="primary"
-              count={booksData?.meta.totalPages}
-              defaultPage={1}
-              boundaryCount={1}
-              onChange={handlePageChange}
-              page={pageCount}
-            />
-          </Stack>
+          {!isLoading && (
+            <Stack spacing={1}>
+              <Pagination
+                color="primary"
+                count={booksData?.meta.totalPages}
+                defaultPage={1}
+                boundaryCount={1}
+                onChange={handlePageChange}
+                page={pageCount}
+              />
+            </Stack>
+          )}
         </div>
       </div>
     </div>
