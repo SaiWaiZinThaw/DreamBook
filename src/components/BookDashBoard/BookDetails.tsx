@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useUpdateBook } from "@/hooks/useFetchABookAuthor";
@@ -36,8 +36,8 @@ const BookDetails = () => {
   const updateBook = useUpdateBook(bookSlug!);
   const { mutate: softDeleteBook } = useSoftDeleteBook();
   const token = getToken() || "";
-  const { data: fetchABookAuthor } = useFetchABookAuthor(token, bookSlug!);
-
+  const { data: fetchABookAuthor, refetch } = useFetchABookAuthor(token, bookSlug!);
+  const navigate = useNavigate();
   const [isOn, setIsOn] = useState(true);
   const [updateData, setUpdateData] = useState<updateBookType>({
     title: "",
@@ -114,28 +114,37 @@ const BookDetails = () => {
     setIsOn(!isOn);
   };
 
-  // Function to handle edit button click
+
+  useEffect(() => {
+    if (fetchABookAuthor?.keywords) {
+      setKeywords(fetchABookAuthor.keywords);
+    }
+  }, [fetchABookAuthor]);
+
+
   const handleEditClick = () => {
-    setIsEditing(true); // Set edit mode to true
+    setIsEditing(true); 
   };
 
-  // Function to handle cancel button click
   const handleCancelClick = () => {
-    setIsEditing(false); // Set edit mode to false
+    setIsEditing(false);
   };
 
-  // Function to handle save button click
-  const handleSaveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+  const handleSaveClick = (e: any) => {
     e.preventDefault();
     updateBook.mutate(updateData);
-    setIsEditing(false); // Set edit mode to false
+    console.log(updateData);
+    setIsEditing(false);
+
   };
 
-  // Function to handle delete confirmation
   const handleDeleteConfirm = (bookSlug: string) => {
     softDeleteBook(bookSlug, {
       onSuccess: () => {
         console.log("Book is soft delete");
+        refetch();
+        navigate("/me/restore");
       },
       onError: (error) => {
         console.log("Error to delete", error);
@@ -295,15 +304,11 @@ const BookDetails = () => {
                   modules={quillModules}
                 />
               ) : (
-                <p className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]">
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(
-                        fetchABookAuthor?.description!
-                      ),
-                    }}
-                  />
-                </p>
+
+                <div className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]">
+                  <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(fetchABookAuthor?.description!) }} />
+                </div>
+
               )}
             </div>
           </div>
@@ -401,7 +406,7 @@ const BookDetails = () => {
               Preview Card Design
             </h1>
 
-            <div className="bg-slate-100 shadow-xl border rounded-[8px] w-[232px] h-[280px]">
+            <div className="bg-slate-100 shadow-xl border rounded-[8px] w-[232px] max-h-full">
               <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                 <img
                   src={fetchABookAuthor?.coverImage}
@@ -411,12 +416,16 @@ const BookDetails = () => {
               </div>
 
               <div className="ml-2">
-                <h1 className="text-xl font-bold">{fetchABookAuthor?.title}</h1>
-                <p className="text-sm font-normal text-gray-500">
-                  {fetchABookAuthor?.category.title!}
+
+                <h1 className="font-bold text-[15px]">{fetchABookAuthor?.title}</h1>
+                <p className="flex mt-1 font-Inter font-normal text-[12px] text-gray-500">
+                  <img src={fetchABookAuthor?.category.icon} alt="" className="mr-2 w-[20px] h-[20px]"/>
+                  {fetchABookAuthor?.category.title}
                 </p>
-                <h2 className="mt-3 font-medium text-md">
-                  {fetchABookAuthor?.user?.name || "Author Not Available"}
+                <h2 className="flex my-2 font-bold text-[13px]">
+                  <img src={fetchABookAuthor?.user.profilePicture} alt="" className="mr-2 rounded-full w-[20px] h-[20px]"/>
+                  By {fetchABookAuthor?.user.name}
+
                 </h2>
               </div>
             </div>

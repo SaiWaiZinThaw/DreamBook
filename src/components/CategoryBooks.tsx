@@ -1,3 +1,6 @@
+
+import { Sorting } from "@/assets";
+
 import { useState } from "react";
 import { BsHeartFill, BsHeart, BsEyeFill } from "react-icons/bs";
 import { IoIosSearch } from "react-icons/io";
