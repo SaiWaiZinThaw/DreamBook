@@ -64,7 +64,6 @@ const Books = () => {
           </NavLink>
         </div>
         <div className="grid grid-cols-2 gap-2 p-10 lg:grid-cols-4 lg:gap-4">
-
           {!isLoading &&
             data &&
             data.items &&
@@ -98,7 +97,6 @@ const Books = () => {
                       onClick={editHandler}
                     />
                   </div>
-
                 </div>
                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                   <img
