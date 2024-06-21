@@ -206,7 +206,7 @@ const BookDetails = () => {
                     id="title"
                     className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] h-[45px] font-semibold text-black"
                   >
-                    {fetchABookAuthor!.title}
+                    {fetchABookAuthor?.title}
                   </h1>
                 )}
                 <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" />
@@ -222,7 +222,7 @@ const BookDetails = () => {
                   id="category"
                   className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] h-[45px] font-semibold text-black"
                 >
-                  {fetchABookAuthor!.category?.title ||
+                  {fetchABookAuthor?.category?.title! ||
                     "Category Not Available"}
                 </h1>
               </div>
@@ -280,19 +280,7 @@ const BookDetails = () => {
               >
                 Description
               </Label>
-              {/* <ReactQuill
-                value={updateData.description}
-                onChange={(content) => {
-                  const sanitizedContent = DOMPurify.sanitize(content);
-                  setUpdateData((prev) => ({
-                    ...prev,
-                    description: sanitizedContent,
-                  }));
-                }}
-                className="rounded-[5px] h-[290px]"
-                modules={quillModules}
-                readOnly={!isEditing}
-              /> */}
+
               {isEditing ? (
                 <ReactQuill
                   value={updateData.description}
@@ -307,18 +295,6 @@ const BookDetails = () => {
                   modules={quillModules}
                 />
               ) : (
-                // <textarea
-                //   onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-                //     const sanitizedValue = DOMPurify.sanitize(event.target.value);
-                //     setUpdateData((prev) => ({
-                //       ...prev,
-                //       description: sanitizedValue,
-                //     }));
-                //   }}
-                //   value={updateData.description}
-                //   id="description"
-                //   className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]"
-                // />
                 <p className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]">
                   <div
                     dangerouslySetInnerHTML={{
@@ -412,7 +388,7 @@ const BookDetails = () => {
                 />
               ) : (
                 <img
-                  src={fetchABookAuthor!.coverImage}
+                  src={fetchABookAuthor?.coverImage}
                   alt=""
                   className="mx-[52.5px] my-[30px] w-[127px] h-[191px]"
                 />
@@ -428,7 +404,7 @@ const BookDetails = () => {
             <div className="bg-slate-100 shadow-xl border rounded-[8px] w-[232px] h-[280px]">
               <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                 <img
-                  src={fetchABookAuthor!.coverImage}
+                  src={fetchABookAuthor?.coverImage}
                   alt=""
                   className="w-[86px] h-[129px]"
                 />
@@ -437,10 +413,10 @@ const BookDetails = () => {
               <div className="ml-2">
                 <h1 className="text-xl font-bold">{fetchABookAuthor?.title}</h1>
                 <p className="text-sm font-normal text-gray-500">
-                  {fetchABookAuthor?.category.title}
+                  {fetchABookAuthor?.category.title!}
                 </p>
                 <h2 className="mt-3 font-medium text-md">
-                  {fetchABookAuthor!.user?.name || "Author Not Available"}
+                  {fetchABookAuthor?.user?.name || "Author Not Available"}
                 </h2>
               </div>
             </div>

@@ -36,7 +36,7 @@ const Chapters = () => {
   const [chapterData, setChapterData] = useState<createChapterData>({
     title: "",
     content: "",
-    status: "draft",
+    status: "Draft",
     priority: 0,
     slug: "",
   });
@@ -96,7 +96,7 @@ const Chapters = () => {
   };
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-full">
       <div className="w-full px-0 mx-0">
         <div className="flex flex-col w-full">
           <div className="flex border-slate-300 border-b w-full h-[80px]">
