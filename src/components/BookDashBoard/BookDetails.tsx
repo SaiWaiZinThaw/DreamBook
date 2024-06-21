@@ -1,9 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import { Input } from "@/components/ui/input";
 import { useUpdateBook } from "@/hooks/useFetchABookAuthor";
-
 import { Label } from "@/components/ui/label";
 import { AiOutlineUser } from "react-icons/ai";
 import {
@@ -33,7 +31,10 @@ const BookDetails = () => {
   const updateBook = useUpdateBook(bookSlug!);
   const { mutate: softDeleteBook } = useSoftDeleteBook();
   const token = getToken() || "";
-  const { data: fetchABookAuthor } = useFetchABookAuthor(token, bookSlug!);
+  const { data: fetchABookAuthor, isLoading } = useFetchABookAuthor(
+    token,
+    bookSlug!
+  );
 
   const [isOn, setIsOn] = useState(true);
   const [updateData, setUpdateData] = useState<updateBookType>({
@@ -48,10 +49,8 @@ const BookDetails = () => {
   useEffect(() => {
     if (fetchABookAuthor?.status === "Draft") {
       setIsOn(true);
-      console.log(isOn);
     } else if (fetchABookAuthor?.status === "Published") {
       setIsOn(false);
-      console.log(isOn);
     }
   }, [fetchABookAuthor?.status]);
 
@@ -81,6 +80,9 @@ const BookDetails = () => {
         status: fetchABookAuthor.status || "",
         slug: fetchABookAuthor.slug || "",
       }));
+      if (fetchABookAuthor.keywords) {
+        setKeywords(fetchABookAuthor.keywords);
+      }
     }
   }, [fetchABookAuthor]);
 
@@ -110,12 +112,6 @@ const BookDetails = () => {
     setIsOn(!isOn);
   };
 
-  useEffect(() => {
-    if (fetchABookAuthor?.keywords) {
-      setKeywords(fetchABookAuthor.keywords);
-    }
-  }, [fetchABookAuthor]);
-
   // Function to handle edit button click
   const handleEditClick = () => {
     setIsEditing(true); // Set edit mode to true
@@ -127,11 +123,9 @@ const BookDetails = () => {
   };
 
   // Function to handle save button click
-  const handleSaveClick = (e: any) => {
+  const handleSaveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     updateBook.mutate(updateData);
-    console.log(updateData);
-    // Logic to save changes
     setIsEditing(false); // Set edit mode to false
   };
 
@@ -147,11 +141,15 @@ const BookDetails = () => {
     });
   };
 
-  const handleDeleteKeyword = (indexToDelete: any) => {
+  const handleDeleteKeyword = (indexToDelete: number) => {
     setKeywords((prevKeywords) =>
       prevKeywords.filter((_, index) => index !== indexToDelete)
     );
   };
+
+  if (isLoading || !fetchABookAuthor) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="container w-full h-full px-0 mx-0">
@@ -206,11 +204,9 @@ const BookDetails = () => {
                     id="title"
                     className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] h-[45px] font-semibold text-black"
                   >
-                    {fetchABookAuthor?.title}
+                    {fetchABookAuthor.title}
                   </h1>
                 )}
-                {/* <Input  type="text" id="title" placeholder={fetchABookAuthor.title}  className="text-black border border-slate-300"/> */}
-                {/* <h1 id="title" className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] h-[45px] font-semibold text-black">{fetchABookAuthor?.title}</h1> */}
                 <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" />
               </div>
             </div>
@@ -224,7 +220,7 @@ const BookDetails = () => {
                   id="category"
                   className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] h-[45px] font-semibold text-black"
                 >
-                  {fetchABookAuthor?.category.title}
+                  {fetchABookAuthor.category?.title || "Category Not Available"}
                 </h1>
               </div>
             </div>
@@ -295,7 +291,7 @@ const BookDetails = () => {
                 />
               ) : (
                 <p className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]">
-                  {fetchABookAuthor?.description}
+                  {fetchABookAuthor.description}
                 </p>
               )}
             </div>
@@ -345,7 +341,7 @@ const BookDetails = () => {
                         </AlertDialogCancel>
                         <AlertDialogAction
                           onClick={() =>
-                            handleDeleteConfirm(fetchABookAuthor?.slug!)
+                            handleDeleteConfirm(fetchABookAuthor.slug!)
                           }
                           className="hover:bg-blue-400 rounded-[8px] text-slate-100 hover:text-slate-200"
                         >
@@ -374,14 +370,14 @@ const BookDetails = () => {
             </h1>
 
             <div className="border-slate-500 border border-dotted rounded-[8px] h-[252px]">
-              {isEditing && fetchABookAuthor ? (
+              {isEditing ? (
                 <BookCoverChange
                   onFileChange={handleFileChange}
                   coverImage={fetchABookAuthor.coverImage}
                 />
               ) : (
                 <img
-                  src={fetchABookAuthor?.coverImage}
+                  src={fetchABookAuthor.coverImage}
                   alt=""
                   className="mx-[52.5px] my-[30px] w-[127px] h-[191px]"
                 />
@@ -397,19 +393,19 @@ const BookDetails = () => {
             <div className="bg-slate-100 shadow-xl border rounded-[8px] w-[232px] h-[280px]">
               <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                 <img
-                  src={fetchABookAuthor?.coverImage}
+                  src={fetchABookAuthor.coverImage}
                   alt=""
                   className="w-[86px] h-[129px]"
                 />
               </div>
 
               <div className="ml-2">
-                <h1 className="text-xl font-bold">{fetchABookAuthor?.title}</h1>
+                <h1 className="text-xl font-bold">{fetchABookAuthor.title}</h1>
                 <p className="text-sm font-normal text-gray-500">
-                  {fetchABookAuthor?.category.title}
+                  {fetchABookAuthor.category?.title || "Category Not Available"}
                 </p>
                 <h2 className="mt-3 font-medium text-md">
-                  {fetchABookAuthor?.user.name}
+                  {fetchABookAuthor.user?.name || "Author Not Available"}
                 </h2>
               </div>
             </div>

@@ -79,11 +79,11 @@ export type Book = {
 export type fetchBookData = {
   items: Book[];
   meta: {
-    currentPage: string;
-    itemCount: string;
-    itemsPerPage: string;
-    totalItems: string;
-    totalPages: string;
+    currentPage: number;
+    itemCount: number;
+    itemsPerPage: number;
+    totalItems: number;
+    totalPages: number;
   };
 };
 
@@ -100,5 +100,9 @@ export type fetchChapterData = Chapter[];
 
 export type commentData = {
   comment: string;
+  slug: string;
+};
+
+export type favoriteData = {
   slug: string;
 };
