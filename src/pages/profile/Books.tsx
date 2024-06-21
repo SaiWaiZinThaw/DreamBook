@@ -15,7 +15,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { HiPencil } from "react-icons/hi";
 import { getToken } from "@/services/authService";
 import { useState } from "react";
-]
+
 import { useFetchAllBookAuthor } from "@/hooks/useFetchABookAuthor";
 
 const Books = () => {
