@@ -15,7 +15,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { HiPencil } from "react-icons/hi";
 import { getToken } from "@/services/authService";
 import { useState } from "react";
-]
 import { useFetchAllBookAuthor } from "@/hooks/useFetchABookAuthor";
 
 const Books = () => {
@@ -64,7 +63,6 @@ const Books = () => {
           </NavLink>
         </div>
         <div className="grid grid-cols-2 gap-2 p-10 lg:grid-cols-4 lg:gap-4">
-
           {!isLoading &&
             data &&
             data.items &&
@@ -98,7 +96,6 @@ const Books = () => {
                       onClick={editHandler}
                     />
                   </div>
-
                 </div>
                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                   <img
