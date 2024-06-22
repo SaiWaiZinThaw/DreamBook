@@ -1,6 +1,5 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import { Input } from "@/components/ui/input";
 import { useUpdateBook } from "@/hooks/useFetchABookAuthor";
 import ReactQuill from 'react-quill';
@@ -35,8 +34,8 @@ const BookDetails = () => {
   const updateBook = useUpdateBook(bookSlug!);
   const { mutate: softDeleteBook } = useSoftDeleteBook();
   const token = getToken() || "";
-  const { data: fetchABookAuthor } = useFetchABookAuthor(token, bookSlug!);
-
+  const { data: fetchABookAuthor, refetch } = useFetchABookAuthor(token, bookSlug!);
+  const navigate = useNavigate();
   const [isOn, setIsOn] = useState(true);
   const [updateData, setUpdateData] = useState<updateBookType>({
     title: "",
@@ -118,30 +117,27 @@ const BookDetails = () => {
     }
   }, [fetchABookAuthor]);
 
-  // Function to handle edit button click
   const handleEditClick = () => {
-    setIsEditing(true); // Set edit mode to true
+    setIsEditing(true); 
   };
 
-  // Function to handle cancel button click
   const handleCancelClick = () => {
-    setIsEditing(false); // Set edit mode to false
+    setIsEditing(false);
   };
 
-  // Function to handle save button click
   const handleSaveClick = (e: any) => {
     e.preventDefault();
     updateBook.mutate(updateData);
     console.log(updateData);
-    // Logic to save changes
-    setIsEditing(false); // Set edit mode to false
+    setIsEditing(false);
   };
 
-  // Function to handle delete confirmation
   const handleDeleteConfirm = (bookSlug: string) => {
     softDeleteBook(bookSlug, {
       onSuccess: () => {
         console.log("Book is soft delete");
+        refetch();
+        navigate("/me/restore");
       },
       onError: (error) => {
         console.log("Error to delete", error);
@@ -324,9 +320,9 @@ const BookDetails = () => {
                 //   className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]"
                 // />
               ) : (
-                <p className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]">
+                <div className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]">
                   <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(fetchABookAuthor?.description!) }} />
-                </p>
+                </div>
               )}
             </div>
           </div>
@@ -424,7 +420,7 @@ const BookDetails = () => {
               Preview Card Design
             </h1>
 
-            <div className="bg-slate-100 shadow-xl border rounded-[8px] w-[232px] h-[280px]">
+            <div className="bg-slate-100 shadow-xl border rounded-[8px] w-[232px] max-h-full">
               <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                 <img
                   src={fetchABookAuthor?.coverImage}
@@ -434,12 +430,14 @@ const BookDetails = () => {
               </div>
 
               <div className="ml-2">
-                <h1 className="font-bold text-xl">{fetchABookAuthor?.title}</h1>
-                <p className="font-normal text-gray-500 text-sm">
+                <h1 className="font-bold text-[15px]">{fetchABookAuthor?.title}</h1>
+                <p className="flex mt-1 font-Inter font-normal text-[12px] text-gray-500">
+                  <img src={fetchABookAuthor?.category.icon} alt="" className="mr-2 w-[20px] h-[20px]"/>
                   {fetchABookAuthor?.category.title}
                 </p>
-                <h2 className="mt-3 font-medium text-md">
-                  {fetchABookAuthor?.user.name}
+                <h2 className="flex my-2 font-bold text-[13px]">
+                  <img src={fetchABookAuthor?.user.profilePicture} alt="" className="mr-2 rounded-full w-[20px] h-[20px]"/>
+                  By {fetchABookAuthor?.user.name}
                 </h2>
               </div>
             </div>

@@ -116,7 +116,7 @@ const Books = () => {
                       alt={book.user.name}
                       className="rounded-full w-6 h-6"
                     />
-                    <h2 className="text-[13px] text-black">
+                    <h2 className="font-medium text-[13px] text-black">
                       By {book.user.name}
                     </h2>
                   </div>
