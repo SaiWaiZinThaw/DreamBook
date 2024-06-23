@@ -7,6 +7,7 @@ import { useSearchParams } from "react-router-dom";
 import { useFetchAllBooks } from "@/hooks/useFetchBook";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import { useDebounce } from "use-debounce";
 
 const LibraryLayout = () => {
   const { data, isLoading } = useFetchCategories();
@@ -17,6 +18,7 @@ const LibraryLayout = () => {
   });
 
   const [search, setSearch] = useState(searchParams.get("search") || "");
+  const [deBounceSearch] = useDebounce(search, 1000);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     JSON.parse(searchParams.get("category_ids") || "[]")
   );
@@ -26,7 +28,7 @@ const LibraryLayout = () => {
   );
 
   const { data: booksData, isLoading: isBooksLoading } = useFetchAllBooks({
-    search,
+    deBounceSearch,
     selectedCategories,
     sortBy,
     pageCount,
@@ -56,15 +58,15 @@ const LibraryLayout = () => {
     if (sortBy) {
       params.sort_by = sortBy;
     }
-    if (search) {
-      params.search = search;
+    if (deBounceSearch) {
+      params.deBounceSearch = deBounceSearch;
     }
     if (pageCount) {
       params.page = pageCount;
     }
 
     setSearchParams(params);
-  }, [search, sortBy, setSearchParams, selectedCategories, pageCount]);
+  }, [deBounceSearch, sortBy, setSearchParams, selectedCategories, pageCount]);
 
   return (
     <div className="container w-screen px-0 mx-0">
