@@ -30,6 +30,7 @@ export type profileFetchData = {
   localNumber: string;
   bio?: string;
   gender: string;
+  userId: number;
 };
 
 export type createChapterData = {
@@ -101,6 +102,23 @@ export type fetchChapterData = Chapter[];
 export type commentData = {
   comment: string;
   slug: string;
+};
+
+export type CommentDataArray = {
+  commentId: number;
+  comment: string;
+  createdTime: Date;
+  updatedTime: Date;
+  user: {
+    userId: number;
+    name: string;
+    profilePicture: string;
+  };
+  book: Book;
+};
+
+export type getCommentData = {
+  comments: CommentDataArray[];
 };
 
 export type favoriteData = {
