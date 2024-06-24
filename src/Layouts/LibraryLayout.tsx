@@ -18,7 +18,7 @@ const LibraryLayout = () => {
   });
 
   const [search, setSearch] = useState(searchParams.get("search") || "");
-  const [deBounceSearch] = useDebounce(search, 1000);
+  const [deBounceSearch] = useDebounce(search, 500);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     JSON.parse(searchParams.get("category_ids") || "[]")
   );
@@ -59,7 +59,7 @@ const LibraryLayout = () => {
       params.sort_by = sortBy;
     }
     if (deBounceSearch) {
-      params.deBounceSearch = deBounceSearch;
+      params.search = deBounceSearch;
     }
     if (pageCount) {
       params.page = pageCount;

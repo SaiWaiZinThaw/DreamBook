@@ -1,5 +1,7 @@
 import { Book, fetchBookData } from "@/types/types";
 import BaseURL from "../services/ApiEndPoint";
+import { getToken } from "@/services/authService";
+const token = getToken();
 
 interface FetchAllBookParams {
   deBounceSearch?: string;
@@ -54,6 +56,7 @@ export const fetchAllBook = async (params: FetchAllBookParams = {}) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       mode: "cors",
       method: "GET",

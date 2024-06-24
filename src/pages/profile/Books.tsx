@@ -24,7 +24,9 @@ const Books = () => {
 
   const { data, isLoading } = useFetchAllBookAuthor(token);
   const navigate = useNavigate();
-
+  if (!isLoading) {
+    console.log(data);
+  }
   const editHandler = (bookSlug: string) => {
     navigate(`/book-dashboard/${bookSlug}/book-details`);
   };
