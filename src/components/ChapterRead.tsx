@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useFetchAChapter, useFetchAllChapters } from '@/hooks/useFetchChapter';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 
 const ChapterRead = () => {
   const { bookSlug, chapterId } = useParams<{ bookSlug: string, chapterId?: string }>(); // Make chapterId optional
@@ -9,6 +10,7 @@ const ChapterRead = () => {
   const { data: getChapters } = useFetchAllChapters(bookSlug!);
   const [parsedChapterId, setParsedChapterId] = useState<number | null>(null)
   const { data: getChapter, isLoading, error } = useFetchAChapter(parsedChapterId !);
+  const [activeChapterId, setActiveChapterId] = useState<number | null>(null);
 
   useEffect(() => {
     // Parse chapterId from string to number when it changes
@@ -16,6 +18,7 @@ const ChapterRead = () => {
       const parsedId = parseInt(chapterId, 10);
       if (!isNaN(parsedId)) {
         setParsedChapterId(parsedId);
+        setActiveChapterId(parsedId);
       } else {
         console.error('Invalid chapterId:', chapterId);
       }
@@ -28,6 +31,7 @@ const ChapterRead = () => {
   const handleChapterSelect = (id: number) => {
     navigate(`/book/${bookSlug}/chapter/${id}`);
     setParsedChapterId(id);
+    setActiveChapterId(id);
   };
 
   return (
@@ -46,9 +50,9 @@ const ChapterRead = () => {
           {getChapters &&
             getChapters.map((chapter: any) => (
               <li
-                className="mb-[16px] cursor-pointer"
-                key={chapter.id}
-                onClick={() => handleChapterSelect(chapter.id)}
+                className={`mb-[16px] cursor-pointer ${chapter.chapterId === activeChapterId ? 'text-primary font-semibold' : ''}`}
+                key={chapter.chapterId}
+                onClick={() => handleChapterSelect(chapter.chapterId)}
               >
                 {chapter.title}
               </li>
@@ -60,9 +64,9 @@ const ChapterRead = () => {
         {isLoading && <p>Loading...</p>}
         {error && <p>Error loading chapter: {error.message}</p>}
         {getChapter && (
-          <div>
-            <h2 className="font-bold text-2xl">{getChapter.title}</h2>
-            <p>{getChapter.content}</p>
+          <div className="ml-[108px]">
+            <h1 className="mt-[28px] font-bold text-[36px] text-primary">{getChapter.title}</h1>
+            <div className="mt-[24px] font-normal text-lg" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(getChapter.content) }} />
           </div>
         )}
       </div>
