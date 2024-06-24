@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 
 const ChapterRead = () => {
-  const { bookSlug, chapterId } = useParams<{ bookSlug: string, chapterId?: string }>(); // Make chapterId optional
+  const { bookSlug, chapterId} = useParams<{ bookSlug: string, chapterId?: string }>();
   const navigate = useNavigate();
   const { data: getChapters } = useFetchAllChapters(bookSlug!);
   const [parsedChapterId, setParsedChapterId] = useState<number | null>(null)
