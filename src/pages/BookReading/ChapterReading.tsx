@@ -1,5 +1,13 @@
-const ChapterReading = () => {
-  return <div></div>;
-};
+import { ChapterRead } from "@/components"
+import { Outlet } from "react-router-dom"
 
-export default ChapterReading;
+const ChapterReading = () => {
+  return (
+    <div>
+      <ChapterRead/>
+      <Outlet/>
+    </div>
+  )
+}
+
+export default ChapterReading
