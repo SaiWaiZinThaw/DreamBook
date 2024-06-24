@@ -1,6 +1,6 @@
 import { RouteObject } from "react-router-dom";
 
-import { ChapterReading, CreateNewBook, Home, Library } from "../pages";
+import { CreateNewBook, Home, Library } from "../pages";
 import { AuthLayout, Login, SignUp } from "@/pages/auth";
 import AuthHOC from "./AuthHOC";
 import BookReading from "@/pages/BookReading/BookReading";

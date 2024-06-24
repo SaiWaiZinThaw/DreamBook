@@ -2,7 +2,7 @@ import { fetchAllBook, fetchBook } from "@/api/bookApi";
 import { useQuery } from "@tanstack/react-query";
 
 interface FetchAllBookParams {
-  search?: string;
+  deBounceSearch?: string;
   selectedCategories?: string[];
   sortBy?: string;
   pageCount?: number;

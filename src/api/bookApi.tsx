@@ -1,8 +1,10 @@
 import { Book, fetchBookData } from "@/types/types";
 import BaseURL from "../services/ApiEndPoint";
+import { getToken } from "@/services/authService";
+const token = getToken();
 
 interface FetchAllBookParams {
-  search?: string;
+  deBounceSearch?: string;
   selectedCategories?: string | number | (string | number)[];
   sortBy?: string;
   pageCount?: number;
@@ -29,18 +31,17 @@ export const fetchBook = async (bookSlug: string) => {
 };
 
 export const fetchAllBook = async (params: FetchAllBookParams = {}) => {
-  const { search, sortBy, selectedCategories, pageCount } = params;
+  const { deBounceSearch, sortBy, selectedCategories, pageCount } = params;
 
   const queryParams = new URLSearchParams();
-
   if (selectedCategories) {
     const categoryString = Array.isArray(selectedCategories)
       ? selectedCategories.join(",")
       : selectedCategories.toString();
     queryParams.append("category_ids", categoryString);
   }
-  if (search) {
-    queryParams.append("search", search);
+  if (deBounceSearch) {
+    queryParams.append("search", deBounceSearch);
   }
   if (sortBy) {
     queryParams.append("sortBy", sortBy);
@@ -55,6 +56,7 @@ export const fetchAllBook = async (params: FetchAllBookParams = {}) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       mode: "cors",
       method: "GET",

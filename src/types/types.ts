@@ -106,3 +106,23 @@ export type commentData = {
 export type favoriteData = {
   slug: string;
 };
+
+export type favoriteBookData = {
+  book: Book;
+  bookId: string;
+  user: {
+    name: string;
+    profilePicture: File;
+  };
+};
+
+export type fetchFavoriteBookData = {
+  items: favoriteBookData[];
+  meta: {
+    currentPage: number;
+    itemCount: number;
+    itemsPerPage: number;
+    totalItems: number;
+    totalPages: number;
+  };
+};
