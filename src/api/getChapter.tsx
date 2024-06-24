@@ -39,26 +39,9 @@ export const deleteChapter = async (chapterId: string) => {
   return result;
 };
 
-
-export const getAllChapters = async(bookSlug: string) => {
-  const response: Response = await fetch( `${BaseURL}/chapters/public?slug=${bookSlug}`,
-    {
-      mode: "cors",
-      method: "GET",
-      redirect: "follow",
-    },
-  );
-
-    if(!response.ok) {
-      throw new Error("Failed to fetch chapters");
-    }
-
-    const data = await response.json();
-    return data;
-}
-
-export const getAChapter = async(chapterId: number) => {
-  const response: Response = await fetch(`${BaseURL}/chapters/public/${chapterId}`,
+export const getAllChapters = async (bookSlug: string) => {
+  const response: Response = await fetch(
+    `${BaseURL}/chapters/public?slug=${bookSlug}`,
     {
       mode: "cors",
       method: "GET",
@@ -66,11 +49,28 @@ export const getAChapter = async(chapterId: number) => {
     }
   );
 
-  if(!response.ok) {
-      throw new Error("Failed to fetch chapters");
+  if (!response.ok) {
+    throw new Error("Failed to fetch chapters");
+  }
+
+  const data = await response.json();
+  return data;
+};
+
+export const getAChapter = async (chapterId: number) => {
+  const response: Response = await fetch(
+    `${BaseURL}/chapters/public/${chapterId}`,
+    {
+      mode: "cors",
+      method: "GET",
+      redirect: "follow",
     }
+  );
 
-    const data = await response.json();
-    return data;
-}
+  if (!response.ok) {
+    throw new Error("Failed to fetch chapters");
+  }
 
+  const data = await response.json();
+  return data;
+};

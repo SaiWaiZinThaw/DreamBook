@@ -1,33 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useFetchAChapter, useFetchAllChapters } from '@/hooks/useFetchChapter';
-import { FaArrowLeft } from 'react-icons/fa';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useFetchAllChapters } from "@/hooks/useFetchChapter";
+import { FaArrowLeft } from "react-icons/fa";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 
 const ChapterRead = () => {
-  const { bookSlug, chapterId } = useParams<{ bookSlug: string, chapterId?: string }>(); // Make chapterId optional
+  const { bookSlug } = useParams();
   const navigate = useNavigate();
   const { data: getChapters } = useFetchAllChapters(bookSlug!);
-  const [parsedChapterId, setParsedChapterId] = useState<number | null>(null)
-  const { data: getChapter, isLoading, error } = useFetchAChapter(parsedChapterId !);
 
-  useEffect(() => {
-    // Parse chapterId from string to number when it changes
-    if (chapterId) {
-      const parsedId = parseInt(chapterId, 10);
-      if (!isNaN(parsedId)) {
-        setParsedChapterId(parsedId);
-      } else {
-        console.error('Invalid chapterId:', chapterId);
-      }
-    } else {
-      console.error('chapterId is undefined');
-    }
-  }, [chapterId]);
-
-  // Handle navigation and selection of chapters
   const handleChapterSelect = (id: number) => {
     navigate(`/book/${bookSlug}/chapter/${id}`);
-    setParsedChapterId(id);
   };
 
   return (
@@ -47,8 +28,8 @@ const ChapterRead = () => {
             getChapters.map((chapter: any) => (
               <li
                 className="mb-[16px] cursor-pointer"
-                key={chapter.id}
-                onClick={() => handleChapterSelect(chapter.id)}
+                key={chapter.chpaterId}
+                onClick={() => handleChapterSelect(chapter.chapterId)}
               >
                 {chapter.title}
               </li>
@@ -56,16 +37,7 @@ const ChapterRead = () => {
         </ol>
       </div>
 
-      <div className="p-4 w-screen">
-        {isLoading && <p>Loading...</p>}
-        {error && <p>Error loading chapter: {error.message}</p>}
-        {getChapter && (
-          <div>
-            <h2 className="font-bold text-2xl">{getChapter.title}</h2>
-            <p>{getChapter.content}</p>
-          </div>
-        )}
-      </div>
+      <Outlet />
     </div>
   );
 };
