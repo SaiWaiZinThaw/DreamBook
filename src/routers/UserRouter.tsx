@@ -1,11 +1,12 @@
 import { RouteObject } from "react-router-dom";
 
-import { ChapterReading, CreateNewBook, Home, Library } from "../pages";
+import {CreateNewBook, Home, Library } from "../pages";
 import { AuthLayout, Login, SignUp } from "@/pages/auth";
 import AuthHOC from "./AuthHOC";
 import BookReading from "@/pages/BookReading/BookReading";
 import ChapterReading from "@/pages/BookReading/ChapterReading";
 import BookReadingLayout from "@/pages/BookReading/BookReadingLayout";
+import ChapterReadingOnClick from "@/components/ChapterReadingOnClick";
 
 const UserRouter: RouteObject[] = [
   {
@@ -29,10 +30,6 @@ const UserRouter: RouteObject[] = [
         element: <ChapterReading />,
       },
     ],
-  },
-  {
-    path: "/book/chapter",
-    element: <ChapterReading />,
   },
 
   {
