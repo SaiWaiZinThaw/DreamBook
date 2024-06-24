@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { BsHeartFill, BsHeart, BsEyeFill } from "react-icons/bs";
 import { IoIosSearch } from "react-icons/io";
 import {
@@ -12,7 +12,8 @@ import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { Book, fetchBookData } from "@/types/types";
 import { Sorting } from "@/assets";
-import { useAddFavorite } from "@/hooks/useFavorites";
+import { useAddFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
+import { useEffect, useState } from "react";
 
 interface CategoryBooksProps {
   search: string;
@@ -29,10 +30,10 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
   booksData,
   isBooksLoading,
 }) => {
-  const [active, setActive] = useState(false);
   const navigate = useNavigate();
-
+  const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({});
   const addFavorite = useAddFavorite();
+  const removeFavorite = useRemoveFavorite();
 
   const handleSortChange = (value: string) => {
     setSortBy(value);
@@ -42,14 +43,34 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
     navigate(`/book/${bookSlug}`);
   };
 
-  if (!isBooksLoading) {
-    console.log(booksData);
-  }
+  const toggleFavorite = (bookId: string, bookSlug: string) => {
+    setFavorites((prevFavorites) => {
+      const isFavorite = !prevFavorites[bookId];
+      if (isFavorite) {
+        addFavorite.mutate({ slug: bookSlug });
+      } else {
+        removeFavorite.mutate({ slug: bookSlug });
+      }
+      return { ...prevFavorites, [bookId]: isFavorite };
+    });
+  };
+
+  useEffect(() => {
+    if (booksData) {
+      const newFavorites: { [key: string]: boolean } = {};
+      booksData.items.forEach((book) => {
+        newFavorites[book.bookId] = Boolean(book.isFavorite);
+      });
+      setFavorites(newFavorites);
+    }
+  }, [booksData]);
 
   return (
-    <div className="flex flex-col mx-0 px-10 w-full min-h-screen">
-      <div className="flex justify-between mt-4 w-full h-[42px]">
-        <div className="flex items-center gap-3 w-full">
+
+    <div className="flex flex-col w-full min-h-screen px-10 mx-0">
+      <div className="flex justify-between mt-4 h-[42px] w-full">
+        <div className="flex items-center w-full gap-3">
+
           <img src={Sorting} alt="sorting" />
 
           <Select onValueChange={handleSortChange}>
@@ -57,7 +78,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
               <SelectValue placeholder="Sort by default" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="random">Sort by random</SelectItem>
+              <SelectItem value="random">Sort by Random</SelectItem>
               <SelectItem value="latest">Sort by Latest</SelectItem>
               <SelectItem value="a-z">Sort by A-Z</SelectItem>
               <SelectItem value="z-a">Sort by Z-A</SelectItem>
@@ -86,20 +107,20 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
               className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] w-[232px] h-[280px] book group"
             >
               <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                  {book.isFavorite ? (
+
+                <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                  {favorites[book.bookId] ? (
+
                     <BsHeartFill
                       className="text-red-500 cursor-pointer"
-                      onClick={() => setActive(!active)}
+                      onClick={() => toggleFavorite(book.bookId, book.slug)}
                     />
                   ) : (
                     <BsHeart
-                      className="text-slate-500 cursor-pointer"
-                      onClick={() =>
-                        addFavorite.mutate({
-                          slug: book.slug,
-                        })
-                      }
+
+                      className="cursor-pointer text-slate-500"
+                      onClick={() => toggleFavorite(book.bookId, book.slug)}
+
                     />
                   )}
                 </div>

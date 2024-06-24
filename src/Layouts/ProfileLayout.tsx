@@ -32,13 +32,13 @@ const ProfileLayout = () => {
       <div className="flex w-full">
         <div className="flex flex-col gap-10 border-2 shadow-sm p-8 pt-16 shoadw-border border-r-border w-[480px]">
           {!isLoading && data && (
-            <div className="flex items-center gap-4 profile">
+            <div className="flex items-center gap-4 px-5 profile">
               <img
                 src={data.profilePicture}
                 alt={data.profilePicture}
                 className="rounded-full w-[65px] h-[65px]"
               />
-              <span className="font-bold text-lg">{data.name}</span>
+              <span className="text-lg font-bold">{data.name}</span>
             </div>
           )}
 
@@ -113,9 +113,16 @@ const ProfileLayout = () => {
               <FaAngleRight />
             </NavLink>
 
-            <NavLink to={"/me/restore"} className={({isActive}) => isActive ? "bg-primary !text-primary-foreground p-5 rounded-[8px] flex items-center justify-between" : "text-black flex items-center justify-between p-5 rounded-[8px]"}>
+            <NavLink
+              to={"/me/restore"}
+              className={({ isActive }) =>
+                isActive
+                  ? "bg-primary !text-primary-foreground p-5 rounded-[8px] flex items-center justify-between"
+                  : "text-black flex items-center justify-between p-5 rounded-[8px]"
+              }
+            >
               <div className="flex items-center gap-3">
-              <FaTrashAlt /> Recently deleted
+                <FaTrashAlt /> Recently deleted
               </div>
               <FaAngleRight />
             </NavLink>
@@ -123,9 +130,9 @@ const ProfileLayout = () => {
 
           <button
             onClick={LogOut}
-            className="flex justify-center items-center gap-3 p-4 border-t border-border font-bold text-secondary-foreground"
+            className="flex items-center justify-center gap-3 p-4 font-bold border-t border-border text-secondary-foreground"
           >
-            <CiLogout className="font-bold text-2xl" /> Sign Out
+            <CiLogout className="text-2xl font-bold" /> Sign Out
           </button>
         </div>
         <Outlet />

@@ -1,6 +1,6 @@
 import BaseURL from "@/services/ApiEndPoint";
 import { getToken } from "@/services/authService";
-import { commentData } from "@/types/types";
+import { commentData, CommentDataArray } from "@/types/types";
 
 const token = getToken();
 export const createComment = async ({ data }: { data: commentData }) => {
@@ -29,17 +29,15 @@ export const getComments = async (bookSlug: string) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
       mode: "cors",
       method: "GET",
       redirect: "follow",
-      body: JSON.stringify(bookSlug),
     }
   );
   const result = await response.json();
   if (!response.ok) {
     throw new Error(result.message);
   }
-  return result;
+  return result as CommentDataArray[];
 };

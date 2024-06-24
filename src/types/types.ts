@@ -30,6 +30,7 @@ export type profileFetchData = {
   localNumber: string;
   bio?: string;
   gender: string;
+  userId: number;
 };
 
 export type createChapterData = {
@@ -103,6 +104,43 @@ export type commentData = {
   slug: string;
 };
 
+export type CommentDataArray = {
+  commentId: number;
+  comment: string;
+  createdTime: Date;
+  updatedTime: Date;
+  user: {
+    userId: number;
+    name: string;
+    profilePicture: string;
+  };
+  book: Book;
+};
+
+export type getCommentData = {
+  comments: CommentDataArray[];
+};
+
 export type favoriteData = {
   slug: string;
+};
+
+export type favoriteBookData = {
+  book: Book;
+  bookId: string;
+  user: {
+    name: string;
+    profilePicture: File;
+  };
+};
+
+export type fetchFavoriteBookData = {
+  items: favoriteBookData[];
+  meta: {
+    currentPage: number;
+    itemCount: number;
+    itemsPerPage: number;
+    totalItems: number;
+    totalPages: number;
+  };
 };
