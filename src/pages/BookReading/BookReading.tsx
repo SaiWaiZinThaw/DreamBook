@@ -6,6 +6,7 @@ import { useCreateComment } from "@/hooks/useComment";
 import { useFetchABook } from "@/hooks/useFetchBook";
 import CommentSection from "@/components/CommentSection";
 import { useGetComments } from "@/hooks/useComment";
+
 const BookReading: React.FC = () => {
   const { bookSlug } = useParams();
   const [comment, setComment] = useState({
@@ -13,17 +14,13 @@ const BookReading: React.FC = () => {
     slug: "",
   });
   const createComment = useCreateComment();
-  const {
-    data: comments,
-    isLoading: commentIsLoading,
-    refetch,
-  } = useGetComments(bookSlug!);
+  const { refetch } = useGetComments(bookSlug!);
   const { data: fetchABook, isLoading } = useFetchABook(bookSlug!);
 
   const createCommentHandler = () => {
     setComment({ comment: "", slug: bookSlug! });
-    refetch();
     createComment.mutate(comment);
+    refetch();
   };
 
   return (
@@ -96,20 +93,18 @@ const BookReading: React.FC = () => {
                   });
                 }}
                 placeholder="Type your comment"
-                className="px-4 py-4 border border-border rounded-[12px] w-full text-sm flex items-center justify-center  placeholder:text-secondary-foreground placeholder:text-opacity-50"
+                className="px-4 py-6 border  border-border rounded-[12px] w-full   flex items-center justify-center  resize-none placeholder:text-secondary-foreground placeholder:text-opacity-50"
               ></textarea>
               <Button
                 onClick={createCommentHandler}
-                className="rounded-[8px] !font-normal text-sm"
+                className="rounded-[8px] !font-normal text-sm resize-none"
+                style={{ resize: "none" }}
               >
                 Post Comment
               </Button>
             </div>
 
-            <CommentSection
-              comments={comments!}
-              commentIsLoading={commentIsLoading}
-            />
+            <CommentSection />
           </div>
         )}
       </div>

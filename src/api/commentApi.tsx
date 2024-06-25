@@ -1,6 +1,6 @@
 import BaseURL from "@/services/ApiEndPoint";
 import { getToken } from "@/services/authService";
-import { commentData, CommentDataArray } from "@/types/types";
+import { commentData, getCommentData } from "@/types/types";
 
 const token = getToken();
 export const createComment = async ({ data }: { data: commentData }) => {
@@ -22,9 +22,9 @@ export const createComment = async ({ data }: { data: commentData }) => {
   return result;
 };
 
-export const getComments = async (bookSlug: string) => {
+export const getComments = async (bookSlug: string, pageParam: number) => {
   const response: Response = await fetch(
-    `${BaseURL}/comments?slug=${bookSlug}`,
+    `${BaseURL}/comments?slug=${bookSlug}&page=${pageParam}&limit=3`,
     {
       headers: {
         Accept: "application/json",
@@ -39,5 +39,5 @@ export const getComments = async (bookSlug: string) => {
   if (!response.ok) {
     throw new Error(result.message);
   }
-  return result as CommentDataArray[];
+  return result as getCommentData;
 };

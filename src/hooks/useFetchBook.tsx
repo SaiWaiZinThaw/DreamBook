@@ -1,4 +1,4 @@
-import { fetchAllBook, fetchBook } from "@/api/bookApi";
+import { fetchAllBook, fetchBook, fetchPopularBooks } from "@/api/bookApi";
 import { useQuery } from "@tanstack/react-query";
 
 interface FetchAllBookParams {
@@ -15,4 +15,10 @@ export const useFetchAllBooks = (params: FetchAllBookParams) =>
   useQuery({
     queryKey: ["allBooks", params],
     queryFn: () => fetchAllBook(params),
+  });
+
+export const useFetchPopularBooks = () =>
+  useQuery({
+    queryKey: ["popular Books"],
+    queryFn: () => fetchPopularBooks(),
   });

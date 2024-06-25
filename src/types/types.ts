@@ -118,7 +118,14 @@ export type CommentDataArray = {
 };
 
 export type getCommentData = {
-  comments: CommentDataArray[];
+  items: CommentDataArray[];
+  meta: {
+    currentPage: number;
+    itemCount: number;
+    itemsPerPage: number;
+    totalItems: number;
+    totalPages: number;
+  };
 };
 
 export type favoriteData = {
