@@ -49,7 +49,6 @@ export const fetchAllBook = async (params: FetchAllBookParams = {}) => {
   if (pageCount) {
     queryParams.append("page", pageCount.toString());
   }
-
   const response: Response = await fetch(
     `${BaseURL}/books/public?${queryParams.toString()}`,
     {
@@ -63,6 +62,23 @@ export const fetchAllBook = async (params: FetchAllBookParams = {}) => {
       redirect: "follow",
     }
   );
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result.message || "Failed to fetch books data");
+  }
+  return result as fetchBookData;
+};
+
+export const fetchPopularBooks = async () => {
+  const response: Response = await fetch(`${BaseURL}/books/popular?limit=5`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    mode: "cors",
+    method: "GET",
+    redirect: "follow",
+  });
   const result = await response.json();
   if (!response.ok) {
     throw new Error(result.message || "Failed to fetch books data");
