@@ -74,11 +74,33 @@ export const fetchPopularBooks = async () => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     mode: "cors",
     method: "GET",
     redirect: "follow",
   });
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result.message || "Failed to fetch books data");
+  }
+  return result as fetchBookData;
+};
+
+export const fetchLatestBooks = async () => {
+  const response: Response = await fetch(
+    `${BaseURL}/books/public?sortBy=latest&limit=5`,
+    {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors",
+      method: "GET",
+      redirect: "follow",
+    }
+  );
   const result = await response.json();
   if (!response.ok) {
     throw new Error(result.message || "Failed to fetch books data");

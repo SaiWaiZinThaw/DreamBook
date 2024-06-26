@@ -37,7 +37,7 @@ export const getComments = async (bookSlug: string, pageParam: number) => {
   );
   const result = await response.json();
   if (!response.ok) {
-    throw new Error(result.message);
+    throw new Error(`${response.status}`);
   }
   return result as getCommentData;
 };

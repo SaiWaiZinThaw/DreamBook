@@ -34,7 +34,7 @@ export const deleteChapter = async (chapterId: string) => {
   });
   const result = await response.json();
   if (!response.ok) {
-    throw new Error();
+    throw new Error(`${response.status}`);
   }
   return result;
 };

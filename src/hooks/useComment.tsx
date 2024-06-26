@@ -11,6 +11,9 @@ export const useGetComments = (bookSlug: string) =>
     queryFn: ({ queryKey, pageParam = 1 }) =>
       getComments(queryKey[1], pageParam),
     initialPageParam: 1,
+    retry(failureCount, error) {
+      return error.message === "404" && failureCount == 1 ? false : true;
+    },
     getNextPageParam: (lastPage, allPages) => {
       if (allPages.length === lastPage.meta.totalPages) {
         return undefined;

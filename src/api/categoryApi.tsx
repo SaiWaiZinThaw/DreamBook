@@ -31,3 +31,12 @@ export const createInterestedCategories = async (data: categoryData) => {
   }
   return result;
 };
+
+export const fetchTrendingCategories = async () => {
+  const response: Response = await fetch(`${BaseURL}/categories?limit=6`);
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error();
+  }
+  return result as any[];
+};
