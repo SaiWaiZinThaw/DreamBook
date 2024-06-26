@@ -107,8 +107,8 @@ export type commentData = {
 export type CommentDataArray = {
   commentId: number;
   comment: string;
-  createdTime: Date;
-  updatedTime: Date;
+  cratedAt: string;
+  updatedTime: string;
   user: {
     userId: number;
     name: string;

@@ -2,16 +2,13 @@ import {
   Animation,
   AppStore,
   GooglePLay,
-  BestSelf,
   About,
   LatestBg,
-  LatestBooks,
   FeatureBg,
   Visit,
   Daisy,
   HeroBg,
 } from "@/assets";
-import { BsEyeFill, BsHeart, BsHeartFill } from "react-icons/bs";
 import {
   Accordion,
   AccordionContent,
@@ -19,16 +16,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import { useState } from "react";
 import "../App.css";
 import { NavLink } from "react-router-dom";
-import { useFetchCategories } from "@/hooks/useFetchCategories";
+import { useFetchTrendingCategories } from "@/hooks/useFetchCategories";
 import { faqItems } from "@/variables";
 import PopularBooks from "./PopularBooks";
+import LatestBooks from "./LatestBooks";
 
 const Hero = () => {
-  const [active, setActive] = useState(false);
-  const { data: fetchCategories } = useFetchCategories();
+  const { data: fetchTrendingCategories } = useFetchTrendingCategories();
 
   return (
     <div className="container px-0 mx-0">
@@ -52,7 +48,7 @@ const Hero = () => {
             </button>
           </NavLink>
 
-          <p className="my-4 font-sans text-sm font-normal text-blue-300">
+          <p className="my-4 font-sans text-sm font-normal text-blue-400">
             TRY ON MOBILE
           </p>
 
@@ -126,23 +122,19 @@ const Hero = () => {
         <div>
           <div className="flex justify-center mx-8 mt-11">
             <div className="grid w-full grid-cols-3 gap-6">
-              {fetchCategories &&
-                fetchCategories?.map(
-                  (category: any) =>
-                    category.priority === 2 && (
-                      <div
-                        key={category.categoryId}
-                        className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md"
-                      >
-                        <img
-                          src={category.icon}
-                          className="mr-[38px] ml-[12px] w-[35px] h-[35px]"
-                          alt=""
-                        />
-                        <h1 className="pt-[5px]">{category.title}</h1>
-                      </div>
-                    )
-                )}
+              {fetchTrendingCategories?.map((category: any) => (
+                <div
+                  key={category.categoryId}
+                  className="flex border-slate-300 cursor-pointer bg-slate-50 shadow-md pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md"
+                >
+                  <img
+                    src={category.icon}
+                    className="mr-[38px] ml-[12px] w-[35px] h-[35px]"
+                    alt=""
+                  />
+                  <h1 className="pt-[5px]">{category.title}</h1>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -151,93 +143,12 @@ const Hero = () => {
       <div className="mt-[50px] w-screen h-[400px]">
         <div className="flex justify-between mx-8">
           <h1 className="text-xl font-bold">Latest Books</h1>
-          {/* this must be link when we finish router */}
           <a href="" className="font-medium text-md">
             View More &gt;
           </a>
         </div>
 
-        <div className="relative transition group">
-          <div className="gap-x-3 grid grid-cols-5 mx-8 mt-6 h-[280px]">
-            <div className="bg-slate-100 shadow-xl border rounded-[8px]">
-              <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                <img src={BestSelf} alt="" />
-
-                {/* This will change of code we get API */}
-                <div className="group-hover:right-[35px] top-[64px] -right-11 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
-                    {active ? (
-                      <BsHeartFill
-                        className="text-red-500"
-                        onClick={() => setActive(!active)}
-                      />
-                    ) : (
-                      <BsHeart
-                        className="text-slate-500"
-                        onClick={() => setActive(!active)}
-                      />
-                    )}
-                  </div>
-
-                  {/* Change div to link to= {"Book/id"}*/}
-                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
-                    <BsEyeFill className="text-slate-500" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="ml-2">
-                <h1 className="text-xl font-bold">Title</h1>
-                <p className="text-sm font-normal text-gray-500">Category</p>
-                <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-              </div>
-            </div>
-
-            <div className="bg-slate-100 shadow-xl border rounded-[8px]">
-              <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                <img src={BestSelf} alt="" />
-              </div>
-              <div className="ml-2">
-                <h1 className="text-xl font-bold">Title</h1>
-                <p className="text-sm font-normal text-gray-500">Category</p>
-                <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-              </div>
-            </div>
-
-            <div className="bg-slate-100 shadow-xl border rounded-[8px]">
-              <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                <img src={BestSelf} alt="" />
-              </div>
-              <div className="ml-2">
-                <h1 className="text-xl font-bold">Title</h1>
-                <p className="text-sm font-normal text-gray-500">Category</p>
-                <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-              </div>
-            </div>
-
-            <div className="bg-slate-100 shadow-xl border rounded-[8px]">
-              <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                <img src={BestSelf} alt="" />
-              </div>
-              <div className="ml-2">
-                <h1 className="text-xl font-bold">Title</h1>
-                <p className="text-sm font-normal text-gray-500">Category</p>
-                <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-              </div>
-            </div>
-
-            <div className="bg-slate-100 shadow-xl border rounded-[8px]">
-              <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                <img src={BestSelf} alt="" />
-              </div>
-              <div className="ml-2">
-                <h1 className="text-xl font-bold">Title</h1>
-                <p className="text-sm font-normal text-gray-500">Category</p>
-                <h2 className="mt-3 font-medium text-md">Author's Acc</h2>
-              </div>
-            </div>
-          </div>
-        </div>
+        <LatestBooks />
       </div>
 
       <div
@@ -255,10 +166,6 @@ const Hero = () => {
                 Explore Now
               </button>
             </NavLink>
-          </div>
-
-          <div className="pt-[35px]">
-            <img src={LatestBooks} alt="" />
           </div>
         </div>
       </div>

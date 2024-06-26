@@ -1,10 +1,10 @@
 import { BsEyeFill, BsHeart, BsHeartFill } from "react-icons/bs";
 import { useAddFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
 import { useEffect, useState } from "react";
-import { useFetchPopularBooks } from "@/hooks/useFetchBook";
+import { usefetchLatestBooks } from "@/hooks/useFetchBook";
 import { useNavigate } from "react-router-dom";
-const PopularBooks = () => {
-  const { data: booksData, isLoading: isBooksLoading } = useFetchPopularBooks();
+const LatestBooks = () => {
+  const { data: booksData, isLoading: isBooksLoading } = usefetchLatestBooks();
   const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({});
   const addFavorite = useAddFavorite();
   const removeFavorite = useRemoveFavorite();
@@ -107,4 +107,4 @@ const PopularBooks = () => {
   );
 };
 
-export default PopularBooks;
+export default LatestBooks;

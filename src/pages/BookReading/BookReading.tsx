@@ -81,7 +81,7 @@ const BookReading: React.FC = () => {
               </div>
             </div>
             <div className="flex flex-col gap-5 px-20 pt-5 pb-5">
-              <h1>Leave a comment</h1>
+              <h1 className="text-lg">Leave a comment</h1>
               <textarea
                 value={comment.comment}
                 onChange={(event) => {
