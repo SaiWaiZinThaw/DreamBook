@@ -4,5 +4,13 @@ import Footer from "./Footer";
 import CategoryBooks from "./CategoryBooks";
 import CreateBook from "./CreateBook";
 import Description from "./Description";
-
-export { NavBar, Hero, Footer, CategoryBooks, Description, CreateBook };
+import ChapterRead from "./ChapterRead";
+export {
+  NavBar,
+  Hero,
+  Footer,
+  CategoryBooks,
+  Description,
+  CreateBook,
+  ChapterRead,
+};
