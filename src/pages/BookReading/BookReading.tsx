@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import parse from "html-react-parser";
 import { useCreateComment } from "@/hooks/useComment";
@@ -24,8 +24,8 @@ const BookReading: React.FC = () => {
   };
 
   return (
-    <div className="flex w-full min-h-screen px-20">
-      <div className="flex-col w-10/12 h-full px-10 pt-20 border-r border-border">
+    <div className="flex px-20 w-full min-h-screen">
+      <div className="flex-col px-10 pt-20 border-r border-border w-10/12 h-full">
         {fetchABook && !isLoading && (
           <div className="flex flex-col gap-[20px] w-full h-full">
             <div className="flex gap-[100px] px-20 pb-20 w-full">
@@ -37,7 +37,7 @@ const BookReading: React.FC = () => {
                 />
               </div>
               <div className="flex flex-col justify-center gap-3 w-[400px]">
-                <h1 className="text-3xl font-extrabold">{fetchABook.title}</h1>
+                <h1 className="font-extrabold text-3xl">{fetchABook.title}</h1>
                 <div className="flex items-center gap-2">
                   <img
                     src={fetchABook.user.profilePicture}
@@ -47,7 +47,7 @@ const BookReading: React.FC = () => {
                   <span className="text-[15px]">By {fetchABook.user.name}</span>
                 </div>
                 <div className="flex gap-3 mt-[20px]">
-                  <span className="text-lg font-bold">Category:</span>
+                  <span className="font-bold text-lg">Category:</span>
                   <div className="flex items-center gap-2">
                     <img
                       src={fetchABook.category.icon}
@@ -58,7 +58,7 @@ const BookReading: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <span className="text-lg font-bold">Keywords:</span>
+                  <span className="font-bold text-lg">Keywords:</span>
                   <div className="flex items-center gap-1">
                     {fetchABook.keywords.map((keyword, index) => (
                       <span key={index} className="text-sm">
@@ -70,12 +70,14 @@ const BookReading: React.FC = () => {
                 </div>
 
                 <div className="w-full h-5"></div>
-
-                <Button size={"full"}> Start Reading</Button>
+                <NavLink to={"chapter/:chapterId"}>
+                  <Button size={"full"}> Start Reading</Button>
+                </NavLink>
+                
               </div>
             </div>
             <div className="flex flex-col gap-5 px-20 border-b border-border min-h-[200px]">
-              <h1 className="text-2xl font-bold">Book Overview</h1>
+              <h1 className="font-bold text-2xl">Book Overview</h1>
               <div className="text-lg">
                 {parse(fetchABook.description || "")}
               </div>

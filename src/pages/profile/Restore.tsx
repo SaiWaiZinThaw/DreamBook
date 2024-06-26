@@ -24,8 +24,6 @@ const Restore = () => {
    })
 };
 
- 
-
   const handleDelete = (bookId: string) => {
     hardDelete(bookId, {
       onSuccess: () => {
