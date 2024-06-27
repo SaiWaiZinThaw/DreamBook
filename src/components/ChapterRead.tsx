@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useFetchAChapter, useFetchAllChapters } from '@/hooks/useFetchChapter';
 import { FaArrowLeft } from 'react-icons/fa';
@@ -7,12 +8,21 @@ import { SlArrowRight } from "react-icons/sl";
 import { SlArrowLeft } from "react-icons/sl";
 import { useCreateChapterProgress } from '@/hooks/useChapterProgress';
 
+
 const ChapterRead = () => {
-  const { bookSlug, chapterId} = useParams<{ bookSlug: string, chapterId?: string }>();
+  const { bookSlug, chapterId } = useParams<{
+    bookSlug: string;
+    chapterId?: string;
+  }>();
   const navigate = useNavigate();
   const { data: getChapters } = useFetchAllChapters(bookSlug!);
-  const [parsedChapterId, setParsedChapterId] = useState<number | null>(null)
-  const { data: getChapter, isLoading, error } = useFetchAChapter(parsedChapterId !);
+  const [parsedChapterId, setParsedChapterId] = useState<number | null>(null);
+  const {
+    data: getChapter,
+    isLoading,
+    error,
+  } = useFetchAChapter(parsedChapterId!);
+
   const [activeChapterId, setActiveChapterId] = useState<number | null>(null);
   const createChapterProgress = useCreateChapterProgress();
 
@@ -23,10 +33,10 @@ const ChapterRead = () => {
         setParsedChapterId(parsedId);
         setActiveChapterId(parsedId);
       } else {
-        console.error('Invalid chapterId:', chapterId);
+        console.error("Invalid chapterId:", chapterId);
       }
     } else {
-      console.error('chapterId is undefined');
+      console.error("chapterId is undefined");
     }
   }, [chapterId]);
 
@@ -54,7 +64,11 @@ const ChapterRead = () => {
           {getChapters &&
             getChapters.map((chapter: any) => (
               <li
-                className={`mb-[16px] cursor-pointer ${chapter.chapterId === activeChapterId ? 'text-primary font-semibold' : ''}`}
+                className={`mb-[16px] cursor-pointer ${
+                  chapter.chapterId === activeChapterId
+                    ? "text-primary font-semibold"
+                    : ""
+                }`}
                 key={chapter.chapterId}
                 onClick={() => handleChapterSelect(chapter.chapterId)}
               >
@@ -64,6 +78,7 @@ const ChapterRead = () => {
         </ol>
       </div>
 
+
       <div className="flex flex-col w-screen min-h-screen">
         {isLoading && <p>Loading...</p>}
         {error && <p>Error loading chapter: {error.message}</p>}
@@ -71,6 +86,7 @@ const ChapterRead = () => {
           <div className="ml-[108px] p-4">
             <h1 className="mt-[28px] font-bold text-[36px] text-primary">{getChapter.title}</h1>
             <div className="mt-[24px] font-normal text-lg" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(getChapter.content) }} />
+
           </div>
         )}
 

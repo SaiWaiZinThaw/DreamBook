@@ -107,8 +107,8 @@ export type commentData = {
 export type CommentDataArray = {
   commentId: number;
   comment: string;
-  createdTime: Date;
-  updatedTime: Date;
+  cratedAt: string;
+  updatedTime: string;
   user: {
     userId: number;
     name: string;
@@ -118,7 +118,14 @@ export type CommentDataArray = {
 };
 
 export type getCommentData = {
-  comments: CommentDataArray[];
+  items: CommentDataArray[];
+  meta: {
+    currentPage: number;
+    itemCount: number;
+    itemsPerPage: number;
+    totalItems: number;
+    totalPages: number;
+  };
 };
 
 export type favoriteData = {
