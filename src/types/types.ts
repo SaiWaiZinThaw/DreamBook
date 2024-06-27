@@ -86,6 +86,26 @@ export type fetchBookData = {
   };
 };
 
+export type favoriteBookData = {
+  book: Book;
+  bookId: string;
+  user: {
+    name: string;
+    profilePicture: File;
+  };
+};
+
+export type fetchFavoriteBookData = {
+  items: favoriteBookData[];
+  meta: {
+    currentPage: number;
+    itemCount: number;
+    itemsPerPage: number;
+    totalItems: number;
+    totalPages: number;
+  };
+};
+
 export type Chapter = {
   chapterId: string;
   title: string;
@@ -133,9 +153,9 @@ export type favoriteData = {
 export type PasswordChangeData = {
   oldPassword: string;
   newPassword: string;
-}
+};
 
 export type ChapterProgressData = {
   slug: string;
   chapterId: number;
-}
+};
