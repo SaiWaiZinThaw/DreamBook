@@ -19,7 +19,7 @@ export const updateBookApi = async (
   formData.append("keywords", JSON.stringify(keyWords));
   formData.append("status", data.status);
 
-  const response: Response = await fetch(`${BaseURL}/books/${bookSlug}`, {
+  const response: Response = await fetch(`${BaseURL}/books/update/${bookSlug}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
