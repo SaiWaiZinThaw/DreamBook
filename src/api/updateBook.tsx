@@ -19,6 +19,7 @@ export const updateBookApi = async (
   formData.append("keywords", JSON.stringify(keyWords));
   formData.append("status", data.status);
 
+
   const response: Response = await fetch(
     `${BaseURL}/books/update/${bookSlug}`,
     {
@@ -30,6 +31,7 @@ export const updateBookApi = async (
       body: formData,
     }
   );
+
 
   const result = await response.json();
   if (!response.ok) {
