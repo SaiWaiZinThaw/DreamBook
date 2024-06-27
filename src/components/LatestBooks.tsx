@@ -3,12 +3,14 @@ import { useAddFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
 import { useEffect, useState } from "react";
 import { usefetchLatestBooks } from "@/hooks/useFetchBook";
 import { useNavigate } from "react-router-dom";
+
 const LatestBooks = () => {
   const { data: booksData, isLoading: isBooksLoading } = usefetchLatestBooks();
   const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({});
   const addFavorite = useAddFavorite();
   const removeFavorite = useRemoveFavorite();
   const navigate = useNavigate();
+
   const toggleFavorite = (bookId: string, bookSlug: string) => {
     setFavorites((prevFavorites) => {
       const isFavorite = !prevFavorites[bookId];
@@ -20,6 +22,7 @@ const LatestBooks = () => {
       return { ...prevFavorites, [bookId]: isFavorite };
     });
   };
+
   const viewBook = (bookSlug: string) => {
     navigate(`/book/${bookSlug}`);
   };
@@ -34,16 +37,17 @@ const LatestBooks = () => {
       setFavorites(newFavorites);
     }
   }, [booksData]);
+
   return (
-    <div className="p-2 transition">
-      <div className="grid grid-cols-5 mx-8 mt-6 h-[280px]">
+    <div className="py-2 overflow-x-auto transition lg:p-3">
+      <div className="flex  mt-6 h-[280px] w-full">
         {!isBooksLoading &&
           booksData &&
           booksData.items.map((book) => (
             <div
               key={book.bookId}
               id={book.bookId}
-              className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] w-[232px] h-[280px] book group"
+              className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] lg:w-[232px] min-w-[200px] h-[280px] book group"
             >
               <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                 <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">

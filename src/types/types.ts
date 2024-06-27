@@ -6,8 +6,6 @@ export type AuthData = {
 export type ProfileSetupData = {
   name: string;
   profilePicture?: File;
-  countryCode: string;
-  localNumber: string;
   phoneNumber?: string;
   bio?: string;
   gender: string;

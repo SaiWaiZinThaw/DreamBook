@@ -6,63 +6,74 @@ import React, { useEffect, useState } from "react";
 import { countryCodes } from "@/variables";
 import { useNavigate } from "react-router-dom";
 import { useProfileSetup } from "@/hooks/useAuth";
-import { ProfileSetupData } from "@/types/types";
 import { useGetMe } from "@/hooks/useUser";
 import { ButtonLoading } from "@/components/ui/loading-button";
 import { getToken } from "@/services/authService";
+import { ProfileSetupData } from "@/types/types";
 
 const ProfileSetup = () => {
   const profileSetup = useProfileSetup();
   const token = getToken() || "";
   const { data } = useGetMe(token);
-
   const navigate = useNavigate();
+  const [localPhoneNumber, setLocalPhoneNumber] = useState("");
+  const [countryCodeNumber, setCountryCodeNumber] = useState("+95");
 
   const [profileData, setProfileData] = useState<ProfileSetupData>({
     name: "",
     profilePicture: undefined,
-    countryCode: "+95",
-    localNumber: "",
+    phoneNumber: "",
     bio: "",
     gender: "male",
   });
 
-  const [errors, setErrors] = useState<{ name?: string; localNumber?: string }>({});
+  const [errors, setErrors] = useState<{ name?: string; localNumber?: string }>(
+    {}
+  );
+
+  useEffect(() => {
+    if (localPhoneNumber || countryCodeNumber) {
+      setProfileData((prev) => ({
+        ...prev,
+        phoneNumber: localPhoneNumber + countryCodeNumber,
+      }));
+    }
+  }, [localPhoneNumber, countryCodeNumber]);
 
   useEffect(() => {
     if (data) {
+      setLocalPhoneNumber(data.localNumber);
+      setCountryCodeNumber(data.countryCode);
       setProfileData((prev) => ({
         ...prev,
         name: data.name || "",
         bio: data.bio || "",
         gender: data.gender || "",
-        localNumber: data.localNumber || "",
-        countryCode: data.countryCode || "",
+        phoneNumber: countryCodeNumber + localPhoneNumber,
       }));
     }
   }, [data]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    const validationErrors: {name?: string; localNumber?: string} = {};
-    if(!profileData.name) {
-      validationErrors.name = "* Fill Your Username"
-    }else if(profileData.name.length > 25){
-      validationErrors.name = "Username must be maximum 25 characters !"
+
+    const validationErrors: { name?: string; localNumber?: string } = {};
+    if (!profileData.name) {
+      validationErrors.name = "* Fill Your Username";
+    } else if (profileData.name.length > 25) {
+      validationErrors.name = "Username must be maximum 25 characters !";
     }
 
     setErrors(validationErrors);
 
-    if(Object.keys(validationErrors).length === 0) {
+    if (Object.keys(validationErrors).length === 0) {
       profileSetup.mutate(profileData, {
-        onError: (error:any) => {
-          if(error.response && error.response.data){
-            setErrors(error.response.data.errors)
+        onError: (error: any) => {
+          if (error.response && error.response.data) {
+            setErrors(error.response.data.errors);
           }
-        }
+        },
       });
-
     }
   };
 
@@ -86,20 +97,17 @@ const ProfileSetup = () => {
         onSubmit={handleSubmit}
         className="flex flex-col items-center gap-6 w-[460px] font-Inter"
       >
-        <h1 className="font-bold text-2xl text-white">Create an account</h1>
+        <h1 className="text-2xl font-bold text-white">Create an account</h1>
         <FileUpload onFileChange={handleFileChange} />
-        <Label htmlFor="picture" className="font-Inter text-lg text-white">
+        <Label htmlFor="picture" className="text-lg text-white font-Inter">
           Upload Photo
         </Label>
-        <div className="flex items-center gap-5 w-full">
+        <div className="flex items-center w-full gap-5">
           <select
             className="flex justify-center items-center p-4 rounded-[5px] h-12"
-            value={profileData.countryCode}
+            value={countryCodeNumber}
             onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-              setProfileData((prev) => ({
-                ...prev,
-                countryCode: event.target.value,
-              }));
+              setCountryCodeNumber(event.target.value);
             }}
           >
             {countryCodes.map((code, index) => (
@@ -112,17 +120,14 @@ const ProfileSetup = () => {
             type="tel"
             id="phone"
             placeholder="Phone"
-            value={profileData.localNumber}
+            value={localPhoneNumber}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setProfileData((prev) => ({
-                ...prev,
-                localNumber: event.target.value,
-              }));
+              setLocalPhoneNumber(event.target.value);
             }}
           />
           {errors.localNumber && (
-          <p className="text-red-500 text-sm">{errors.localNumber}</p>
-        )}
+            <p className="text-sm text-red-500">{errors.localNumber}</p>
+          )}
         </div>
         <Input
           type="text"
@@ -136,9 +141,7 @@ const ProfileSetup = () => {
             }));
           }}
         />
-         {errors.name && (
-          <p className="text-red-500 text-sm">{errors.name}</p>
-        )}
+        {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
         <select
           className="flex justify-center items-center p-4 rounded-[5px] w-full h-12 text-sm"
           value={profileData.gender}
