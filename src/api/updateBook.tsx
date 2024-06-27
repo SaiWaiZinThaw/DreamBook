@@ -19,14 +19,17 @@ export const updateBookApi = async (
   formData.append("keywords", JSON.stringify(keyWords));
   formData.append("status", data.status);
 
-  const response: Response = await fetch(`${BaseURL}/books/${bookSlug}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    mode: "cors",
-    method: "PATCH",
-    body: formData,
-  });
+  const response: Response = await fetch(
+    `${BaseURL}/books/update/${bookSlug}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors",
+      method: "PATCH",
+      body: formData,
+    }
+  );
 
   const result = await response.json();
   if (!response.ok) {

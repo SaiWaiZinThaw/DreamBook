@@ -6,7 +6,6 @@ import {
   LatestBg,
   FeatureBg,
   Visit,
-  Daisy,
   HeroBg,
 } from "@/assets";
 import {
@@ -27,16 +26,16 @@ const Hero = () => {
   const { data: fetchTrendingCategories } = useFetchTrendingCategories();
 
   return (
-    <div className="container px-0 mx-0">
+    <div className="container px-0 mx-0 lg:flex-none">
       <div
-        className="relative flex bg-slate-100 bg-cover w-screen h-[600px]"
+        className=" flex lg:flex-row flex-col bg-slate-100 bg-cover w-screen lg:h-[600px]"
         style={{ backgroundImage: `url(${HeroBg})` }}
       >
-        <div className="mt-[130px] ml-[125px] w-[700px] h-[300px]">
+        <div className="lg:mt-[130px] flex flex-col lg:flex-none gap-3 lg:ml-[125px] lg:w-[700px] lg:h-[300px] p-10">
           <h1 className="text-4xl font-bold">
             Discover <br /> Magic Of Books
           </h1>
-          <p className="pt-7 font-normal text-lg leading-[23px]">
+          <p className="lg:pt-7 font-normal text-md lg:text-lg leading-[23px] w-full  lg:w-auto ">
             "Unlock worlds, one page at a time: Dive into the stories that{" "}
             <br /> shape us. Welcome to a sanctuary for book lovers, where{" "}
             <br /> words ignite passions and journeys never end."
@@ -48,31 +47,28 @@ const Hero = () => {
             </button>
           </NavLink>
 
-          <p className="my-4 font-sans text-sm font-normal text-blue-400">
+          <p className="mt-4 mb-2 font-sans text-sm font-light tracking-widest text-blue-400 lg:my-4">
             TRY ON MOBILE
           </p>
 
           <div className="flex gap-x-6">
-            <img src={AppStore} alt="" />
-            <img src={GooglePLay} alt="" />
+            <img src={AppStore} alt="" className="w-[120px] lg:w-auto" />
+            <img src={GooglePLay} alt="" className="w-[120px] lg:w-auto" />
           </div>
         </div>
 
-        <div className="mt-[90px] mr-[10px] w-[500px] h-[450px]">
-          <img src={Animation} alt="" className="" />
+        <div className="mt-[90px] mr-[10px] lg:w-[500px] w-full  lg:h-[450px] p-5 lg:p-0">
+          <img src={Animation} alt="" className="w-full lg:w-auto" />
 
-          <p className="flex items-center justify-center mt-4 text-2xl font-medium">
+          <p className="flex items-center justify-center mt-4 font-medium lg:text-2xl">
             Most Popular Books This Week
           </p>
-          <div className="top-[452px] right-2 bottom-0 z-10 absolute">
-            <img src={Daisy} alt="" className="w-[170px] h-[170px]" />
-          </div>
         </div>
       </div>
 
-      <div className="flex justify-center gap-x-4 mt-[60px] w-screen h-[230px]">
+      <div className="flex flex-col p-2 items-center mx-2 px-5 gap-4 lg:gap-0 lg:flex-row lg:justify-center lg:gap-x-4 lg:mt-[60px] w-full lg:h-[230px]">
         <div
-          className="grid-col-1 bg-opacity-88 bg-no-repeat p-9 w-[400px] text-white"
+          className="lg:flex-none lg:grid-cols-1 flex flex-col lg:gap-0 gap-3 bg-opacity-88 bg-no-repeat bg-cover p-3 lg:p-9 w-full rounded-[2px] h-[200px] lg:w-[400px] text-white"
           style={{ backgroundImage: `url(${About})` }}
         >
           <h1 className="text-xl font-semibold">About Us</h1>
@@ -82,7 +78,7 @@ const Hero = () => {
           </p>
         </div>
         <div
-          className="grid-col-1 bg-opacity-88 bg-no-repeat p-9 w-[400px] text-white"
+          className="lg:flex-none lg:grid-cols-1 flex flex-col lg:gap-0 gap-3 bg-opacity-88 bg-no-repeat bg-cover p-3 lg:p-9 w-full rounded-[2px] h-[200px] lg:w-[400px] text-white"
           style={{ backgroundImage: `url(${FeatureBg})` }}
         >
           <h1 className="text-xl font-semibold">Feactured</h1>
@@ -92,7 +88,7 @@ const Hero = () => {
           </p>
         </div>
         <div
-          className="grid-col-1 bg-opacity-88 bg-no-repeat p-9 w-[400px] text-white"
+          className="lg:flex-none lg:grid-cols-1 flex flex-col lg:gap-0 gap-3 bg-opacity-88 bg-no-repeat bg-cover p-3 lg:p-9 w-full rounded-[2px] h-[200px] lg:w-[400px] text-white"
           style={{ backgroundImage: `url(${Visit})` }}
         >
           <h1 className="text-xl font-semibold">Visit Now</h1>
@@ -103,7 +99,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="w-screen h-[400px]">
+      <div className="w-screen h-[400px] p-6">
         <h1 className="flex items-center justify-center text-2xl font-semibold">
           Popular Books
         </h1>
@@ -111,37 +107,34 @@ const Hero = () => {
         <PopularBooks />
       </div>
 
-      <div className="w-screen h-[250px]">
-        <div className="flex justify-between mx-8">
+      <div className="w-screen lg:h-[250px] p-6">
+        <div className="flex justify-between">
           <h1 className="text-xl font-bold">Trending Category</h1>
-          {/* this must be link when we finish router */}
           <a href="" className="font-medium text-md">
             View More &gt;
           </a>
         </div>
-        <div>
-          <div className="flex justify-center mx-8 mt-11">
-            <div className="grid w-full grid-cols-3 gap-6">
-              {fetchTrendingCategories?.map((category: any) => (
-                <div
-                  key={category.categoryId}
-                  className="flex border-slate-300 cursor-pointer bg-slate-50 shadow-md pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md"
-                >
-                  <img
-                    src={category.icon}
-                    className="mr-[38px] ml-[12px] w-[35px] h-[35px]"
-                    alt=""
-                  />
-                  <h1 className="pt-[5px]">{category.title}</h1>
-                </div>
-              ))}
-            </div>
+        <div className="flex justify-center mx-8 mt-11">
+          <div className="grid w-full grid-cols-1 gap-6 lg:grid-cols-3">
+            {fetchTrendingCategories?.map((category: any) => (
+              <div
+                key={category.categoryId}
+                className="flex border-slate-300 cursor-pointer bg-slate-50 shadow-md pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md"
+              >
+                <img
+                  src={category.icon}
+                  className="mr-[38px] ml-[12px] w-[35px] h-[35px]"
+                  alt=""
+                />
+                <h1 className="pt-[5px]">{category.title}</h1>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="mt-[50px] w-screen h-[400px]">
-        <div className="flex justify-between mx-8">
+      <div className="mt-[50px] w-screen lg:h-[400px] p-6">
+        <div className="flex justify-between">
           <h1 className="text-xl font-bold">Latest Books</h1>
           <a href="" className="font-medium text-md">
             View More &gt;

@@ -1,11 +1,12 @@
 import { authService } from "@/services";
-import React from "react";
-import { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 interface AuthContextType {
   token: string | null;
   login: (token: string) => void;
   logout: () => void;
+  showMenu: boolean;
+  setShowMenu: (value: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -13,8 +14,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const token = authService.getToken() || null;
-
+  const initialToken = authService.getToken() || null;
+  const [showMenu, setShowMenu] = useState<boolean>(false);
   const login = (token: string) => {
     authService.login(token);
   };
@@ -24,7 +25,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <AuthContext.Provider value={{ token, login, logout }}>
+    <AuthContext.Provider
+      value={{ token: initialToken, login, logout, showMenu, setShowMenu }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -32,8 +35,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("Error");
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
