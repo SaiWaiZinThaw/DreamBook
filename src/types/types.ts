@@ -106,3 +106,13 @@ export type commentData = {
 export type favoriteData = {
   slug: string;
 };
+
+export type PasswordChangeData = {
+  oldPassword: string;
+  newPassword: string;
+}
+
+export type ChapterProgressData = {
+  slug: string;
+  chapterId: number;
+}

@@ -3,6 +3,9 @@ import { useFetchAChapter, useFetchAllChapters } from '@/hooks/useFetchChapter';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
+import { SlArrowRight } from "react-icons/sl";
+import { SlArrowLeft } from "react-icons/sl";
+import { useCreateChapterProgress } from '@/hooks/useChapterProgress';
 
 const ChapterRead = () => {
   const { bookSlug, chapterId} = useParams<{ bookSlug: string, chapterId?: string }>();
@@ -11,9 +14,9 @@ const ChapterRead = () => {
   const [parsedChapterId, setParsedChapterId] = useState<number | null>(null)
   const { data: getChapter, isLoading, error } = useFetchAChapter(parsedChapterId !);
   const [activeChapterId, setActiveChapterId] = useState<number | null>(null);
+  const createChapterProgress = useCreateChapterProgress();
 
   useEffect(() => {
-    // Parse chapterId from string to number when it changes
     if (chapterId) {
       const parsedId = parseInt(chapterId, 10);
       if (!isNaN(parsedId)) {
@@ -27,11 +30,12 @@ const ChapterRead = () => {
     }
   }, [chapterId]);
 
-  // Handle navigation and selection of chapters
   const handleChapterSelect = (id: number) => {
     navigate(`/book/${bookSlug}/chapter/${id}`);
     setParsedChapterId(id);
     setActiveChapterId(id);
+    createChapterProgress.mutate({ slug: bookSlug!, chapterId: id });
+    console.log(createChapterProgress.data.progressId);
   };
 
   return (
@@ -60,15 +64,20 @@ const ChapterRead = () => {
         </ol>
       </div>
 
-      <div className="p-4 w-screen">
+      <div className="flex flex-col w-screen min-h-screen">
         {isLoading && <p>Loading...</p>}
         {error && <p>Error loading chapter: {error.message}</p>}
         {getChapter && (
-          <div className="ml-[108px]">
+          <div className="ml-[108px] p-4">
             <h1 className="mt-[28px] font-bold text-[36px] text-primary">{getChapter.title}</h1>
             <div className="mt-[24px] font-normal text-lg" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(getChapter.content) }} />
           </div>
         )}
+
+        <div className="flex justify-between mt-auto border border-t-slate-300">
+          <button className="flex justify-center items-center border-slate-300 my-[15.5px] border rounded-[8px] w-[113px] h-[42px]"><SlArrowLeft className='mt-[2px] mr-2'/>Previous</button>
+          <button className="flex justify-center items-center bg-primary my-[15.5px] border rounded-[8px] w-[113px] h-[42px] text-slate-50">Next <SlArrowRight className='mt-[2px] ml-2'/></button>
+        </div>
       </div>
     </div>
   );
