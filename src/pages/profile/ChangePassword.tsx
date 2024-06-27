@@ -30,12 +30,16 @@ const ChangePassword = () => {
     setConfirmPassword(e.target.value);
   };
 
-  // useEffect(() => {
-  //   if (data.isSuccess) {
-  //     console.log(passwordData.data);
-  //     navigate("/auth/select-category");
-  //   }
-  // }, [profileSetup.isSuccess]);
+  useEffect(() => {
+    if passwordChange.isSuccess) {
+      Swal.fire({
+        icon: "success",
+        title: "Password is Updated",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [passwordChange.isSuccess]);
 
   return (
     <section className="flex justify-center items-center">
