@@ -24,7 +24,9 @@ const Books = () => {
 
   const { data, isLoading } = useFetchAllBookAuthor(token);
   const navigate = useNavigate();
-
+  if (!isLoading) {
+    console.log(data);
+  }
   const editHandler = (bookSlug: string) => {
     navigate(`/book-dashboard/${bookSlug}/book-details`);
   };
@@ -34,8 +36,8 @@ const Books = () => {
   };
 
   return (
-    <div className="w-screen overflow-hidden">
-      <div className="p-4">
+    <div className="w-full overflow-hidden">
+      <div className="p-10">
         <div className="flex justify-between items-center mb-4 h-[50px]">
           <div className="flex items-center gap-3">
             <img src={Sorting} alt="sorting" className="h-[50px]" />
