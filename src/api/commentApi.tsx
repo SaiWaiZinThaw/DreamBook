@@ -22,6 +22,8 @@ export const createComment = async ({ data }: { data: commentData }) => {
   return result;
 };
 
+console.log(token);
+
 export const getComments = async (bookSlug: string, pageParam: number) => {
   const response: Response = await fetch(
     `${BaseURL}/comments?slug=${bookSlug}&page=${pageParam}&limit=3`,
