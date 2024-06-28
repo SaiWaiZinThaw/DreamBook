@@ -45,7 +45,7 @@ const ChangePassword = () => {
   }, [passwordChange.isSuccess]);
 
   return (
-    <section className="flex items-center justify-center">
+    <section className="flex items-center justify-center w-full">
       <div className="flex flex-col ml-[165px] w-[544px] h-[451px]">
         <h1 className="mb-[16px] font-bold text-2xl text-center">
           Change Your Password

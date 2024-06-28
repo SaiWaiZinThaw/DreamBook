@@ -14,6 +14,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { BsQuestionCircle } from "react-icons/bs";
 
 import "../App.css";
 import { NavLink } from "react-router-dom";
@@ -66,9 +67,9 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="flex flex-col p-2 items-center mx-2 px-5 gap-4 lg:gap-0 lg:flex-row lg:justify-center lg:gap-x-4 lg:mt-[60px] w-full lg:h-[230px]">
+      <div className="flex flex-col p-2 items-center mx-2 px-5 gap-4 lg:gap-0 lg:flex-row lg:justify-center lg:gap-x-4 lg:mt-[60px] w-screen lg:h-[220px]">
         <div
-          className="lg:flex-none lg:grid-cols-1 flex flex-col lg:gap-0 gap-3 bg-opacity-88 bg-no-repeat bg-cover p-3 lg:p-9 w-full rounded-[2px] h-[200px] lg:w-[400px] text-white"
+          className=" flex flex-col min-h-[150px] gap-1 lg:gap-3 bg-opacity-88 bg-no-repeat w-[400px] h-full bg-cover p-5 lg:p-9 rounded-[10px]    text-white"
           style={{ backgroundImage: `url(${About})` }}
         >
           <h1 className="text-xl font-semibold">About Us</h1>
@@ -78,7 +79,7 @@ const Hero = () => {
           </p>
         </div>
         <div
-          className="lg:flex-none lg:grid-cols-1 flex flex-col lg:gap-0 gap-3 bg-opacity-88 bg-no-repeat bg-cover p-3 lg:p-9 w-full rounded-[2px] h-[200px] lg:w-[400px] text-white"
+          className="flex flex-col min-h-[120px] gap-1 lg:gap-3 bg-opacity-88 bg-no-repeat w-[400px] h-full bg-cover p-5 lg:p-9 rounded-[10px]    text-white"
           style={{ backgroundImage: `url(${FeatureBg})` }}
         >
           <h1 className="text-xl font-semibold">Feactured</h1>
@@ -88,7 +89,7 @@ const Hero = () => {
           </p>
         </div>
         <div
-          className="lg:flex-none lg:grid-cols-1 flex flex-col lg:gap-0 gap-3 bg-opacity-88 bg-no-repeat bg-cover p-3 lg:p-9 w-full rounded-[2px] h-[200px] lg:w-[400px] text-white"
+          className="flex flex-col min-h-[120px] gap-1 lg:gap-3 bg-opacity-88 bg-no-repeat w-[400px] h-full bg-cover p-5 lg:p-9 rounded-[10px]  text-white"
           style={{ backgroundImage: `url(${Visit})` }}
         >
           <h1 className="text-xl font-semibold">Visit Now</h1>
@@ -164,9 +165,19 @@ const Hero = () => {
           FAQs
         </h1>
         {faqItems.map((item, index) => (
-          <Accordion key={index} type="single" collapsible>
+          <Accordion
+            className="lg:w-[1400px] w-full lg:self-center"
+            key={index}
+            type="single"
+            collapsible
+          >
             <AccordionItem value={item.question}>
-              <AccordionTrigger>{item.question}</AccordionTrigger>
+              <AccordionTrigger className="flex gap-0">
+                <div className="flex items-center gap-2 ">
+                  <BsQuestionCircle />
+                  {item.question}
+                </div>
+              </AccordionTrigger>
               <AccordionContent>{item.answer}</AccordionContent>
             </AccordionItem>
           </Accordion>
