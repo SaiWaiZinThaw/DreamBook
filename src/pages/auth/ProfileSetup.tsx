@@ -35,15 +35,21 @@ const ProfileSetup = () => {
     if (localPhoneNumber || countryCodeNumber) {
       setProfileData((prev) => ({
         ...prev,
-        phoneNumber: localPhoneNumber + countryCodeNumber,
+        phoneNumber: countryCodeNumber + localPhoneNumber,
       }));
     }
   }, [localPhoneNumber, countryCodeNumber]);
 
   useEffect(() => {
     if (data) {
-      setLocalPhoneNumber(data.localNumber);
-      setCountryCodeNumber(data.countryCode);
+      if (data.localNumber) {
+        setLocalPhoneNumber(data.localNumber);
+      }
+      if (data.countryCode) {
+        setCountryCodeNumber(data.countryCode);
+      } else {
+        setCountryCodeNumber("+95");
+      }
       setProfileData((prev) => ({
         ...prev,
         name: data.name || "",
@@ -79,7 +85,6 @@ const ProfileSetup = () => {
 
   useEffect(() => {
     if (profileSetup.isSuccess) {
-      console.log(profileSetup.data);
       navigate("/auth/select-category");
     }
   }, [profileSetup.isSuccess]);
@@ -92,10 +97,10 @@ const ProfileSetup = () => {
   };
 
   return (
-    <div className="flex flex-col items-center pb-10">
+    <div className="flex flex-col items-center w-full pb-10">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center gap-6 w-[460px] font-Inter"
+        className="flex flex-col items-center lg:gap-6 gap-3 w-[300px] lg:w-[460px] font-Inter lg:text-md text-sm"
       >
         <h1 className="text-2xl font-bold text-white">Create an account</h1>
         <FileUpload onFileChange={handleFileChange} />
@@ -104,7 +109,7 @@ const ProfileSetup = () => {
         </Label>
         <div className="flex items-center w-full gap-5">
           <select
-            className="flex justify-center items-center p-4 rounded-[5px] h-12"
+            className="flex justify-center items-center px-4 rounded-[5px] h-10 lg:h-12 text-sm"
             value={countryCodeNumber}
             onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
               setCountryCodeNumber(event.target.value);
@@ -119,6 +124,7 @@ const ProfileSetup = () => {
           <Input
             type="tel"
             id="phone"
+            className="h-10 lg:h-auto lg:placeholder:text-md lg:text-md text-[13px] placeholder:text-[13px]"
             placeholder="Phone"
             value={localPhoneNumber}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,6 +138,7 @@ const ProfileSetup = () => {
         <Input
           type="text"
           id="name"
+          className="h-10 lg:h-auto lg:placeholder:text-md lg:text-md text-[13px] placeholder:text-[13px]"
           placeholder="Full Name"
           value={profileData.name}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,18 +150,20 @@ const ProfileSetup = () => {
         />
         {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
         <select
-          className="flex justify-center items-center p-4 rounded-[5px] w-full h-12 text-sm"
+          className="flex justify-center items-center px-4 rounded-[5px] w-full h-10 lg:h-12 text-sm"
           value={profileData.gender}
           onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
             setProfileData((prev) => ({
               ...prev,
               gender: event.target.value,
             }));
+            console.log(profileData);
           }}
         >
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="rather not to say">Rather not to say</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+          <option value="Rather not say">Rather not to say</option>
         </select>
         <textarea
           name="bio"

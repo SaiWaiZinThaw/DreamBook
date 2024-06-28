@@ -22,7 +22,7 @@ const SignUp = () => {
   });
   const [confirmPassword, setConfirmPassword] = useState("");
   const createAccount = useSignUp();
-  const [errors, setErrors] = useState<Errors>({})
+  const [errors, setErrors] = useState<Errors>({});
 
   useEffect(() => {
     if (createAccount.isSuccess) {
@@ -54,27 +54,31 @@ const SignUp = () => {
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
-    const validationErrors:{email?: string; password?: string; confirmPassword?: string} = {}
+    const validationErrors: {
+      email?: string;
+      password?: string;
+      confirmPassword?: string;
+    } = {};
 
-    if(!accountData.email) {
-      validationErrors.email = "* Email is required !"
-    } else if(!/\S+@\S+\.\S+/.test(accountData.email)){
-      validationErrors.email = "Invalid Email !"
+    if (!accountData.email) {
+      validationErrors.email = "* Email is required !";
+    } else if (!/\S+@\S+\.\S+/.test(accountData.email)) {
+      validationErrors.email = "Invalid Email !";
     }
 
-    if(!accountData.password) {
-      validationErrors.password = "* Password is required !"
-    }else if(accountData.password.length < 8) {
-      validationErrors.password = "Password must be at least 8 characters !"
+    if (!accountData.password) {
+      validationErrors.password = "* Password is required !";
+    } else if (accountData.password.length < 8) {
+      validationErrors.password = "Password must be at least 8 characters !";
     }
 
-    if(confirmPassword !== accountData.password) {
-      validationErrors.confirmPassword = "Password does not match !"
+    if (confirmPassword !== accountData.password) {
+      validationErrors.confirmPassword = "Password does not match !";
     }
 
     setErrors(validationErrors);
 
-    if(Object.keys(validationErrors).length === 0) {
+    if (Object.keys(validationErrors).length === 0) {
       const payload = {
         email: accountData.email,
         password: accountData.password,
@@ -85,24 +89,28 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-10 w-6/12 self-center">
-      <form className="flex flex-col items-center gap-5 w-[460px] font-Inter">
-        <div className="flex flex-col items-center gap-3">
-          <h1 className="font-bold text-2xl text-white">Create an Account</h1>
+    <div className="flex flex-col items-center self-center gap-10 lg:w-6/12">
+      <form className="flex flex-col items-center lg:gap-5 gap-3 lg:w-[460px] w-[300px] font-Inter lg:text-md text-sm">
+        <div className="flex flex-col items-center gap-5">
+          <h1 className="text-2xl font-bold text-white">Create an Account</h1>
           <h3 className="text-white">Get started to share books & reading</h3>
         </div>
         <Input
           type="email"
           id="email"
           placeholder="Email"
+          className="h-10 lg:h-auto lg:placeholder:text-md lg:text-md text-[13px] placeholder:text-[13px]"
           value={accountData.email}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setAccountData((prev) => ({ ...prev, email: event.target.value }));
           }}
         />
-        {errors.email && <span className="font-bold text-red-500 text-sm">{errors.email}</span>}
+        {errors.email && (
+          <span className="text-sm font-bold text-red-500">{errors.email}</span>
+        )}
         <Input
           type="password"
+          className="h-10 lg:h-auto lg:placeholder:text-md lg:text-md text-[13px] placeholder:text-[13px]"
           id="password"
           placeholder="Password"
           value={accountData.password}
@@ -113,9 +121,14 @@ const SignUp = () => {
             }));
           }}
         />
-        {errors.password && <span className="font-bold text-red-500 text-sm">{errors.password}</span>}
+        {errors.password && (
+          <span className="text-sm font-bold text-red-500">
+            {errors.password}
+          </span>
+        )}
         <Input
           type="password"
+          className="h-10 lg:h-auto lg:placeholder:text-md lg:text-md text-[13px] placeholder:text-[13px]"
           id="ConfirmPassword"
           placeholder="Confirm Password"
           value={confirmPassword}
@@ -123,10 +136,15 @@ const SignUp = () => {
             setConfirmPassword(event.target.value);
           }}
         />
-        {errors.confirmPassword && <span className="font-bold text-red-500 text-sm">{errors.confirmPassword}</span>}
+        {errors.confirmPassword && (
+          <span className="text-sm font-bold text-red-500">
+            {errors.confirmPassword}
+          </span>
+        )}
 
         {!createAccount.isPending ? (
           <Button
+            className="h-10 lg:h-auto"
             variant={"default"}
             size={"full"}
             text={"white"}
