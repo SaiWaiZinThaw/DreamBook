@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { usePasswordChange } from "@/hooks/usePasswordChange";
 import { PasswordChangeData } from "@/types/types";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 
 const ChangePassword = () => {
   const passwordChange = usePasswordChange();
@@ -28,10 +29,10 @@ const ChangePassword = () => {
 
   const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(e.target.value);
-  };
+  }; 
 
   useEffect(() => {
-    if passwordChange.isSuccess) {
+    if (passwordChange.isSuccess) {
       Swal.fire({
         icon: "success",
         title: "Password is Updated",
@@ -40,7 +41,7 @@ const ChangePassword = () => {
       });
     }
   }, [passwordChange.isSuccess]);
-
+  
   return (
     <section className="flex justify-center items-center">
       <div className="flex flex-col ml-[165px] w-[544px] h-[451px]">

@@ -141,3 +141,7 @@ export type ChapterProgressData = {
   slug: string;
   chapterId: number;
 }
+
+export type UpdateProgressData = {
+  chapterId: number;
+}

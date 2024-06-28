@@ -1,6 +1,6 @@
 import { getToken } from "@/services/authService";
 import BaseURL from "../services/ApiEndPoint";
-import { ChapterProgressData } from "@/types/types";
+import { ChapterProgressData, UpdateProgressData } from "@/types/types";
 
 const token = getToken();
 
@@ -23,8 +23,8 @@ export const createChapaterProgressApi = async ({ data }: { data: ChapterProgres
     return result;
 }
 
-export const getCurrentChapter = async () => {
-    const response: Response = await fetch(`${BaseURL}/chapter-progress`, {
+export const getCurrentChapter = async ({bookSlug}: {bookSlug:string}) => {
+    const response: Response = await fetch(`${BaseURL}/chapter-progress?slug=${bookSlug}`, {
         headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -39,8 +39,23 @@ export const getCurrentChapter = async () => {
     return result;
 }
 
-export const fetchChapterUpdate = async (progressId: number) => {
-    const response : Response = await fetch(`${BaseURL}/chapter-progress/${progressId}`, {
-
-    })
+export const fetchProgressUpdate = async ( 
+  bookSlug: string,
+  { data }: { data: UpdateProgressData }) => {
+    const response : Response = await fetch(`${BaseURL}/chapter-progress/?slug=${bookSlug}`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors",
+      method: "PATCH",
+      redirect: "follow",
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      throw new Error(result.message);
+    }
+    return result;
 }

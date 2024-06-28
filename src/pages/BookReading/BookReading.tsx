@@ -6,6 +6,9 @@ import { useCreateComment } from "@/hooks/useComment";
 import { useFetchABook } from "@/hooks/useFetchBook";
 import CommentSection from "@/components/CommentSection";
 import { useGetComments } from "@/hooks/useComment";
+import { Progress } from "@radix-ui/react-progress";
+import { useFetchAllChapters } from "@/hooks/useFetchChapter";
+import { useFetchCurrentChapter } from "@/hooks/useChapterProgress";
 
 const BookReading: React.FC = () => {
   const { bookSlug } = useParams();
@@ -16,12 +19,18 @@ const BookReading: React.FC = () => {
   const createComment = useCreateComment();
   const { refetch } = useGetComments(bookSlug!);
   const { data: fetchABook, isLoading } = useFetchABook(bookSlug!);
+  const { data: getChapters } = useFetchAllChapters(bookSlug!);
+  const { data: getChapterProgress } = useFetchCurrentChapter(bookSlug!);
 
   const createCommentHandler = () => {
     setComment({ comment: "", slug: bookSlug! });
     createComment.mutate(comment);
     refetch();
   };
+
+  const totalChapters = getChapters?.length || 1;
+  const currentChapterIndex = getChapterProgress?.chapterId ? getChapters.findIndex((chapter:any) => chapter.chapterId === getChapterProgress.chapterId) + 1 : 0;
+  const progressPercentage = (currentChapterIndex / totalChapters) * 100;
 
   return (
     <div className="flex px-20 w-full min-h-screen">
@@ -69,6 +78,13 @@ const BookReading: React.FC = () => {
                   </div>
                 </div>
 
+                <div className="w-full">
+                  <Progress value={progressPercentage} max={100} className="relative bg-gray-200 rounded-full w-full h-2 overflow-hidden">
+                    <div style={{ width: `${progressPercentage}%` }} className="bg-blue-600 h-full" />
+                  </Progress>
+                  <div className="mt-2 text-sm">{`Chapter ${currentChapterIndex} of ${totalChapters}`}</div>
+                </div>
+
                 <div className="w-full h-5"></div>
                 <NavLink to={"chapter/:chapterId"}>
                   <Button size={"full"}> Start Reading</Button>
@@ -93,7 +109,7 @@ const BookReading: React.FC = () => {
                   });
                 }}
                 placeholder="Type your comment"
-                className="px-4 py-6 border  border-border rounded-[12px] w-full   flex items-center justify-center  resize-none placeholder:text-secondary-foreground placeholder:text-opacity-50"
+                className="flex justify-center items-center px-4 py-6 border border-border rounded-[12px] w-full placeholder:text-secondary-foreground placeholder:text-opacity-50 resize-none"
               ></textarea>
               <Button
                 onClick={createCommentHandler}

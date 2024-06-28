@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import { SlArrowRight } from "react-icons/sl";
 import { SlArrowLeft } from "react-icons/sl";
-import { useCreateChapterProgress } from '@/hooks/useChapterProgress';
+import { useCreateChapterProgress, useFetchCurrentChapter, useUpdateChapterProgress } from '@/hooks/useChapterProgress';
 
 
 const ChapterRead = () => {
@@ -25,28 +25,47 @@ const ChapterRead = () => {
 
   const [activeChapterId, setActiveChapterId] = useState<number | null>(null);
   const createChapterProgress = useCreateChapterProgress();
+  const { data: getChapterProgress} = useFetchCurrentChapter(bookSlug!)
+  const updateProgress = useUpdateChapterProgress(bookSlug!);
 
   useEffect(() => {
-    if (chapterId) {
-      const parsedId = parseInt(chapterId, 10);
-      if (!isNaN(parsedId)) {
-        setParsedChapterId(parsedId);
-        setActiveChapterId(parsedId);
-      } else {
-        console.error("Invalid chapterId:", chapterId);
-      }
-    } else {
-      console.error("chapterId is undefined");
+    if(getChapterProgress?.chapterId) {
+      setParsedChapterId(getChapterProgress.chapterId);
+      console.log(getChapterProgress.progressId)
+      // navigate(`/book/${bookSlug}/chapters/${lastReadChapter}`);
+    } else if (chapterId) {
+      setParsedChapterId(parseInt(chapterId, 10))
     }
-  }, [chapterId]);
+  }, [getChapterProgress])
 
   const handleChapterSelect = (id: number) => {
     navigate(`/book/${bookSlug}/chapter/${id}`);
     setParsedChapterId(id);
     setActiveChapterId(id);
-    createChapterProgress.mutate({ slug: bookSlug!, chapterId: id });
-    console.log(createChapterProgress.data.progressId);
+
+    const existingProgress = getChapterProgress?.chapterId === id;
+    console.log(existingProgress)
+    if(existingProgress) {
+      updateProgress.mutate({ chapterId: id });
+      // console.log(updateProgress.data.progressId);
+    } else {
+      createChapterProgress.mutate({ slug: bookSlug!, chapterId: id });
+      // console.log(createChapterProgress.data.progressId);
+    }
   };
+
+  useEffect(() => {
+    if (updateProgress.isSuccess) {
+      console.log("Update Progress Success:", updateProgress.data);
+    }
+    if (updateProgress.isError) {
+      console.error("Update Progress Error:", updateProgress.error);
+    }
+  }, [updateProgress]);
+
+
+  const currentChapterIndex = getChapters?.findIndex((chapter:any) => chapter.chapterId === parsedChapterId) + 1;
+  const totalChapters = getChapters?.length;
 
   return (
     <div className="flex">
@@ -91,8 +110,30 @@ const ChapterRead = () => {
         )}
 
         <div className="flex justify-between mt-auto border border-t-slate-300">
-          <button className="flex justify-center items-center border-slate-300 my-[15.5px] border rounded-[8px] w-[113px] h-[42px]"><SlArrowLeft className='mt-[2px] mr-2'/>Previous</button>
-          <button className="flex justify-center items-center bg-primary my-[15.5px] border rounded-[8px] w-[113px] h-[42px] text-slate-50">Next <SlArrowRight className='mt-[2px] ml-2'/></button>
+          <button 
+            onClick={()=> {
+              if(currentChapterIndex > 1) {
+                handleChapterSelect(getChapters[currentChapterIndex -2].chapterId);
+              }
+            }} 
+            disabled={currentChapterIndex <= 1}
+            className="flex justify-center items-center border-slate-300 my-[15.5px] border rounded-[8px] w-[113px] h-[42px]">
+              <SlArrowLeft className='mt-[2px] mr-2'/>
+              Previous
+          </button>
+
+          <div className="flex items-center">{currentChapterIndex} / {totalChapters}</div>
+          <button
+            onClick={() => {
+              if(currentChapterIndex < totalChapters) {
+                handleChapterSelect(getChapters[currentChapterIndex].chapterId);
+              }
+            }}
+            disabled={currentChapterIndex >= totalChapters}
+            className="flex justify-center items-center bg-primary my-[15.5px] border rounded-[8px] w-[113px] h-[42px] text-slate-50">
+              Next 
+              <SlArrowRight className='mt-[2px] ml-2'/>
+          </button>
         </div>
       </div>
     </div>
