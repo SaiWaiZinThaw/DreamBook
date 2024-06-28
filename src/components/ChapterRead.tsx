@@ -52,7 +52,7 @@ const ChapterRead = () => {
     setParsedChapterId(id);
     setActiveChapterId(id);
 
-    if (getChapterProgress?.chapterId !== id) {
+    if (getChapterProgress?.chapterId === id) {
       updateProgress.mutate({ bookSlug: bookSlug!, data: { chapterId: id } });
     } else {
       createChapterProgress.mutate({ slug: bookSlug!, chapterId: id });
