@@ -27,15 +27,20 @@ export const createChapaterProgressApi = async ({
   return result;
 };
 
-export const getCurrentChapter = async () => {
-  const response: Response = await fetch(`${BaseURL}/chapter-progress`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    mode: "cors",
-    method: "GET",
-    redirect: "follow",
-  });
+
+export const getCurrentChapter = async ({ bookSlug }: { bookSlug: string }) => {
+  const response: Response = await fetch(
+    `${BaseURL}/chapter-progress?slug=${bookSlug}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors",
+      method: "GET",
+      redirect: "follow",
+    }
+  );
+
   const result = await response.json();
   if (!response.ok) {
     throw new Error(result.message);
@@ -43,8 +48,29 @@ export const getCurrentChapter = async () => {
   return result;
 };
 
-// export const fetchChapterUpdate = async (progressId: number) => {
-//     const response : Response = await fetch(`${BaseURL}/chapter-progress/${progressId}`, {
 
-//     })
-// }
+export const fetchProgressUpdate = async (
+  bookSlug: string,
+  data: { chapterId: number }
+) => {
+  const response: Response = await fetch(
+    `${BaseURL}/chapter-progress/?slug=${bookSlug}`,
+    {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors",
+      method: "PATCH",
+      redirect: "follow",
+      body: JSON.stringify(data),
+    }
+  );
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result.message);
+  }
+  return result;
+};
+

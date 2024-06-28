@@ -2,7 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { usePasswordChange } from "@/hooks/usePasswordChange";
 import { PasswordChangeData } from "@/types/types";
+
 import { useEffect, useState } from "react";
+
 import Swal from "sweetalert2";
 
 const ChangePassword = () => {
@@ -31,7 +33,7 @@ const ChangePassword = () => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setConfirmPassword(e.target.value);
-  };
+  }; 
 
   useEffect(() => {
     if (passwordChange.isSuccess) {
@@ -43,7 +45,7 @@ const ChangePassword = () => {
       });
     }
   }, [passwordChange.isSuccess]);
-
+  
   return (
     <section className="flex items-center justify-center w-full">
       <div className="flex flex-col ml-[165px] w-[544px] h-[451px]">

@@ -67,13 +67,13 @@ const CommentSection = () => {
   return (
     <div className="flex flex-col gap-5 px-20 pb-8">
       <span className="flex items-center gap-2">
-        <h1 className="text-lg font-semibold">Reader's Review</h1>
+        <h1 className="font-semibold text-lg">Reader's Review</h1>
         {comments ? (
-          <span className="flex items-center justify-center px-2 py-1 text-sm font-bold bg-blue-200 rounded-full text-primary min-w-8 min-h-6">
+          <span className="flex justify-center items-center bg-blue-200 px-2 py-1 rounded-full min-w-8 min-h-6 font-bold text-primary text-sm">
             {comments.pages[0].meta.totalItems}
           </span>
         ) : (
-          <span className="flex items-center justify-center px-2 py-1 text-sm font-bold bg-blue-200 rounded-full text-primary min-w-8 min-h-6">
+          <span className="flex justify-center items-center bg-blue-200 px-2 py-1 rounded-full min-w-8 min-h-6 font-bold text-primary text-sm">
             0
           </span>
         )}
@@ -88,17 +88,18 @@ const CommentSection = () => {
               <img
                 src={comment.user.profilePicture}
                 alt={comment.user.name}
-                className="w-[45px] h-[45px] rounded-full"
+                className="rounded-full w-[45px] h-[45px]"
               />
-              <div className="flex flex-col justify-center w-full gap-1">
+              <div className="flex flex-col justify-center gap-1 w-full">
                 <div className="flex flex-col">
-                  <h3 className="text-[18px] font-medium">
+                  <h3 className="font-medium text-[18px]">
                     {comment.user.name}
                   </h3>
                   <span className="text-[11px] text-secondary-foreground">
                     {format(parseISO(comment.cratedAt), "eeee do MMM, yyyy")}
                   </span>
                 </div>
+
                 {isEditing[comment.commentId] ? (
                   <textarea
                     value={editCommentText[comment.commentId]}
@@ -153,6 +154,7 @@ const CommentSection = () => {
                       Reply
                     </Button>
                   )}
+
                 </div>
               </div>
             </div>
@@ -160,14 +162,16 @@ const CommentSection = () => {
         )}
       {comments?.pages[0].items.length !== 0 && hasNextPage && !isFetching ? (
         <Button
-          className="self-center rounded-[6px] w-24 bg-primary"
+          className="bg-primary rounded-[6px] w-24 self-center"
           onClick={() => fetchNextPage()}
         >
           Load More
         </Button>
       ) : (
+
         isFetchingNextPage && (
           <Button disabled className="self-center rounded-[8px] w-24">
+
             <Loader2 className="text-white animate-spin" />
           </Button>
         )

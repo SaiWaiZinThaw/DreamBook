@@ -1,12 +1,16 @@
 
-import { useState, useEffect } from 'react';
-import { useFetchAChapter, useFetchAllChapters } from '@/hooks/useFetchChapter';
-import { FaArrowLeft } from 'react-icons/fa';
-import { useNavigate, useParams } from 'react-router-dom';
-import DOMPurify from 'dompurify';
+import { useState, useEffect } from "react";
+import { useFetchAChapter, useFetchAllChapters } from "@/hooks/useFetchChapter";
+import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
+import DOMPurify from "dompurify";
 import { SlArrowRight } from "react-icons/sl";
 import { SlArrowLeft } from "react-icons/sl";
-import { useCreateChapterProgress } from '@/hooks/useChapterProgress';
+import {
+  useCreateChapterProgress,
+  useFetchCurrentChapter,
+  useUpdateChapterProgress,
+} from "@/hooks/useChapterProgress";
 
 
 const ChapterRead = () => {
@@ -25,28 +29,50 @@ const ChapterRead = () => {
 
   const [activeChapterId, setActiveChapterId] = useState<number | null>(null);
   const createChapterProgress = useCreateChapterProgress();
+  const { data: getChapterProgress, error: progressError } = useFetchCurrentChapter(bookSlug!);
+  const updateProgress = useUpdateChapterProgress();
 
   useEffect(() => {
-    if (chapterId) {
-      const parsedId = parseInt(chapterId, 10);
-      if (!isNaN(parsedId)) {
-        setParsedChapterId(parsedId);
-        setActiveChapterId(parsedId);
-      } else {
-        console.error("Invalid chapterId:", chapterId);
-      }
-    } else {
-      console.error("chapterId is undefined");
+    if (getChapterProgress?.chapterId) {
+      setParsedChapterId(getChapterProgress.chapterId);
+      console.log(getChapterProgress.chapterId);
+    } else if (chapterId) {
+      setParsedChapterId(parseInt(chapterId, 10));
     }
-  }, [chapterId]);
+  }, [getChapterProgress]);
+
+  useEffect(() => {
+    if (progressError && (progressError as any).response?.status === 404 && chapterId) {
+      createChapterProgress.mutate({ slug: bookSlug!, chapterId: parseInt(chapterId, 10) });
+    }
+  }, [progressError, chapterId, bookSlug, createChapterProgress]);
 
   const handleChapterSelect = (id: number) => {
     navigate(`/book/${bookSlug}/chapter/${id}`);
     setParsedChapterId(id);
     setActiveChapterId(id);
-    createChapterProgress.mutate({ slug: bookSlug!, chapterId: id });
-    console.log(createChapterProgress.data.progressId);
+
+    if (getChapterProgress?.chapterId !== id) {
+      updateProgress.mutate({ bookSlug: bookSlug!, data: { chapterId: id } });
+    } else {
+      createChapterProgress.mutate({ slug: bookSlug!, chapterId: id });
+    }
   };
+
+  useEffect(() => {
+    if (updateProgress.isSuccess) {
+      console.log("Update Progress Success:", updateProgress.data);
+    }
+    if (updateProgress.isError) {
+      console.error("Update Progress Error:", updateProgress.error);
+    }
+  }, [updateProgress]);
+
+  const currentChapterIndex =
+    getChapters?.findIndex(
+      (chapter: any) => chapter.chapterId === parsedChapterId
+    ) + 1;
+  const totalChapters = getChapters?.length;
 
   return (
     <div className="flex">
@@ -78,21 +104,55 @@ const ChapterRead = () => {
         </ol>
       </div>
 
-
       <div className="flex flex-col w-screen min-h-screen">
         {isLoading && <p>Loading...</p>}
         {error && <p>Error loading chapter: {error.message}</p>}
         {getChapter && (
           <div className="ml-[108px] p-4">
-            <h1 className="mt-[28px] font-bold text-[36px] text-primary">{getChapter.title}</h1>
-            <div className="mt-[24px] font-normal text-lg" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(getChapter.content) }} />
-
+            <h1 className="mt-[28px] font-bold text-[36px] text-primary">
+              {getChapter.title}
+            </h1>
+            <div
+              className="mt-[24px] font-normal text-lg"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(getChapter.content),
+              }}
+            />
           </div>
         )}
 
         <div className="flex justify-between mt-auto border border-t-slate-300">
-          <button className="flex justify-center items-center border-slate-300 my-[15.5px] border rounded-[8px] w-[113px] h-[42px]"><SlArrowLeft className='mt-[2px] mr-2'/>Previous</button>
-          <button className="flex justify-center items-center bg-primary my-[15.5px] border rounded-[8px] w-[113px] h-[42px] text-slate-50">Next <SlArrowRight className='mt-[2px] ml-2'/></button>
+          <button
+            onClick={() => {
+              if (currentChapterIndex > 1) {
+                handleChapterSelect(
+                  getChapters[currentChapterIndex - 2].chapterId
+                );
+              }
+            }}
+            disabled={currentChapterIndex <= 1}
+            className="flex justify-center items-center border-slate-300 my-[15.5px] border rounded-[8px] w-[113px] h-[42px]"
+          >
+            <SlArrowLeft className="mt-[2px] mr-2" />
+            Previous
+          </button>
+
+          <div className="flex items-center">
+            {currentChapterIndex} / {totalChapters}
+          </div>
+         
+          <button
+            onClick={() => {
+              if (currentChapterIndex < totalChapters) {
+                handleChapterSelect(getChapters[currentChapterIndex].chapterId);
+              }
+            }}
+            disabled={currentChapterIndex >= totalChapters}
+            className="flex justify-center items-center bg-primary my-[15.5px] border rounded-[8px] w-[113px] h-[42px] text-slate-50"
+          >
+            Next
+            <SlArrowRight className="mt-[2px] ml-2" />
+          </button>
         </div>
       </div>
     </div>
