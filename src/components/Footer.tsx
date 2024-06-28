@@ -2,8 +2,8 @@ import { FooterImg, GooglePLay, AppStore } from "@/assets";
 
 const Footer = () => {
   return (
-    <div className="container w-full px-0 mx-0">
-      <div className="flex flex-col lg:items-center bg-blue-600 bg-opacity-75 mt-10 lg:h-[400px] p-12 lg:px-20">
+    <div className="container px-0 mx-0">
+      <div className="flex flex-col w-screen p-12 mt-10 bg-blue-600 bg-opacity-75 lg:items-center lg:px-20">
         <img
           src={FooterImg}
           alt=""
@@ -35,7 +35,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <p className="py-4 mt-6 text-white border-t border-t-border lg:text-[16px] text-[12px] w-full text-center">
+        <p className="pt-4 mt-6 text-white border-t border-t-border lg:text-[16px] text-[12px] w-full text-center">
           Copyright 2024 dream book .All Rights reserved.
         </p>
       </div>

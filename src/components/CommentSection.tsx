@@ -158,7 +158,7 @@ const CommentSection = () => {
             </div>
           ))
         )}
-      {hasNextPage && !isFetching ? (
+      {comments?.pages.length == 0 && hasNextPage && !isFetching ? (
         <Button
           className="self-center rounded-[6px] w-24 bg-primary"
           onClick={() => fetchNextPage()}
