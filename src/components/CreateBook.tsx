@@ -56,6 +56,7 @@ const CreateBook = () => {
     status: "Draft",
     categoryId: "",
   });
+  console.log(token);
 
   useEffect(() => {
     if (quillRef.current) {
