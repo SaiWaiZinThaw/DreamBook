@@ -1,5 +1,10 @@
-import { createComment, getComments } from "@/api/commentApi";
-import { commentData } from "@/types/types";
+import {
+  createComment,
+  deleteComment,
+  editComment,
+  getComments,
+} from "@/api/commentApi";
+import { commentData, updateCommentData } from "@/types/types";
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 
 export const useCreateComment = () =>
@@ -20,4 +25,20 @@ export const useGetComments = (bookSlug: string) =>
       }
       return allPages.length + 1;
     },
+  });
+
+export const useUpdateComment = () =>
+  useMutation({
+    mutationFn: ({
+      commentId,
+      data,
+    }: {
+      commentId: number;
+      data: updateCommentData;
+    }) => editComment(commentId, { data }),
+  });
+
+export const useDeleteComment = () =>
+  useMutation({
+    mutationFn: (commentId: number) => deleteComment(commentId),
   });

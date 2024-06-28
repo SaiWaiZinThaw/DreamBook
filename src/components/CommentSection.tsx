@@ -1,13 +1,19 @@
+import { useEffect, useState } from "react";
 import { useGetMe } from "@/hooks/useUser";
 import { getToken } from "@/services/authService";
 import { useParams } from "react-router-dom";
-import { useGetComments } from "@/hooks/useComment";
+import {
+  useDeleteComment,
+  useGetComments,
+  useUpdateComment,
+} from "@/hooks/useComment";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { format, parseISO } from "date-fns";
+
 const CommentSection = () => {
   const token = getToken();
-  const { data, isLoading } = useGetMe(token!);
+  const { data: userData, isLoading: userIsLoading } = useGetMe(token!);
   const { bookSlug } = useParams();
   const {
     data: comments,
@@ -15,7 +21,49 @@ const CommentSection = () => {
     fetchNextPage,
     hasNextPage,
     isFetching,
+    isFetchingNextPage,
+    refetch,
   } = useGetComments(bookSlug!);
+
+  // const [replyText, setReplyText] = useState<{ [key: number]: string }>({});
+  const [isEditing, setIsEditing] = useState<{ [key: number]: boolean }>({});
+  const [editCommentText, setEditCommentText] = useState<{
+    [key: number]: string;
+  }>({});
+
+  const updateComment = useUpdateComment();
+  const deleteComment = useDeleteComment();
+
+  // const handleReplyChange = (commentId: number, text: string) => {
+  //   setReplyText((prev) => ({ ...prev, [commentId]: text }));
+  // };
+
+  const handleEditToggle = (commentId: number, currentText: string) => {
+    setIsEditing((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
+    if (!isEditing[commentId]) {
+      setEditCommentText((prev) => ({ ...prev, [commentId]: currentText }));
+    }
+  };
+
+  const handleSaveComment = (commentId: number) => {
+    if (editCommentText[commentId]) {
+      updateComment.mutate({
+        commentId,
+        data: { comment: editCommentText[commentId] },
+      });
+    }
+    setIsEditing((prev) => ({ ...prev, [commentId]: false }));
+  };
+
+  useEffect(() => {
+    if (deleteComment.isSuccess) {
+      refetch();
+    }
+    if (updateComment.isSuccess) {
+      refetch();
+    }
+  }, [deleteComment.isSuccess, updateComment.isSuccess, refetch]);
+
   return (
     <div className="flex flex-col gap-5 px-20 pb-8">
       <span className="flex items-center gap-2">
@@ -31,8 +79,8 @@ const CommentSection = () => {
         )}
       </span>
       {!commentIsLoading &&
-        comments?.pages.map((pages) =>
-          pages.items.map((comment) => (
+        comments?.pages.map((page) =>
+          page.items.map((comment) => (
             <div
               className="flex items-start gap-4 p-2 border-b border-b-border"
               key={comment.commentId}
@@ -51,25 +99,68 @@ const CommentSection = () => {
                     {format(parseISO(comment.cratedAt), "eeee do MMM, yyyy")}
                   </span>
                 </div>
-                <p>{comment.comment}</p>
-                <div className="flex gap-3 self-end">
-                  <Button className="hidden !bg-red-500 px-8 rounded-[4px] w-10 h-8 !text-[12px]">
-                    Delete
-                  </Button>
-                  {!isLoading && data?.userId === comment.user.userId && (
-                    <Button className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px]">
-                      Edit
+
+                {isEditing[comment.commentId] ? (
+                  <textarea
+                    value={editCommentText[comment.commentId]}
+                    onChange={(e) =>
+                      setEditCommentText((prev) => ({
+                        ...prev,
+                        [comment.commentId]: e.target.value,
+                      }))
+                    }
+                    className="p-2 m-2 border border-border rounded-[5px] resize-none"
+                  />
+                ) : (
+                  <p>{comment.comment}</p>
+                )}
+                <div className="flex self-end gap-3">
+                  {!userIsLoading &&
+                    userData?.userId === comment.user.userId && (
+                      <Button
+                        className="w-10 rounded-[4px] px-8 !text-[12px] !bg-primary h-8"
+                        onClick={() =>
+                          handleEditToggle(comment.commentId, comment.comment)
+                        }
+                      >
+                        {isEditing[comment.commentId] ? "Cancel" : "Edit"}
+                      </Button>
+                    )}
+                  {isEditing[comment.commentId] ? (
+                    <div className="flex items-center gap-3">
+                      <Button
+                        onClick={() => handleSaveComment(comment.commentId)}
+                        className="w-10 !text-[12px] rounded-[4px] px-8 !bg-primary h-8"
+                      >
+                        Save
+                      </Button>
+                      {deleteComment.isPending ? (
+                        <Button className="self-center !bg-red-500 h-8 rounded-[4px] w-16">
+                          <Loader2 className="text-white animate-spin" />
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() =>
+                            deleteComment.mutate(comment.commentId)
+                          }
+                          className="w-10 !text-[12px] rounded-[4px] px-8 !bg-red-500 h-8"
+                        >
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  ) : (
+                    <Button className="w-10 !text-[12px] rounded-[4px] px-8 !bg-primary h-8">
+                      Reply
                     </Button>
                   )}
-                  <Button className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px]">
-                    Reply
-                  </Button>
+
                 </div>
               </div>
             </div>
           ))
         )}
-      {hasNextPage && !isFetching ? (
+      {comments?.pages[0].items.length !== 0 && hasNextPage && !isFetching ? (
         <Button
           className="bg-primary rounded-[6px] w-24 self-center"
           onClick={() => fetchNextPage()}
@@ -77,8 +168,10 @@ const CommentSection = () => {
           Load More
         </Button>
       ) : (
-        isFetching && (
-          <Button disabled className="rounded-[8px] w-24 self-center">
+
+        isFetchingNextPage && (
+          <Button disabled className="self-center rounded-[8px] w-24">
+
             <Loader2 className="text-white animate-spin" />
           </Button>
         )

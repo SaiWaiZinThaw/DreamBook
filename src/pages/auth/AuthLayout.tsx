@@ -6,10 +6,10 @@ SignUp;
 const LoginLayout = () => {
   return (
     <div
-      className="flex justify-center items-center bg-cover min-h-screen"
+      className="flex items-center justify-center h-screen bg-cover lg:h-auto lg:min-h-screen"
       style={{ backgroundImage: `url(${LoginBackground})` }}
     >
-      <div className="flex flex-col items-center gap-3 mt-0 p-5 w-full">
+      <div className="flex flex-col items-center w-full gap-3 p-5 mt-0">
         <NavLink to={"/"}>
           <img src={AuthLogo} alt="AuthLogo" className="p-5 w-[400px]" />
         </NavLink>

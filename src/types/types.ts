@@ -6,8 +6,6 @@ export type AuthData = {
 export type ProfileSetupData = {
   name: string;
   profilePicture?: File;
-  countryCode: string;
-  localNumber: string;
   phoneNumber?: string;
   bio?: string;
   gender: string;
@@ -88,6 +86,26 @@ export type fetchBookData = {
   };
 };
 
+export type favoriteBookData = {
+  book: Book;
+  bookId: string;
+  user: {
+    name: string;
+    profilePicture: File;
+  };
+};
+
+export type fetchFavoriteBookData = {
+  items: favoriteBookData[];
+  meta: {
+    currentPage: number;
+    itemCount: number;
+    itemsPerPage: number;
+    totalItems: number;
+    totalPages: number;
+  };
+};
+
 export type Chapter = {
   chapterId: string;
   title: string;
@@ -102,6 +120,10 @@ export type fetchChapterData = Chapter[];
 export type commentData = {
   comment: string;
   slug: string;
+};
+
+export type updateCommentData = {
+  comment: string;
 };
 
 export type CommentDataArray = {
@@ -135,13 +157,15 @@ export type favoriteData = {
 export type PasswordChangeData = {
   oldPassword: string;
   newPassword: string;
-}
+};
 
 export type ChapterProgressData = {
   slug: string;
   chapterId: number;
+
 }
 
 export type UpdateProgressData = {
   chapterId: number;
 }
+

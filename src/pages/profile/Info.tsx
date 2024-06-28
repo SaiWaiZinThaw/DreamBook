@@ -15,25 +15,39 @@ const Info = () => {
   const profileSetup = useProfileSetup();
   const token = getToken() || "";
   const { data } = useGetMe(token);
-
+  const [localPhoneNumber, setLocalPhoneNumber] = useState("");
+  const [countryCodeNumber, setCountryCodeNumber] = useState("+95");
   const [profileData, setProfileData] = useState<ProfileSetupData>({
     name: "",
     profilePicture: undefined,
-    countryCode: "+95",
-    localNumber: "",
+    phoneNumber: "",
     bio: "",
     gender: "male",
   });
 
   useEffect(() => {
+    if (localPhoneNumber || countryCodeNumber) {
+      setProfileData((prev) => ({
+        ...prev,
+        phoneNumber: countryCodeNumber + localPhoneNumber,
+      }));
+    }
+  }, [localPhoneNumber, countryCodeNumber]);
+
+  useEffect(() => {
     if (data) {
+      if (data.localNumber) {
+        setLocalPhoneNumber(data.localNumber);
+      }
+      if (data.countryCode) {
+        setCountryCodeNumber(data.countryCode);
+      }
       setProfileData((prev) => ({
         ...prev,
         name: data.name || "",
         bio: data.bio || "",
         gender: data.gender || "",
-        localNumber: data.localNumber || "",
-        countryCode: data.countryCode || "",
+        phoneNumber: countryCodeNumber + localPhoneNumber,
       }));
     }
   }, [data]);
@@ -41,6 +55,7 @@ const Info = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     profileSetup.mutate(profileData);
+    console.log(profileData);
   };
 
   useEffect(() => {
@@ -62,15 +77,15 @@ const Info = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full">
+    <div className="flex items-center justify-center w-full">
       <div className="flex flex-col items-center pb-10">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center gap-6 w-[460px] font-Inter"
         >
-          <h1 className="font-bold text-2xl text-white">Create an account</h1>
+          <h1 className="text-2xl font-bold text-white">Create an account</h1>
           <FileUpload onFileChange={handleFileChange} />
-          <Label htmlFor="picture" className="font-Inter text-black">
+          <Label htmlFor="picture" className="text-black font-Inter">
             Upload Photo
           </Label>
           <Input
@@ -89,16 +104,14 @@ const Info = () => {
           <div className="bg-white p-4 border border-border rounded-[5px] w-full h-12 font-Inter font-semibold text-secondary-foreground text-sm text-opacity-50">
             {data?.email}
           </div>
-          <div className="flex items-center gap-5 w-full">
-
+          <div className="flex items-center w-full gap-5">
             <select
               className="flex justify-center items-center p-4 rounded-[5px] h-12"
-              value={profileData.countryCode}
+              value={countryCodeNumber}
               onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-                setProfileData((prev) => ({
-                  ...prev,
-                  countryCode: event.target.value,
-                }));
+                setCountryCodeNumber(event.target.value);
+                console.log(event.target.value);
+                console.log(countryCodeNumber);
               }}
             >
               {countryCodes.map((code, index) => (
@@ -111,12 +124,9 @@ const Info = () => {
               type="tel"
               id="phone"
               placeholder="Phone"
-              value={profileData.localNumber}
+              value={localPhoneNumber}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setProfileData((prev) => ({
-                  ...prev,
-                  localNumber: event.target.value,
-                }));
+                setLocalPhoneNumber(event.target.value);
               }}
             />
           </div>
