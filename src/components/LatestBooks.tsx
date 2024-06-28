@@ -32,7 +32,6 @@ const LatestBooks = () => {
       const newFavorites: { [key: string]: boolean } = {};
       booksData.items.forEach((book) => {
         newFavorites[book.bookId] = Boolean(book.isFavorite);
-        console.log(book.isFavorite);
       });
       setFavorites(newFavorites);
     }
@@ -40,7 +39,7 @@ const LatestBooks = () => {
 
   return (
     <div className="py-2 overflow-x-auto transition lg:p-3">
-      <div className="flex  mt-6 h-[280px] w-full">
+      <div className="flex  h-[280px] w-full">
         {!isBooksLoading &&
           booksData &&
           booksData.items.map((book) => (
@@ -75,7 +74,7 @@ const LatestBooks = () => {
                 <img
                   src={book.coverImage}
                   alt={book.coverImage}
-                  className="h-[140px] max-w-[120px]"
+                  className="h-[140px] min-w-[120px]"
                 />
               </div>
 

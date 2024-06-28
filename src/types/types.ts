@@ -122,6 +122,10 @@ export type commentData = {
   slug: string;
 };
 
+export type updateCommentData = {
+  comment: string;
+};
+
 export type CommentDataArray = {
   commentId: number;
   comment: string;

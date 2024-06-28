@@ -29,14 +29,13 @@ const PopularBooks = () => {
       const newFavorites: { [key: string]: boolean } = {};
       booksData.items.forEach((book) => {
         newFavorites[book.bookId] = Boolean(book.isFavorite);
-        console.log(book.isFavorite);
       });
       setFavorites(newFavorites);
     }
   }, [booksData]);
   return (
-    <div className="w-full py-2 overflow-scroll transition">
-      <div className="flex lg:mt-6 mt-2  h-[280px] w-full">
+    <div className="w-full py-2 overflow-x-auto transition">
+      <div className="flex mt-2 h-[280px] w-full">
         {!isBooksLoading &&
           booksData &&
           booksData.items.map((book) => (

@@ -28,10 +28,10 @@ const Hero = () => {
   return (
     <div className="container px-0 mx-0 lg:flex-none">
       <div
-        className=" flex lg:flex-row flex-col bg-slate-100 bg-cover w-screen lg:h-[600px]"
+        className=" flex gap-6 lg:gap-0 md:gap-0 lg:flex-row flex-col md:flex-row lg:items-start items-center bg-slate-100 bg-cover w-screen lg:h-[700px] p-6 md:p-10 lg:pt-20"
         style={{ backgroundImage: `url(${HeroBg})` }}
       >
-        <div className="lg:mt-[130px] flex flex-col lg:flex-none gap-3 lg:ml-[125px] lg:w-[700px] lg:h-[300px] p-10">
+        <div className=" flex flex-col lg:flex-none gap-3 lg:ml-[125px] md:w-6/12 lg:w-6/12 ">
           <h1 className="text-4xl font-bold">
             Discover <br /> Magic Of Books
           </h1>
@@ -57,7 +57,7 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="mt-[90px] mr-[10px] lg:w-[500px] w-full  lg:h-[450px] p-5 lg:p-0">
+        <div className=" mr-[10px] lg:w-5/12 md:w-5/12 w-full p-5 lg:p-0">
           <img src={Animation} alt="" className="w-full lg:w-auto" />
 
           <p className="flex items-center justify-center mt-4 font-medium lg:text-2xl">
@@ -99,7 +99,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="w-screen h-[400px] p-6">
+      <div className="w-screen h-[400px] p-6 lg:p-10">
         <h1 className="flex items-center justify-center text-2xl font-semibold">
           Popular Books
         </h1>
@@ -107,7 +107,7 @@ const Hero = () => {
         <PopularBooks />
       </div>
 
-      <div className="w-screen lg:h-[250px] p-6">
+      <div className="w-screen lg:h-[250px] p-6 lg:p-10">
         <div className="flex justify-between">
           <h1 className="text-xl font-bold">Trending Category</h1>
           <a href="" className="font-medium text-md">
@@ -133,7 +133,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="mt-[50px] w-screen lg:h-[400px] p-6">
+      <div className="mt-[50px] w-screen lg:h-[400px] p-6 lg:p-8">
         <div className="flex justify-between">
           <h1 className="text-xl font-bold">Latest Books</h1>
           <a href="" className="font-medium text-md">
@@ -145,21 +145,17 @@ const Hero = () => {
       </div>
 
       <div
-        className="bg-slate-950 bg-cover bg-no-repeat bg-center opacity-60 w-screen h-[450px]"
+        className="bg-slate-950 bg-cover bg-no-repeat bg-center opacity-60 w-screen lg:h-[450px] p-10"
         style={{ backgroundImage: `url(${LatestBg})`, opacity: `95%` }}
       >
-        <div className="flex">
-          <div className="pt-[100px] pl-[125px] w-[700px] h-[300px] text-slate-100">
-            <p className="my-4 text-lg font-medium">latest collections</p>
-            <h2 className="mt-5 text-4xl font-bold">
-              The New Publishing Books
-            </h2>
-            <NavLink to="/library">
-              <button className="bg-blue-700 mt-12 p-[10px] rounded-[6px] w-60 text-white">
-                Explore Now
-              </button>
-            </NavLink>
-          </div>
+        <div className="lg:flex-none flex flex-col items-start justify-center gap-5 w-full lg:w-[700px] h-[300px] text-slate-100">
+          <p className="text-lg font-medium ">latest collections</p>
+          <h2 className="text-4xl font-bold ">The New Publishing Books</h2>
+          <NavLink to="/library">
+            <button className="bg-blue-700  p-[10px] rounded-[6px] w-60 text-white">
+              Explore Now
+            </button>
+          </NavLink>
         </div>
       </div>
 

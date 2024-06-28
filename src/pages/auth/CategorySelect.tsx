@@ -3,7 +3,8 @@ import {
   useFetchCategories,
   useInterestedCategories,
 } from "@/hooks/useFetchCategories";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Category {
   categoryId: string;
@@ -12,16 +13,14 @@ interface Category {
 }
 
 const CategorySelect = () => {
+  const navigate = useNavigate();
   const interestedCategories = useInterestedCategories();
   const { data, isLoading } = useFetchCategories();
   const [selectedCategories, setSelectedCategories] = useState<{
     categoryIds: string[];
   }>({ categoryIds: [] });
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Selected category IDs:", selectedCategories);
-    // Assuming you want to mutate with the selectedCategories
     interestedCategories.mutate(selectedCategories);
   };
 
@@ -40,6 +39,12 @@ const CategorySelect = () => {
       }
     });
   };
+
+  useEffect(() => {
+    if (interestedCategories.isSuccess) {
+      navigate("/");
+    }
+  }, [interestedCategories.isSuccess]);
 
   return (
     <form
@@ -72,7 +77,7 @@ const CategorySelect = () => {
             </div>
           </div>
         ))}
-      
+
       <Button className="col-span-2" size={"full"} type="submit">
         Finish
       </Button>
