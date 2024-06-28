@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useFetchAChapter, useFetchAllChapters } from "@/hooks/useFetchChapter";
 import { FaArrowLeft } from "react-icons/fa";
@@ -10,6 +11,7 @@ import {
   useFetchCurrentChapter,
   useUpdateChapterProgress,
 } from "@/hooks/useChapterProgress";
+
 
 const ChapterRead = () => {
   const { bookSlug, chapterId } = useParams<{
@@ -27,7 +29,7 @@ const ChapterRead = () => {
 
   const [activeChapterId, setActiveChapterId] = useState<number | null>(null);
   const createChapterProgress = useCreateChapterProgress();
-  const { data: getChapterProgress } = useFetchCurrentChapter(bookSlug!);
+  const { data: getChapterProgress, error: progressError } = useFetchCurrentChapter(bookSlug!);
   const updateProgress = useUpdateChapterProgress();
 
   useEffect(() => {
@@ -38,6 +40,12 @@ const ChapterRead = () => {
       setParsedChapterId(parseInt(chapterId, 10));
     }
   }, [getChapterProgress]);
+
+  useEffect(() => {
+    if (progressError && (progressError as any).response?.status === 404 && chapterId) {
+      createChapterProgress.mutate({ slug: bookSlug!, chapterId: parseInt(chapterId, 10) });
+    }
+  }, [progressError, chapterId, bookSlug, createChapterProgress]);
 
   const handleChapterSelect = (id: number) => {
     navigate(`/book/${bookSlug}/chapter/${id}`);
@@ -132,6 +140,7 @@ const ChapterRead = () => {
           <div className="flex items-center">
             {currentChapterIndex} / {totalChapters}
           </div>
+         
           <button
             onClick={() => {
               if (currentChapterIndex < totalChapters) {
