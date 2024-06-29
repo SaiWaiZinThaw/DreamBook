@@ -71,20 +71,18 @@ const LibraryLayout = () => {
   return (
     <div className="container w-screen px-0 mx-0">
       <div
-        className="flex flex-col justify-center items-center bg-cover bg-no-repeat w-screen h-[370px] text-white"
+        className="flex flex-col gap-4 justify-center items-center bg-cover bg-no-repeat w-screen h-[370px] text-white"
         style={{ backgroundImage: `url(${LibraryHero})` }}
       >
-        <h1 className="mt-6 text-4xl font-extrabold">Library</h1>
-        <h2 className="my-3 mt-6 text-xl font-medium">
-          Explore your favorite books
-        </h2>
-        <h2 className="text-xl font-medium">
-          Reading is the best for get idea , Keep Reading
+        <h1 className="text-4xl font-extrabold">Library</h1>
+        <h2 className="font-medium lg:text-xl ">Explore your favorite books</h2>
+        <h2 className="font-medium lg:text-xl">
+          Reading is the best to get idea , Keep Reading
         </h2>
       </div>
 
-      <div className="flex w-full mt-4">
-        <div className="border-slate-400 mt-2 border-r w-[400px]">
+      <div className="w-full mt-4 lg:flex">
+        <div className="lg:block hidden border-slate-400 mt-2 border-r w-[400px]">
           <h1 className="flex justify-center mt-[20px] font-extrabold text-2xl text-black">
             Categories
           </h1>

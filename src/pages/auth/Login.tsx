@@ -38,6 +38,7 @@ const Login = () => {
       delete LoginAccount.data.access_token;
       login(authToken);
       navigate("/");
+      window.location.reload();
     }
   }, [LoginAccount.isSuccess]);
 
@@ -51,42 +52,38 @@ const Login = () => {
     }
   }, [LoginAccount.isError]);
 
-
   const onSubmit = (data: LoginSchemaType) => {
     LoginAccount.mutate(data);
     console.log(data);
   };
 
   const handleValidationErrors = () => {
-    if(isSubmitted) {
-      if(errors.email && errors.password) {
-        return "Invalid Account !"
+    if (isSubmitted) {
+      if (errors.email && errors.password) {
+        return "Invalid Account !";
       }
 
-      if(errors.email){
-        return "* Please enter a valid email address !"
+      if (errors.email) {
+        return "* Please enter a valid email address !";
       }
-      // if(errors.password){
-      //   return ""
-      // }
     }
-  }
+  };
 
   const validationErrors = handleValidationErrors();
 
   return (
-    <div className="flex flex-col justify-self-center items-center gap-10">
+    <div className="flex flex-col items-center gap-10 justify-self-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col items-center gap-6 w-[460px] font-Inter"
       >
         <div className="flex flex-col items-center gap-3">
-          <h1 className="font-bold text-2xl text-white">Welcome Again!</h1>
+          <h1 className="text-2xl font-bold text-white">Welcome Again!</h1>
           <h3 className="text-white">Please Login to your account</h3>
         </div>
 
         {validationErrors && (
-          <p className="font-bold text-lg text-red-600">{validationErrors}</p>
+          <p className="text-lg font-bold text-red-600">{validationErrors}</p>
         )}
 
         <Input
@@ -96,8 +93,8 @@ const Login = () => {
           {...register("email", {
             pattern: {
               value: /\S+@\S+\.\S+/,
-              message: "Please enter a valid email address."
-            }
+              message: "Please enter a valid email address.",
+            },
           })}
         />
 

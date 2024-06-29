@@ -12,7 +12,7 @@ import { Loader2 } from "lucide-react";
 import { format, parseISO } from "date-fns";
 
 const CommentSection = () => {
-  const token = getToken();
+  const token = getToken() || "";
   const { data: userData, isLoading: userIsLoading } = useGetMe(token!);
   const { bookSlug } = useParams();
   const {
@@ -67,13 +67,13 @@ const CommentSection = () => {
   return (
     <div className="flex flex-col gap-5 px-20 pb-8">
       <span className="flex items-center gap-2">
-        <h1 className="font-semibold text-lg">Reader's Review</h1>
+        <h1 className="text-lg font-semibold">Reader's Review</h1>
         {comments ? (
-          <span className="flex justify-center items-center bg-blue-200 px-2 py-1 rounded-full min-w-8 min-h-6 font-bold text-primary text-sm">
+          <span className="flex items-center justify-center px-2 py-1 text-sm font-bold bg-blue-200 rounded-full min-w-8 min-h-6 text-primary">
             {comments.pages[0].meta.totalItems}
           </span>
         ) : (
-          <span className="flex justify-center items-center bg-blue-200 px-2 py-1 rounded-full min-w-8 min-h-6 font-bold text-primary text-sm">
+          <span className="flex items-center justify-center px-2 py-1 text-sm font-bold bg-blue-200 rounded-full min-w-8 min-h-6 text-primary">
             0
           </span>
         )}
@@ -90,7 +90,7 @@ const CommentSection = () => {
                 alt={comment.user.name}
                 className="rounded-full w-[45px] h-[45px]"
               />
-              <div className="flex flex-col justify-center gap-1 w-full">
+              <div className="flex flex-col justify-center w-full gap-1">
                 <div className="flex flex-col">
                   <h3 className="font-medium text-[18px]">
                     {comment.user.name}
@@ -154,7 +154,6 @@ const CommentSection = () => {
                       Reply
                     </Button>
                   )}
-
                 </div>
               </div>
             </div>
@@ -168,10 +167,8 @@ const CommentSection = () => {
           Load More
         </Button>
       ) : (
-
         isFetchingNextPage && (
           <Button disabled className="self-center rounded-[8px] w-24">
-
             <Loader2 className="text-white animate-spin" />
           </Button>
         )

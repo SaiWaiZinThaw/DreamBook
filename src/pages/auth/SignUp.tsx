@@ -31,6 +31,7 @@ const SignUp = () => {
       delete createAccount.data.access_token;
       login(authToken);
       navigate("/auth/profile-setup");
+      window.location.reload();
     }
   }, [createAccount.isSuccess]);
 
@@ -84,7 +85,6 @@ const SignUp = () => {
         password: accountData.password,
       };
       createAccount.mutate(payload);
-      console.log(payload);
     }
   };
 
