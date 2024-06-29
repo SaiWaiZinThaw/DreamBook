@@ -9,6 +9,7 @@ import { useGetComments } from "@/hooks/useComment";
 import { Progress } from "@radix-ui/react-progress";
 import { useFetchAllChapters } from "@/hooks/useFetchChapter";
 import { useFetchCurrentChapter } from "@/hooks/useChapterProgress";
+import { useCreateBookHistory } from "@/hooks/useBookHistory";
 
 const BookReading: React.FC = () => {
   const { bookSlug } = useParams();
@@ -17,22 +18,27 @@ const BookReading: React.FC = () => {
     slug: "",
   });
   const createComment = useCreateComment();
+  const createBookHistory = useCreateBookHistory();
   const { refetch } = useGetComments(bookSlug!);
   const { data: fetchABook, isLoading } = useFetchABook(bookSlug!);
   const { data: getChapters } = useFetchAllChapters(bookSlug!);
   const { data: getChapterProgress } = useFetchCurrentChapter(bookSlug!);
-
+  
   const createCommentHandler = () => {
     setComment({ comment: "", slug: bookSlug! });
     createComment.mutate(comment);
     refetch();
   };
 
+  const startReadingHandler = () => {
+    createBookHistory.mutate({ bookSlug: bookSlug! })
+  };
+
   const totalChapters = getChapters?.length || 1;
   const currentChapterIndex = getChapterProgress?.chapterId ? getChapters.findIndex((chapter:any) => chapter.chapterId === getChapterProgress.chapterId) + 1 : 0;
   const progressPercentage = (currentChapterIndex / totalChapters) * 100;
   const firstChapterId = getChapters?.[0]?.id || "";
-  
+
   return (
     <div className="flex px-20 w-full min-h-screen">
       <div className="flex-col px-10 pt-20 border-r border-border w-10/12 h-full">
@@ -88,7 +94,7 @@ const BookReading: React.FC = () => {
 
                 <div className="w-full h-5"></div>
                 <NavLink to={`chapter/${firstChapterId}`}>
-                  <Button size={"full"}> Start Reading</Button>
+                  <Button onClick={startReadingHandler} size={"full"}> Start Reading</Button>
                 </NavLink>
                 
               </div>
