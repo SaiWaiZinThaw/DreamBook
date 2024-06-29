@@ -41,7 +41,7 @@ export const getCurrentChapter = async ({bookSlug}: {bookSlug:string}) => {
 
 export const fetchProgressUpdate = async ( 
   bookSlug: string,
-  { data }: { data: UpdateProgressData }) => {
+  data: { chapterId: number }) => {
     const response : Response = await fetch(`${BaseURL}/chapter-progress/?slug=${bookSlug}`, {
       headers: {
         Accept: "application/json",

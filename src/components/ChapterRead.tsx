@@ -26,12 +26,12 @@ const ChapterRead = () => {
   const [activeChapterId, setActiveChapterId] = useState<number | null>(null);
   const createChapterProgress = useCreateChapterProgress();
   const { data: getChapterProgress} = useFetchCurrentChapter(bookSlug!)
-  const updateProgress = useUpdateChapterProgress(bookSlug!);
+  const updateProgress = useUpdateChapterProgress();
 
   useEffect(() => {
     if(getChapterProgress?.chapterId) {
       setParsedChapterId(getChapterProgress.chapterId);
-      console.log(getChapterProgress.progressId)
+      console.log(getChapterProgress.chapterId)
       // navigate(`/book/${bookSlug}/chapters/${lastReadChapter}`);
     } else if (chapterId) {
       setParsedChapterId(parseInt(chapterId, 10))
@@ -43,14 +43,10 @@ const ChapterRead = () => {
     setParsedChapterId(id);
     setActiveChapterId(id);
 
-    const existingProgress = getChapterProgress?.chapterId === id;
-    console.log(existingProgress)
-    if(existingProgress) {
-      updateProgress.mutate({ chapterId: id });
-      // console.log(updateProgress.data.progressId);
+    if (getChapterProgress?.chapterId === id) {
+      updateProgress.mutate({ bookSlug: bookSlug!, data: { chapterId: id } });
     } else {
       createChapterProgress.mutate({ slug: bookSlug!, chapterId: id });
-      // console.log(createChapterProgress.data.progressId);
     }
   };
 
