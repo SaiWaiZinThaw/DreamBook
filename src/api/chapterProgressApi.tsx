@@ -4,40 +4,47 @@ import { ChapterProgressData } from "@/types/types";
 
 const token = getToken();
 
-export const createChapaterProgressApi = async ({ data }: { data: ChapterProgressData }) => {
-    const response: Response = await fetch(`${BaseURL}/chapter-progress`, {
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-        mode: "cors",
-        method: "POST",
-        redirect: "follow",
-        body: JSON.stringify(data),
-    });
-    const result = await response.json();
-    if (!response.ok) {
-      throw new Error(result.message);
-    }
-    return result;
-}
+export const createChapaterProgressApi = async ({
+  data,
+}: {
+  data: ChapterProgressData;
+}) => {
+  const response: Response = await fetch(`${BaseURL}/chapter-progress`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    mode: "cors",
+    method: "POST",
+    redirect: "follow",
+    body: JSON.stringify(data),
+  });
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result.message);
+  }
+  return result;
+};
 
-export const getCurrentChapter = async ({bookSlug}: {bookSlug:string}) => {
-    const response: Response = await fetch(`${BaseURL}/chapter-progress?slug=${bookSlug}`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          mode: "cors",
-          method: "GET",
-          redirect: "follow",
-    });
-    const result = await response.json();
-    if (!response.ok) {
-      throw new Error(result.message);
+export const getCurrentChapter = async ({ bookSlug }: { bookSlug: string }) => {
+  const response: Response = await fetch(
+    `${BaseURL}/chapter-progress?slug=${bookSlug}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors",
+      method: "GET",
+      redirect: "follow",
     }
-    return result;
-}
+  );
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result.message);
+  }
+  return result;
+};
 
 export const fetchProgressUpdate = async (
   bookSlug: string,

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useFetchAChapter, useFetchAllChapters } from "@/hooks/useFetchChapter";
 import { FaArrowLeft } from "react-icons/fa";
@@ -10,6 +11,7 @@ import {
   useFetchCurrentChapter,
   useUpdateChapterProgress,
 } from "@/hooks/useChapterProgress";
+
 
 const ChapterRead = () => {
   const { bookSlug, chapterId } = useParams<{
@@ -41,7 +43,6 @@ const ChapterRead = () => {
 
   useEffect(() => {
     if (progressError && (progressError as any).response?.status === 404 && chapterId) {
-      // Create new progress if not found
       createChapterProgress.mutate({ slug: bookSlug!, chapterId: parseInt(chapterId, 10) });
     }
   }, [progressError, chapterId, bookSlug, createChapterProgress]);
@@ -51,7 +52,7 @@ const ChapterRead = () => {
     setParsedChapterId(id);
     setActiveChapterId(id);
 
-    if (getChapterProgress?.chapterId === id) {
+    if (getChapterProgress?.chapterId !== id) {
       updateProgress.mutate({ bookSlug: bookSlug!, data: { chapterId: id } });
     } else {
       createChapterProgress.mutate({ slug: bookSlug!, chapterId: id });
@@ -139,6 +140,7 @@ const ChapterRead = () => {
           <div className="flex items-center">
             {currentChapterIndex} / {totalChapters}
           </div>
+         
           <button
             onClick={() => {
               if (currentChapterIndex < totalChapters) {
