@@ -6,19 +6,29 @@ import { getToken } from "@/services/authService";
 import { useGetMe } from "@/hooks/useUser";
 import { FaHeart } from "react-icons/fa";
 import ProfileDropdown from "./ui/profile-dropdown";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { useAuth } from "../contexts/AuthContext";
 
 const NavBar = () => {
   const token = getToken() || "";
-
+  const { setShowMenu } = useAuth();
   const { data, isLoading, isSuccess } = useGetMe(token);
   return (
-    <div className="flex justify-between items-center bg-white shadow-slate-300 shadow-sm px-40 py-6 w-full h-[70px] font-Inter">
-      <NavLink to={"/"}>
-        <div className="w-[70px]">
-          <img src={Logo} alt="Logo" className="w-full" />
-        </div>
-      </NavLink>
-      <nav className="flex items-center gap-5">
+    <div className=" flex justify-between items-center bg-white shadow-slate-300 shadow-sm lg:px-40 py-2 px-10 lg:py-6 w-full h-[70px] font-Inter">
+      <div className="flex items-center gap-3">
+        <button
+          onClick={() => setShowMenu(true)}
+          className="text-xl font-bold lg:hidden"
+        >
+          <RxHamburgerMenu />
+        </button>
+        <NavLink to={"/"}>
+          <div className="lg:w-[70px] w-[45px]">
+            <img src={Logo} alt="Logo" className="w-full" />
+          </div>
+        </NavLink>
+      </div>
+      <nav className="items-center hidden gap-5 lg:flex">
         <NavLink
           className={({ isActive }) =>
             isActive
@@ -53,7 +63,7 @@ const NavBar = () => {
 
       {!token ? (
         <div className="flex items-center gap-2">
-          <NavLink to="/auth/login">
+          <NavLink className="hidden lg:block" to="/auth/login">
             <Button variant={"ghost"} className="flex items-center gap-2">
               <HiMiniUserCircle className="text-2xl" /> Login
             </Button>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import parse from "html-react-parser";
@@ -96,7 +96,6 @@ const BookReading: React.FC = () => {
                 <NavLink to={`chapter/${firstChapterId}`}>
                   <Button onClick={startReadingHandler} size={"full"}> Start Reading</Button>
                 </NavLink>
-                
               </div>
             </div>
             <div className="flex flex-col gap-5 px-20 border-b border-border min-h-[200px]">

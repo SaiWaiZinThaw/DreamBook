@@ -27,6 +27,7 @@ export const createChapaterProgressApi = async ({
   return result;
 };
 
+
 export const getCurrentChapter = async ({ bookSlug }: { bookSlug: string }) => {
   const response: Response = await fetch(
     `${BaseURL}/chapter-progress?slug=${bookSlug}`,
@@ -39,12 +40,14 @@ export const getCurrentChapter = async ({ bookSlug }: { bookSlug: string }) => {
       redirect: "follow",
     }
   );
+
   const result = await response.json();
   if (!response.ok) {
     throw new Error(result.message);
   }
   return result;
 };
+
 
 export const fetchProgressUpdate = async (
   bookSlug: string,
@@ -70,3 +73,4 @@ export const fetchProgressUpdate = async (
   }
   return result;
 };
+

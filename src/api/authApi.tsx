@@ -62,8 +62,7 @@ export const profileSetupApi = async ({ data }: { data: ProfileSetupData }) => {
   if (data.profilePicture) {
     formData.append("profilePicture", data.profilePicture);
   }
-  formData.append("localNumber", data.localNumber || "");
-  formData.append("countryCode", data.countryCode || "");
+  formData.append("phoneNumber", data.phoneNumber || "");
   if (data.bio) {
     formData.append("bio", data.bio);
   }

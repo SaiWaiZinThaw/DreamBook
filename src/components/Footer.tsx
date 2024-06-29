@@ -1,35 +1,46 @@
-import { FooterImg, GooglePLay, AppStore } from "@/assets"
+import { FooterImg, GooglePLay, AppStore } from "@/assets";
 
 const Footer = () => {
   return (
-    <div className="mx-0 px-0 w-full container">
-        <div className="bg-blue-600 bg-opacity-75 mt-10 w-screen h-[400px]">
-            <div className="flex justify-center items-center">
-                <img src={FooterImg} alt="" className="mt-[60px] w-[290px] h-[65px]" />
+    <div className="container px-0 mx-0">
+      <div className="flex flex-col w-screen p-12 mt-10 bg-blue-600 bg-opacity-75 lg:items-center lg:px-20">
+        <img
+          src={FooterImg}
+          alt=""
+          className=" lg:w-[290px] w-[240px] lg:h-[65px]"
+        />
+        <div className="flex flex-col w-full lg:gap-3 lg:flex-row lg:items-center">
+          <div className="flex lg:flex-row gap-3 lg:justify-center lg:w-full flex-col lg:gap-x-[64px] mt-11 text-slate-50">
+            <a href="">Home</a>
+            <a href="">Recommended Books</a>
+            <a href="">Latest Books</a>
+            <a href="">FAQs</a>
+          </div>
+          <div className="flex flex-col">
+            <p className="my-3 font-sans text-sm font-normal text-[10px] text-white lg:flex lg:justify-center text-opacity-70">
+              TRY ON MOBILE
+            </p>
+
+            <div className="flex w-full gap-2">
+              <img
+                src={AppStore}
+                alt=""
+                className="w-6/12 md:w-3/12 lg:w-6/12"
+              />
+              <img
+                src={GooglePLay}
+                alt=""
+                className="w-6/12 md:w-3/12 lg:w-6/12"
+              />
             </div>
-            <div className="flex justify-center items-center mt-[20px] w-screen h-[102px]">
-                <div className="flex gap-x-[64px] mt-11 w-[600px] text-slate-50">
-                    <a href="">Home</a>
-                    <a href="">Recommended Books</a>
-                    <a href="">Latest Books</a>
-                    <a href="">FAQs</a>
-                </div>
-                <div className="flex flex-col w-[410px]">
-                <p className="flex justify-center my-3 font-normal font-sans text-sm text-white text-opacity-70">TRY ON MOBILE</p>
-                
-                <div className="flex gap-x-2 w-[200px] h-[62px]">
-                   <img src={AppStore} alt="" className="" />
-                   <img src={GooglePLay} alt="" />
-                </div> 
-                </div>
-               
-            </div> 
-            <hr className="border-gray-300 mx-[100px] my-4 mt-[80px] border-t-2"></hr>
-
-            <p className="flex justify-center items-center mt-6 text-white text-opacity-75">Copyright 2024 dream book .All Rights reserved.</p>
+          </div>
         </div>
+        <p className="pt-4 mt-6 text-white border-t border-t-border lg:text-[16px] text-[12px] w-full text-center">
+          Copyright 2024 dream book .All Rights reserved.
+        </p>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

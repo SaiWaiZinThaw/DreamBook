@@ -36,7 +36,10 @@ const BookDetails = () => {
   const updateBook = useUpdateBook(bookSlug!);
   const { mutate: softDeleteBook } = useSoftDeleteBook();
   const token = getToken() || "";
-  const { data: fetchABookAuthor, refetch } = useFetchABookAuthor(token, bookSlug!);
+  const { data: fetchABookAuthor, refetch } = useFetchABookAuthor(
+    token,
+    bookSlug!
+  );
   const navigate = useNavigate();
   const [isOn, setIsOn] = useState(true);
   const [updateData, setUpdateData] = useState<updateBookType>({
@@ -114,29 +117,25 @@ const BookDetails = () => {
     setIsOn(!isOn);
   };
 
-
   useEffect(() => {
     if (fetchABookAuthor?.keywords) {
       setKeywords(fetchABookAuthor.keywords);
     }
   }, [fetchABookAuthor]);
 
-
   const handleEditClick = () => {
-    setIsEditing(true); 
+    setIsEditing(true);
   };
 
   const handleCancelClick = () => {
     setIsEditing(false);
   };
 
-
   const handleSaveClick = (e: any) => {
     e.preventDefault();
     updateBook.mutate(updateData);
     console.log(updateData);
     setIsEditing(false);
-
   };
 
   const handleDeleteConfirm = (bookSlug: string) => {
@@ -163,7 +162,7 @@ const BookDetails = () => {
   };
 
   return (
-    <div className="mx-0 px-0 w-full h-full container">
+    <div className="container w-full h-full px-0 mx-0">
       <div className="flex border-slate-300 border-b h-[80px]">
         <h1 className="my-[20px] pl-[40px] font-extrabold text-2xl">
           Book Details
@@ -208,7 +207,7 @@ const BookDetails = () => {
                     }}
                     value={updateData.title}
                     id="title"
-                    className="border-slate-300 border text-black"
+                    className="text-black border border-slate-300"
                   />
                 ) : (
                   <h1
@@ -257,7 +256,7 @@ const BookDetails = () => {
                   {keywords.map((keyword, index) => (
                     <span
                       key={index}
-                      className="inline-block bg-gray-200 mr-2 mb-2 px-3 py-1 rounded-full font-semibold text-slate-950 text-sm"
+                      className="inline-block px-3 py-1 mb-2 mr-2 text-sm font-semibold bg-gray-200 rounded-full text-slate-950"
                     >
                       {keyword}
                     </span>
@@ -269,7 +268,7 @@ const BookDetails = () => {
                 <div className="flex">
                   {keywords.map((keyword, index) => (
                     <div key={index} className="flex items-center">
-                      <span className="flex bg-gray-200 mr-2 mb-2 px-3 py-1 rounded-full font-semibold text-slate-950 text-sm">
+                      <span className="flex px-3 py-1 mb-2 mr-2 text-sm font-semibold bg-gray-200 rounded-full text-slate-950">
                         {keyword}
                         <BsX
                           onClick={() => handleDeleteKeyword(index)}
@@ -304,11 +303,15 @@ const BookDetails = () => {
                   modules={quillModules}
                 />
               ) : (
-
                 <div className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]">
-                  <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(fetchABookAuthor?.description!) }} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(
+                        fetchABookAuthor?.description!
+                      ),
+                    }}
+                  />
                 </div>
-
               )}
             </div>
           </div>
@@ -341,9 +344,9 @@ const BookDetails = () => {
                         Delete
                       </Button>
                     </AlertDialogTrigger>
-                    <AlertDialogContent className="bg-slate-50 rounded-none">
+                    <AlertDialogContent className="rounded-none bg-slate-50">
                       <AlertDialogHeader>
-                        <AlertDialogTitle className="font-extrabold text-red-600 text-xl">
+                        <AlertDialogTitle className="text-xl font-extrabold text-red-600">
                           Are you sure want to delete?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
@@ -416,16 +419,24 @@ const BookDetails = () => {
               </div>
 
               <div className="ml-2">
-
-                <h1 className="font-bold text-[15px]">{fetchABookAuthor?.title}</h1>
+                <h1 className="font-bold text-[15px]">
+                  {fetchABookAuthor?.title}
+                </h1>
                 <p className="flex mt-1 font-Inter font-normal text-[12px] text-gray-500">
-                  <img src={fetchABookAuthor?.category?.icon} alt="" className="mr-2 w-[20px] h-[20px]"/>
+                  <img
+                    src={fetchABookAuthor?.category?.icon}
+                    alt=""
+                    className="mr-2 w-[20px] h-[20px]"
+                  />
                   {fetchABookAuthor?.category?.title}
                 </p>
                 <h2 className="flex my-2 font-bold text-[13px]">
-                  <img src={fetchABookAuthor?.user?.profilePicture} alt="" className="mr-2 rounded-full w-[20px] h-[20px]"/>
+                  <img
+                    src={fetchABookAuthor?.user?.profilePicture}
+                    alt=""
+                    className="mr-2 rounded-full w-[20px] h-[20px]"
+                  />
                   By {fetchABookAuthor?.user?.name}
-
                 </h2>
               </div>
             </div>
