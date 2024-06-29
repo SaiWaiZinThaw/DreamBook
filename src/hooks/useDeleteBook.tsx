@@ -7,8 +7,9 @@ export const useSoftDeleteBook = () =>
         mutationFn: (bookSlug: string) => softDeleteBook(bookSlug)
     })
 
-export const useHardDeleteBook = () => 
-    useMutation ({
-        mutationFn: (bookId: string) => hardDeleteBook(bookId)
-    })
 
+export const useHardDeleteBook = () => 
+    useMutation({
+        mutationFn: (bookSlugs: string[]) => hardDeleteBook(bookSlugs)
+    });
+    
