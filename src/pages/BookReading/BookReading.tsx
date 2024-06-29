@@ -31,7 +31,8 @@ const BookReading: React.FC = () => {
   const totalChapters = getChapters?.length || 1;
   const currentChapterIndex = getChapterProgress?.chapterId ? getChapters.findIndex((chapter:any) => chapter.chapterId === getChapterProgress.chapterId) + 1 : 0;
   const progressPercentage = (currentChapterIndex / totalChapters) * 100;
-
+  const firstChapterId = getChapters?.[0]?.id || "";
+  
   return (
     <div className="flex px-20 w-full min-h-screen">
       <div className="flex-col px-10 pt-20 border-r border-border w-10/12 h-full">
@@ -86,7 +87,7 @@ const BookReading: React.FC = () => {
                 </div>
 
                 <div className="w-full h-5"></div>
-                <NavLink to={"chapter/:chapterId"}>
+                <NavLink to={`chapter/${firstChapterId}`}>
                   <Button size={"full"}> Start Reading</Button>
                 </NavLink>
                 

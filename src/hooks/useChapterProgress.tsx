@@ -11,6 +11,11 @@ export const useFetchCurrentChapter = (bookSlug: string) =>
 
 export const useUpdateChapterProgress = () =>
     useMutation({
-      mutationFn: ({ bookSlug, data }: { bookSlug: string; data: UpdateProgressData }) =>
-        fetchProgressUpdate(bookSlug, data),
+      mutationFn: ({
+        bookSlug,
+        data,
+      }: {
+        bookSlug: string;
+        data: UpdateProgressData;
+      }) => fetchProgressUpdate(bookSlug, data),
     });

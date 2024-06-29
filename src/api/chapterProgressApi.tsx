@@ -1,6 +1,6 @@
 import { getToken } from "@/services/authService";
 import BaseURL from "../services/ApiEndPoint";
-import { ChapterProgressData, UpdateProgressData } from "@/types/types";
+import { ChapterProgressData } from "@/types/types";
 
 const token = getToken();
 
@@ -39,10 +39,13 @@ export const getCurrentChapter = async ({bookSlug}: {bookSlug:string}) => {
     return result;
 }
 
-export const fetchProgressUpdate = async ( 
+export const fetchProgressUpdate = async (
   bookSlug: string,
-  data: { chapterId: number }) => {
-    const response : Response = await fetch(`${BaseURL}/chapter-progress/?slug=${bookSlug}`, {
+  data: { chapterId: number }
+) => {
+  const response: Response = await fetch(
+    `${BaseURL}/chapter-progress/?slug=${bookSlug}`,
+    {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -52,10 +55,11 @@ export const fetchProgressUpdate = async (
       method: "PATCH",
       redirect: "follow",
       body: JSON.stringify(data),
-    });
-    const result = await response.json();
-    if (!response.ok) {
-      throw new Error(result.message);
     }
-    return result;
-}
+  );
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result.message);
+  }
+  return result;
+};
