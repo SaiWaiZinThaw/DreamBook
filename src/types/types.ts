@@ -169,3 +169,6 @@ export type UpdateProgressData = {
   chapterId: number;
 }
 
+export type BookHisoryData = {
+  bookSlug: string;
+}
