@@ -3,7 +3,7 @@ import restoreBook from "@/api/restoreApi";
 
 export const useRestoreBook = () => 
     useMutation({
-        mutationFn: (bookId: string) => restoreBook(bookId),
+        mutationFn: (bookSlugs: string[]) => restoreBook(bookSlugs),
     });
 
     

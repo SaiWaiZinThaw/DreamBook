@@ -1,10 +1,10 @@
 import { getToken } from "@/services/authService";
 import BaseURL from "../services/ApiEndPoint";
 
-const restoreBook = async (bookId: string) => {
+const restoreBook = async (bookSlugs: string[]) => {
     const token = getToken();
-
-    const response: Response = await fetch(`${BaseURL}/books/restore/${bookId}`, {
+    const slugs = bookSlugs.join(',');
+    const response: Response = await fetch(`${BaseURL}/books/restore?slugs=${encodeURIComponent(slugs)}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },

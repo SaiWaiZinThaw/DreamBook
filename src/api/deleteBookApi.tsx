@@ -19,9 +19,10 @@ export const softDeleteBook = async (bookSlug: string) => {
       return response.status;
 };
 
-export const hardDeleteBook = async (bookId: string) => {
+export const hardDeleteBook = async (bookSlugs: string[]) => {
     const token = getToken();
-    const response: Response = await fetch(`${BaseURL}/books/hard/${bookId}`, {
+    const slugs = bookSlugs;
+    const response: Response = await fetch(`${BaseURL}/books/hard?slugs=${slugs}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -31,8 +32,8 @@ export const hardDeleteBook = async (bookId: string) => {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to delete the book');
-      }
+        throw new Error('Failed to delete the book(s)');
+    }
     
-      return response.status;
+    return response.status;
 };
