@@ -81,8 +81,8 @@ const LibraryLayout = () => {
         </h2>
       </div>
 
-      <div className="w-full mt-4 lg:flex">
-        <div className="lg:block hidden border-slate-400 mt-2 border-r w-[400px]">
+      <div className="w-full mt-4 lg:flex md:flex">
+        <div className="lg:block hidden md:block  border-slate-400 mt-2 border-r w-[400px] md:px-4">
           <h1 className="flex justify-center mt-[20px] font-extrabold text-2xl text-black">
             Categories
           </h1>
@@ -90,7 +90,7 @@ const LibraryLayout = () => {
           <div className="flex flex-col justify-start gap-3 mt-[30px] ml-[30px]">
             <label
               key={"All"}
-              className="flex items-center gap-2 text-lg font-medium"
+              className="flex items-center gap-2 text-lg font-medium md:text-[16px]"
             >
               <Checkbox />
               All
@@ -100,7 +100,7 @@ const LibraryLayout = () => {
                   <label
                     key={item.categoryId}
                     id={item.categoryId}
-                    className="flex items-center gap-2 text-lg font-medium"
+                    className="flex items-center gap-2 text-lg font-medium md:text-[16px]"
                   >
                     <Checkbox
                       onCheckedChange={() => {
