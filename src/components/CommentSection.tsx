@@ -231,7 +231,7 @@ const CommentSection = () => {
                           alt={reply.user.name}
                           className="rounded-full w-[40px] h-[40px]"
                         />
-                        <div className="flex flex-col justify-center w-full gap-1">
+                        <div className="flex flex-col w-full gap-1">
                           <div className="flex flex-col">
                             <h3 className="font-medium text-[13px]">
                               {reply.user.name}
