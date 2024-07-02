@@ -101,7 +101,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
       </div>
 
 
-      <div className="grid w-full grid-cols-3 py-6 lg:p-10 lg:gap-8 lg:grid-cols-4">
+      <div className="grid w-full grid-cols-2 gap-2 p-4 py-6 gap-y-4 md:grid-cols-3 lg:p-10 lg:gap-8 lg:grid-cols-4">
 
         {!isBooksLoading &&
           booksData &&
@@ -110,7 +110,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
             onClick={() => viewBook(book.slug)}
               key={book.bookId}
               id={book.bookId}
-              className="relative w-[150px] md:gap-2 md:w-[170px] py-2 lg:py-0 bg-slate-100 shadow-md shadow-secondary-foreground lg:mr-[21px] border rounded-[8px] lg:w-[232px] lg:h-[280px] book group"
+              className="relative min-w-[150px] md:gap-2 md:max-w-[170px] py-2 lg:py-0 bg-slate-100 shadow-md shadow-slate-200 border rounded-[8px] lg:min-w-[190px] lg:h-[280px] book group"
             >
               <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                 <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">

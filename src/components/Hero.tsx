@@ -140,7 +140,9 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="mt-[50px] p-6 lg:p-8 w-screen lg:h-[400px]">
+
+      <div className="mt-[50px] w-screen  lg:h-[400px] p-6 lg:p-10">
+
         <div className="flex justify-between">
           <h1 className="font-bold text-xl">Latest Books</h1>
           <a href="" className="font-medium text-md">
@@ -172,7 +174,9 @@ const Hero = () => {
         </h1>
         {faqItems.map((item, index) => (
           <Accordion
-            className="w-full lg:w-[1400px] lg:self-center"
+
+            className="lg:max-w-[1400px] w-full lg:self-center"
+
             key={index}
             type="single"
             collapsible

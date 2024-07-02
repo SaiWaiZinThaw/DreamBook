@@ -274,22 +274,25 @@ const handleBlur = () => {
 
   return (
     <div>
-      <div className="flex mt-[42px] ml-[110px] w-[660px] h-[53px] text-md">
+      <div className="flex mt-[42px] w-full lg:ml-[110px] lg:w-[660px] h-[53px] text-md justify-center gap-2">
         <div
-          className="flex my-[12.5px] w-[83px] h-[28px] text-blue-700 text-opacity-60 cursor-pointer"
+          className="flex w-[83px] h-[28px] text-blue-700 text-opacity-60 cursor-pointer items-center"
           onClick={() => navigate(-1)}
         >
           <FaArrowLeft className="mx-2 mt-1" />
           <h2>Back</h2>
         </div>
 
-        <div className="ml-[24px] w-[374px] h-[53px]">
-          <h1 className="my-[8px] font-bold text-3xl">Creating A New Book</h1>
+        <div className="w-[374px] h-[53px]">
+          <h1 className="text-lg font-bold lg:text-3xl">Creating A New Book</h1>
         </div>
       </div>
 
-      <form className="flex" onSubmit={handleSubmit}>
-        <div className="mt-[50px] ml-[110px] w-[199px] h-[327px]">
+      <form
+        className="flex flex-col items-center lg:flex-row lg:items-start"
+        onSubmit={handleSubmit}
+      >
+        <div className="lg:mt-[50px] lg:ml-[110px] w-[199px] h-[327px]">
           <div className="h-[284px]">
             {formData.coverImage instanceof File ? (
               <img
@@ -332,7 +335,7 @@ const handleBlur = () => {
           </div>
         </div>
 
-        <div className="ml-[95px] w-[667px]">
+        <div className=" lg:w-[667px]">
           <div className="h-[581px]">
             <div className="items-center gap-1.5 grid mx-[32px] pt-[30px] w-[603px] h-[74px]">
               <Label htmlFor="title" className="font-semibold text-[16px]">

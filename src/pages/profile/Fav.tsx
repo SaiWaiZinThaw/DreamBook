@@ -63,16 +63,22 @@ const Fav = () => {
                 id={item.book.slug}
                 className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] max-w-[232px] h-[280px] book group"
               >
-                <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+
+                <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
+                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+
                     <BsHeartFill
                       className="text-red-500 cursor-pointer"
                       onClick={(event) => hideBook(event, item.book.slug)}
                     />
                   </div>
 
-                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                    <BsEyeFill className="text-slate-500 cursor-pointer" />
+                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                    <BsEyeFill
+                      className="cursor-pointer text-slate-500"
+                      onClick={() => navigate(`/book/${item.book.slug}`)}
+                    />
+
                   </div>
                 </div>
                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
