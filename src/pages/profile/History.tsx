@@ -62,7 +62,7 @@ const History = () => {
           <ul className="flex gap-x-4 mx-4">
             {
               getHistory?.map((historyItem:any) => (
-                <div key={historyItem.id}  className="relative bg-slate-100 shadow-xl border rounded-[8px] w-[232px] group">
+                <div key={historyItem.id}  className="relative bg-slate-100 shadow-xl border rounded-[8px] w-[232px] cursor-pointer group">
                   <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                    <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                    <FaTrashCan onClick={() => handleDelete(historyItem.book.slug)} className="text-red-500 cursor-pointer"/>
@@ -73,10 +73,10 @@ const History = () => {
                   </div>
                   <h1 className="px-3 font-semibold text-xl">{historyItem.book.title}</h1>
 
-                  {/* <p className="flex mt-1 font-Inter font-normal text-[12px] text-gray-500">
+                  <p className="flex mt-1 font-Inter font-normal text-[12px] text-gray-500">
                     <img src={historyItem?.book.category?.icon} alt="" className="mr-2 w-[20px] h-[20px]"/>
                     {historyItem?.book.category?.title}
-                  </p> */}
+                  </p>
 
                     <h2 className="flex my-2 px-3 font-bold text-[13px]">
                       <img src={historyItem.user.profilePicture} alt="" className="mr-2 rounded-full w-[20px] h-[20px]"/>

@@ -1,3 +1,4 @@
+import NotFound from "@/Layouts/NotFound";
 import { Login, SignUp } from "@/pages/auth";
 import LoginLayout from "@/pages/auth/AuthLayout";
 import CategorySelect from "@/pages/auth/CategorySelect";
@@ -28,6 +29,10 @@ const AuthRouter: RouteObject[] = [
       { path: "select-category", element: <CategorySelect /> },
     ],
   },
+  {
+    path: "*",
+    element: <NotFound/>
+  }
 ];
 
 export default AuthRouter;

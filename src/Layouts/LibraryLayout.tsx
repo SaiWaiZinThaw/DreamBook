@@ -69,11 +69,12 @@ const LibraryLayout = () => {
   }, [deBounceSearch, sortBy, setSearchParams, selectedCategories, pageCount]);
 
   return (
-    <div className="container w-screen px-0 mx-0">
+    <div className="mx-0 px-0 w-screen container">
       <div
         className="flex flex-col gap-4 justify-center items-center bg-cover bg-no-repeat w-screen h-[370px] text-white"
         style={{ backgroundImage: `url(${LibraryHero})` }}
       >
+
         <h1 className="text-4xl font-extrabold">Library</h1>
         <h2 className="font-medium lg:text-xl ">Explore your favorite books</h2>
         <h2 className="font-medium lg:text-xl">
@@ -83,6 +84,7 @@ const LibraryLayout = () => {
 
       <div className="w-full mt-4 lg:flex md:flex">
         <div className="lg:block hidden md:block  border-slate-400 mt-2 border-r w-[400px] md:px-4">
+
           <h1 className="flex justify-center mt-[20px] font-extrabold text-2xl text-black">
             Categories
           </h1>
@@ -90,7 +92,9 @@ const LibraryLayout = () => {
           <div className="flex flex-col justify-start gap-3 mt-[30px] ml-[30px]">
             <label
               key={"All"}
+
               className="flex items-center gap-2 text-lg font-medium md:text-[16px]"
+
             >
               <Checkbox />
               All
@@ -100,7 +104,9 @@ const LibraryLayout = () => {
                   <label
                     key={item.categoryId}
                     id={item.categoryId}
+
                     className="flex items-center gap-2 text-lg font-medium md:text-[16px]"
+
                   >
                     <Checkbox
                       onCheckedChange={() => {
