@@ -27,7 +27,6 @@ const BookReading: React.FC = () => {
 
   const { data: relatedBook } = useRelatedBook(bookSlug!);
 
-
   const createCommentHandler = () => {
     setComment({ comment: "", slug: bookSlug! });
     createComment.mutate(comment);
@@ -66,7 +65,6 @@ const BookReading: React.FC = () => {
                 />
               </div>
               <div className="flex flex-col justify-center gap-3 w-[400px]">
-
                 <h1 className="text-3xl font-extrabold">{fetchABook.title}</h1>
 
                 <div className="flex items-center gap-2">
@@ -75,7 +73,9 @@ const BookReading: React.FC = () => {
                     alt={fetchABook?.user?.name}
                     className="rounded-full w-[30px] h-[30px]"
                   />
-                  <span className="text-[15px]">By {fetchABook?.user?.name}</span>
+                  <span className="text-[15px]">
+                    By {fetchABook?.user?.name}
+                  </span>
                 </div>
                 <div className="flex gap-3 mt-[20px]">
                   <span className="text-lg font-bold">Category:</span>
@@ -85,7 +85,9 @@ const BookReading: React.FC = () => {
                       alt={fetchABook?.category?.title}
                       className="rounded-full w-[25px] h-[25px]"
                     />
-                    <span className="text-sm">{fetchABook?.category?.title}</span>
+                    <span className="text-sm">
+                      {fetchABook?.category?.title}
+                    </span>
                   </div>
                 </div>
                 <div className="flex gap-3">
@@ -156,15 +158,19 @@ const BookReading: React.FC = () => {
         )}
       </div>
 
-      <div className="mx-4 w-full">
-        <h1 className="mt-4 font-semibold text-center text-md">Related Books</h1>
+      <div className="w-full mx-4">
+        <h1 className="mt-4 font-semibold text-center text-md">
+          Related Books
+        </h1>
 
         <div className="flex flex-col mx-2">
-          {
-            relatedBook?.pages.map((page, i) => (
-              <div key={i}>
-                {page.items.map(book => (
-                <div key={book.bookId} className="flex flex-col bg-slate-100 shadow-xl my-4 border rounded-[8px] w-[232px] max-h-full">
+          {relatedBook?.pages.map((page, i) => (
+            <div key={i}>
+              {page.items.map((book) => (
+                <div
+                  key={book.bookId}
+                  className="flex flex-col bg-slate-100 shadow-xl my-4 border rounded-[8px] w-[232px] max-h-full"
+                >
                   <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                     <img
                       src={book.coverImage}
@@ -174,9 +180,7 @@ const BookReading: React.FC = () => {
                   </div>
 
                   <div className="ml-2">
-                    <h1 className="font-bold text-[15px]">
-                      {book.title}
-                    </h1>
+                    <h1 className="font-bold text-[15px]">{book.title}</h1>
                     <p className="flex mt-1 font-Inter font-normal text-[12px] text-gray-500">
                       <img
                         src={book.category?.icon}
@@ -196,9 +200,8 @@ const BookReading: React.FC = () => {
                   </div>
                 </div>
               ))}
-              </div>
-            ))
-          }
+            </div>
+          ))}
         </div>
       </div>
     </div>
