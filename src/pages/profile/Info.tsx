@@ -66,6 +66,7 @@ const Info = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+      window.location.reload();
     }
   }, [profileSetup.isSuccess]);
 
@@ -106,7 +107,7 @@ const Info = () => {
           </div>
           <div className="flex items-center w-full gap-5">
             <select
-              className="flex justify-center items-center p-4 rounded-[5px] h-12"
+              className="flex justify-center items-center px-4 rounded-[5px] h-12 border border-border"
               value={countryCodeNumber}
               onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                 setCountryCodeNumber(event.target.value);
@@ -132,7 +133,7 @@ const Info = () => {
           </div>
 
           <select
-            className="flex justify-center items-center p-4 rounded-[5px] w-full h-12 text-sm"
+            className="flex justify-center items-center px-4 rounded-[5px] w-full h-12 text-sm border border-border"
             value={profileData.gender}
             onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
               console.log(profileData);
@@ -142,9 +143,10 @@ const Info = () => {
               }));
             }}
           >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="rather not to say">Rather not to say</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Rather not say">Rather not to say</option>
+            <option value="Other">Other</option>
           </select>
 
           <textarea

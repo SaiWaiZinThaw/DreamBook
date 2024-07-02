@@ -14,7 +14,7 @@ const NavBar = () => {
   const { setShowMenu } = useAuth();
   const { data, isLoading, isSuccess } = useGetMe(token);
   return (
-    <div className=" flex justify-between items-center bg-white shadow-slate-300 shadow-sm lg:px-40 py-2 px-10 lg:py-6 w-full h-[70px] font-Inter">
+    <div className=" flex justify-between items-center bg-white shadow-slate-300 shadow-sm lg:px-40 py-2 px-6 lg:py-6 w-full h-[70px] font-Inter">
       <div className="flex items-center gap-3">
         <button
           onClick={() => setShowMenu(true)}

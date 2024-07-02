@@ -1,5 +1,5 @@
 import { authService } from "@/services";
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 interface AuthContextType {
   token: string | null;

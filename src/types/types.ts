@@ -120,27 +120,43 @@ export type fetchChapterData = Chapter[];
 export type commentData = {
   comment: string;
   slug: string;
+  parentCommentId?: number;
 };
 
 export type updateCommentData = {
   comment: string;
 };
 
-export type CommentDataArray = {
+export type ChildCommentDataArray = {
   commentId: number;
   comment: string;
-  cratedAt: string;
+  replyTo: string;
+  createdAt: string;
   updatedTime: string;
   user: {
     userId: number;
     name: string;
     profilePicture: string;
   };
-  book: Book;
+};
+
+export type ParentCommentDataArray = {
+  commentId: number;
+  comment: string;
+  replyTo: string | null;
+  createdAt: string;
+  updatedTime: string;
+  user: {
+    userId: number;
+    name: string;
+    profilePicture: string;
+  };
+  parentComment: string | null;
+  replies: ChildCommentDataArray[];
 };
 
 export type getCommentData = {
-  items: CommentDataArray[];
+  items: ParentCommentDataArray[];
   meta: {
     currentPage: number;
     itemCount: number;
@@ -162,15 +178,15 @@ export type PasswordChangeData = {
 export type ChapterProgressData = {
   slug: string;
   chapterId: number;
-
-}
+};
 
 export type UpdateProgressData = {
   chapterId: number;
-}
+};
 
 export type BookHisoryData = {
   bookSlug: string;
+
 }
 
 export type relatedBookData = {
@@ -182,4 +198,6 @@ export type relatedBookData = {
     totalItems: number;
     totalPages: number;
   };
+=======
+
 };

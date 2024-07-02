@@ -213,8 +213,9 @@ const ChapterRead = () => {
     setParsedChapterId(id);
     setActiveChapterId(id);
 
-    if (getChapterProgress?.chapterId !== id) {
-      console.log('Updating progress:', { bookSlug, chapterId: id });
+
+    if (getChapterProgress?.chapterId === id) {
+
       updateProgress.mutate({ bookSlug: bookSlug!, data: { chapterId: id } });
     } else {
       console.log('Creating new progress:', { bookSlug, chapterId: id });

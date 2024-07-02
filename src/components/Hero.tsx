@@ -67,9 +67,11 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="flex lg:flex-row flex-col lg:justify-center items-center gap-4 lg:gap-0 lg:gap-x-4 mx-2 lg:mt-[60px] px-5 p-2 w-screen lg:h-[220px]">
+
+      <div className="flex flex-col p-2 items-center px-5 gap-4 lg:gap-0 lg:flex-row lg:justify-center lg:gap-x-4 lg:mt-[60px] w-screen lg:h-[220px]">
         <div
-          className="flex flex-col gap-1 lg:gap-3 bg-opacity-88 bg-cover bg-no-repeat p-5 lg:p-9 rounded-[10px] w-[400px] h-full min-h-[150px] text-white"
+          className=" flex flex-col min-h-[150px] gap-1 lg:gap-3 bg-opacity-88 bg-no-repeat w-full lg:w-[400px] h-full bg-cover p-5 lg:p-9 rounded-[10px]    text-white"
+
           style={{ backgroundImage: `url(${About})` }}
         >
           <h1 className="font-semibold text-xl">About Us</h1>
@@ -79,7 +81,9 @@ const Hero = () => {
           </p>
         </div>
         <div
-          className="flex flex-col gap-1 lg:gap-3 bg-opacity-88 bg-cover bg-no-repeat p-5 lg:p-9 rounded-[10px] w-[400px] h-full min-h-[120px] text-white"
+
+          className="flex flex-col min-h-[120px] gap-1 lg:gap-3 bg-opacity-88 bg-no-repeat w-full lg:w-[400px] h-full bg-cover p-5 lg:p-9 rounded-[10px]    text-white"
+
           style={{ backgroundImage: `url(${FeatureBg})` }}
         >
           <h1 className="font-semibold text-xl">Feactured</h1>
@@ -89,7 +93,9 @@ const Hero = () => {
           </p>
         </div>
         <div
-          className="flex flex-col gap-1 lg:gap-3 bg-opacity-88 bg-cover bg-no-repeat p-5 lg:p-9 rounded-[10px] w-[400px] h-full min-h-[120px] text-white"
+
+          className="flex flex-col min-h-[120px] gap-1 lg:gap-3 bg-opacity-88 bg-no-repeat w-full lg:w-[400px] h-full bg-cover p-5 lg:p-9 rounded-[10px]  text-white"
+
           style={{ backgroundImage: `url(${Visit})` }}
         >
           <h1 className="font-semibold text-xl">Visit Now</h1>
