@@ -21,7 +21,7 @@ const PasswordVisible: React.FC<PasswordVisibleProps> = ({
     <div className="relative w-full h-12">
       <input
         type={visible ? "text" : "password"}
-        className="p-4 pr-12 rounded-[5px] w-full h-12 font-semibold text-sm font-Inter bg-white placeholder:opacity-70 placeholder:text-black border border-border"
+        className="p-4 pr-12 rounded-[5px] w-full lg:h-12 font-semibold text-sm font-Inter bg-white placeholder:opacity-70 placeholder:text-black  h-10 lg:placeholder:text-md lg:text-md text-[13px] placeholder:text-[13px] border border-border"
         {...register("password")}
         placeholder="Password"
       />

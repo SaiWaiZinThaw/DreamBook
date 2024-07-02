@@ -124,7 +124,7 @@ const CommentSection = () => {
                       {comment.user.name}
                     </h3>
                     <span className="text-[11px] text-secondary-foreground">
-                      {format(parseISO(comment.cratedAt), "eeee do MMM, yyyy")}
+                      {format(parseISO(comment.createdAt), "eeee do MMM, yyyy")}
                     </span>
                   </div>
 
@@ -238,7 +238,7 @@ const CommentSection = () => {
                             </h3>
                             <span className="text-[9px] text-secondary-foreground">
                               {format(
-                                parseISO(reply.cratedAt),
+                                parseISO(reply.createdAt),
                                 "eeee do MMM, yyyy"
                               )}
                             </span>

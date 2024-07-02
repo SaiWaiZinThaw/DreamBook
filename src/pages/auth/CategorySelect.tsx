@@ -49,13 +49,13 @@ const CategorySelect = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="gap-6 gap-x-8 grid grid-cols-2 w-[600px]"
+      className="lg:gap-6 gap-2 gap-x-3 lg:gap-x-8 grid grid-cols-2 w-full lg:w-[600px] py-4"
     >
       {!isLoading &&
         data?.map((category: Category) => (
           <div
             key={category.categoryId}
-            className="flex justify-between items-center bg-white px-4 py-2 rounded-[5px]"
+            className="flex justify-between items-center bg-white px-4 py-2 lg:h-auto h-[50px] rounded-[5px]"
           >
             <div className="flex items-center gap-3">
               <input
@@ -68,17 +68,21 @@ const CategorySelect = () => {
                 )}
               />
               <label
-                className="flex items-center gap-3 font-bold font-Inter"
+                className="flex items-center gap-3 text-[12px] font-bold lg-text-lg font-Inter"
                 htmlFor={category.categoryId}
               >
-                <img src={category.icon} alt={category.title} />
+                <img
+                  src={category.icon}
+                  alt={category.title}
+                  className="lg:w-auto w-[20px]"
+                />
                 {category.title}
               </label>
             </div>
           </div>
         ))}
 
-      <Button className="col-span-2" size={"full"} type="submit">
+      <Button className="col-span-2 mt-4" size={"full"} type="submit">
         Finish
       </Button>
     </form>

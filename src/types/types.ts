@@ -131,7 +131,7 @@ export type ChildCommentDataArray = {
   commentId: number;
   comment: string;
   replyTo: string;
-  cratedAt: string;
+  createdAt: string;
   updatedTime: string;
   user: {
     userId: number;
@@ -144,7 +144,7 @@ export type ParentCommentDataArray = {
   commentId: number;
   comment: string;
   replyTo: string | null;
-  cratedAt: string;
+  createdAt: string;
   updatedTime: string;
   user: {
     userId: number;

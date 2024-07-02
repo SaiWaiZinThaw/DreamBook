@@ -10,7 +10,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useGetFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
-import { HiPencil } from "react-icons/hi";
 import { BsHeartFill, BsEyeFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
@@ -18,9 +17,6 @@ const Fav = () => {
   const { data, isLoading } = useGetFavorite();
   const navigate = useNavigate();
   const removeFavorite = useRemoveFavorite();
-  const editHandler = (bookSlug: string) => {
-    navigate(`/book-dashboard/${bookSlug}/book-details`);
-  };
 
   const hideBook = (
     event: React.MouseEvent<SVGElement, MouseEvent>,
@@ -69,7 +65,7 @@ const Fav = () => {
                 id={item.book.slug}
                 className="relative book bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] max-w-[232px] h-[280px] group"
               >
-                <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
+                <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                   <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                     <BsHeartFill
                       className="text-red-500 cursor-pointer"
@@ -78,12 +74,9 @@ const Fav = () => {
                   </div>
 
                   <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
-                    <BsEyeFill className="cursor-pointer text-slate-500" />
-                  </div>
-                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
-                    <HiPencil
+                    <BsEyeFill
                       className="cursor-pointer text-slate-500"
-                      onClick={() => editHandler(item.book.slug)}
+                      onClick={() => navigate(`/book/${item.book.slug}`)}
                     />
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import parse from "html-react-parser";
@@ -23,25 +23,34 @@ const BookReading: React.FC = () => {
   const { data: fetchABook, isLoading } = useFetchABook(bookSlug!);
   const { data: getChapters } = useFetchAllChapters(bookSlug!);
   const { data: getChapterProgress } = useFetchCurrentChapter(bookSlug!);
-  
+
   const createCommentHandler = () => {
     setComment({ comment: "", slug: bookSlug! });
     createComment.mutate(comment);
-    refetch();
   };
 
   const startReadingHandler = () => {
-    createBookHistory.mutate({ bookSlug: bookSlug! })
+    createBookHistory.mutate({ bookSlug: bookSlug! });
   };
 
   const totalChapters = getChapters?.length || 1;
-  const currentChapterIndex = getChapterProgress?.chapterId ? getChapters.findIndex((chapter:any) => chapter.chapterId === getChapterProgress.chapterId) + 1 : 0;
+  const currentChapterIndex = getChapterProgress?.chapterId
+    ? getChapters.findIndex(
+        (chapter: any) => chapter.chapterId === getChapterProgress.chapterId
+      ) + 1
+    : 0;
   const progressPercentage = (currentChapterIndex / totalChapters) * 100;
   const firstChapterId = getChapters?.[0]?.id || "";
 
+  useEffect(() => {
+    if (createComment.isSuccess) {
+      refetch();
+    }
+  }, [createComment.isSuccess]);
+
   return (
-    <div className="flex px-20 w-full min-h-screen">
-      <div className="flex-col px-10 pt-20 border-r border-border w-10/12 h-full">
+    <div className="flex w-full min-h-screen px-20">
+      <div className="flex-col w-10/12 h-full px-10 pt-20 border-r border-border">
         {fetchABook && !isLoading && (
           <div className="flex flex-col gap-[20px] w-full h-full">
             <div className="flex gap-[100px] px-20 pb-20 w-full">
@@ -53,7 +62,7 @@ const BookReading: React.FC = () => {
                 />
               </div>
               <div className="flex flex-col justify-center gap-3 w-[400px]">
-                <h1 className="font-extrabold text-3xl">{fetchABook.title}</h1>
+                <h1 className="text-3xl font-extrabold">{fetchABook.title}</h1>
                 <div className="flex items-center gap-2">
                   <img
                     src={fetchABook.user.profilePicture}
@@ -63,7 +72,7 @@ const BookReading: React.FC = () => {
                   <span className="text-[15px]">By {fetchABook.user.name}</span>
                 </div>
                 <div className="flex gap-3 mt-[20px]">
-                  <span className="font-bold text-lg">Category:</span>
+                  <span className="text-lg font-bold">Category:</span>
                   <div className="flex items-center gap-2">
                     <img
                       src={fetchABook.category.icon}
@@ -74,7 +83,7 @@ const BookReading: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <span className="font-bold text-lg">Keywords:</span>
+                  <span className="text-lg font-bold">Keywords:</span>
                   <div className="flex items-center gap-1">
                     {fetchABook.keywords.map((keyword, index) => (
                       <span key={index} className="text-sm">
@@ -86,20 +95,30 @@ const BookReading: React.FC = () => {
                 </div>
 
                 <div className="w-full">
-                  <Progress value={progressPercentage} max={100} className="relative bg-gray-200 rounded-full w-full h-2 overflow-hidden">
-                    <div style={{ width: `${progressPercentage}%` }} className="bg-blue-600 h-full" />
+                  <Progress
+                    value={progressPercentage}
+                    max={100}
+                    className="relative w-full h-2 overflow-hidden bg-gray-200 rounded-full"
+                  >
+                    <div
+                      style={{ width: `${progressPercentage}%` }}
+                      className="h-full bg-blue-600"
+                    />
                   </Progress>
                   <div className="mt-2 text-sm">{`Chapter ${currentChapterIndex} of ${totalChapters}`}</div>
                 </div>
 
                 <div className="w-full h-5"></div>
                 <NavLink to={`chapter/${firstChapterId}`}>
-                  <Button onClick={startReadingHandler} size={"full"}> Start Reading</Button>
+                  <Button onClick={startReadingHandler} size={"full"}>
+                    {" "}
+                    Start Reading
+                  </Button>
                 </NavLink>
               </div>
             </div>
             <div className="flex flex-col gap-5 px-20 border-b border-border min-h-[200px]">
-              <h1 className="font-bold text-2xl">Book Overview</h1>
+              <h1 className="text-2xl font-bold">Book Overview</h1>
               <div className="text-lg">
                 {parse(fetchABook.description || "")}
               </div>
