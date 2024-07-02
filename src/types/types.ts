@@ -186,7 +186,8 @@ export type UpdateProgressData = {
 
 export type BookHisoryData = {
   bookSlug: string;
-};
+
+}
 
 export type relatedBookData = {
   items: Book[];
@@ -197,4 +198,6 @@ export type relatedBookData = {
     totalItems: number;
     totalPages: number;
   };
+
+
 };
