@@ -1,3 +1,4 @@
+import NotFound from "@/Layouts/NotFound";
 import ProfileLayout from "@/Layouts/ProfileLayout";
 import Books from "@/pages/profile/Books";
 import ChangePassword from "@/pages/profile/ChangePassword";
@@ -27,6 +28,10 @@ const ProfileRouter: RouteObject[] = [
       { path: "restore", element: <Restore/> },
     ],
   },
+  {
+    path: "*",
+    element: <NotFound/>
+  }
 ];
 
 export default ProfileRouter;

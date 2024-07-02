@@ -15,9 +15,7 @@ function App() {
         <Route path="/*" element={UserRouting} />
         <Route path="/auth/*" element={AuthRouting} />
         <Route path="/me/*" element={ProfileRouting} />
-      </Routes>
-      <Routes>
-        <Route path="/*" element={BookRouting} />
+        <Route path="book-dashboard/*" element={BookRouting} />
       </Routes>
     </div>
   );
