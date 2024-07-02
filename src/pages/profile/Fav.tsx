@@ -11,11 +11,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useGetFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
 import { BsHeartFill, BsEyeFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const Fav = () => {
   const { data, isLoading } = useGetFavorite();
   const removeFavorite = useRemoveFavorite();
-
+  const navigate = useNavigate();
   const hideBook = (
     event: React.MouseEvent<SVGElement, MouseEvent>,
     Bookslug: string
@@ -55,18 +56,16 @@ const Fav = () => {
             Search
           </Button>
         </div>
-        <div className="gap-2 lg:gap-4 grid grid-cols-2 lg:grid-cols-4 p-10">
+        <div className="grid grid-cols-2 gap-2 p-10 lg:gap-4 lg:grid-cols-4">
           {!isLoading &&
-            data?.items.map((item:any) => (
+            data?.items.map((item: any) => (
               <div
                 key={item.book.title}
                 id={item.book.slug}
                 className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] max-w-[232px] h-[280px] book group"
               >
-
                 <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                   <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
-
                     <BsHeartFill
                       className="text-red-500 cursor-pointer"
                       onClick={(event) => hideBook(event, item.book.slug)}
@@ -78,7 +77,6 @@ const Fav = () => {
                       className="cursor-pointer text-slate-500"
                       onClick={() => navigate(`/book/${item.book.slug}`)}
                     />
-
                   </div>
                 </div>
                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
@@ -107,7 +105,7 @@ const Fav = () => {
                     <img
                       src={item.book.user.profilePicture}
                       alt={item.book.user.name}
-                      className="rounded-full w-6 h-6"
+                      className="w-6 h-6 rounded-full"
                     />
                     <h2 className="text-[13px] text-black">
                       By {item.book.user.name}
