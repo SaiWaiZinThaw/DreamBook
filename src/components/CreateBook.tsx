@@ -238,14 +238,10 @@ const CreateBook = () => {
     }
   };
 
-  const handleBlur = () => {
-    if (formData.title.trim() === "") {
-      setTitleError(true);
-    }
-    if (formData.keywords.length === 0) {
-      setKeywordError(true);
-    }
-  };
+const handleBlur = () => {
+  setTitleError(formData.title.trim() === "");
+  setKeywordError(formData.keywords.length === 0);
+};
 
   const handleDeleteKeyword = (indexToDelete: any) => {
     setFormData((prevFormData) => ({
@@ -405,11 +401,11 @@ const CreateBook = () => {
                 id="keywords"
               />
               <div>
-                <ul className="absolute flex ml-4 space-x-2">
+                <ul className="absolute flex space-x-2 ml-4">
                   {formData.keywords.map((keyword, index) => (
                     <li
                       key={index}
-                      className="flex px-2 py-1 border rounded-md border-primary border-opacity-55 text-slate-600"
+                      className="flex border-primary px-2 py-1 border border-opacity-55 rounded-md text-slate-600"
                     >
                       {keyword}
                       <BsX

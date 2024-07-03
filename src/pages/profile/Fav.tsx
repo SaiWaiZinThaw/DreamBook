@@ -10,17 +10,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useGetFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
-import { HiPencil } from "react-icons/hi";
 import { BsHeartFill, BsEyeFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
 
 const Fav = () => {
   const { data, isLoading } = useGetFavorite();
-  const navigate = useNavigate();
   const removeFavorite = useRemoveFavorite();
-  const editHandler = (bookSlug: string) => {
-    navigate(`/book-dashboard/${bookSlug}/book-details`);
-  };
 
   const hideBook = (
     event: React.MouseEvent<SVGElement, MouseEvent>,
@@ -32,11 +26,11 @@ const Fav = () => {
   };
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <div className="p-10">
-        <div className="flex items-center h-[50px] justify-between">
+        <div className="flex justify-between items-center h-[50px]">
           <div className="flex items-center gap-3">
-            <img src={Sorting} alt="sorting" className=" h-[50px]" />
+            <img src={Sorting} alt="sorting" className="h-[50px]" />
             <Select>
               <SelectTrigger className="w-[180px] h-[50px]">
                 <SelectValue placeholder="Sort by default" />
@@ -57,34 +51,28 @@ const Fav = () => {
               />
             </div>
           </div>
-          <Button className="w-[100px] flex items-center gap-5 rounded-[8px] h-full ">
+          <Button className="flex items-center gap-5 rounded-[8px] w-[100px] h-full">
             Search
           </Button>
         </div>
-        <div className="grid grid-cols-2 gap-2 p-10 lg:grid-cols-4 lg:gap-4">
+        <div className="gap-2 lg:gap-4 grid grid-cols-2 lg:grid-cols-4 p-10">
           {!isLoading &&
-            data?.items.map((item) => (
+            data?.items.map((item:any) => (
               <div
                 key={item.book.title}
                 id={item.book.slug}
-                className="relative book bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] max-w-[232px] h-[280px] group"
+                className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] max-w-[232px] h-[280px] book group"
               >
                 <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                     <BsHeartFill
                       className="text-red-500 cursor-pointer"
                       onClick={(event) => hideBook(event, item.book.slug)}
                     />
                   </div>
 
-                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
-                    <BsEyeFill className="cursor-pointer text-slate-500" />
-                  </div>
-                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
-                    <HiPencil
-                      className="cursor-pointer text-slate-500"
-                      onClick={() => editHandler(item.book.slug)}
-                    />
+                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                    <BsEyeFill className="text-slate-500 cursor-pointer" />
                   </div>
                 </div>
                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
@@ -113,7 +101,7 @@ const Fav = () => {
                     <img
                       src={item.book.user.profilePicture}
                       alt={item.book.user.name}
-                      className="w-6 h-6 rounded-full"
+                      className="rounded-full w-6 h-6"
                     />
                     <h2 className="text-[13px] text-black">
                       By {item.book.user.name}

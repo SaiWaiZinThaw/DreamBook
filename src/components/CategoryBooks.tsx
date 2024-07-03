@@ -65,9 +65,9 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
   }, [booksData]);
 
   return (
-    <div className="flex flex-col w-full min-h-screen px-10 mx-0">
-      <div className="flex justify-between mt-4 h-[42px] w-full">
-        <div className="flex items-center w-full gap-3">
+    <div className="flex flex-col mx-0 px-10 w-full min-h-screen">
+      <div className="flex justify-between mt-4 w-full h-[42px]">
+        <div className="flex items-center gap-3 w-full">
           <img src={Sorting} alt="sorting" />
 
           <Select onValueChange={handleSortChange}>
@@ -94,17 +94,18 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
         />
       </div>
 
-      <div className="grid w-full grid-cols-4 gap-8 p-10">
+      <div className="gap-8 grid grid-cols-4 p-10 w-full">
         {!isBooksLoading &&
           booksData &&
           booksData.items.map((book: Book) => (
             <div
+            onClick={() => viewBook(book.slug)}
               key={book.bookId}
               id={book.bookId}
               className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] w-[232px] h-[280px] book group"
             >
               <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                   {favorites[book.bookId] ? (
                     <BsHeartFill
                       className="text-red-500 cursor-pointer"
@@ -112,15 +113,15 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
                     />
                   ) : (
                     <BsHeart
-                      className="cursor-pointer text-slate-500"
+                      className="text-slate-500 cursor-pointer"
                       onClick={() => toggleFavorite(book.bookId, book.slug)}
                     />
                   )}
                 </div>
 
-                <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                   <BsEyeFill
-                    className="cursor-pointer text-slate-500"
+                    className="text-slate-500 cursor-pointer"
                     onClick={() => viewBook(book.slug)}
                   />
                 </div>
@@ -151,7 +152,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
                   <img
                     src={book.user.profilePicture}
                     alt={book.user.name}
-                    className="w-6 h-6 rounded-full"
+                    className="rounded-full w-6 h-6"
                   />
                   <h2 className="text-[13px] text-black">
                     By {book.user.name}

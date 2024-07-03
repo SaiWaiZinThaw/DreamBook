@@ -172,3 +172,14 @@ export type UpdateProgressData = {
 export type BookHisoryData = {
   bookSlug: string;
 }
+
+export type relatedBookData = {
+  items: Book[];
+  meta: {
+    currentPage: number;
+    itemCount: number;
+    itemsPerPage: number;
+    totalItems: number;
+    totalPages: number;
+  };
+};

@@ -6,6 +6,7 @@ import { PasswordChangeData } from "@/types/types";
 import { useEffect, useState } from "react";
 
 import Swal from "sweetalert2";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ChangePassword = () => {
   const passwordChange = usePasswordChange();
@@ -14,11 +15,22 @@ const ChangePassword = () => {
     newPassword: "",
   });
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (passwordData.newPassword !== confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Passwords do not match",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
     passwordChange.mutate(passwordData);
-    console.log(passwordData);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,11 +41,9 @@ const ChangePassword = () => {
     }));
   };
 
-  const handleConfirmPasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(e.target.value);
-  }; 
+  };
 
   useEffect(() => {
     if (passwordChange.isSuccess) {
@@ -45,15 +55,15 @@ const ChangePassword = () => {
       });
     }
   }, [passwordChange.isSuccess]);
-  
+
   return (
-    <section className="flex items-center justify-center w-full">
+    <section className="flex justify-center items-center w-full">
       <div className="flex flex-col ml-[165px] w-[544px] h-[451px]">
         <h1 className="mb-[16px] font-bold text-2xl text-center">
           Change Your Password
         </h1>
-        <p className="text-sm font-normal text-center text-slate-500">
-          The new password you set must be different ot the previous one
+        <p className="font-normal text-center text-slate-500 text-sm">
+          The new password you set must be different to the previous one
         </p>
 
         <form onSubmit={handleSubmit}>
@@ -62,10 +72,15 @@ const ChangePassword = () => {
               onChange={handleInputChange}
               value={passwordData.oldPassword}
               name="oldPassword"
-              type="password"
+              type={showOldPassword ? "text" : "password"}
               placeholder="Enter Old Password"
             />
-            {/* <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" /> */}
+            <div
+              className="top-1/2 right-3 absolute transform -translate-y-1/2 cursor-pointer"
+              onClick={() => setShowOldPassword(!showOldPassword)}
+            >
+              {showOldPassword ? <FaEyeSlash /> : <FaEye />}
+            </div>
           </div>
 
           <div className="relative mb-[44px]">
@@ -73,10 +88,15 @@ const ChangePassword = () => {
               onChange={handleInputChange}
               value={passwordData.newPassword}
               name="newPassword"
-              type="password"
+              type={showNewPassword ? "text" : "password"}
               placeholder="Enter New Password"
             />
-            {/* <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" /> */}
+            <div
+              className="top-1/2 right-3 absolute transform -translate-y-1/2 cursor-pointer"
+              onClick={() => setShowNewPassword(!showNewPassword)}
+            >
+              {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+            </div>
           </div>
 
           <div className="relative mb-[44px]">
@@ -84,10 +104,15 @@ const ChangePassword = () => {
               onChange={handleConfirmPasswordChange}
               value={confirmPassword}
               name="confirmPassword"
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm Password"
             />
-            {/* <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" /> */}
+            <div
+              className="top-1/2 right-3 absolute transform -translate-y-1/2 cursor-pointer"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </div>
           </div>
 
           <Button type="submit" className="rounded-[8px] w-full h-[45px]">
