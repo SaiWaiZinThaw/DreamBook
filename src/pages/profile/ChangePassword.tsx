@@ -41,7 +41,9 @@ const ChangePassword = () => {
     }));
   };
 
-  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setConfirmPassword(e.target.value);
   };
 
@@ -57,58 +59,63 @@ const ChangePassword = () => {
   }, [passwordChange.isSuccess]);
 
   return (
-    <section className="flex justify-center items-center w-full">
-      <div className="flex flex-col ml-[165px] w-[544px] h-[451px]">
-        <h1 className="mb-[16px] font-bold text-2xl text-center">
+    <section className="flex items-center justify-center w-full">
+      <div className="flex flex-col  md:w-[544px] gap-3 w-full p-6">
+        <h1 className="font-bold text-center text-md md:text-2xl ">
           Change Your Password
         </h1>
-        <p className="font-normal text-center text-slate-500 text-sm">
+        <p className="text-[12px] md:text-sm  font-normal text-center text-slate-500">
           The new password you set must be different to the previous one
         </p>
 
-        <form onSubmit={handleSubmit}>
-          <div className="relative mt-[36px] mb-[44px]">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4 py-4 md:gap-8"
+        >
+          <div className="relative ">
             <Input
               onChange={handleInputChange}
-              value={passwordData.oldPassword}
+              className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
               name="oldPassword"
               type={showOldPassword ? "text" : "password"}
               placeholder="Enter Old Password"
             />
             <div
-              className="top-1/2 right-3 absolute transform -translate-y-1/2 cursor-pointer"
+              className="absolute transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
               onClick={() => setShowOldPassword(!showOldPassword)}
             >
               {showOldPassword ? <FaEyeSlash /> : <FaEye />}
             </div>
           </div>
 
-          <div className="relative mb-[44px]">
+          <div className="relative ">
             <Input
               onChange={handleInputChange}
+              className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
               value={passwordData.newPassword}
               name="newPassword"
               type={showNewPassword ? "text" : "password"}
               placeholder="Enter New Password"
             />
             <div
-              className="top-1/2 right-3 absolute transform -translate-y-1/2 cursor-pointer"
+              className="absolute transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
               onClick={() => setShowNewPassword(!showNewPassword)}
             >
               {showNewPassword ? <FaEyeSlash /> : <FaEye />}
             </div>
           </div>
 
-          <div className="relative mb-[44px]">
+          <div className="relative ">
             <Input
               onChange={handleConfirmPasswordChange}
+              className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
               value={confirmPassword}
               name="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm Password"
             />
             <div
-              className="top-1/2 right-3 absolute transform -translate-y-1/2 cursor-pointer"
+              className="absolute transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}

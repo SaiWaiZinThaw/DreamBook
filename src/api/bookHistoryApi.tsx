@@ -1,5 +1,6 @@
 import { getToken } from "@/services/authService";
 import BaseURL from "../services/ApiEndPoint";
+import { BookHistoryData } from "@/types/types";
 
 const token = getToken();
 
@@ -22,7 +23,7 @@ export const createBookHistory = async (bookSlug: string) => {
   return result;
 };
 
-export const getAllBookHistory = async() => {
+export const getAllBookHistory = async () => {
   const response: Response = await fetch(`${BaseURL}/history`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -30,26 +31,29 @@ export const getAllBookHistory = async() => {
     mode: "cors",
     method: "GET",
     redirect: "follow",
-  }) 
+  });
   const result = await response.json();
   if (!response.ok) {
     throw new Error(result.message);
   }
-  return result;
-}
+  return result as BookHistoryData[];
+};
 
-export const deleteHistory = async (bookSlug:string) => {
-  const response: Response = await fetch(`${BaseURL}/history?slug=${bookSlug}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-  },
-    mode: "cors",
-    method: "DELETE",
-    redirect: "follow",
-  });
+export const deleteHistory = async (bookSlug: string) => {
+  const response: Response = await fetch(
+    `${BaseURL}/history?slug=${bookSlug}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors",
+      method: "DELETE",
+      redirect: "follow",
+    }
+  );
   if (!response.ok) {
-    throw new Error('Failed to delete the book');
+    throw new Error("Failed to delete the book");
   }
 
   return response.status;
-}
+};

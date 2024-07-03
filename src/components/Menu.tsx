@@ -16,7 +16,7 @@ const Menu = () => {
       </button>
       <div className="flex flex-col items-center w-[200px] mt-5">
         <NavLink to={"/"}>
-          <div className="lg:w-[70px] w-full">
+          <div className="md:w-[70px] w-full">
             <img src={LogoBlue} alt="Logo" className="w-full" />
           </div>
         </NavLink>

@@ -10,8 +10,8 @@ const Library = () => {
     <div
       className={
         showMenu
-          ? "relative w-screen h-screen overflow-hidden lg:overflow-auto"
-          : " w-full h-full overflow-x-hidden lg:overflow-auto"
+          ? "relative w-screen h-screen overflow-hidden"
+          : " w-full h-full overflow-x-hidden"
       }
     >
       <Nav />

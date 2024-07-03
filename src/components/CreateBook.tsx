@@ -239,10 +239,10 @@ const CreateBook = () => {
     }
   };
 
-const handleBlur = () => {
-  setTitleError(formData.title.trim() === "");
-  setKeywordError(formData.keywords.length === 0);
-};
+  const handleBlur = () => {
+    setTitleError(formData.title.trim() === "");
+    setKeywordError(formData.keywords.length === 0);
+  };
 
   const handleDeleteKeyword = (indexToDelete: any) => {
     setFormData((prevFormData) => ({
@@ -274,7 +274,7 @@ const handleBlur = () => {
 
   return (
     <div>
-      <div className="flex mt-[42px] w-full lg:ml-[110px] lg:w-[660px] h-[53px] text-md justify-center gap-2">
+      <div className="flex mt-[42px] w-full md:ml-[110px] md:w-[660px] h-[53px] text-md justify-center gap-2">
         <div
           className="flex w-[83px] h-[28px] text-blue-700 text-opacity-60 cursor-pointer items-center"
           onClick={() => navigate(-1)}
@@ -284,15 +284,15 @@ const handleBlur = () => {
         </div>
 
         <div className="w-[374px] h-[53px]">
-          <h1 className="text-lg font-bold lg:text-3xl">Creating A New Book</h1>
+          <h1 className="text-lg font-bold md:text-3xl">Creating A New Book</h1>
         </div>
       </div>
 
       <form
-        className="flex flex-col items-center lg:flex-row lg:items-start"
+        className="flex flex-col items-center md:flex-row md:items-start"
         onSubmit={handleSubmit}
       >
-        <div className="lg:mt-[50px] lg:ml-[110px] w-[199px] h-[327px]">
+        <div className="md:mt-[50px] md:ml-[110px] w-[199px] h-[327px]">
           <div className="h-[284px]">
             {formData.coverImage instanceof File ? (
               <img
@@ -335,7 +335,7 @@ const handleBlur = () => {
           </div>
         </div>
 
-        <div className=" lg:w-[667px]">
+        <div className=" md:w-[667px]">
           <div className="h-[581px]">
             <div className="items-center gap-1.5 grid mx-[32px] pt-[30px] w-[603px] h-[74px]">
               <Label htmlFor="title" className="font-semibold text-[16px]">
@@ -405,11 +405,11 @@ const handleBlur = () => {
                 id="keywords"
               />
               <div>
-                <ul className="absolute flex space-x-2 ml-4">
+                <ul className="absolute flex ml-4 space-x-2">
                   {formData.keywords.map((keyword, index) => (
                     <li
                       key={index}
-                      className="flex border-primary px-2 py-1 border border-opacity-55 rounded-md text-slate-600"
+                      className="flex px-2 py-1 border rounded-md border-primary border-opacity-55 text-slate-600"
                     >
                       {keyword}
                       <BsX

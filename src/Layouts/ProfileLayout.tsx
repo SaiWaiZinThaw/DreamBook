@@ -27,112 +27,121 @@ const ProfileLayout = () => {
   }, [!token]);
 
   return (
-    <div className="w-full">
+    <div className="w-full h-screen">
       <NavBar />
-      <div className="flex w-full">
-        <div className="flex flex-col gap-10 border-2 shadow-sm p-8 pt-16 shoadw-border border-r-border w-[480px]">
+      <div className="flex w-full h-full">
+        <div className="flex flex-col md:gap-10 border-2 shadow-sm pt-8 md:p-8 md:pt-16 shoadw-border border-r-border w-[90px] md:w-[480px]">
           {!isLoading && data && (
-            <div className="flex items-center gap-4 px-5 profile">
+            <div className="flex flex-col items-center gap-2 py-4 md:gap-4 md:flex-row md:px-5 profile">
               <img
                 src={data.profilePicture}
                 alt={data.profilePicture}
-                className="rounded-full w-[65px] h-[65px]"
+                className="rounded-full md:w-[65px] h-[40px] w-[40px] md:h-[65px]"
               />
-              <span className="text-lg font-bold">{data.name}</span>
+              <span className="font-bold md:text-base text-[10px] text-center">
+                {data.name}
+              </span>
             </div>
           )}
 
-          <div className="flex flex-col justify-center gap-0">
+          <div className="flex flex-col justify-center h-full gap-3 md:h-auto md:gap-0">
             <NavLink
               to={"/me/info"}
               className={({ isActive }) =>
                 isActive
-                  ? "bg-primary !text-primary-foreground p-5 rounded-[8px] flex items-center justify-between"
-                  : "text-black flex items-center justify-between p-5 rounded-[8px]"
+                  ? "bg-primary  md:w-full w-[50px] !text-primary-foreground p-2 self-center md:p-5 rounded-[8px] flex items-center justify-center md:justify-between"
+                  : "text-black flex items-center justify-center md:w-full w-[50px] md:justify-between p-2 self-center md:p-5 rounded-[8px]"
               }
             >
               <div className="flex items-center gap-3">
-                <FaUser /> Personal Information
+                <FaUser />
+                <span className="hidden md:block">Personal Information</span>
               </div>
-              <FaAngleRight />
+              <FaAngleRight className="hidden md:block" />
             </NavLink>
 
             <NavLink
               to={"/me/books"}
               className={({ isActive }) =>
                 isActive
-                  ? "bg-primary !text-primary-foreground p-5 rounded-[8px] flex items-center justify-between"
-                  : "text-black flex items-center justify-between p-5 rounded-[8px]"
+                  ? "bg-primary md:w-full w-[50px] !text-primary-foreground p-2 self-center md:p-5 rounded-[8px] flex items-center justify-center md:justify-between"
+                  : "text-black flex items-center justify-center md:w-full w-[50px] md:justify-between p-2 self-center md:p-5 rounded-[8px]"
               }
             >
               <div className="flex items-center gap-3">
-                <ImBooks className="text-xl" /> Book Lists
+                <ImBooks className="text-xl" />
+                <span className="hidden md:block">Book Lists</span>
               </div>
-              <FaAngleRight />
+              <FaAngleRight className="hidden md:block" />
             </NavLink>
 
             <NavLink
               to={"/me/fav"}
               className={({ isActive }) =>
                 isActive
-                  ? "bg-primary !text-primary-foreground p-5 rounded-[8px] flex items-center justify-between"
-                  : "text-black flex items-center justify-between p-5 rounded-[8px]"
+                  ? "bg-primary md:w-full w-[50px] !text-primary-foreground p-2 self-center md:p-5 rounded-[8px] flex items-center justify-center md:justify-between"
+                  : "text-black flex items-center justify-center md:w-full w-[50px] md:justify-between p-2 self-center md:p-5 rounded-[8px]"
               }
             >
               <div className="flex items-center gap-3">
-                <GoHeart className="text-xl" /> Favorite Books
+                <GoHeart className="text-xl" />
+                <span className="hidden md:block">Favorite Books</span>
               </div>
-              <FaAngleRight />
+              <FaAngleRight className="hidden md:block" />
             </NavLink>
 
             <NavLink
               to={"/me/history"}
               className={({ isActive }) =>
                 isActive
-                  ? "bg-primary !text-primary-foreground p-5 rounded-[8px] flex items-center justify-between"
-                  : "text-black flex items-center justify-between p-5 rounded-[8px]"
+                  ? "bg-primary md:w-full w-[50px] !text-primary-foreground p-2 self-center md:p-5 rounded-[8px] flex items-center justify-center md:justify-between"
+                  : "text-black flex items-center justify-center md:w-full w-[50px] md:justify-between p-2 self-center md:p-5 rounded-[8px]"
               }
             >
               <div className="flex items-center gap-3">
-                <IoMdBookmarks className="text-xl" /> History
+                <IoMdBookmarks className="text-xl" />
+                <span className="hidden md:block">History</span>
               </div>
-              <FaAngleRight />
+              <FaAngleRight className="hidden md:block" />
             </NavLink>
 
             <NavLink
               to={"/me/change-password"}
               className={({ isActive }) =>
                 isActive
-                  ? "bg-primary !text-primary-foreground p-5 rounded-[8px] flex items-center justify-between"
-                  : "text-black flex items-center justify-between p-5 rounded-[8px]"
+                  ? "bg-primary md:w-full w-[50px] !text-primary-foreground p-2 self-center md:p-5 rounded-[8px] flex items-center justify-center md:justify-between"
+                  : "text-black flex items-center justify-center md:w-full w-[50px] md:justify-between p-2 self-center md:p-5 rounded-[8px]"
               }
             >
               <div className="flex items-center gap-3">
-                <FaUser /> Change Password
+                <FaUser />
+                <span className="hidden md:block">Change Password</span>
               </div>
-              <FaAngleRight />
+              <FaAngleRight className="hidden md:block" />
             </NavLink>
 
             <NavLink
               to={"/me/restore"}
               className={({ isActive }) =>
                 isActive
-                  ? "bg-primary !text-primary-foreground p-5 rounded-[8px] flex items-center justify-between"
-                  : "text-black flex items-center justify-between p-5 rounded-[8px]"
+                  ? "bg-primary md:w-full w-[50px] !text-primary-foreground p-2 self-center md:p-5 rounded-[8px] flex items-center justify-center md:justify-between"
+                  : "text-black flex items-center justify-center md:w-full w-[50px] md:justify-between p-2 self-center md:p-5 rounded-[8px]"
               }
             >
               <div className="flex items-center gap-3">
-                <FaTrashAlt /> Recently deleted
+                <FaTrashAlt />
+                <span className="hidden md:block">Recently Deleated</span>
               </div>
-              <FaAngleRight />
+              <FaAngleRight className="hidden md:block" />
             </NavLink>
           </div>
 
           <button
             onClick={LogOut}
-            className="flex items-center justify-center gap-3 p-4 font-bold border-t border-border text-secondary-foreground"
+            className="flex items-center justify-center gap-3 px-4 py-10 font-bold border-t border-border text-secondary-foreground"
           >
-            <CiLogout className="text-2xl font-bold" /> Sign Out
+            <CiLogout className="text-2xl font-bold" />
+            <span className="hidden md:block">Sign Out</span>
           </button>
         </div>
         <Outlet />

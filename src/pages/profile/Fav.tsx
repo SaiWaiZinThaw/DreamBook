@@ -27,13 +27,13 @@ const Fav = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <div className="p-10">
-        <div className="flex justify-between items-center h-[50px]">
-          <div className="flex items-center gap-3">
-            <img src={Sorting} alt="sorting" className="h-[50px]" />
+        <div className="flex md:flex-row md:gap-0  flex-col h-[100px] justify-between items-center mb-4 md:h-[50px]">
+          <div className="flex items-center w-full gap-3">
+            <img src={Sorting} alt="sorting" className="h-[30px] md:h-[50px]" />
             <Select>
-              <SelectTrigger className="w-[180px] h-[50px]">
+              <SelectTrigger className="w-[100px] md:w-[180px] h-[30px] md:h-[50px]">
                 <SelectValue placeholder="Sort by default" />
               </SelectTrigger>
               <SelectContent>
@@ -44,27 +44,27 @@ const Fav = () => {
               </SelectContent>
             </Select>
 
-            <div className="w-[380px]">
+            <div className="w-auto  md:w-[380px]">
               <Input
                 icon={<IoIosSearch className="text-2xl" />}
                 placeholder="Search"
-                className="!border-black rounded-[8px]"
+                className="!border-black rounded-[8px] md:h-full h-[30px]"
               />
             </div>
           </div>
-          <Button className="flex items-center gap-5 rounded-[8px] w-[100px] h-full">
+          <Button className="h-[40px] md:h-full self-end text-[13px] md:text-[15px]">
             Search
           </Button>
         </div>
-        <div className="grid grid-cols-2 gap-2 p-10 lg:gap-4 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2 md:p-10 md:gap-4 md:grid-cols-4">
           {!isLoading &&
             data?.items.map((item: any) => (
               <div
                 key={item.book.title}
                 id={item.book.slug}
-                className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] max-w-[232px] h-[280px] book group"
+                className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] min-w-[160px] max-w-[250px] h-[280px] book group"
               >
-                <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
+                <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                   <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                     <BsHeartFill
                       className="text-red-500 cursor-pointer"
@@ -83,7 +83,7 @@ const Fav = () => {
                   <img
                     src={item.book.coverImage}
                     alt={item.book.coverImage}
-                    className="max-w-[120px] h-[140px]"
+                    className="max-w-[120px] min-w-[100px] h-[140px]"
                   />
                 </div>
 
@@ -97,7 +97,7 @@ const Fav = () => {
                       alt={item.book.category.title}
                       className="w-6"
                     />
-                    <p className="font-Inter text-[12px] text-secondary-foreground">
+                    <p className="font-Inter text-[12px] text-secondary-foreground line-clamp-1">
                       {item.book.category.title}
                     </p>
                   </div>
@@ -107,7 +107,7 @@ const Fav = () => {
                       alt={item.book.user.name}
                       className="w-6 h-6 rounded-full"
                     />
-                    <h2 className="text-[13px] text-black">
+                    <h2 className="font-medium text-[13px] text-black">
                       By {item.book.user.name}
                     </h2>
                   </div>
