@@ -69,7 +69,7 @@ const NavBar = () => {
             </Button>
           </NavLink>
           <NavLink to="/auth/signup">
-            <Button size={"lg"}>Register</Button>
+            <Button size={"md"}>Register</Button>
           </NavLink>
         </div>
       ) : (

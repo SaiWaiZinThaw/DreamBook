@@ -89,8 +89,8 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex flex-col items-center self-center gap-10 lg:w-6/12">
-      <form className="flex flex-col items-center lg:gap-5 gap-3 lg:w-[460px] w-[300px] font-Inter lg:text-md text-sm">
+    <div className="flex flex-col items-center self-center gap-10 md:w-6/12">
+      <form className="flex flex-col items-center md:gap-5 gap-3 md:w-[460px] w-[300px] font-Inter md:text-md text-sm">
         <div className="flex flex-col items-center gap-5">
           <h1 className="text-2xl font-bold text-white">Create an Account</h1>
           <h3 className="text-white">Get started to share books & reading</h3>
@@ -99,7 +99,7 @@ const SignUp = () => {
           type="email"
           id="email"
           placeholder="Email"
-          className="h-10 lg:h-auto lg:placeholder:text-md lg:text-md text-[13px] placeholder:text-[13px]"
+          className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
           value={accountData.email}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setAccountData((prev) => ({ ...prev, email: event.target.value }));
@@ -110,7 +110,7 @@ const SignUp = () => {
         )}
         <Input
           type="password"
-          className="h-10 lg:h-auto lg:placeholder:text-md lg:text-md text-[13px] placeholder:text-[13px]"
+          className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
           id="password"
           placeholder="Password"
           value={accountData.password}
@@ -128,7 +128,7 @@ const SignUp = () => {
         )}
         <Input
           type="password"
-          className="h-10 lg:h-auto lg:placeholder:text-md lg:text-md text-[13px] placeholder:text-[13px]"
+          className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
           id="ConfirmPassword"
           placeholder="Confirm Password"
           value={confirmPassword}
@@ -144,7 +144,7 @@ const SignUp = () => {
 
         {!createAccount.isPending ? (
           <Button
-            className="h-10 lg:h-auto"
+            className="h-10 md:h-auto"
             variant={"default"}
             size={"full"}
             text={"white"}

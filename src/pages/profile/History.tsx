@@ -8,15 +8,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useDeleteHistory, useFetchAllHistory } from "@/hooks/useBookHistory";
 import { FaTrashCan } from "react-icons/fa6";
 
 const History = () => {
-  const {data: getHistory, refetch} = useFetchAllHistory();
+  const { data: getHistory, isLoading, refetch } = useFetchAllHistory();
   const deleteHistory = useDeleteHistory();
 
-  const handleDelete = (bookSlug:string) => {
+  const handleDelete = (bookSlug: string) => {
     deleteHistory.mutate(bookSlug, {
       onSuccess: () => {
         refetch();
@@ -28,13 +27,13 @@ const History = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <div className="p-10">
-        <div className="flex justify-between items-center h-[50px]">
-          <div className="flex items-center gap-3">
-            <img src={Sorting} alt="sorting" className="h-[50px]" />
+        <div className="flex md:flex-row md:gap-0  flex-col h-[100px] justify-between items-center mb-4 md:h-[50px]">
+          <div className="flex items-center w-full gap-3">
+            <img src={Sorting} alt="sorting" className="h-[30px] md:h-[50px]" />
             <Select>
-              <SelectTrigger className="w-[180px] h-[50px]">
+              <SelectTrigger className="w-[100px] md:w-[180px] h-[30px] md:h-[50px]">
                 <SelectValue placeholder="Sort by default" />
               </SelectTrigger>
               <SelectContent>
@@ -45,50 +44,66 @@ const History = () => {
               </SelectContent>
             </Select>
 
-            <div className="w-[380px]">
+            <div className="w-auto  md:w-[380px]">
               <Input
                 icon={<IoIosSearch className="text-2xl" />}
                 placeholder="Search"
-                className="!border-black rounded-[8px]"
+                className="!border-black rounded-[8px] md:h-full h-[30px]"
               />
             </div>
           </div>
-          <Button className="flex items-center gap-5 rounded-[8px] w-[100px] h-full">
-            Search
-          </Button>
         </div>
-
-        <div className="mt-5">
-          <ul className="flex gap-x-4 mx-4">
-            {
-              getHistory?.map((historyItem:any) => (
-                <div key={historyItem.id}  className="relative bg-slate-100 shadow-xl border rounded-[8px] w-[232px] cursor-pointer group">
-                  <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                   <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                   <FaTrashCan onClick={() => handleDelete(historyItem.book.slug)} className="text-red-500 cursor-pointer"/>
-                   </div>
+        <div className="grid grid-cols-2 gap-2 md:p-10 md:gap-4 md:grid-cols-4">
+          {!isLoading &&
+            getHistory?.map((item) => (
+              <div
+                key={item.book.title}
+                id={item.book.slug}
+                className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] min-w-[150px] max-w-[232px] h-[280px] book group"
+              >
+                <div className="group-hover:right-[5px] top-[10px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
+                  <div
+                    onClick={() => handleDelete(item.book.slug)}
+                    className="flex items-center justify-center w-8 h-8 border rounded-full cursor-pointer bg-slate-50 drop-shadow-xl"
+                  >
+                    <FaTrashCan className="text-red-500" />
                   </div>
-                  <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                    <img src={historyItem.book.coverImage} alt="" className="w-[86px] h-[129px]" />
-                  </div>
-                  <h1 className="px-3 font-semibold text-xl">{historyItem.book.title}</h1>
-
-                  <p className="flex mt-1 font-Inter font-normal text-[12px] text-gray-500">
-                    <img src={historyItem?.book.category?.icon} alt="" className="mr-2 w-[20px] h-[20px]"/>
-                    {historyItem?.book.category?.title}
-                  </p>
-
-                    <h2 className="flex my-2 px-3 font-bold text-[13px]">
-                      <img src={historyItem.user.profilePicture} alt="" className="mr-2 rounded-full w-[20px] h-[20px]"/>
-                      By {historyItem.user.name}
-
-                    </h2>
-                   
-                  <div  />
                 </div>
-              ))
-            }
-          </ul>
+                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                  <img
+                    src={item.book.coverImage}
+                    alt={item.book.coverImage}
+                    className="max-w-[120px] min-w-[100px] h-[140px]"
+                  />
+                </div>
+
+                <div className="flex flex-col justify-center gap-1 ml-2">
+                  <h1 className="line-clamp-1 h-6 font-bold text-[15px]">
+                    {item.book.title}
+                  </h1>
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={item.book.category.icon}
+                      alt={item.book.category.title}
+                      className="w-6"
+                    />
+                    <p className="font-Inter text-[12px] text-secondary-foreground line-clamp-1">
+                      {item.book.category.title}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3 mt-1">
+                    <img
+                      src={item.user.profilePicture}
+                      alt={item.user.name}
+                      className="w-6 h-6 rounded-full"
+                    />
+                    <h2 className="font-medium text-[13px] text-black">
+                      By {item.user.name}
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     </div>

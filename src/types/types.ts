@@ -86,8 +86,20 @@ export type fetchBookData = {
   };
 };
 
+export type BookHistoryData = {
+  book: Book;
+  userId: string;
+  bookId: string;
+  user: {
+    name: string;
+    profilePicture: string;
+    userId: string;
+  };
+};
+
 export type favoriteBookData = {
   book: Book;
+  userId: string;
   bookId: string;
   user: {
     name: string;
@@ -186,8 +198,7 @@ export type UpdateProgressData = {
 
 export type BookHisoryData = {
   bookSlug: string;
-
-}
+};
 
 export type relatedBookData = {
   items: Book[];
@@ -198,6 +209,4 @@ export type relatedBookData = {
     totalItems: number;
     totalPages: number;
   };
-
-
 };

@@ -38,7 +38,7 @@ const LatestBooks = () => {
   }, [booksData]);
 
   return (
-    <div className="py-2 lg:p-3 transition overflow-x-auto">
+    <div className="py-2 overflow-x-auto transition md:p-3">
       <div className="flex w-full h-[280px]">
         {!isBooksLoading &&
           booksData &&
@@ -46,10 +46,10 @@ const LatestBooks = () => {
             <div
               key={book.bookId}
               id={book.bookId}
-              className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] lg:w-[232px] min-w-[200px] h-[280px] book group"
+              className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] md:w-[232px] min-w-[200px] h-[280px] book group"
             >
               <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                   {favorites[book.bookId] ? (
                     <BsHeartFill
                       className="text-red-500 cursor-pointer"
@@ -57,15 +57,15 @@ const LatestBooks = () => {
                     />
                   ) : (
                     <BsHeart
-                      className="text-slate-500 cursor-pointer"
+                      className="cursor-pointer text-slate-500"
                       onClick={() => toggleFavorite(book.bookId, book.slug)}
                     />
                   )}
                 </div>
 
-                <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                   <BsEyeFill
-                    className="text-slate-500 cursor-pointer"
+                    className="cursor-pointer text-slate-500"
                     onClick={() => viewBook(book.slug)}
                   />
                 </div>
@@ -96,7 +96,7 @@ const LatestBooks = () => {
                   <img
                     src={book.user.profilePicture}
                     alt={book.user.name}
-                    className="rounded-full w-6 h-6"
+                    className="w-6 h-6 rounded-full"
                   />
                   <h2 className="text-[13px] text-black">
                     By {book.user.name}
