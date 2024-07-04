@@ -28,8 +28,8 @@ const Fav = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="p-10">
-        <div className="flex md:flex-row md:gap-0  flex-col h-[100px] justify-between items-center mb-4 md:h-[50px]">
+      <div className="p-4 md:p-10">
+        <div className="flex md:flex-row md:gap-0 flex-col h-[100px] justify-between items-center mb-4 md:h-[50px]">
           <div className="flex items-center w-full gap-3">
             <img src={Sorting} alt="sorting" className="h-[30px] md:h-[50px]" />
             <Select>
@@ -44,7 +44,7 @@ const Fav = () => {
               </SelectContent>
             </Select>
 
-            <div className="w-auto  md:w-[380px]">
+            <div className="w-auto md:w-[380px]">
               <Input
                 icon={<IoIosSearch className="text-2xl" />}
                 placeholder="Search"
@@ -62,7 +62,7 @@ const Fav = () => {
               <div
                 key={item.book.title}
                 id={item.book.slug}
-                className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] min-w-[160px] max-w-[250px] h-[280px] book group"
+                className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] min-w-[130px] max-w-[250px] h-[280px] book group"
               >
                 <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                   <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">

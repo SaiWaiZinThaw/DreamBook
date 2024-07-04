@@ -17,7 +17,7 @@ import {
 import { BsQuestionCircle } from "react-icons/bs";
 
 import "../App.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useFetchTrendingCategories } from "@/hooks/useFetchCategories";
 import { faqItems } from "@/variables";
 import PopularBooks from "./PopularBooks";
@@ -25,7 +25,7 @@ import LatestBooks from "./LatestBooks";
 
 const Hero = () => {
   const { data: fetchTrendingCategories } = useFetchTrendingCategories();
-
+  const navigate = useNavigate();
   return (
     <div className="container px-0 mx-0 md:flex-none">
       <div
@@ -120,6 +120,15 @@ const Hero = () => {
             {fetchTrendingCategories?.map((category: any) => (
               <div
                 key={category.categoryId}
+                onClick={() => {
+                  const categoryIdArray = [category.categoryId];
+                  const encodedCategoryIds = encodeURIComponent(
+                    JSON.stringify(categoryIdArray)
+                  );
+                  navigate(
+                    `library?category_ids=${encodedCategoryIds}&sort_by=random&page=1`
+                  );
+                }}
                 className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md cursor-pointer"
               >
                 <img

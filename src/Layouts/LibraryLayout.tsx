@@ -13,7 +13,7 @@ const LibraryLayout = () => {
   const { data, isLoading } = useFetchCategories();
   const [searchParams, setSearchParams] = useSearchParams({
     search: "",
-    category_ids: "",
+    category_ids: "[]",
     sortBy: "random",
   });
 
@@ -24,8 +24,9 @@ const LibraryLayout = () => {
   );
   const [sortBy, setSortBy] = useState(searchParams.get("sortBy") || "random");
   const [pageCount, setPageCount] = useState<number>(
-    parseInt(searchParams.get("page") || "1")
+    parseInt(searchParams.get("page") || "1", 10)
   );
+  const [selectAll, setSelectAll] = useState<boolean>(false);
 
   const { data: booksData, isLoading: isBooksLoading } = useFetchAllBooks({
     deBounceSearch,
@@ -34,12 +35,30 @@ const LibraryLayout = () => {
     pageCount,
   });
 
-  const categoryHandler = (categoryId: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(categoryId)
-        ? prev.filter((id) => id !== categoryId)
-        : [...prev, categoryId]
+  useEffect(() => {
+    setSelectAll(
+      selectedCategories.length > 0 &&
+        data?.length === selectedCategories.length
     );
+  }, [selectedCategories, data]);
+
+  const categoryHandler = (categoryId: string) => {
+    setSelectedCategories((prev) => {
+      if (prev.includes(categoryId)) {
+        return prev.filter((id) => id !== categoryId);
+      } else {
+        return [...prev, categoryId];
+      }
+    });
+  };
+
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedCategories([]);
+    } else {
+      setSelectedCategories(data ? data.map((item) => item.categoryId) : []);
+    }
+    setSelectAll(!selectAll);
   };
 
   const handlePageChange = (
@@ -53,7 +72,7 @@ const LibraryLayout = () => {
   useEffect(() => {
     const params: any = {};
     if (selectedCategories.length > 0) {
-      params.category_ids = JSON.stringify(selectedCategories.join());
+      params.category_ids = JSON.stringify(selectedCategories);
     }
     if (sortBy) {
       params.sort_by = sortBy;
@@ -62,7 +81,7 @@ const LibraryLayout = () => {
       params.search = deBounceSearch;
     }
     if (pageCount) {
-      params.page = pageCount;
+      params.page = pageCount.toString();
     }
 
     setSearchParams(params);
@@ -82,17 +101,14 @@ const LibraryLayout = () => {
       </div>
 
       <div className="w-full mt-4 md:flex">
-        <div className="md:block hidden   border-slate-400 mt-2 border-r w-[400px] md:px-4">
+        <div className="md:block hidden border-slate-400 mt-2 border-r w-[400px] md:px-4">
           <h1 className="flex justify-center mt-[20px] font-extrabold text-2xl text-black">
             Categories
           </h1>
 
           <div className="flex flex-col justify-start gap-3 mt-[30px] ml-[30px]">
-            <label
-              key={"All"}
-              className="flex items-center gap-2 text-lg font-medium md:text-[16px]"
-            >
-              <Checkbox />
+            <label className="flex items-center gap-2 text-lg font-medium md:text-[16px]">
+              <Checkbox onCheckedChange={handleSelectAll} checked={selectAll} />
               All
             </label>
             {!isLoading && data
@@ -124,7 +140,7 @@ const LibraryLayout = () => {
             isBooksLoading={isBooksLoading}
           />
 
-          {!isLoading && (
+          {!isBooksLoading && (
             <Stack spacing={1}>
               <Pagination
                 color="primary"
