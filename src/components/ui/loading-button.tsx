@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export function ButtonLoading() {
   return (
-    <Button size={"full"} disabled className="h-10 lg:h-auto">
+    <Button size={"full"} disabled className="h-10 md:h-auto">
       <Loader2 className="h-4 mr-2 animate-spin" />
       Please wait
     </Button>

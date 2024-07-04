@@ -100,16 +100,16 @@ const ProfileSetup = () => {
     <div className="flex flex-col items-center w-full pb-10">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center lg:gap-6 gap-3 w-[300px] lg:w-[460px] font-Inter lg:text-md text-sm"
+        className="flex flex-col items-center md:gap-6 gap-3 w-[300px] md:w-[460px] font-Inter md:text-md text-sm"
       >
         <h1 className="text-2xl font-bold text-white">Create an account</h1>
         <FileUpload onFileChange={handleFileChange} />
-        <Label htmlFor="picture" className="text-lg text-white font-Inter">
+        <Label htmlFor="picture" className="text-white text-md font-Inter">
           Upload Photo
         </Label>
         <div className="flex items-center w-full gap-5">
           <select
-            className="flex justify-center items-center px-4 rounded-[5px] h-10 lg:h-12 text-sm"
+            className="flex justify-center items-center px-4 rounded-[5px] h-10 md:h-12 text-sm"
             value={countryCodeNumber}
             onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
               setCountryCodeNumber(event.target.value);
@@ -124,7 +124,7 @@ const ProfileSetup = () => {
           <Input
             type="tel"
             id="phone"
-            className="h-10 lg:h-auto lg:placeholder:text-md lg:text-md text-[13px] placeholder:text-[13px]"
+            className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
             placeholder="Phone"
             value={localPhoneNumber}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,7 +138,7 @@ const ProfileSetup = () => {
         <Input
           type="text"
           id="name"
-          className="h-10 lg:h-auto lg:placeholder:text-md lg:text-md text-[13px] placeholder:text-[13px]"
+          className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
           placeholder="Full Name"
           value={profileData.name}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -150,7 +150,7 @@ const ProfileSetup = () => {
         />
         {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
         <select
-          className="flex justify-center items-center px-4 rounded-[5px] w-full h-10 lg:h-12 text-sm"
+          className="flex justify-center items-center px-4 rounded-[5px] w-full h-10 md:h-12 text-sm"
           value={profileData.gender}
           onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
             setProfileData((prev) => ({
