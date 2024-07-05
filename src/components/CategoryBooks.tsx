@@ -66,18 +66,18 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
 
   return (
 
-    <div className="flex flex-col w-full min-h-screen px-6 mx-0 lg:px-10">
-      <div className="flex justify-between lg:gap-0 gap-4 mt-4 h-[30px] lg:h-[50px] w-full">
-        <div className="flex items-center w-8/12 gap-3 lg:w-full">
+    <div className="flex flex-col mx-0 px-6 lg:px-10 w-full min-h-screen">
+      <div className="flex justify-between gap-4 lg:gap-0 mt-4 w-full h-[30px] lg:h-[50px]">
+        <div className="flex items-center gap-3 w-8/12 lg:w-full">
           <img
             src={Sorting}
             alt="sorting"
-            className="w-4/12 h-full lg:w-auto md:w-auto"
+            className="w-4/12 md:w-auto lg:w-auto h-full"
           />
 
 
           <Select onValueChange={handleSortChange}>
-            <SelectTrigger className="lg:w-[180px] w-8/12 h-full text-xs lg:text-md">
+            <SelectTrigger className="w-8/12 lg:w-[180px] h-full text-xs lg:text-md">
               <SelectValue placeholder="Sort" />
             </SelectTrigger>
             <SelectContent>
@@ -93,7 +93,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
           icon={<IoIosSearch className="lg:text-2xl" />}
           placeholder="Search"
           value={search}
-          className="!border-black rounded-[8px] lg:w-[280px] lg:h-[42px] h-full w-full lg:text-md text-xs placeholder:text-xs"
+          className="!border-black rounded-[8px] w-full lg:w-[280px] h-full lg:h-[42px] text-xs lg:text-md placeholder:text-xs"
           onChange={(event) => {
             setSearch(event.target.value);
           }}
@@ -101,18 +101,18 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
       </div>
 
 
-      <div className="grid w-full grid-cols-2 gap-2 p-4 py-6 gap-y-4 md:grid-cols-3 lg:p-10 lg:gap-8 lg:grid-cols-4">
+      <div className="gap-2 gap-y-4 lg:gap-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 py-6 p-4 lg:p-10 w-full">
 
         {!isBooksLoading &&
           booksData &&
           booksData.items.map((book: Book) => (
             <div
-            onClick={() => viewBook(book.slug)}
+            // onClick={() => viewBook(book.slug)}
               key={book.bookId}
               id={book.bookId}
-              className="relative min-w-[150px] md:gap-2 md:max-w-[170px] py-2 lg:py-0 bg-slate-100 shadow-md shadow-slate-200 border rounded-[8px] lg:min-w-[190px] lg:h-[280px] book group"
+              className="relative md:gap-2 bg-slate-100 shadow-md shadow-slate-200 py-2 lg:py-0 border rounded-[8px] min-w-[150px] lg:min-w-[190px] md:max-w-[170px] lg:h-[280px] book group"
             >
-              <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
+              <div  className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                 <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                   {favorites[book.bookId] ? (
                     <BsHeartFill
@@ -134,16 +134,16 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
                   />
                 </div>
               </div>
-              <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+              <div onClick={() => viewBook(book.slug)} className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px] cursor-pointer">
                 <img
                   src={book.coverImage}
                   alt={book.coverImage}
-                  className="lg:max-w-[120px] lg:h-[140px] h-[120px] w-[100px]"
+                  className="w-[100px] lg:max-w-[120px] h-[120px] lg:h-[140px]"
                 />
               </div>
 
               <div className="flex flex-col justify-center gap-1 ml-2">
-                <h1 className="line-clamp-1 h-6 font-bold lg:text-[15px] text-[13px]">
+                <h1 className="line-clamp-1 h-6 font-bold text-[13px] lg:text-[15px]">
                   {book.title}
                 </h1>
                 <div className="flex items-center gap-2">
@@ -161,10 +161,10 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
                     src={book.user.profilePicture}
                     alt={book.user.name}
 
-                    className="w-5 h-5 rounded-full lg:w-6 lg:h-6"
+                    className="rounded-full w-5 lg:w-6 h-5 lg:h-6"
 
                   />
-                  <h2 className="lg:text-[13px] text-[12px] text-black">
+                  <h2 className="text-[12px] text-black lg:text-[13px]">
                     By {book.user.name}
                   </h2>
                 </div>

@@ -273,47 +273,47 @@ const handleBlur = () => {
   };
 
   return (
-    <div>
-      <div className="flex mt-[42px] w-full lg:ml-[110px] lg:w-[660px] h-[53px] text-md justify-center gap-2">
+    <div className="flex flex-col justify-center">
+      <div className="flex gap-2 mx-2 mt-[20px] lg:mt-[45px] lg:ml-[110px] w-full lg:w-[660px] h-[53px] text-md">
         <div
-          className="flex w-[83px] h-[28px] text-blue-700 text-opacity-60 cursor-pointer items-center"
+          className="flex items-center lg:mt-[19.5px] lg:w-[83px] sm:h-[26px] lg:h-[28px] text-blue-700 text-opacity-60 cursor-pointer"
           onClick={() => navigate(-1)}
         >
-          <FaArrowLeft className="mx-2 mt-1" />
-          <h2>Back</h2>
+          <FaArrowLeft className="lg:mx-2 mt-[2px] mr-1 text-[12px] lg:text-[18px]" />
+          <h2 className="text-[12px] lg:text-lg">Back</h2>
         </div>
 
-        <div className="w-[374px] h-[53px]">
-          <h1 className="text-lg font-bold lg:text-3xl">Creating A New Book</h1>
+        <div className="lg:ml-[20px] w-[374px] h-[53px]">
+          <h1 className="mt-[13.5px] font-bold text-md lg:text-3xl">Creating A New Book</h1>
         </div>
       </div>
 
       <form
-        className="flex flex-col items-center lg:flex-row lg:items-start"
+        className="flex lg:flex-row flex-col items-center lg:items-start sm:ml-[16px] lg:ml-[20px]"
         onSubmit={handleSubmit}
       >
-        <div className="lg:mt-[50px] lg:ml-[110px] w-[199px] h-[327px]">
-          <div className="h-[284px]">
+        <div className="lg:mt-[60px] lg:ml-[110px] w-[200px] lg:w-[199px] lg:h-[327px]">
+          <div className="h-[300px] lg:h-[284px]">
             {formData.coverImage instanceof File ? (
               <img
                 src={URL.createObjectURL(formData.coverImage)}
                 alt="Uploaded Cover"
-                className="rounded-[8px] w-full h-full object-cover"
+                className="rounded-[8px] w-full lg:w-full h-full lg:h-full object-cover"
               />
             ) : (
               <label
                 htmlFor="fileInput"
-                className="flex flex-col justify-center items-center border-slate-500 border border-dotted rounded-[8px] h-[284px] cursor-pointer"
+                className="flex flex-col justify-center items-center border-slate-500 border border-dotted rounded-[8px] h-[300px] lg:h-[284px] cursor-pointer"
               >
                 <img
                   src={BookCraftImg}
                   alt=""
-                  className="w-[48px] h-[48px] object-cover"
+                  className="w-[38px] lg:w-[48px] h-[38px] lg:h-[48px] object-cover"
                 />
-                <h3 className="flex px-[10px] py-[10px] font-extrabold text-slate-500 text-sm">
+                <h3 className="flex px-[23px] lg:px-[10px] py-[10px] font-extrabold text-[12px] text-slate-500 lg:text-sm">
                   Drop your images here or browse JPG, JPEG or PNG
                 </h3>
-                <p className="mx-[33px] font-semibold text-[12px] text-slate-500">
+                <p className="mx-[20px] lg:mx-[33px] font-semibold text-[10px] text-red-400 lg:text-slate-500 lg:text-[12px]">
                   The size must be <br /> (123 x 123 ) px
                 </p>
               </label>
@@ -328,22 +328,23 @@ const handleBlur = () => {
               id="fileInput"
             />
             <label htmlFor="fileInput">
-              <h1 className="font-extrabold text-[19px] text-primary">
+              <h1 className="font-extrabold text-primary lg:text-[19px]">
                 Select Book Cover
               </h1>
             </label>
           </div>
         </div>
 
-        <div className=" lg:w-[667px]">
+        <div className="lg:ml-[50px] w-[430px] lg:w-[667px]">
           <div className="h-[581px]">
-            <div className="items-center gap-1.5 grid mx-[32px] pt-[30px] w-[603px] h-[74px]">
-              <Label htmlFor="title" className="font-semibold text-[16px]">
+            <div className="justify-center lg:items-center gap-1.5 grid mx-[32px] pt-[30px] w-[366px] lg:w-[603px] h-[40px] lg:h-[74px]">
+              <Label htmlFor="title" className="font-semibold lg:text-[16px]">
                 Title
               </Label>
               <div className="relative">
                 <Input
                   onChange={handleTitleChange}
+                  className="w-[220px] lg:w-[603px] h-[25px] lg:h-[45px] text-[12px] lg:text-[14px]"
                   value={formData.title}
                   name="title"
                   type="text"
@@ -352,31 +353,31 @@ const handleBlur = () => {
                   onBlur={handleBlur}
                   required
                 />
-                <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" />
+                <AiOutlineUser className="top-[5px] lg:top-[12.7px] right-[12px] lg:right-2 bottom-0 absolute lg:w-[21px] lg:h-[21px] text-gray-400" />
               </div>
               {titleError && (
-                <div className="ml-[10px] font-bold text-red-500 text-sm">
+                <div className="ml-[10px] font-bold text-[12px] text-red-500 lg:text-sm">
                   <h1>* Please fill the title</h1>
                 </div>
               )}
             </div>
 
-            <div className="items-center gap-1.5 grid mx-[32px] pt-[60px] w-[603px] h-[74px]">
-              <Label htmlFor="category" className="font-semibold text-[16px]">
+            <div className="justify-center lg:items-center gap-1.5 grid mx-[32px] pt-[60px] w-[366px] lg:w-[603px] h-[40px] lg:h-[74px]">
+              <Label htmlFor="category" className="font-semibold lg:text-[16px]">
                 Category
               </Label>
               <div className="relative">
                 <select
                   name="category"
                   id="category"
-                  className={`border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold ${
+                  className={`border-slate-300 pl-[16px] border rounded h-[35px] lg:w-[603px] lg:h-[45px] font-extrabold ${
                     selectedCategory === "" ? "text-slate-300" : ""
                   }`}
                   ref={selectRef}
                   onChange={handleChange}
                   defaultValue=""
                 >
-                  <option value="" disabled className="font-extrabold">
+                  <option value="" disabled className="font-extrabold text-[12px]">
                     Select Category
                   </option>
                   {fetchCategories?.map((category: any) => (
@@ -392,12 +393,13 @@ const handleBlur = () => {
               </div>
             </div>
 
-            <div className="items-center gap-1.5 grid mx-[32px] pt-[90px] w-[603px] h-[74px]">
-              <Label htmlFor="keywords" className="font-semibold text-[16px]">
+            <div className="justify-center lg:items-center gap-1.5 grid mx-[32px] pt-[90px] lg:pl-0 w-[366px] lg:w-[603px] h-[40px] lg:h-[74px]">
+              <Label htmlFor="keywords" className="font-semibold lg:text-[16px]">
                 Keywords
               </Label>
               <Input
                 onChange={handleKeywordChange}
+                className="w-[220px] lg:w-[603px] h-[25px] lg:h-[45px]"
                 value={currentKeyword}
                 onKeyPress={handleKeyPress}
                 name="keywords"
@@ -427,90 +429,90 @@ const handleBlur = () => {
               )}
             </div>
 
-            <div className="items-center gap-1.5 grid mx-[32px] pt-[120px] w-[603px] h-[176px]">
+            <div className="justify-center lg:items-center gap-1.5 grid mx-[32px] pt-[90px] lg:pl-0 w-[366px] lg:w-[603px] h-[176px]">
               <Label
                 htmlFor="description"
-                className="font-semibold text-[16px]"
+                className="font-semibold lg:text-[16px]"
               >
                 Description
               </Label>
               <div
                 ref={quillRef}
-                className="border-slate-300 border rounded w-full h-[200px]"
+                className="border-slate-300 border rounded w-[220px] lg:w-[603px] h-[200px]"
               />
               <div className="relative">
-                <div className="bottom-0 absolute mb-[8px] ml-[25px]">
+                <div className="bottom-0.5 lg:bottom-0 absolute mb-[8px] lg:ml-[25px]">
                   <button
                     type="button"
                     onClick={handleBold}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 ml-[4px] mr-[2.5px] lg:mx-1 p-1 border rounded-[4px]  ${
                       isBoldActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaBold className="w-[17px] h-[17px]" />
+                    <FaBold className="w-[12px] lg:w-[17px] lg:h-[17px]" />
                   </button>
                   <button
                     type="button"
                     onClick={handleItalic}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 mx-[2.5px] lg:mx-1 p-1 border rounded-[4px]  ${
                       isItalicActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaItalic className="w-[17px] h-[17px]" />
+                    <FaItalic className="w-[12px] lg:w-[17px] lg:h-[17px]" />
                   </button>
                   <button
                     type="button"
                     onClick={handleUnderline}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 mx-[2.5px] lg:mx-1 p-1 border rounded-[4px]  ${
                       isUnderlineActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaUnderline className="w-[17px] h-[17px]" />
+                    <FaUnderline className="w-[12px] lg:w-[17px] lg:h-[17px]" />
                   </button>
                   <button
                     type="button"
                     onClick={alignLeft}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 mx-[2.5px] lg:mx-1 p-1 border rounded-[4px]  ${
                       isLeftActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaAlignLeft className="w-[17px] h-[17px]" />
+                    <FaAlignLeft className="w-[12px] lg:w-[17px] lg:h-[17px]" />
                   </button>
                   <button
                     type="button"
                     onClick={alignCenter}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 mx-[2.5px] lg:mx-1 p-1 border rounded-[4px]  ${
                       isCenterActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaAlignCenter className="w-[17px] h-[17px]" />
+                    <FaAlignCenter className="w-[12px] lg:w-[17px] lg:h-[17px]" />
                   </button>
                   <button
                     type="button"
                     onClick={alignRight}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 mx-[2.5px] lg:mx-1 p-1 border rounded-[4px]  ${
                       isRightActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaAlignRight className="w-[17px] h-[17px]" />
+                    <FaAlignRight className="w-[12px] lg:w-[17px] lg:h-[17px]" />
                   </button>
                   <button
                     type="button"
                     onClick={handleBullet}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 mx-[2.5px] lg:mx-1 p-1 border rounded-[4px]  ${
                       isBulletActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaListUl className="w-[17px] h-[17px]" />
+                    <FaListUl className="w-[12px] lg:w-[17px] lg:h-[17px]" />
                   </button>
                   <button
                     type="button"
                     onClick={handleOrder}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 mx-[2.5px] lg:mx-1 p-1 border rounded-[4px]  ${
                       isOrderActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaListOl className="w-[17px] h-[17px]" />
+                    <FaListOl className="w-[12px] lg:w-[17px] lg:h-[17px]" />
                   </button>
                 </div>
                 <textarea
@@ -532,10 +534,10 @@ const handleBlur = () => {
           </div>
 
           {!createBookMutation.isPending ? (
-            <div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
+            <div className="flex justify-center items-center bg-primary mx-auto lg:my-10 mb-10 border rounded-[8px] w-[220px] lg:w-[603px]">
               <button
                 type="submit"
-                className="justify-center mx-[256px] text-white"
+                className="lg:justify-center ml-[20px] h-[40px] lg:h-[43px] text-[14px] text-white lg:text-lg"
               >
                 Create Now
               </button>

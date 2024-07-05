@@ -68,9 +68,9 @@ const Hero = () => {
       </div>
 
 
-      <div className="flex flex-col p-2 items-center px-5 gap-4 lg:gap-0 lg:flex-row lg:justify-center lg:gap-x-4 lg:mt-[60px] w-screen lg:h-[220px]">
+      <div className="flex lg:flex-row flex-col lg:justify-center items-center gap-4 lg:gap-0 lg:gap-x-4 lg:mt-[60px] px-5 p-2 w-screen lg:h-[220px]">
         <div
-          className=" flex flex-col min-h-[150px] gap-1 lg:gap-3 bg-opacity-88 bg-no-repeat w-full lg:w-[400px] h-full bg-cover p-5 lg:p-9 rounded-[10px]    text-white"
+          className="flex flex-col gap-1 lg:gap-3 bg-opacity-88 bg-cover bg-no-repeat p-5 lg:p-9 rounded-[10px] w-full lg:w-[400px] h-full min-h-[150px] text-white"
 
           style={{ backgroundImage: `url(${About})` }}
         >
@@ -82,7 +82,7 @@ const Hero = () => {
         </div>
         <div
 
-          className="flex flex-col min-h-[120px] gap-1 lg:gap-3 bg-opacity-88 bg-no-repeat w-full lg:w-[400px] h-full bg-cover p-5 lg:p-9 rounded-[10px]    text-white"
+          className="flex flex-col gap-1 lg:gap-3 bg-opacity-88 bg-cover bg-no-repeat p-5 lg:p-9 rounded-[10px] w-full lg:w-[400px] h-full min-h-[120px] text-white"
 
           style={{ backgroundImage: `url(${FeatureBg})` }}
         >
@@ -94,7 +94,7 @@ const Hero = () => {
         </div>
         <div
 
-          className="flex flex-col min-h-[120px] gap-1 lg:gap-3 bg-opacity-88 bg-no-repeat w-full lg:w-[400px] h-full bg-cover p-5 lg:p-9 rounded-[10px]  text-white"
+          className="flex flex-col gap-1 lg:gap-3 bg-opacity-88 bg-cover bg-no-repeat p-5 lg:p-9 rounded-[10px] w-full lg:w-[400px] h-full min-h-[120px] text-white"
 
           style={{ backgroundImage: `url(${Visit})` }}
         >
@@ -141,7 +141,7 @@ const Hero = () => {
       </div>
 
 
-      <div className="mt-[50px] w-screen  lg:h-[400px] p-6 lg:p-10">
+      <div className="mt-[50px] p-6 lg:p-10 w-screen lg:h-[400px]">
 
         <div className="flex justify-between">
           <h1 className="font-bold text-xl">Latest Books</h1>
@@ -175,7 +175,7 @@ const Hero = () => {
         {faqItems.map((item, index) => (
           <Accordion
 
-            className="lg:max-w-[1400px] w-full lg:self-center"
+            className="w-full lg:max-w-[1400px] lg:self-center"
 
             key={index}
             type="single"
