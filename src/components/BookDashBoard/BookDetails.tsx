@@ -161,24 +161,24 @@ const BookDetails = () => {
 
   return (
     <div className="mx-0 px-0 w-full h-full container">
-      <div className="flex border-slate-300 border-b h-[80px]">
-        <h1 className="my-[20px] pl-[40px] font-extrabold text-2xl">
+      <div className="flex justify-between border-slate-300 border-b h-[50px] md:h-[80px]">
+        <h1 className="md:my-[20px] md:pl-[40px] font-extrabold md:text-2xl">
           Book Details
         </h1>
 
         <div
-          className="flex gap-x-2 bg-slate-200 my-[13px] ml-[650px] rounded-[8px] w-[190px] h-[40px] text-slate-400"
+          className="flex md:gap-x-2 bg-slate-200 md:my-[13px] md:ml-[650px] rounded-[8px] w-[120px] md:w-[190px] h-[30px] md:h-[40px] text-slate-400"
           onClick={toggleButton}
         >
           <button
-            className={`p-2 w-[91px] rounded-[8px] ${
+            className={`md:p-2 w-[91px] rounded-[8px] ${
               isOn ? "bg-yellow-400 text-slate-100" : "bg-gray-200"
             }`}
           >
             Draft
           </button>
           <button
-            className={`p-2 w-[91px] rounded-[8px] ${
+            className={`md:p-2 w-[91px] rounded-[8px] ${
               !isOn ? "bg-green-400 text-slate-100" : "bg-gray-200"
             }`}
           >
@@ -186,11 +186,73 @@ const BookDetails = () => {
           </button>
         </div>
       </div>
-      <div className="flex h-full">
-        <div className="border-slate-300 ml-[12px] border-r w-[667px]">
+      <div className="md:flex h-full">
+        <div className="md:flex md:flex-row-reverse">
+        <div className="flex md:flex-col justify-center md:ml-[35px]">
+          <div className="order-1 md:order-none md:mx-8 mt-[32px] md:w-[232px] md:h-[289px]">
+            <h1 className="flex justify-center mb-[18.5px] font-bold md:text-xl">
+              Cover Image
+            </h1>
+
+            <div className="border-slate-500 border border-dotted rounded-[8px] md:h-[252px]">
+              {isEditing ? (
+                <BookCoverChange
+                  onFileChange={handleFileChange}
+                  coverImage={fetchABookAuthor!.coverImage}
+                />
+              ) : (
+                <img
+                  src={fetchABookAuthor?.coverImage}
+                  alt=""
+                  className="mx-6 md:mx-[52.5px] my-3 md:my-[30px] w-[100px] md:w-[127px] h-[150px] md:h-[191px]"
+                />
+              )}
+            </div>
+          </div>
+
+          <div className="order-2 mx-8 mt-[32px] md:none-order md:mt-[84px] md:w-[232px] md:h-[314px]">
+            <h1 className="flex justify-center mb-[11px] font-bold md:text-xl">
+              Preview Card Design
+            </h1>
+
+            <div className="bg-slate-100 shadow-xl border rounded-[8px] md:w-[232px] max-h-full">
+              <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[100px] md:h-[160px]">
+                <img
+                  src={fetchABookAuthor?.coverImage}
+                  alt=""
+                  className="md:w-[86px] md:h-[129px]"
+                />
+              </div>
+
+              <div className="ml-2">
+                <h1 className="font-bold text-[13.5px] md:text-[15px]">
+                  {fetchABookAuthor?.title}
+                </h1>
+                <p className="flex mt-[1.5px] md:mt-1 font-Inter font-normal text-[10px] text-gray-500 md:text-[12px]">
+                  <img
+                    src={fetchABookAuthor?.category?.icon}
+                    alt=""
+                    className="mr-2 w-[14px] md:w-[20px] h-[14px] md:h-[20px]"
+                  />
+                  {fetchABookAuthor?.category?.title}
+                </p>
+                <h2 className="flex my-2 font-bold text-[11.5px] md:text-[13px]">
+                  <img
+                    src={fetchABookAuthor?.user?.profilePicture}
+                    alt=""
+                    className="mr-2 rounded-full w-[14px] md:w-[20px] h-[14px] md:h-[20px]"
+                  />
+                  By {fetchABookAuthor?.user?.name}
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+          <div className="border-slate-300 order-3 md:order-none ml-[12px] md:border-r md:w-[667px]">
           <div className="h-[581px]">
-            <div className="items-center gap-1.5 grid mx-[32px] pt-[30px] w-[603px] h-[74px]">
-              <Label htmlFor="title" className="font-semibold text-[16px]">
+            <div className="items-center gap-1.5 grid md:mx-[32px] pt-[30px] h-[74px]">
+              <Label htmlFor="title" className="font-semibold md:text-[16px]">
                 Title
               </Label>
               <div className="relative">
@@ -205,28 +267,28 @@ const BookDetails = () => {
                     }}
                     value={updateData.title}
                     id="title"
-                    className="border-slate-300 border text-black"
+                    className="border-slate-300 border text-[14px] text-black md:text-[16px]"
                   />
                 ) : (
                   <h1
                     id="title"
-                    className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] h-[45px] font-semibold text-black"
+                    className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] w-full h-[45px] font-semibold text-[14px] text-black md:text-[16px]"
                   >
                     {fetchABookAuthor?.title}
                   </h1>
                 )}
-                <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" />
+                <AiOutlineUser className="top-[12.7px] right-2 absolute md:w-[21px] md:h-[21px] text-gray-400" />
               </div>
             </div>
 
-            <div className="items-center gap-1.5 grid mx-[32px] pt-[60px] w-[603px] h-[74px]">
-              <Label htmlFor="category" className="font-semibold text-[16px]">
+            <div className="items-center gap-1.5 grid md:mx-[32px] pt-[60px] h-[74px]">
+              <Label htmlFor="category" className="font-semibold md:text-[16px]">
                 Category
               </Label>
               <div className="relative">
                 <h1
                   id="category"
-                  className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] h-[45px] font-semibold text-black"
+                  className="border-slate-300 py-[8.5px] pl-[16px] border rounded-[5px] w-full h-[45px] font-semibold text-[14px] text-black md:text-[16px]"
                 >
                   {fetchABookAuthor?.category?.title! ||
                     "Category Not Available"}
@@ -234,8 +296,8 @@ const BookDetails = () => {
               </div>
             </div>
 
-            <div className="items-center gap-1.5 grid mx-[32px] pt-[90px] w-[603px] h-[74px]">
-              <Label htmlFor="keywords" className="font-semibold text-[16px]">
+            <div className="items-center gap-1.5 grid md:mx-[32px] pt-[90px] h-[74px]">
+              <Label htmlFor="keywords" className="font-semibold md:text-[16px]">
                 Keywords
               </Label>
               {isEditing ? (
@@ -279,10 +341,10 @@ const BookDetails = () => {
               )}
             </div>
 
-            <div className="items-center gap-1.5 grid mx-[32px] pt-[120px] w-[603px] h-[176px]">
+            <div className="items-center gap-1.5 grid md:mx-[32px] pt-[120px] h-[176px]">
               <Label
                 htmlFor="description"
-                className="font-semibold text-[16px]"
+                className="font-semibold md:text-[16px]"
               >
                 Description
               </Label>
@@ -297,11 +359,11 @@ const BookDetails = () => {
                       description: sanitizedContent,
                     }));
                   }}
-                  className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]"
+                  className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px] text-[14px] md:text-[16px]"
                   modules={quillModules}
                 />
               ) : (
-                <div className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px]">
+                <div className="border-slate-300 pt-[15px] pl-[25px] border rounded-[5px] h-[290px] text-[14px] md:text-[16px]">
                   <div
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(
@@ -314,7 +376,7 @@ const BookDetails = () => {
             </div>
           </div>
 
-          <div className="flex mt-[130px] ml-[390px] rounded-[8px] h-[43px]">
+          <div className="flex justify-end mt-[130px] md:mr-4 rounded-[8px] h-[43px]">
             <div className="">
               {isEditing ? (
                 <>
@@ -336,7 +398,7 @@ const BookDetails = () => {
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button
-                        className="border-none w-[111px] text-red-600 hover:text-red-400"
+                        className="border-none md:w-[111px] text-red-600 md:text-md hover:text-red-400"
                         variant="outline"
                       >
                         Delete
@@ -380,66 +442,9 @@ const BookDetails = () => {
           </div>
         </div>
 
-        <div className="flex flex-col ml-[35px]">
-          <div className="mx-8 mt-[32px] w-[232px] h-[289px]">
-            <h1 className="flex justify-center mb-[18.5px] font-bold text-xl">
-              Cover Image
-            </h1>
-
-            <div className="border-slate-500 border border-dotted rounded-[8px] h-[252px]">
-              {isEditing ? (
-                <BookCoverChange
-                  onFileChange={handleFileChange}
-                  coverImage={fetchABookAuthor!.coverImage}
-                />
-              ) : (
-                <img
-                  src={fetchABookAuthor?.coverImage}
-                  alt=""
-                  className="mx-[52.5px] my-[30px] w-[127px] h-[191px]"
-                />
-              )}
-            </div>
-          </div>
-
-          <div className="mx-8 mt-[84px] w-[232px] h-[314px]">
-            <h1 className="flex justify-center mb-[11px] font-bold text-xl">
-              Preview Card Design
-            </h1>
-
-            <div className="bg-slate-100 shadow-xl border rounded-[8px] w-[232px] max-h-full">
-              <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                <img
-                  src={fetchABookAuthor?.coverImage}
-                  alt=""
-                  className="w-[86px] h-[129px]"
-                />
-              </div>
-
-              <div className="ml-2">
-                <h1 className="font-bold text-[15px]">
-                  {fetchABookAuthor?.title}
-                </h1>
-                <p className="flex mt-1 font-Inter font-normal text-[12px] text-gray-500">
-                  <img
-                    src={fetchABookAuthor?.category?.icon}
-                    alt=""
-                    className="mr-2 w-[20px] h-[20px]"
-                  />
-                  {fetchABookAuthor?.category?.title}
-                </p>
-                <h2 className="flex my-2 font-bold text-[13px]">
-                  <img
-                    src={fetchABookAuthor?.user?.profilePicture}
-                    alt=""
-                    className="mr-2 rounded-full w-[20px] h-[20px]"
-                  />
-                  By {fetchABookAuthor?.user?.name}
-                </h2>
-              </div>
-            </div>
-          </div>
+        
         </div>
+        
       </div>
     </div>
   );
