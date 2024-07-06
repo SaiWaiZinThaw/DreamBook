@@ -72,10 +72,10 @@ const Login = () => {
   const validationErrors = handleValidationErrors();
 
   return (
-    <div className="flex flex-col items-center w-full lg:gap-10 justify-self-center">
+    <div className="flex flex-col items-center w-full md:gap-10 justify-self-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center lg:gap-5 gap-3 lg:w-[460px] w-[300px] font-Inter lg:text-md text-sm"
+        className="flex flex-col items-center md:gap-5 gap-3 md:w-[460px] w-[300px] font-Inter md:text-md text-sm"
       >
         <div className="flex flex-col items-center gap-5">
           <h1 className="text-2xl font-bold text-white">Welcome Again!</h1>
@@ -90,7 +90,7 @@ const Login = () => {
           type="email"
           id="email"
           placeholder="Email"
-          className="h-10 lg:h-auto lg:placeholder:text-md lg:text-md text-[13px] placeholder:text-[13px]"
+          className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
           {...register("email", {
             pattern: {
               value: /\S+@\S+\.\S+/,
@@ -106,7 +106,7 @@ const Login = () => {
             variant={"default"}
             size={"full"}
             text={"white"}
-            className="h-10 lg:h-auto"
+            className="h-10 md:h-auto"
           >
             Log in
           </Button>

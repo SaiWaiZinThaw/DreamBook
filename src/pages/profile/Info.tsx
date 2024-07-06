@@ -78,11 +78,11 @@ const Info = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full">
+    <div className="flex items-center justify-center w-full h-full">
       <div className="flex flex-col items-center pb-10">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col items-center gap-6 w-[460px] font-Inter"
+          className="flex flex-col items-center gap-6 w-full p-4 md:p-0 md:w-[460px] font-Inter"
         >
           <h1 className="text-2xl font-bold text-white">Create an account</h1>
           <FileUpload onFileChange={handleFileChange} />
@@ -93,6 +93,7 @@ const Info = () => {
             type="text"
             id="name"
             placeholder="Full Name"
+            className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
             value={profileData.name}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setProfileData((prev) => ({
@@ -107,7 +108,7 @@ const Info = () => {
           </div>
           <div className="flex items-center w-full gap-5">
             <select
-              className="flex justify-center items-center px-4 rounded-[5px] h-12 border border-border"
+              className="flex justify-center items-center px-4 rounded-[5px] h-10 md:h-12 text-sm border border-border"
               value={countryCodeNumber}
               onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                 setCountryCodeNumber(event.target.value);
@@ -126,6 +127,7 @@ const Info = () => {
               id="phone"
               placeholder="Phone"
               value={localPhoneNumber}
+              className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setLocalPhoneNumber(event.target.value);
               }}
@@ -133,7 +135,7 @@ const Info = () => {
           </div>
 
           <select
-            className="flex justify-center items-center px-4 rounded-[5px] w-full h-12 text-sm border border-border"
+            className="flex justify-center items-center px-4 rounded-[5px] w-full h-10 md:h-12 text-sm border border-border"
             value={profileData.gender}
             onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
               console.log(profileData);

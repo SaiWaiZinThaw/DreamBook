@@ -5,6 +5,10 @@ export const relatedBookApi = async (bookSlug: string, pageParam: number) => {
   const response: Response = await fetch(
     `${BaseURL}/books/related?page=${pageParam}&limit=12&slug=${bookSlug}`,
     {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
       mode: "cors",
       method: "GET",
       redirect: "follow",

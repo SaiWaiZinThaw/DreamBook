@@ -49,13 +49,13 @@ const CategorySelect = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="lg:gap-6 gap-2 gap-x-3 lg:gap-x-8 grid grid-cols-2 w-full lg:w-[600px] py-4"
+      className="md:gap-6 gap-2 gap-x-3 md:gap-x-8 grid grid-cols-2 w-full md:w-[600px] py-4"
     >
       {!isLoading &&
         data?.map((category: Category) => (
           <div
             key={category.categoryId}
-            className="flex justify-between items-center bg-white px-4 py-2 lg:h-auto h-[50px] rounded-[5px]"
+            className="flex justify-between items-center bg-white px-4 py-2 md:h-auto h-[50px] rounded-[5px]"
           >
             <div className="flex items-center gap-3">
               <input
@@ -74,7 +74,7 @@ const CategorySelect = () => {
                 <img
                   src={category.icon}
                   alt={category.title}
-                  className="lg:w-auto w-[20px]"
+                  className="md:w-auto w-[20px]"
                 />
                 {category.title}
               </label>
