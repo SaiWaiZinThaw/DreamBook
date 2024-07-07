@@ -1,11 +1,12 @@
-import { ChapterRead } from "@/components"
-import { Outlet } from "react-router-dom"
+import { ChapterRead, NavBar } from "@/components"
 
 const ChapterReading = () => {
   return (
-    <div>
+    <div className="w-full overflow-x-hidden">
+      <div className="md:block hidden">
+        <NavBar />
+      </div>
       <ChapterRead/>
-      <Outlet/>
     </div>
   )
 }

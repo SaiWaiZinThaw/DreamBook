@@ -16,11 +16,11 @@ const BookDashBoardLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuItemClick = () => {
-    setIsMenuOpen(false); // Close the menu when an item is selected
+    setIsMenuOpen(false);
   };
 
   const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev); // Toggle menu visibility
+    setIsMenuOpen((prev) => !prev);
   };
 
   return (
