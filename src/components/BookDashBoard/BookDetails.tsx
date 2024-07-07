@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useFetchABookAuthor } from "@/hooks/useFetchABookAuthor";
-import { getToken } from "@/services/authService";
 import { BsX } from "react-icons/bs";
 import { updateBookType } from "@/types/types";
 import { BookCoverChange } from "./BookCoverChange";
@@ -34,11 +33,7 @@ const BookDetails = () => {
   const { bookSlug } = useParams();
   const updateBook = useUpdateBook(bookSlug!);
   const { mutate: softDeleteBook } = useSoftDeleteBook();
-  const token = getToken() || "";
-  const { data: fetchABookAuthor, refetch } = useFetchABookAuthor(
-    token,
-    bookSlug!
-  );
+  const { data: fetchABookAuthor, refetch } = useFetchABookAuthor(bookSlug!);
   const navigate = useNavigate();
   const [isOn, setIsOn] = useState(true);
   const [updateData, setUpdateData] = useState<updateBookType>({
@@ -161,9 +156,11 @@ const BookDetails = () => {
   };
 
   return (
+
     <div className="m-0 p-0 w-full h-full container">
       <div className="flex justify-between border-slate-300 border-b h-[50px] md:h-[80px]">
         <h1 className="md:my-[20px] md:pl-[40px] font-extrabold md:text-2xl">
+
           Book Details
         </h1>
 
@@ -268,7 +265,9 @@ const BookDetails = () => {
                     }}
                     value={updateData.title}
                     id="title"
+
                     className="border-slate-300 border text-[12.5px] text-black md:text-[16px]"
+
                   />
                 ) : (
                   <h1
@@ -317,7 +316,9 @@ const BookDetails = () => {
                   {keywords.map((keyword, index) => (
                     <span
                       key={index}
+
                       className="inline-block bg-gray-200 mr-2 mb-2 md:px-3 md:py-1 p-1 rounded-full font-semibold text-[12.5px] text-slate-950 md:text-sm"
+
                     >
                       {keyword}
                     </span>
@@ -329,7 +330,7 @@ const BookDetails = () => {
                 <div className="flex">
                   {keywords.map((keyword, index) => (
                     <div key={index} className="flex items-center">
-                      <span className="flex bg-gray-200 mr-2 mb-2 px-3 py-1 rounded-full font-semibold text-slate-950 text-sm">
+                      <span className="flex px-3 py-1 mb-2 mr-2 text-sm font-semibold bg-gray-200 rounded-full text-slate-950">
                         {keyword}
                         <BsX
                           onClick={() => handleDeleteKeyword(index)}
@@ -405,9 +406,9 @@ const BookDetails = () => {
                         Delete
                       </Button>
                     </AlertDialogTrigger>
-                    <AlertDialogContent className="bg-slate-50 rounded-none">
+                    <AlertDialogContent className="rounded-none bg-slate-50">
                       <AlertDialogHeader>
-                        <AlertDialogTitle className="font-extrabold text-red-600 text-xl">
+                        <AlertDialogTitle className="text-xl font-extrabold text-red-600">
                           Are you sure want to delete?
                         </AlertDialogTitle>
                         <AlertDialogDescription>

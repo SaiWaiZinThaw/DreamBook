@@ -8,23 +8,68 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BsHeartFill, BsHeart, BsEyeFill } from "react-icons/bs";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FaPlus } from "react-icons/fa";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import { HiPencil } from "react-icons/hi";
-import { getToken } from "@/services/authService";
-import { useState } from "react";
-
+import { useDebounce } from "use-debounce";
+import { useEffect, useState } from "react";
 import { useFetchAllBookAuthor } from "@/hooks/useFetchABookAuthor";
 
 const Books = () => {
-  const token = getToken() || "";
+  const [searchParams, setSearchParams] = useSearchParams({
+    search: "",
+    category_ids: "[]",
+    sortBy: "random",
+  });
+
+  const [search, setSearch] = useState(searchParams.get("search") || "");
+  const [deBounceSearch] = useDebounce(search, 500);
+  const [sortBy, setSortBy] = useState(searchParams.get("sortBy") || "random");
+  const [pageCount, setPageCount] = useState<number>(
+    parseInt(searchParams.get("page") || "1", 10)
+  );
+  const { data, isLoading } = useFetchAllBookAuthor({
+    deBounceSearch,
+    sortBy,
+    pageCount,
+  });
+  const handleSortChange = (value: string) => {
+    setSortBy(value);
+  };
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    event.preventDefault();
+    setPageCount(value);
+  };
+
+  useEffect(() => {
+    const params: any = {};
+
+    if (sortBy) {
+      params.sort_by = sortBy;
+    }
+    if (deBounceSearch) {
+      params.search = deBounceSearch;
+    }
+    if (pageCount) {
+      params.page = pageCount.toString();
+    }
+
+    setSearchParams(params);
+  }, [deBounceSearch, sortBy, setSearchParams, pageCount]);
   const [active, setActive] = useState(false);
 
-  const { data, isLoading } = useFetchAllBookAuthor(token);
   const navigate = useNavigate();
-
+  if (!isLoading) {
+    console.log(data);
+  }
   const editHandler = (bookSlug: string) => {
     navigate(`/book-dashboard/${bookSlug}/book-details`);
   };
@@ -34,12 +79,14 @@ const Books = () => {
   };
 
   return (
-    <div className="w-full h-full">
-      <div className="p-4 md:p-10">
-        <div className="flex md:flex-row flex-col justify-between items-center md:gap-0 mb-4 h-[100px] md:h-[50px]">
-          <div className="flex items-center md:gap-3 w-full">
+
+    <div className="w-full h-full ">
+      <div className="flex flex-col items-center gap-5 p-10">
+        <div className="w-full flex md:flex-row md:gap-0  flex-col h-[100px] justify-between items-center mb-4 md:h-[50px]">
+          <div className="flex items-center w-full gap-3">
+
             <img src={Sorting} alt="sorting" className="h-[30px] md:h-[50px]" />
-            <Select>
+            <Select onValueChange={handleSortChange}>
               <SelectTrigger className="w-[100px] md:w-[180px] h-[30px] md:h-[50px]">
                 <SelectValue placeholder="Sort by default" />
               </SelectTrigger>
@@ -47,7 +94,8 @@ const Books = () => {
                 <SelectItem value="default">Sort by default</SelectItem>
                 <SelectItem value="random">Sort by random</SelectItem>
                 <SelectItem value="latest">Sort by Latest</SelectItem>
-                <SelectItem value="A-Z">Sort by A-Z</SelectItem>
+                <SelectItem value="a-z">Sort by A-Z</SelectItem>
+                <SelectItem value="z-a">Sort by Z-A</SelectItem>
               </SelectContent>
             </Select>
 
@@ -55,7 +103,13 @@ const Books = () => {
               <Input
                 icon={<IoIosSearch className="text-2xl" />}
                 placeholder="Search"
-                className="!border-black rounded-[8px] h-[30px] md:h-full"
+
+                value={search}
+                onChange={(event) => {
+                  setSearch(event.target.value);
+                }}
+                className="!border-black rounded-[8px] md:h-full h-[30px]"
+
               />
             </div>
           </div>
@@ -73,7 +127,7 @@ const Books = () => {
               <div
                 key={book.title}
                 id={book.slug}
-                className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] min-w-[130px] max-w-[232px] h-[280px] book group"
+                className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] min-w-[150px] max-w-[232px] h-[280px] book group"
               >
                 <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                   <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
@@ -139,6 +193,18 @@ const Books = () => {
               </div>
             ))}
         </div>
+        {!isLoading && (
+          <Stack className="self-center" spacing={1}>
+            <Pagination
+              color="primary"
+              count={data?.meta.totalPages}
+              defaultPage={1}
+              boundaryCount={1}
+              onChange={handlePageChange}
+              page={pageCount}
+            />
+          </Stack>
+        )}
       </div>
     </div>
   );

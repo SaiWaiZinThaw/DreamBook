@@ -75,7 +75,9 @@ const NavBar = () => {
       ) : (
         <div className="flex items-center gap-4">
           <NavLink
-            className="flex flex-col justify-end items-center"
+
+            className="flex-col items-center justify-end hidden lg:flex"
+
             to="/me/fav"
           >
             <FaHeart className="font-bold text-lg text-red-600" />
