@@ -26,12 +26,13 @@ const UserRouter: RouteObject[] = [
         index: true,
         element: <BookReading />,
       },
-      {
-        path: "chapter",
-        element: <ChapterReading />,
-        children: [{ path: ":id", element: <Chapter /> }],
-      },
     ],
+  },
+
+  {
+    path: "/:bookSlug/chapter",
+    element: <ChapterReading />,
+    children: [{ path: ":id", element: <Chapter /> }],
   },
 
   {

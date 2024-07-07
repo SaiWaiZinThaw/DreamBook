@@ -1,3 +1,6 @@
+
+import { useState } from "react";
+import { FiAlignJustify } from "react-icons/fi";
 import {
   ChapterOutline,
   FooterImg,
@@ -10,14 +13,32 @@ import { FaArrowLeft } from "react-icons/fa";
 const BookDashBoardLayout = () => {
   const navigate = useNavigate();
   const { bookSlug } = useParams();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMenuItemClick = () => {
+    setIsMenuOpen(false);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
 
   return (
-    <div className="flex md:flex-row flex-col mx-0 px-0 w-full h-screen">
-      <div className="flex flex-col bg-primary bg-opacity-90 w-full md:w-[296px] h-screen overflow-y-auto">
+    <div className="flex md:flex-row flex-col mx-0 px-0 w-full lg:h-screen">
+      <div className="flex justify-between items-center md:hidden bg-primary p-4">
+        <button className="text-white" onClick={toggleMenu}>
+          <FiAlignJustify size={24} />
+        </button>
+      </div>
+      <div
+        className={`flex flex-col bg-primary bg-opacity-90 w-full md:w-[296px] h-screen overflow-y-auto transition-transform transform ${
+          isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0 absolute md:relative z-10 md:z-auto`}
+      >
         <img
           src={FooterImg}
           alt=""
-          className="border-slate-300 mx-auto py-4 border-b w-[223px]"
+          className="border-slate-300 mx-auto py-4 border-b w-[180px] lg:w-[223px]"
         />
 
         <div className="flex flex-col gap-4 mt-6">
@@ -28,13 +49,14 @@ const BookDashBoardLayout = () => {
                 : "flex items-center py-4 pl-4"
             }
             to={`/book-dashboard/${bookSlug}/book-details`}
+            onClick={handleMenuItemClick}
           >
             <img
               src={LightMenuBook}
               alt=""
-              className="mr-2 w-6 h-8"
+              className="mr-2 w-4 sm:w-6 lg:w-6 h-4 sm:h-6 lg:h-8"
             />
-            <h1 className="font-semibold text-lg text-slate-100">
+            <h1 className="font-semibold text-slate-100 lg:text-lg">
               Book Details
             </h1>
           </NavLink>
@@ -46,13 +68,14 @@ const BookDashBoardLayout = () => {
                 : "flex items-center py-4 pl-4"
             }
             to={`/book-dashboard/${bookSlug}/chapters`}
+            onClick={handleMenuItemClick}
           >
             <img
               src={ChapterOutline}
               alt=""
-              className="mr-2 w-6 h-6"
+              className="mr-2 w-4 sm:w-6 lg:w-6 h-4 sm:h-6 lg:h-8"
             />
-            <h1 className="font-semibold text-lg text-slate-100">Chapters</h1>
+            <h1 className="font-semibold text-slate-100 lg:text-lg">Chapters</h1>
           </NavLink>
 
           <NavLink
@@ -62,13 +85,14 @@ const BookDashBoardLayout = () => {
                 : "flex items-center py-4 pl-4"
             }
             to={`/book-dashboard/${bookSlug}/comments`}
+            onClick={handleMenuItemClick}
           >
             <img
               src={LightCommentOutline}
               alt=""
-              className="mr-2 w-6 h-6"
+              className="mr-2 w-4 sm:w-6 lg:w-6 h-4 sm:h-6 lg:h-8"
             />
-            <h1 className="font-semibold text-lg text-slate-100">Comments</h1>
+            <h1 className="font-semibold text-slate-100 lg:text-lg">Comments</h1>
           </NavLink>
         </div>
 
@@ -76,12 +100,16 @@ const BookDashBoardLayout = () => {
           className="flex border-slate-300 mt-auto pt-4 pl-4 border-t h-16 text-white cursor-pointer"
           onClick={() => navigate(`/me/books`)}
         >
-          <FaArrowLeft className="mt-1 mr-2 w-5 h-5" />
-          <h1 className="font-medium text-lg">Exit to Booklists</h1>
+          <FaArrowLeft className="mt-1 mr-2 lg:w-5 lg:h-5" />
+          <h1 className="font-medium lg:text-lg">Exit to Booklists</h1>
         </div>
       </div>
 
-      <div className="flex-1 p-4 overflow-y-auto">
+      <div
+        className={`flex-1 p-4 overflow-y-auto ${
+          isMenuOpen ? "hidden md:block" : "block"
+        }`}
+      >
         <Outlet />
       </div>
     </div>
@@ -89,4 +117,3 @@ const BookDashBoardLayout = () => {
 };
 
 export default BookDashBoardLayout;
-

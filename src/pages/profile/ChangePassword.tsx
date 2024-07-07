@@ -156,14 +156,11 @@ const ChangePassword = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // Client-side validation
     if (passwordData.newPassword !== confirmPassword) {
       setPasswordMismatchError(true);
       return;
     }
 
-    // Server-side validation handled by usePasswordChange hook
     passwordChange.mutate(passwordData);
   };
 
@@ -182,15 +179,13 @@ const ChangePassword = () => {
     setPasswordMismatchError(false); // Reset mismatch error on change
   };
 
-  const handleOldPasswordBlur = () => {
-    // Perform old password validation here (can be server-side validation)
-    // For demonstration purposes, let's assume a simple check on client-side
-    if (passwordData.oldPassword !== "correct_old_password") {
-      setOldPasswordError(true);
-    } else {
-      setOldPasswordError(false);
-    }
-  };
+  // const handleOldPasswordBlur = () => {
+  //   if (passwordData.oldPassword !== "correct_old_password") {
+  //     setOldPasswordError(true);
+  //   } else {
+  //     setOldPasswordError(false);
+  //   }
+  // };
 
   useEffect(() => {
     if (passwordChange.isSuccess) {
@@ -217,20 +212,20 @@ const ChangePassword = () => {
   }, [passwordChange.isError]);
 
   return (
-    <section className="flex items-center justify-center w-full">
-      <div className="flex flex-col  md:w-[544px] gap-3 w-full p-6">
-        <h1 className="font-bold text-center text-md md:text-2xl ">
+    <section className="flex justify-center items-center w-full">
+      <div className="flex flex-col gap-3 p-6 w-full md:w-[544px]">
+        <h1 className="font-bold text-center text-md md:text-2xl">
           Change Your Password
         </h1>
-        <p className="text-[12px] md:text-sm  font-normal text-center text-slate-500">
+        <p className="font-normal text-[12px] text-center text-slate-500 md:text-sm">
           The new password you set must be different to the previous one
         </p>
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-4 py-4 md:gap-8"
+          className="flex flex-col gap-4 md:gap-8 py-4"
         >
-          <div className="relative ">
+          <div className="relative">
             <Input
               onChange={handleInputChange}
 
@@ -240,7 +235,7 @@ const ChangePassword = () => {
               className={oldPasswordError ? "border-red-500" : "h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"}
             />
             <div
-              className="absolute transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
+              className="top-1/2 right-3 absolute transform -translate-y-1/2 cursor-pointer"
               onClick={() => setShowOldPassword(!showOldPassword)}
             >
               {showOldPassword ? <FaEyeSlash /> : <FaEye />}
@@ -250,35 +245,34 @@ const ChangePassword = () => {
             )}
           </div>
 
-          <div className="relative ">
+          <div className="relative">
             <Input
               onChange={handleInputChange}
-              className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
+              className="h-10 md:h-auto text-[13px] md:placeholder:text-md md:text-md placeholder:text-[13px]"
               value={passwordData.newPassword}
               name="newPassword"
               type={showNewPassword ? "text" : "password"}
               placeholder="Enter New Password"
             />
             <div
-              className="absolute transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
+              className="top-1/2 right-3 absolute transform -translate-y-1/2 cursor-pointer"
               onClick={() => setShowNewPassword(!showNewPassword)}
             >
               {showNewPassword ? <FaEyeSlash /> : <FaEye />}
             </div>
           </div>
 
-          <div className="relative ">
+          <div className="relative">
             <Input
               onChange={handleConfirmPasswordChange}
-              className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
               value={confirmPassword}
               name="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm Password"
-              className={passwordMismatchError ? "border-red-500" : ""}
+              className={passwordMismatchError ? "border-red-500" : "h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"}
             />
             <div
-              className="absolute transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
+              className="top-1/2 right-3 absolute transform -translate-y-1/2 cursor-pointer"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
