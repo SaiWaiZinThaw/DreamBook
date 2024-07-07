@@ -1,18 +1,23 @@
-import { Sorting } from "@/assets";
-import { IoIosSearch } from "react-icons/io";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { useDeleteHistory, useFetchAllHistory } from "@/hooks/useBookHistory";
+import { useEffect, useState } from "react";
 import { FaTrashCan } from "react-icons/fa6";
-
+import { useSearchParams } from "react-router-dom";
+// import Pagination from "@mui/material/Pagination";
+// import Stack from "@mui/material/Stack";
 const History = () => {
-  const { data: getHistory, isLoading, refetch } = useFetchAllHistory();
+  const [searchParams, setSearchParams] = useSearchParams({
+    page: "1",
+  });
+  const [pageCount, setPageCount] = useState<number>(
+    parseInt(searchParams.get("page") || "1", 10)
+  );
+  const {
+    data: getHistory,
+    isLoading,
+    refetch,
+  } = useFetchAllHistory({
+    pageCount,
+  });
   const deleteHistory = useDeleteHistory();
 
   const handleDelete = (bookSlug: string) => {
@@ -25,34 +30,30 @@ const History = () => {
       },
     });
   };
+  console.log(setPageCount(1));
+
+  // const handlePageChange = (
+  //   event: React.ChangeEvent<unknown>,
+  //   value: number
+  // ) => {
+  //   event.preventDefault();
+  //   setPageCount(value);
+  // };
+
+  useEffect(() => {
+    const params: any = {};
+
+    if (pageCount) {
+      params.page = pageCount.toString();
+    }
+
+    setSearchParams(params);
+  }, [setSearchParams, pageCount]);
 
   return (
     <div className="w-full h-full">
-      <div className="p-4 md:p-10">
-        <div className="flex md:flex-row md:gap-0  flex-col h-[100px] justify-between items-center mb-4 md:h-[50px]">
-          <div className="flex items-center w-full gap-3">
-            <img src={Sorting} alt="sorting" className="h-[30px] md:h-[50px]" />
-            <Select>
-              <SelectTrigger className="w-[100px] md:w-[180px] h-[30px] md:h-[50px]">
-                <SelectValue placeholder="Sort by default" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="default">Sort by default</SelectItem>
-                <SelectItem value="random">Sort by random</SelectItem>
-                <SelectItem value="latest">Sort by Latest</SelectItem>
-                <SelectItem value="A-Z">Sort by A-Z</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <div className="w-auto  md:w-[380px]">
-              <Input
-                icon={<IoIosSearch className="text-2xl" />}
-                placeholder="Search"
-                className="!border-black rounded-[8px] md:h-full h-[30px]"
-              />
-            </div>
-          </div>
-        </div>
+      <div className="flex flex-col justify-center w-full gap-2 p-4 md:gap-0 md:p-10">
+        <h1 className="text-xl font-bold text-center lg:text-2xl"> History</h1>
         <div className="grid grid-cols-2 gap-2 md:p-10 md:gap-4 md:grid-cols-4">
           {!isLoading &&
             getHistory?.map((item) => (
@@ -105,6 +106,18 @@ const History = () => {
               </div>
             ))}
         </div>
+        {/* {!isLoading && (
+          <Stack className="self-center" spacing={1}>
+            <Pagination
+              color="primary"
+              count={getHistory?.meta.totalPages}
+              defaultPage={1}
+              boundaryCount={1}
+              onChange={handlePageChange}
+              page={pageCount}
+            />
+          </Stack>
+        )} */}
       </div>
     </div>
   );
