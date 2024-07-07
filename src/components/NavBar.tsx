@@ -14,21 +14,21 @@ const NavBar = () => {
   const { setShowMenu } = useAuth();
   const { data, isLoading, isSuccess } = useGetMe(token);
   return (
-    <div className=" flex justify-between items-center bg-white shadow-slate-300 shadow-sm lg:px-40 py-2 px-6 lg:py-6 w-full h-[70px] font-Inter">
+    <div className="flex justify-between items-center bg-white shadow-slate-300 shadow-sm px-6 lg:px-40 py-2 lg:py-6 w-full h-[70px] font-Inter">
       <div className="flex items-center gap-3">
         <button
           onClick={() => setShowMenu(true)}
-          className="text-xl font-bold lg:hidden"
+          className="lg:hidden font-bold text-xl"
         >
           <RxHamburgerMenu />
         </button>
         <NavLink to={"/"}>
-          <div className="lg:w-[70px] w-[45px]">
+          <div className="w-[45px] lg:w-[70px]">
             <img src={Logo} alt="Logo" className="w-full" />
           </div>
         </NavLink>
       </div>
-      <nav className="items-center hidden gap-5 lg:flex">
+      <nav className="lg:flex items-center gap-5 hidden">
         <NavLink
           className={({ isActive }) =>
             isActive
@@ -63,7 +63,7 @@ const NavBar = () => {
 
       {!token ? (
         <div className="flex items-center gap-2">
-          <NavLink className="hidden lg:block" to="/auth/login">
+          <NavLink className="lg:block hidden" to="/auth/login">
             <Button variant={"ghost"} className="flex items-center gap-2">
               <HiMiniUserCircle className="text-2xl" /> Login
             </Button>
@@ -75,11 +75,13 @@ const NavBar = () => {
       ) : (
         <div className="flex items-center gap-4">
           <NavLink
+
             className="flex-col items-center justify-end hidden lg:flex"
+
             to="/me/fav"
           >
-            <FaHeart className="text-lg font-bold text-red-600" />
-            <span className="text-sm font-semibold">Fav Books</span>
+            <FaHeart className="font-bold text-lg text-red-600" />
+            <span className="font-semibold text-sm">Fav Books</span>
           </NavLink>
           {!isLoading && data && isSuccess && <ProfileDropdown data={data} />}
         </div>

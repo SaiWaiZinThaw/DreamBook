@@ -273,27 +273,33 @@ const CreateBook = () => {
   };
 
   return (
-    <div>
-      <div className="flex mt-[42px] w-full md:ml-[110px] md:w-[660px] h-[53px] text-md justify-center gap-2">
+
+    <div className="flex flex-col justify-center w-full h-full">
+      <div className="flex gap-2 mx-9 my-[10px] md:mt-[45px] md:ml-[110px] w-full md:w-[660px] h-[53px] text-md">
+
         <div
-          className="flex w-[83px] h-[28px] text-blue-700 text-opacity-60 cursor-pointer items-center"
+          className="flex items-center md:mt-[19.5px] md:w-[83px] md:h-[28px] text-blue-700 text-opacity-60 cursor-pointer"
           onClick={() => navigate(-1)}
         >
-          <FaArrowLeft className="mx-2 mt-1" />
-          <h2>Back</h2>
+          <FaArrowLeft className="md:mx-2 mr-1 text-[12px] md:text-[18px]" />
+          <h2 className="text-[12px] md:text-lg">Back</h2>
         </div>
 
-        <div className="w-[374px] h-[53px]">
-          <h1 className="text-lg font-bold md:text-3xl">Creating A New Book</h1>
+
+        <div className="md:ml-[20px]">
+          <h1 className="mt-[13.5px] font-bold text-md md:text-3xl">Creating A New Book</h1>
+
         </div>
       </div>
 
       <form
-        className="flex flex-col items-center md:flex-row md:items-start"
+
+        className="flex md:flex-row flex-col items-center md:items-start md:ml-[20px]"
         onSubmit={handleSubmit}
       >
-        <div className="md:mt-[50px] md:ml-[110px] w-[199px] h-[327px]">
-          <div className="h-[284px]">
+        <div className="md:mt-[60px] md:ml-[110px] w-[200px] md:w-[199px] md:h-[327px]">
+          <div className="md:h-[284px]">
+
             {formData.coverImage instanceof File ? (
               <img
                 src={URL.createObjectURL(formData.coverImage)}
@@ -303,17 +309,17 @@ const CreateBook = () => {
             ) : (
               <label
                 htmlFor="fileInput"
-                className="flex flex-col justify-center items-center border-slate-500 border border-dotted rounded-[8px] h-[284px] cursor-pointer"
+                className="flex flex-col justify-center items-center border-slate-500 border border-dotted rounded-[8px] h-[250px] md:h-[284px] cursor-pointer"
               >
                 <img
                   src={BookCraftImg}
                   alt=""
-                  className="w-[48px] h-[48px] object-cover"
+                  className="w-[38px] md:w-[48px] h-[38px] md:h-[48px] object-cover"
                 />
-                <h3 className="flex px-[10px] py-[10px] font-extrabold text-slate-500 text-sm">
+                <h3 className="flex px-[23px] md:px-[10px] py-[10px] font-extrabold text-[12px] text-slate-500 md:text-sm">
                   Drop your images here or browse JPG, JPEG or PNG
                 </h3>
-                <p className="mx-[33px] font-semibold text-[12px] text-slate-500">
+                <p className="mx-[20px] md:mx-[33px] font-semibold text-[10px] text-red-400 md:text-slate-500 md:text-[12px]">
                   The size must be <br /> (123 x 123 ) px
                 </p>
               </label>
@@ -328,22 +334,25 @@ const CreateBook = () => {
               id="fileInput"
             />
             <label htmlFor="fileInput">
-              <h1 className="font-extrabold text-[19px] text-primary">
+              <h1 className="font-extrabold text-primary md:text-[19px]">
                 Select Book Cover
               </h1>
             </label>
           </div>
         </div>
 
-        <div className=" md:w-[667px]">
-          <div className="h-[581px]">
-            <div className="items-center gap-1.5 grid mx-[32px] pt-[30px] w-[603px] h-[74px]">
-              <Label htmlFor="title" className="font-semibold text-[16px]">
+
+        <div className="md:ml-[50px] md:w-[667px]">
+
+          <div className="md:h-[581px]">
+            <div className="md:items-center gap-1.5 grid mx-auto md:pt-[30px] md:w-[603px] md:h-[74px]">
+              <Label htmlFor="title" className="font-semibold md:text-[16px]">
                 Title
               </Label>
               <div className="relative">
                 <Input
                   onChange={handleTitleChange}
+                  className="w-full md:w-[603px] h-[25px] md:h-[45px] text-[12px] md:text-[14px]"
                   value={formData.title}
                   name="title"
                   type="text"
@@ -352,31 +361,31 @@ const CreateBook = () => {
                   onBlur={handleBlur}
                   required
                 />
-                <AiOutlineUser className="top-[12.7px] right-2 absolute w-[21px] h-[21px] text-gray-400" />
+                <AiOutlineUser className="top-[5px] md:top-[12.7px] right-[12px] md:right-2 bottom-0 absolute md:w-[21px] md:h-[21px] text-gray-400" />
               </div>
               {titleError && (
-                <div className="ml-[10px] font-bold text-red-500 text-sm">
+                <div className="ml-[10px] font-bold text-[12px] text-red-500 md:text-sm">
                   <h1>* Please fill the title</h1>
                 </div>
               )}
             </div>
 
-            <div className="items-center gap-1.5 grid mx-[32px] pt-[60px] w-[603px] h-[74px]">
-              <Label htmlFor="category" className="font-semibold text-[16px]">
+            <div className="md:items-center gap-1.5 grid mx-auto pt-6 md:pt-[60px] w-[366px] md:w-[603px] md:h-[74px]">
+              <Label htmlFor="category" className="font-semibold md:text-[16px]">
                 Category
               </Label>
               <div className="relative">
                 <select
                   name="category"
                   id="category"
-                  className={`border-slate-300 pl-[16px] border rounded w-[603px] h-[45px] font-extrabold ${
+                  className={`border-slate-300 pl-[16px] border rounded h-[35px] w-full md:w-[603px] lg:h-[45px] font-extrabold ${
                     selectedCategory === "" ? "text-slate-300" : ""
                   }`}
                   ref={selectRef}
                   onChange={handleChange}
                   defaultValue=""
                 >
-                  <option value="" disabled className="font-extrabold">
+                  <option value="" disabled className="font-extrabold text-[12px]">
                     Select Category
                   </option>
                   {fetchCategories?.map((category: any) => (
@@ -392,12 +401,13 @@ const CreateBook = () => {
               </div>
             </div>
 
-            <div className="items-center gap-1.5 grid mx-[32px] pt-[90px] w-[603px] h-[74px]">
-              <Label htmlFor="keywords" className="font-semibold text-[16px]">
+            <div className="md:items-center gap-1.5 grid mx-auto pt-6 md:pt-[90px] md:pl-0 w-[366px] md:w-[603px] md:h-[74px]">
+              <Label htmlFor="keywords" className="font-semibold md:text-[16px]">
                 Keywords
               </Label>
               <Input
                 onChange={handleKeywordChange}
+                className="w-full md:w-[603px] h-[25px] md:h-[45px]"
                 value={currentKeyword}
                 onKeyPress={handleKeyPress}
                 name="keywords"
@@ -405,11 +415,11 @@ const CreateBook = () => {
                 id="keywords"
               />
               <div>
-                <ul className="absolute flex ml-4 space-x-2">
+                <ul className="absolute flex space-x-2 ml-4">
                   {formData.keywords.map((keyword, index) => (
                     <li
                       key={index}
-                      className="flex px-2 py-1 border rounded-md border-primary border-opacity-55 text-slate-600"
+                      className="flex border-primary px-2 py-1 border border-opacity-55 rounded-md text-slate-600"
                     >
                       {keyword}
                       <BsX
@@ -427,90 +437,90 @@ const CreateBook = () => {
               )}
             </div>
 
-            <div className="items-center gap-1.5 grid mx-[32px] pt-[120px] w-[603px] h-[176px]">
+            <div className="md:items-center gap-1.5 grid mx-auto pt-6 md:pt-[120px] md:pl-0 w-full md:w-[603px] md:h-[176px]">
               <Label
                 htmlFor="description"
-                className="font-semibold text-[16px]"
+                className="font-semibold md:text-[16px]"
               >
                 Description
               </Label>
               <div
                 ref={quillRef}
-                className="border-slate-300 border rounded w-full h-[200px]"
+                className="border-slate-300 border rounded w-full md:w-[603px] h-[200px]"
               />
               <div className="relative">
-                <div className="bottom-0 absolute mb-[8px] ml-[25px]">
+                <div className="bottom-0.5 md:bottom-0 absolute mb-[8px] md:ml-[25px]">
                   <button
                     type="button"
                     onClick={handleBold}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 ml-[4px] mr-[2.5px] md:mx-1 p-1 border rounded-[4px]  ${
                       isBoldActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaBold className="w-[17px] h-[17px]" />
+                    <FaBold className="w-[12px] md:w-[17px] md:h-[17px]" />
                   </button>
                   <button
                     type="button"
                     onClick={handleItalic}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 mx-[2.5px] md:mx-1 p-1 border rounded-[4px]  ${
                       isItalicActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaItalic className="w-[17px] h-[17px]" />
+                    <FaItalic className="w-[12px] md:w-[17px] md:h-[17px]" />
                   </button>
                   <button
                     type="button"
                     onClick={handleUnderline}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 mx-[2.5px] md:mx-1 p-1 border rounded-[4px]  ${
                       isUnderlineActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaUnderline className="w-[17px] h-[17px]" />
+                    <FaUnderline className="w-[12px] md:w-[17px] md:h-[17px]" />
                   </button>
                   <button
                     type="button"
                     onClick={alignLeft}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 mx-[2.5px] md:mx-1 p-1 border rounded-[4px]  ${
                       isLeftActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaAlignLeft className="w-[17px] h-[17px]" />
+                    <FaAlignLeft className="w-[12px] lg:w-[17px] lg:h-[17px]" />
                   </button>
                   <button
                     type="button"
                     onClick={alignCenter}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 mx-[2.5px] md:mx-1 p-1 border rounded-[4px]  ${
                       isCenterActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaAlignCenter className="w-[17px] h-[17px]" />
+                    <FaAlignCenter className="w-[12px] md:w-[17px] md:h-[17px]" />
                   </button>
                   <button
                     type="button"
                     onClick={alignRight}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 mx-[2.5px] md:mx-1 p-1 border rounded-[4px]  ${
                       isRightActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaAlignRight className="w-[17px] h-[17px]" />
+                    <FaAlignRight className="w-[12px] md:w-[17px] md:h-[17px]" />
                   </button>
                   <button
                     type="button"
                     onClick={handleBullet}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 mx-[2.5px] md:mx-1 p-1 border rounded-[4px]  ${
                       isBulletActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaListUl className="w-[17px] h-[17px]" />
+                    <FaListUl className="w-[12px] md:w-[17px] md:h-[17px]" />
                   </button>
                   <button
                     type="button"
                     onClick={handleOrder}
-                    className={`border-slate-300 bg-slate-300 mx-1 p-1 border rounded-[4px]  ${
+                    className={`border-slate-300 bg-slate-300 mx-[2.5px] md:mx-1 p-1 border rounded-[4px]  ${
                       isOrderActive ? "bg-blue-500 text-slate-100" : ""
                     }`}
                   >
-                    <FaListOl className="w-[17px] h-[17px]" />
+                    <FaListOl className="w-[12px] md:w-[17px] md:h-[17px]" />
                   </button>
                 </div>
                 <textarea
@@ -532,10 +542,10 @@ const CreateBook = () => {
           </div>
 
           {!createBookMutation.isPending ? (
-            <div className="flex bg-primary mx-[32px] my-10 rounded-[8px] w-[603px] h-[43px] text-center">
+            <div className="flex justify-center items-center bg-primary mx-auto my-3 md:my-10 border rounded-[8px] w-full md:w-[603px]">
               <button
                 type="submit"
-                className="justify-center mx-[256px] text-white"
+                className="md:justify-center ml-[20px] h-[40px] md:h-[43px] text-[14px] text-white md:text-lg"
               >
                 Create Now
               </button>

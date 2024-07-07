@@ -92,15 +92,15 @@ const CommentSection = () => {
   ]);
 
   return (
-    <div className="flex flex-col gap-5 px-20 pb-8">
+    <div className="flex flex-col gap-5 px-5 md:px-20 md:pb-8">
       <span className="flex items-center gap-2">
-        <h1 className="text-lg font-semibold">Reader's Review</h1>
+        <h1 className="font-semibold md:text-lg">Reader's Review</h1>
         {comments ? (
-          <span className="flex items-center justify-center px-2 py-1 text-sm font-bold bg-blue-200 rounded-full min-w-8 min-h-6 text-primary">
+          <span className="flex justify-center items-center bg-blue-200 md:px-2 md:py-1 p-1 rounded-full min-w-8 min-h-6 font-bold text-primary text-sm">
             {comments.pages[0].meta.totalItems}
           </span>
         ) : (
-          <span className="flex items-center justify-center px-2 py-1 text-sm font-bold bg-blue-200 rounded-full min-w-8 min-h-6 text-primary">
+          <span className="flex justify-center items-center bg-blue-200 md:px-2 md:py-1 p-1 rounded-full min-w-8 min-h-6 font-bold text-primary text-sm">
             0
           </span>
         )}
@@ -110,20 +110,20 @@ const CommentSection = () => {
           page.items.map((comment) => (
             <div className="flex flex-col border-b border-b-border">
               <div
-                className="flex items-start gap-4 p-2 "
+                className="flex items-start gap-4 p-2"
                 key={comment.commentId}
               >
                 <img
                   src={comment.user.profilePicture}
                   alt={comment.user.name}
-                  className="rounded-full w-[45px] h-[45px]"
+                  className="rounded-full w-[30px] md:w-[45px] h-[30px] md:h-[45px]"
                 />
-                <div className="flex flex-col justify-center w-full gap-1">
+                <div className="flex flex-col justify-center gap-1 w-full">
                   <div className="flex flex-col">
-                    <h3 className="font-medium text-[18px]">
+                    <h3 className="font-medium text-[15px] md:text-[18px]">
                       {comment.user.name}
                     </h3>
-                    <span className="text-[11px] text-secondary-foreground">
+                    <span className="text-[9px] text-secondary-foreground md:text-[11px]">
                       {format(parseISO(comment.createdAt), "eeee do MMM, yyyy")}
                     </span>
                   </div>
@@ -137,16 +137,16 @@ const CommentSection = () => {
                           [comment.commentId]: e.target.value,
                         }))
                       }
-                      className="p-2 m-2 border border-border rounded-[5px] resize-none"
+                      className="m-2 p-2 border border-border rounded-[5px] resize-none"
                     />
                   ) : (
-                    <p>{comment.comment}</p>
+                    <p className="text-[14px] md:text-[16px]">{comment.comment}</p>
                   )}
-                  <div className="flex self-end gap-3">
+                  <div className="flex gap-3 self-end">
                     {!userIsLoading &&
                       userData?.userId === comment.user.userId && (
                         <Button
-                          className="w-10 rounded-[4px] px-8 !text-[12px] !bg-primary h-8"
+                          className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px]"
                           onClick={() =>
                             handleEditToggle(comment.commentId, comment.comment)
                           }
@@ -158,12 +158,12 @@ const CommentSection = () => {
                       <div className="flex items-center gap-3">
                         <Button
                           onClick={() => handleSaveComment(comment.commentId)}
-                          className="w-10 !text-[12px] rounded-[4px] px-8 !bg-primary h-8"
+                          className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px]"
                         >
                           Save
                         </Button>
                         {deleteComment.isPending ? (
-                          <Button className="self-center !bg-red-500 h-8 rounded-[4px] w-16">
+                          <Button className="!bg-red-500 rounded-[4px] w-16 h-8 self-center">
                             <Loader2 className="text-white animate-spin" />
                           </Button>
                         ) : (
@@ -171,7 +171,7 @@ const CommentSection = () => {
                             onClick={() =>
                               deleteComment.mutate(comment.commentId)
                             }
-                            className="w-10 !text-[12px] rounded-[4px] px-8 !bg-red-500 h-8"
+                            className="!bg-red-500 px-8 rounded-[4px] w-10 h-8 !text-[12px]"
                           >
                             Delete
                           </Button>
@@ -179,7 +179,7 @@ const CommentSection = () => {
                       </div>
                     ) : (
                       <Button
-                        className="w-10 !text-[12px] rounded-[4px] px-8 !bg-primary h-8"
+                        className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px]"
                         onClick={() => handleReplyToggle(comment.commentId)}
                       >
                         {isReplying[comment.commentId] ? "Cancel" : "Reply"}
@@ -191,7 +191,7 @@ const CommentSection = () => {
                       <img
                         src={userData?.profilePicture}
                         alt={userData?.name}
-                        className="w-[40px] h-[40px] rounded-full"
+                        className="rounded-full w-[40px] h-[40px]"
                       />
                       <textarea
                         placeholder="Reply here"
@@ -199,10 +199,10 @@ const CommentSection = () => {
                         onChange={(e) =>
                           handleReplyChange(comment.commentId, e.target.value)
                         }
-                        className="self-start w-full h-[18] p-2 text-sm border-border border rounded-[5px] resize-none"
+                        className="p-2 border border-border rounded-[5px] w-full h-[18] text-sm resize-none self-start"
                       ></textarea>
                       <Button
-                        className="self-end w-10 rounded-[4px] px-8 !text-[12px] !bg-primary h-8"
+                        className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px] self-end"
                         onClick={() => handleReplyComment(comment.commentId)}
                       >
                         Done
@@ -214,13 +214,13 @@ const CommentSection = () => {
                             [comment.commentId]: false,
                           }))
                         }
-                        className="self-end w-10 rounded-[4px] px-8 !text-[12px] !bg-primary h-8"
+                        className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px] self-end"
                       >
                         Cancel
                       </Button>
                     </div>
                   )}
-                  <div className="pl-4 ml-8 border-l-2 border-gray-300">
+                  <div className="border-gray-300 ml-8 pl-4 border-l-2">
                     {comment.replies.map((reply) => (
                       <div
                         className="flex gap-2 min-h-[100px]"
@@ -231,7 +231,7 @@ const CommentSection = () => {
                           alt={reply.user.name}
                           className="rounded-full w-[40px] h-[40px]"
                         />
-                        <div className="flex flex-col w-full gap-1">
+                        <div className="flex flex-col gap-1 w-full">
                           <div className="flex flex-col">
                             <h3 className="font-medium text-[13px]">
                               {reply.user.name}
@@ -253,16 +253,16 @@ const CommentSection = () => {
                                   [reply.commentId]: e.target.value,
                                 }))
                               }
-                              className="p-2 m-2 border border-border rounded-[5px] resize-none"
+                              className="m-2 p-2 border border-border rounded-[5px] resize-none"
                             />
                           ) : (
                             <p>{reply.comment}</p>
                           )}
-                          <div className="flex self-end gap-3">
+                          <div className="flex gap-3 self-end">
                             {!userIsLoading &&
                               userData?.userId === reply.user.userId && (
                                 <Button
-                                  className="w-10 !text-[12px] rounded-[4px] px-8 !bg-primary h-8"
+                                  className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px]"
                                   onClick={() =>
                                     handleEditToggle(
                                       reply.commentId,
@@ -281,12 +281,12 @@ const CommentSection = () => {
                                   onClick={() =>
                                     handleSaveComment(reply.commentId)
                                   }
-                                  className="w-10 !text-[12px] rounded-[4px] px-8 !bg-primary h-8"
+                                  className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px]"
                                 >
                                   Save
                                 </Button>
                                 {deleteComment.isPending ? (
-                                  <Button className="self-center !bg-red-500 h-8 rounded-[4px] w-16">
+                                  <Button className="!bg-red-500 rounded-[4px] w-16 h-8 self-center">
                                     <Loader2 className="text-white animate-spin" />
                                   </Button>
                                 ) : (
@@ -294,7 +294,7 @@ const CommentSection = () => {
                                     onClick={() =>
                                       deleteComment.mutate(reply.commentId)
                                     }
-                                    className="w-10 !text-[12px] rounded-[4px] px-8 !bg-red-500 h-8"
+                                    className="!bg-red-500 px-8 rounded-[4px] w-10 h-8 !text-[12px]"
                                   >
                                     Delete
                                   </Button>
@@ -320,7 +320,7 @@ const CommentSection = () => {
         </Button>
       ) : (
         isFetchingNextPage && (
-          <Button disabled className="self-center rounded-[8px] w-24">
+          <Button disabled className="rounded-[8px] w-24 self-center">
             <Loader2 className="text-white animate-spin" />
           </Button>
         )
