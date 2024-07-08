@@ -1,6 +1,6 @@
 import { getToken } from "@/services/authService";
 import BaseURL from "../services/ApiEndPoint";
-import { BookHistoryData } from "@/types/types";
+import { fetchFavoriteBookData } from "@/types/types";
 
 interface FetchAllFavBookHistoryParams {
   pageCount?: number;
@@ -50,7 +50,7 @@ export const getAllBookHistory = async (
   if (!response.ok) {
     throw new Error(result.message);
   }
-  return result as BookHistoryData[];
+  return result as fetchFavoriteBookData;
 };
 
 export const deleteHistory = async (bookSlug: string) => {

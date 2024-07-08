@@ -31,6 +31,15 @@ export type profileFetchData = {
   userId: number;
 };
 
+export type otherProfileData = {
+  userId: string;
+  name: string;
+  profilePicture: string;
+  bio: string;
+  gender: string;
+  cratedAt: string;
+};
+
 export type createChapterData = {
   title: string;
   content: string;
@@ -103,7 +112,7 @@ export type favoriteBookData = {
   bookId: string;
   user: {
     name: string;
-    profilePicture: File;
+    profilePicture: string;
   };
 };
 
@@ -135,12 +144,17 @@ export type commentData = {
   parentCommentId?: number;
 };
 
+export type replyComment = {
+  comment: string;
+  replyTo: number;
+};
+
 export type updateCommentData = {
   comment: string;
 };
 
 export type ChildCommentDataArray = {
-  commentId: number;
+  id: number;
   comment: string;
   replyTo: string;
   createdAt: string;

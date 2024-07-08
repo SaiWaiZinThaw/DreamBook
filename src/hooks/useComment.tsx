@@ -1,10 +1,13 @@
 import {
   createComment,
+  createReplyComment,
   deleteComment,
+  deleteReplyComment,
   editComment,
+  editReplyComment,
   getComments,
 } from "@/api/commentApi";
-import { commentData, updateCommentData } from "@/types/types";
+import { commentData, replyComment, updateCommentData } from "@/types/types";
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 
 export const useCreateComment = () =>
@@ -41,4 +44,25 @@ export const useUpdateComment = () =>
 export const useDeleteComment = () =>
   useMutation({
     mutationFn: (commentId: number) => deleteComment(commentId),
+  });
+
+export const useCreateReplyComment = () =>
+  useMutation({
+    mutationFn: (data: replyComment) => createReplyComment({ data }),
+  });
+
+export const useUpdateReplyComment = () =>
+  useMutation({
+    mutationFn: ({
+      commentId,
+      data,
+    }: {
+      commentId: number;
+      data: updateCommentData;
+    }) => editReplyComment(commentId, { data }),
+  });
+
+export const useDeleteReplyComment = () =>
+  useMutation({
+    mutationFn: (commentId: number) => deleteReplyComment(commentId),
   });

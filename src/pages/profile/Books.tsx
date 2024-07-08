@@ -7,7 +7,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { BsHeartFill, BsHeart, BsEyeFill } from "react-icons/bs";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Input } from "@/components/ui/input";
@@ -64,7 +63,6 @@ const Books = () => {
 
     setSearchParams(params);
   }, [deBounceSearch, sortBy, setSearchParams, pageCount]);
-  const [active, setActive] = useState(false);
 
   const navigate = useNavigate();
   if (!isLoading) {
@@ -74,17 +72,11 @@ const Books = () => {
     navigate(`/book-dashboard/${bookSlug}/book-details`);
   };
 
-  const viewHandler = (bookSlug: string) => {
-    navigate(`/book/${bookSlug}`);
-  };
-
   return (
-
     <div className="w-full h-full ">
       <div className="flex flex-col items-center gap-5 p-10">
         <div className="w-full flex md:flex-row md:gap-0  flex-col h-[100px] justify-between items-center mb-4 md:h-[50px]">
           <div className="flex items-center w-full gap-3">
-
             <img src={Sorting} alt="sorting" className="h-[30px] md:h-[50px]" />
             <Select onValueChange={handleSortChange}>
               <SelectTrigger className="w-[100px] md:w-[180px] h-[30px] md:h-[50px]">
@@ -103,13 +95,11 @@ const Books = () => {
               <Input
                 icon={<IoIosSearch className="text-2xl" />}
                 placeholder="Search"
-
                 value={search}
                 onChange={(event) => {
                   setSearch(event.target.value);
                 }}
                 className="!border-black rounded-[8px] md:h-full h-[30px]"
-
               />
             </div>
           </div>
@@ -119,7 +109,7 @@ const Books = () => {
             </Button>
           </NavLink>
         </div>
-        <div className="gap-2 md:gap-4 grid grid-cols-2 md:grid-cols-4 md:p-10">
+        <div className="grid grid-cols-2 gap-2 md:gap-4 md:grid-cols-4 md:p-10">
           {!isLoading &&
             data &&
             data.items &&
@@ -129,30 +119,10 @@ const Books = () => {
                 id={book.slug}
                 className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] min-w-[150px] max-w-[232px] h-[280px] book group"
               >
-                <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                    {active ? (
-                      <BsHeartFill
-                        className="text-red-500 cursor-pointer"
-                        onClick={() => setActive(!active)}
-                      />
-                    ) : (
-                      <BsHeart
-                        className="text-slate-500 cursor-pointer"
-                        onClick={() => setActive(!active)}
-                      />
-                    )}
-                  </div>
-
-                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
-                    <BsEyeFill
-                      onClick={() => viewHandler(book.slug)}
-                      className="text-slate-500 cursor-pointer"
-                    />
-                  </div>
-                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                <div className="group-hover:right-[1px] top-[10px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
+                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                     <HiPencil
-                      className="text-slate-500 cursor-pointer"
+                      className="cursor-pointer text-slate-500"
                       onClick={() => editHandler(book.slug)}
                     />
                   </div>
@@ -179,7 +149,10 @@ const Books = () => {
                       {book.category.title}
                     </p>
                   </div>
-                  <div className="flex items-center gap-1 md:gap-3 mt-1">
+                  <div
+                    onClick={() => navigate(`/profile/${book.user.userId}`)}
+                    className="flex items-center gap-1 mt-1 cursor-pointer md:gap-3"
+                  >
                     <img
                       src={book.user.profilePicture}
                       alt={book.user.name}
