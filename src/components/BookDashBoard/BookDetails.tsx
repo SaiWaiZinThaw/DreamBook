@@ -189,11 +189,42 @@ const BookDetails = () => {
       </div>
       <div className="h-full md:flex">
         <div className="md:flex md:flex-row-reverse">
-          <div className="flex md:flex-col justify-center md:ml-[35px]">
-            <div className="order-1 md:order-none md:mx-8 mt-[32px] md:w-[232px] md:h-[289px]">
-              <h1 className="flex justify-center mb-[18.5px] font-bold text-[14px] md:text-xl">
-                Cover Image
-              </h1>
+        <div className="flex md:flex-col justify-center md:ml-[35px]">
+          <div className="order-1 md:order-none md:mx-8 mt-[32px] md:w-[232px] md:h-[289px]">
+            <h1 className="flex justify-center mb-[18.5px] font-bold text-[14px] md:text-xl">
+              Cover Image
+            </h1>
+
+            <div className="border-slate-500 border border-dotted rounded-[8px] md:h-[252px]">
+              {isEditing ? (
+                <BookCoverChange
+                  onFileChange={handleFileChange}
+                  coverImage={fetchABookAuthor!.coverImage}
+                />
+              ) : (
+                <img
+                  src={fetchABookAuthor?.coverImage}
+                  alt=""
+                  className="md:mx-[52.5px] md:my-[30px] p-3 w-[100px] md:w-[127px] h-[150px] md:h-[191px]"
+                />
+              )}
+            </div>
+          </div>
+
+          <div className="order-2 mx-8 mt-[30px] md:none-order md:mt-[84px] md:w-[232px] md:h-[314px]">
+            <h1 className="flex justify-center mb-[11px] font-bold text-[14px] md:text-xl">
+              Preview Card Design
+            </h1>
+
+            <div className="bg-slate-100 shadow-xl border rounded-[8px] md:w-[232px] md:max-h-full">
+              <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[100px] md:h-[160px]">
+                <img
+                  src={fetchABookAuthor?.coverImage}
+                  alt=""
+                  className="w-[46px] md:w-[86px] md:h-[129px]"
+                />
+              </div>
+
 
               <div className="border-slate-500 border border-dotted rounded-[8px] md:h-[252px]">
                 {isEditing ? (
@@ -385,30 +416,54 @@ const BookDetails = () => {
               </div>
             </div>
 
-            <div className="flex justify-end mt-[50px] md:mt-[170px] md:mr-4 rounded-[8px] h-[43px]">
-              <div className="">
-                {isEditing ? (
-                  <>
-                    <Button
-                      onClick={handleCancelClick}
-                      className="bg-white hover:bg-white text-slate-900 hover:text-slate-500"
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      onClick={handleSaveClick}
-                      className="bg-primary hover:bg-blue-400 rounded-[8px] text-slate-100 hover:text-slate-200"
-                    >
-                      Save
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button
-                          className="border-none md:w-[111px] text-red-600 md:text-md hover:text-red-400"
-                          variant="outline"
+          <div className="flex justify-end mt-[50px] md:mt-[170px] md:mr-4 rounded-[8px] h-[43px]">
+            <div className="">
+              {isEditing ? (
+                <>
+                  <Button
+                    onClick={handleCancelClick}
+                    className="bg-white hover:bg-white text-slate-900 hover:text-slate-500"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={handleSaveClick}
+                    className="bg-primary hover:bg-blue-400 rounded-[8px] text-slate-100 hover:text-slate-200"
+                  >
+                    Save
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        className="border-none md:w-[111px] text-red-600 md:text-md hover:text-red-400"
+                        variant="outline"
+                      >
+                        Delete
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="bg-slate-50 rounded-none">
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="font-extrabold text-red-600 md:text-xl">
+                          Are you sure want to delete?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          The book will be deleted permanently and will not be
+                          recovered.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter className="mx-auto md:mx-0 rounded-[5px]">
+                        <AlertDialogCancel className="border-none">
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() =>
+                            handleDeleteConfirm(fetchABookAuthor!.slug!)
+                          }
+                          className="hover:bg-blue-400 mt-2 md:mt-0 rounded-[8px] text-slate-100 hover:text-slate-200"
+
                         >
                           Delete
                         </Button>

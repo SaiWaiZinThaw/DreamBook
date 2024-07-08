@@ -100,20 +100,20 @@ const Chapters = () => {
     <div className="w-full h-full">
       <div className="mx-0 px-0 w-full">
         <div className="flex flex-col w-full">
-          <div className="flex border-slate-300 border-b w-full h-[80px]">
-            <h1 className="my-[20px] pl-[40px] font-extrabold text-2xl">
+          <div className="flex border-slate-300 border-b w-full h-[40px] md:h-[80px]">
+            <h1 className="md:my-[20px] md:pl-[40px] font-extrabold md:text-2xl">
               Chapters
             </h1>
 
             <Tabs
               defaultValue="status"
-              className="bg-[#E0E0E0] my-[13px] ml-[680px] rounded-[8px] w-[206px] h-[40px] text-slate-400"
+              className="bg-[#E0E0E0] md:my-[13px] ml-auto md:ml-[680px] rounded-[8px] w-[180px] md:w-[206px] h-[40px] text-slate-400"
             >
               <TabsList className="gap-x-2 w-full">
                 <TabsTrigger
                   onClick={() => handleTabClick("draft")}
                   value="draft"
-                  className={`bg-yellow-500 text-slate-100 rounded-[8px] w-[91px] h-[31px] ${
+                  className={`bg-yellow-500 text-slate-100 rounded-[8px] w-[80px] md:w-[91px] md:h-[31px] ${
                     activeTab === "draft" ? "bg-yellow-500 text-slate-100" : ""
                   }`}
                 >
@@ -122,7 +122,7 @@ const Chapters = () => {
                 <TabsTrigger
                   onClick={() => handleTabClick("public")}
                   value="public"
-                  className={`bg-green-800 text-slate-100 rounded-[8px] w-[91px] h-[31px] ${
+                  className={`bg-green-800 text-slate-100 rounded-[8px] md:w-[91px] w-[80px] md:h-[31px] ${
                     activeTab === "public" ? "bg-green-800 text-slate-100" : ""
                   }`}
                 >
@@ -131,7 +131,7 @@ const Chapters = () => {
               </TabsList>
             </Tabs>
           </div>
-          <div className="flex flex-col justify-center px-8 py-4 w-full">
+          <div className="flex flex-col justify-center md:px-8 md:py-4 w-full">
             {data &&
               !isLoading &&
               data.map((chapter: any) => (
@@ -140,7 +140,7 @@ const Chapters = () => {
                   className="flex flex-col justify-center shadow-secondary-foreground shadow-sm m-3 p-4 border border-border rounded-[8px] chapter"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="font-semibold text-primary">
+                    <span className="font-semibold text-[16px] text-primary md:text-[18px]">
                       {chapter.title}
                     </span>
                     <DropdownMenu>
@@ -161,7 +161,7 @@ const Chapters = () => {
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
-                  <div className="px-4 line-clamp-1" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(chapter?.content!) }} />
+                  <div className="md:px-4 line-clamp-1 text-[13px] md:text-[16px]" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(chapter?.content!) }} />
                   {/* <div >{chapter.content}</div> */}
                 </div>
               ))}
@@ -178,7 +178,7 @@ const Chapters = () => {
                   <span id="Shadow"></span>
                 </div>
 
-                <h1 className="mt-[330px] mb-4 ml-[490px] font-normal text-2xl">
+                <h1 className="mt-[330px] mb-4 md:ml-[490px] font-normal md:text-2xl">
                   Craft a Chapter
                 </h1>
                 <p className="ml-[330px] font-normal text-lg text-slate-500 text-opacity-75">
@@ -189,11 +189,11 @@ const Chapters = () => {
                   <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
                       <Button
-                        className="flex bg-primary hover:bg-blue-500 mt-[24px] ml-[455px] border-none rounded-[5px] w-[225px] h-[52px] text-lg text-slate-100 hover:text-slate-200"
+                        className="flex bg-primary hover:bg-blue-500 mt-[24px] md:ml-[455px] border-none rounded-[5px] md:w-[225px] md:h-[52px] text-slate-100 md:text-lg hover:text-slate-200"
                         variant="outline"
                         onClick={() => setOpen(true)}
                       >
-                        <BsPlus className="text-4xl" />
+                        <BsPlus className="md:text-4xl" />
                         Create New Chapter
                       </Button>
                     </DialogTrigger>
@@ -230,17 +230,17 @@ const Chapters = () => {
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button
-                          className="flex gap-1 bg-primary hover:bg-blue-500 mt-[24px] ml-[455px] border-none rounded-[5px] w-[150px] h-[44px] text-slate-100 hover:text-slate-200"
+                          className="flex gap-1 bg-primary hover:bg-blue-500 mx-auto mt-[24px] md:ml-[455px] border-none rounded-[5px] md:w-[150px] md:h-[44px] text-slate-100 hover:text-slate-200"
                           variant="outline"
                         >
-                          <BsPlus className="text-xl" />
+                          <BsPlus className="md:text-xl" />
                           New Chapter
                         </Button>
                       </DialogTrigger>
 
                       <DialogContent className="bg-slate-50">
                         <DialogHeader className="flex justify-center items-center">
-                          <DialogTitle className="font-bold text-xl">
+                          <DialogTitle className="font-bold md:text-xl">
                             Creating A Chapter
                           </DialogTitle>
                         </DialogHeader>
@@ -248,7 +248,7 @@ const Chapters = () => {
                           chapterData={chapterData}
                           setChapterData={setChapterData}
                         />
-                        <DialogFooter className="ml-[683px] w-[135px] h-[43px]">
+                        <DialogFooter className="mx-auto md:ml-[683px] w-[135px] h-[43px]">
                           <Button
                             onClick={handleButton}
                             type="submit"

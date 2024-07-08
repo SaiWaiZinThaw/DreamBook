@@ -18,7 +18,8 @@ const ChangePassword = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordMismatchError, setPasswordMismatchError] = useState(false);
-  const oldPasswordError = false;
+  const [oldPasswordError] = useState(false);
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

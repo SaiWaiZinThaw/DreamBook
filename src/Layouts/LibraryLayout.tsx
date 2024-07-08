@@ -88,26 +88,26 @@ const LibraryLayout = () => {
   }, [deBounceSearch, sortBy, setSearchParams, selectedCategories, pageCount]);
 
   return (
-    <div className="container w-full px-0 mx-0">
+    <div className="mx-0 px-0 w-full container">
       <div
-        className="flex flex-col gap-4 justify-center items-center bg-cover bg-no-repeat w-screen h-[370px] text-white"
+        className="flex flex-col justify-center items-center gap-4 bg-cover bg-no-repeat w-screen h-[370px] text-white"
         style={{ backgroundImage: `url(${LibraryHero})` }}
       >
-        <h1 className="text-4xl font-extrabold">Library</h1>
-        <h2 className="font-medium md:text-xl ">Explore your favorite books</h2>
+        <h1 className="font-extrabold text-4xl">Library</h1>
+        <h2 className="font-medium md:text-xl">Explore your favorite books</h2>
         <h2 className="font-medium md:text-xl">
           Reading is the best to get idea , Keep Reading
         </h2>
       </div>
 
-      <div className="w-full mt-4 md:flex">
-        <div className="md:block hidden border-slate-400 mt-2 border-r w-[400px] md:px-4">
+      <div className="md:flex mt-4 w-full">
+        <div className="md:block border-slate-400 hidden mt-2 md:px-4 border-r w-[400px]">
           <h1 className="flex justify-center mt-[20px] font-extrabold text-2xl text-black">
             Categories
           </h1>
 
           <div className="flex flex-col justify-start gap-3 mt-[30px] ml-[30px]">
-            <label className="flex items-center gap-2 text-lg font-medium md:text-[16px]">
+            <label className="flex items-center gap-2 font-medium text-lg md:text-[16px]">
               <Checkbox onCheckedChange={handleSelectAll} checked={selectAll} />
               All
             </label>
@@ -116,7 +116,7 @@ const LibraryLayout = () => {
                   <label
                     key={item.categoryId}
                     id={item.categoryId}
-                    className="flex items-center gap-2 text-lg font-medium md:text-[16px]"
+                    className="flex items-center gap-2 font-medium text-lg md:text-[16px]"
                   >
                     <Checkbox
                       onCheckedChange={() => {

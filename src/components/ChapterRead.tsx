@@ -52,7 +52,7 @@ const ChapterRead = () => {
     navigate(`/${bookSlug}/chapter/${id}`);
     setParsedChapterId(id);
     setActiveChapterId(id);
-
+  
     if (getChapterProgress?.chapterId === id) {
       updateProgress.mutate({ bookSlug: bookSlug!, data: { chapterId: id } });
     } else {
@@ -60,7 +60,22 @@ const ChapterRead = () => {
       createChapterProgress.mutate({ slug: bookSlug!, chapterId: id });
     }
     setShowChapters(false);
+  
+
+    if (currentChapterIndex < totalChapters && id === getChapters[currentChapterIndex].chapterId) {
+      const nextChapterId = getChapters[currentChapterIndex].chapterId;
+      setParsedChapterId(nextChapterId);
+      setActiveChapterId(nextChapterId);
+  
+      if (getChapterProgress?.chapterId === nextChapterId) {
+        updateProgress.mutate({ bookSlug: bookSlug!, data: { chapterId: nextChapterId } });
+      } else {
+        console.log('Creating new progress:', { bookSlug, chapterId: nextChapterId });
+        createChapterProgress.mutate({ slug: bookSlug!, chapterId: nextChapterId });
+      }
+    }
   };
+  
 
   useEffect(() => {
     if (updateProgress.isSuccess) {
@@ -110,7 +125,7 @@ const ChapterRead = () => {
         </div>
       </div>
 
-      <div className="flex flex-col w-screen min-h-screen">
+      <div className={`flex flex-col w-screen min-h-screen ${showChapters ? 'hidden md:flex' : ''}`}>
         {isLoading && <p>Loading...</p>}
         {error && <p>Error loading chapter: {error.message}</p>}
         {getChapter && (
@@ -166,3 +181,4 @@ const ChapterRead = () => {
 };
 
 export default ChapterRead;
+
