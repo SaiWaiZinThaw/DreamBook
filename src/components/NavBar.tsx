@@ -18,7 +18,7 @@ const NavBar = () => {
       <div className="flex items-center gap-3">
         <button
           onClick={() => setShowMenu(true)}
-          className="lg:hidden font-bold text-xl"
+          className="text-xl font-bold lg:hidden"
         >
           <RxHamburgerMenu />
         </button>
@@ -28,7 +28,7 @@ const NavBar = () => {
           </div>
         </NavLink>
       </div>
-      <nav className="lg:flex items-center gap-5 hidden">
+      <nav className="items-center hidden gap-5 lg:flex">
         <NavLink
           className={({ isActive }) =>
             isActive
@@ -63,7 +63,7 @@ const NavBar = () => {
 
       {!token ? (
         <div className="flex items-center gap-2">
-          <NavLink className="lg:block hidden" to="/auth/login">
+          <NavLink className="hidden lg:block" to="/auth/login">
             <Button variant={"ghost"} className="flex items-center gap-2">
               <HiMiniUserCircle className="text-2xl" /> Login
             </Button>
@@ -75,13 +75,11 @@ const NavBar = () => {
       ) : (
         <div className="flex items-center gap-4">
           <NavLink
-
             className="flex-col items-center justify-end hidden lg:flex"
-
             to="/me/fav"
           >
-            <FaHeart className="font-bold text-lg text-red-600" />
-            <span className="font-semibold text-sm">Fav Books</span>
+            <FaHeart className="text-lg font-bold text-red-600" />
+            <span className="text-sm font-semibold">Fav Books</span>
           </NavLink>
           {!isLoading && data && isSuccess && <ProfileDropdown data={data} />}
         </div>

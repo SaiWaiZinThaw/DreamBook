@@ -8,6 +8,7 @@ import ChapterReading from "@/pages/BookReading/ChapterReading";
 import BookReadingLayout from "@/pages/BookReading/BookReadingLayout";
 import Chapter from "@/pages/BookReading/Chapter";
 import NotFound from "@/Layouts/NotFound";
+import OtherUserProfile from "@/pages/OtherUserProfile";
 
 const UserRouter: RouteObject[] = [
   {
@@ -56,9 +57,14 @@ const UserRouter: RouteObject[] = [
     element: <AuthLayout />,
   },
   {
+    path: "/profile/:userId",
+    element: <OtherUserProfile />,
+  },
+
+  {
     path: "*",
-    element: <NotFound/>
-  }
+    element: <NotFound />,
+  },
 ];
 
 export default UserRouter;

@@ -3,10 +3,12 @@ import { useGetMe } from "@/hooks/useUser";
 import { getToken } from "@/services/authService";
 import { useParams } from "react-router-dom";
 import {
-  useCreateComment,
+  useCreateReplyComment,
   useDeleteComment,
+  useDeleteReplyComment,
   useGetComments,
   useUpdateComment,
+  useUpdateReplyComment,
 } from "@/hooks/useComment";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
@@ -14,7 +16,7 @@ import { format, parseISO } from "date-fns";
 
 const CommentSection = () => {
   const token = getToken() || "";
-  const createReplyComment = useCreateComment();
+  const createReplyComment = useCreateReplyComment();
   const { data: userData, isLoading: userIsLoading } = useGetMe(token!);
   const { bookSlug } = useParams();
   const {
@@ -32,10 +34,15 @@ const CommentSection = () => {
   const [editCommentText, setEditCommentText] = useState<{
     [key: number]: string;
   }>({});
+  const [editReplyCommentText, setEditReplyCommentText] = useState<{
+    [key: number]: string;
+  }>({});
   const [isReplying, setIsReplying] = useState<{ [key: number]: boolean }>({});
 
   const updateComment = useUpdateComment();
   const deleteComment = useDeleteComment();
+  const updateReply = useUpdateReplyComment();
+  const deleteReplyComment = useDeleteReplyComment();
 
   const handleReplyChange = (commentId: number, text: string) => {
     setReplyText((prev) => ({ ...prev, [commentId]: text }));
@@ -45,6 +52,16 @@ const CommentSection = () => {
     setIsEditing((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
     if (!isEditing[commentId]) {
       setEditCommentText((prev) => ({ ...prev, [commentId]: currentText }));
+    }
+  };
+
+  const handleEditReplyToggle = (commentId: number, currentText: string) => {
+    setIsEditing((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
+    if (!isEditing[commentId]) {
+      setEditReplyCommentText((prev) => ({
+        ...prev,
+        [commentId]: currentText,
+      }));
     }
   };
 
@@ -58,6 +75,17 @@ const CommentSection = () => {
     setIsEditing((prev) => ({ ...prev, [commentId]: false }));
   };
 
+  const handleSaveReplyComment = (replyId: number) => {
+    console.log(replyId);
+    if (editReplyCommentText[replyId]) {
+      updateReply.mutate({
+        commentId: replyId,
+        data: { comment: editReplyCommentText[replyId] },
+      });
+    }
+    setIsEditing((prev) => ({ ...prev, [replyId]: false }));
+  };
+
   const handleReplyToggle = (commentId: number) => {
     setIsReplying((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
   };
@@ -65,8 +93,7 @@ const CommentSection = () => {
   const handleReplyComment = (commentId: number) => {
     if (replyText[commentId]) {
       createReplyComment.mutate({
-        parentCommentId: commentId,
-        slug: bookSlug!,
+        replyTo: commentId,
         comment: replyText[commentId],
       });
       setReplyText((prev) => ({ ...prev, [commentId]: "" }));
@@ -74,20 +101,26 @@ const CommentSection = () => {
     setIsReplying((prev) => ({ ...prev, [commentId]: false }));
   };
 
+  const handleDeleteReply = (replyId: number) => {
+    deleteReplyComment.mutate(replyId);
+  };
+
   useEffect(() => {
-    if (deleteComment.isSuccess) {
-      refetch();
-    }
-    if (updateComment.isSuccess) {
-      refetch();
-    }
-    if (createReplyComment.isSuccess) {
+    if (
+      deleteComment.isSuccess ||
+      updateComment.isSuccess ||
+      createReplyComment.isSuccess ||
+      deleteReplyComment.isSuccess ||
+      updateReply.isSuccess
+    ) {
       refetch();
     }
   }, [
     deleteComment.isSuccess,
     updateComment.isSuccess,
     createReplyComment.isSuccess,
+    deleteReplyComment.isSuccess,
+    updateReply.isSuccess,
     refetch,
   ]);
 
@@ -96,11 +129,11 @@ const CommentSection = () => {
       <span className="flex items-center gap-2">
         <h1 className="font-semibold md:text-lg">Reader's Review</h1>
         {comments ? (
-          <span className="flex justify-center items-center bg-blue-200 md:px-2 md:py-1 p-1 rounded-full min-w-8 min-h-6 font-bold text-primary text-sm">
+          <span className="flex items-center justify-center p-1 text-sm font-bold bg-blue-200 rounded-full md:px-2 md:py-1 min-w-8 min-h-6 text-primary">
             {comments.pages[0].meta.totalItems}
           </span>
         ) : (
-          <span className="flex justify-center items-center bg-blue-200 md:px-2 md:py-1 p-1 rounded-full min-w-8 min-h-6 font-bold text-primary text-sm">
+          <span className="flex items-center justify-center p-1 text-sm font-bold bg-blue-200 rounded-full md:px-2 md:py-1 min-w-8 min-h-6 text-primary">
             0
           </span>
         )}
@@ -108,17 +141,17 @@ const CommentSection = () => {
       {!commentIsLoading &&
         comments?.pages.map((page) =>
           page.items.map((comment) => (
-            <div className="flex flex-col border-b border-b-border">
-              <div
-                className="flex items-start gap-4 p-2"
-                key={comment.commentId}
-              >
+            <div
+              className="flex flex-col border-b border-b-border"
+              key={comment.commentId}
+            >
+              <div className="flex items-start gap-4 p-2">
                 <img
                   src={comment.user.profilePicture}
                   alt={comment.user.name}
                   className="rounded-full w-[30px] md:w-[45px] h-[30px] md:h-[45px]"
                 />
-                <div className="flex flex-col justify-center gap-1 w-full">
+                <div className="flex flex-col justify-center w-full gap-1">
                   <div className="flex flex-col">
                     <h3 className="font-medium text-[15px] md:text-[18px]">
                       {comment.user.name}
@@ -137,16 +170,18 @@ const CommentSection = () => {
                           [comment.commentId]: e.target.value,
                         }))
                       }
-                      className="m-2 p-2 border border-border rounded-[5px] resize-none"
+                      className="w-full md:m-2 p-2 border  border-border rounded-[5px] resize-none"
                     />
                   ) : (
-                    <p className="text-[14px] md:text-[16px]">{comment.comment}</p>
+                    <p className="text-[14px] md:text-[16px]">
+                      {comment.comment}
+                    </p>
                   )}
-                  <div className="flex gap-3 self-end">
+                  <div className="flex self-end gap-3">
                     {!userIsLoading &&
                       userData?.userId === comment.user.userId && (
                         <Button
-                          className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px]"
+                          className="!bg-primary px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px]"
                           onClick={() =>
                             handleEditToggle(comment.commentId, comment.comment)
                           }
@@ -158,7 +193,7 @@ const CommentSection = () => {
                       <div className="flex items-center gap-3">
                         <Button
                           onClick={() => handleSaveComment(comment.commentId)}
-                          className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px]"
+                          className="!bg-primary px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px]"
                         >
                           Save
                         </Button>
@@ -171,7 +206,7 @@ const CommentSection = () => {
                             onClick={() =>
                               deleteComment.mutate(comment.commentId)
                             }
-                            className="!bg-red-500 px-8 rounded-[4px] w-10 h-8 !text-[12px]"
+                            className="!bg-red-500 px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px]"
                           >
                             Delete
                           </Button>
@@ -179,7 +214,7 @@ const CommentSection = () => {
                       </div>
                     ) : (
                       <Button
-                        className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px]"
+                        className="!bg-primary px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px]"
                         onClick={() => handleReplyToggle(comment.commentId)}
                       >
                         {isReplying[comment.commentId] ? "Cancel" : "Reply"}
@@ -191,7 +226,7 @@ const CommentSection = () => {
                       <img
                         src={userData?.profilePicture}
                         alt={userData?.name}
-                        className="rounded-full w-[40px] h-[40px]"
+                        className="rounded-full w-[30px] h-[30px] md:w-[40px] md:h-[40px]"
                       />
                       <textarea
                         placeholder="Reply here"
@@ -199,10 +234,10 @@ const CommentSection = () => {
                         onChange={(e) =>
                           handleReplyChange(comment.commentId, e.target.value)
                         }
-                        className="p-2 border border-border rounded-[5px] w-full h-[18] text-sm resize-none self-start"
+                        className="p-2 border border-border rounded-[5px] w-[400px] h-[18] text-sm resize-none self-start"
                       ></textarea>
                       <Button
-                        className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px] self-end"
+                        className="!bg-primary px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px] self-end"
                         onClick={() => handleReplyComment(comment.commentId)}
                       >
                         Done
@@ -214,29 +249,29 @@ const CommentSection = () => {
                             [comment.commentId]: false,
                           }))
                         }
-                        className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px] self-end"
+                        className="!bg-primary px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px] self-end"
                       >
                         Cancel
                       </Button>
                     </div>
                   )}
-                  <div className="border-gray-300 ml-8 pl-4 border-l-2">
+                  <div className="pl-4 ml-8 border-l-2 border-gray-300">
                     {comment.replies.map((reply) => (
                       <div
-                        className="flex gap-2 min-h-[100px]"
-                        key={reply.commentId}
+                        className="flex gap-2 md:min-h-[100px]"
+                        key={reply.id}
                       >
                         <img
                           src={reply.user.profilePicture}
                           alt={reply.user.name}
-                          className="rounded-full w-[40px] h-[40px]"
+                          className="rounded-full w-[30px] h-[30px] md:w-[40px] md:h-[40px]"
                         />
-                        <div className="flex flex-col gap-1 w-full">
+                        <div className="flex flex-col w-full gap-1">
                           <div className="flex flex-col">
-                            <h3 className="font-medium text-[13px]">
+                            <h3 className="font-medium text-[10px] md:text-[13px]">
                               {reply.user.name}
                             </h3>
-                            <span className="text-[9px] text-secondary-foreground">
+                            <span className="text-[8px] md:text-[9px] text-secondary-foreground">
                               {format(
                                 parseISO(reply.createdAt),
                                 "eeee do MMM, yyyy"
@@ -244,63 +279,61 @@ const CommentSection = () => {
                             </span>
                           </div>
 
-                          {isEditing[reply.commentId] ? (
+                          {isEditing[reply.id] ? (
                             <textarea
-                              value={editCommentText[reply.commentId]}
+                              value={editReplyCommentText[reply.id]}
                               onChange={(e) =>
-                                setEditCommentText((prev) => ({
+                                setEditReplyCommentText((prev) => ({
                                   ...prev,
-                                  [reply.commentId]: e.target.value,
+                                  [reply.id]: e.target.value,
                                 }))
                               }
-                              className="m-2 p-2 border border-border rounded-[5px] resize-none"
+                              className="m-2 p-2 border border-border text-[10px] md:text-[13px] rounded-[5px] resize-none"
                             />
                           ) : (
-                            <p>{reply.comment}</p>
+                            <p className="text-[13px] md:text-[16px]">
+                              {reply.comment}
+                            </p>
                           )}
-                          <div className="flex gap-3 self-end">
+                          <div className="flex self-end gap-3">
                             {!userIsLoading &&
                               userData?.userId === reply.user.userId && (
                                 <Button
-                                  className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px]"
+                                  className="!bg-primary px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px]"
                                   onClick={() =>
-                                    handleEditToggle(
-                                      reply.commentId,
+                                    handleEditReplyToggle(
+                                      reply.id,
                                       reply.comment
                                     )
                                   }
                                 >
-                                  {isEditing[reply.commentId]
-                                    ? "Cancel"
-                                    : "Edit"}
+                                  {isEditing[reply.id] ? "Cancel" : "Edit"}
                                 </Button>
                               )}
-                            {isEditing[reply.commentId] && (
+                            {isEditing[reply.id] ? (
                               <div className="flex items-center gap-3">
                                 <Button
                                   onClick={() =>
-                                    handleSaveComment(reply.commentId)
+                                    handleSaveReplyComment(reply.id)
                                   }
-                                  className="!bg-primary px-8 rounded-[4px] w-10 h-8 !text-[12px]"
+                                  className="!bg-primary px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px]"
                                 >
                                   Save
                                 </Button>
-                                {deleteComment.isPending ? (
+                                {deleteReplyComment.isPending ? (
                                   <Button className="!bg-red-500 rounded-[4px] w-16 h-8 self-center">
                                     <Loader2 className="text-white animate-spin" />
                                   </Button>
                                 ) : (
                                   <Button
-                                    onClick={() =>
-                                      deleteComment.mutate(reply.commentId)
-                                    }
-                                    className="!bg-red-500 px-8 rounded-[4px] w-10 h-8 !text-[12px]"
+                                    onClick={() => handleDeleteReply(reply.id)}
+                                    className="!bg-red-500 px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px]"
                                   >
                                     Delete
                                   </Button>
                                 )}
                               </div>
-                            )}
+                            ) : null}
                           </div>
                         </div>
                       </div>

@@ -49,7 +49,7 @@ const Fav = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="flex flex-col justify-center w-full p-4 md:p-10">
+      <div className="flex flex-col justify-center w-full gap-5 p-4 md:p-10">
         <h1 className="text-xl font-bold text-center lg:text-2xl">
           Favorite Books
         </h1>
@@ -98,7 +98,12 @@ const Fav = () => {
                       {item.book.category.title}
                     </p>
                   </div>
-                  <div className="flex items-center gap-3 mt-1">
+                  <div
+                    onClick={() =>
+                      navigate(`/profile/${item.book.user.userId}`)
+                    }
+                    className="flex items-center gap-3 mt-1 cursor-pointer"
+                  >
                     <img
                       src={item.book.user.profilePicture}
                       alt={item.book.user.name}
