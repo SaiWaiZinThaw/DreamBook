@@ -1,62 +1,60 @@
-import { Sorting } from "@/assets";
-import { IoIosSearch } from "react-icons/io";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useGetFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
 import { BsHeartFill, BsEyeFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useGetFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
 
 const Fav = () => {
-  const { data, isLoading } = useGetFavorite();
+  const [searchParams, setSearchParams] = useSearchParams({
+    page: "1",
+  });
+
+  const [pageCount, setPageCount] = useState<number>(
+    parseInt(searchParams.get("page") || "1", 10)
+  );
+  const { data, isLoading } = useGetFavorite({
+    pageCount,
+  });
+
   const removeFavorite = useRemoveFavorite();
   const navigate = useNavigate();
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    event.preventDefault();
+    setPageCount(value);
+  };
+
+  useEffect(() => {
+    const params: any = {};
+
+    if (pageCount) {
+      params.page = pageCount.toString();
+    }
+
+    setSearchParams(params);
+  }, [setSearchParams, pageCount]);
+
   const hideBook = (
     event: React.MouseEvent<SVGElement, MouseEvent>,
-    Bookslug: string
+    bookSlug: string
   ) => {
-    const book = event.currentTarget.closest(`#${Bookslug}`);
+    const book = event.currentTarget.closest(`#${bookSlug}`);
     book?.classList.add("hidden");
-    removeFavorite.mutate({ slug: Bookslug });
+    removeFavorite.mutate({ slug: bookSlug });
   };
 
   return (
     <div className="w-full h-full">
-      <div className="p-4 md:p-10">
-        <div className="flex md:flex-row flex-col justify-between items-center md:gap-0 mb-4 h-[100px] md:h-[50px]">
-          <div className="flex items-center gap-3 w-full">
-            <img src={Sorting} alt="sorting" className="h-[30px] md:h-[50px]" />
-            <Select>
-              <SelectTrigger className="w-[100px] md:w-[180px] h-[30px] md:h-[50px]">
-                <SelectValue placeholder="Sort by default" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="default">Sort by default</SelectItem>
-                <SelectItem value="random">Sort by random</SelectItem>
-                <SelectItem value="latest">Sort by Latest</SelectItem>
-                <SelectItem value="A-Z">Sort by A-Z</SelectItem>
-              </SelectContent>
-            </Select>
 
-            <div className="w-auto md:w-[380px]">
-              <Input
-                icon={<IoIosSearch className="text-2xl" />}
-                placeholder="Search"
-                className="!border-black rounded-[8px] h-[30px] md:h-full"
-              />
-            </div>
-          </div>
-          <Button className="h-[40px] md:h-full text-[13px] md:text-[15px] self-end">
-            Search
-          </Button>
-        </div>
-        <div className="gap-2 md:gap-4 grid grid-cols-2 md:grid-cols-4 md:p-10">
+      <div className="flex flex-col justify-center w-full gap-5 p-4 md:p-10">
+        <h1 className="text-xl font-bold text-center lg:text-2xl">
+          Favorite Books
+        </h1>
+        <div className="grid grid-cols-2 gap-2 md:p-10 md:gap-4 md:grid-cols-4">
           {!isLoading &&
             data?.items.map((item: any) => (
               <div
@@ -101,7 +99,12 @@ const Fav = () => {
                       {item.book.category.title}
                     </p>
                   </div>
-                  <div className="flex items-center gap-3 mt-1">
+                  <div
+                    onClick={() =>
+                      navigate(`/profile/${item.book.user.userId}`)
+                    }
+                    className="flex items-center gap-3 mt-1 cursor-pointer"
+                  >
                     <img
                       src={item.book.user.profilePicture}
                       alt={item.book.user.name}
@@ -115,6 +118,18 @@ const Fav = () => {
               </div>
             ))}
         </div>
+        {!isLoading && (
+          <Stack className="self-center" spacing={1}>
+            <Pagination
+              color="primary"
+              count={data?.meta.totalPages}
+              defaultPage={1}
+              boundaryCount={1}
+              onChange={handlePageChange}
+              page={pageCount}
+            />
+          </Stack>
+        )}
       </div>
     </div>
   );

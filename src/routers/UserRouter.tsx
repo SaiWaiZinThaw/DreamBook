@@ -9,6 +9,7 @@ import BookReadingLayout from "@/pages/BookReading/BookReadingLayout";
 import Chapter from "@/pages/BookReading/Chapter";
 import NotFound from "@/Layouts/NotFound";
 import CommentSection from "@/components/CommentSection";
+import OtherUserProfile from "@/pages/OtherUserProfile";
 
 const UserRouter: RouteObject[] = [
   {
@@ -61,9 +62,14 @@ const UserRouter: RouteObject[] = [
     element: <AuthLayout />,
   },
   {
+    path: "/profile/:userId",
+    element: <OtherUserProfile />,
+  },
+
+  {
     path: "*",
-    element: <NotFound/>
-  }
+    element: <NotFound />,
+  },
 ];
 
 export default UserRouter;

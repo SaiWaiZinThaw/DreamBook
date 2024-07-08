@@ -3,16 +3,22 @@ import { updateBookApi } from "@/api/updateBook";
 import { updateBookType } from "@/types/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-export const useFetchABookAuthor = (token: string, bookSlug: string) =>
+interface FetchAllBookParams {
+  deBounceSearch?: string;
+  sortBy?: string;
+  pageCount?: number;
+}
+
+export const useFetchABookAuthor = (bookSlug: string) =>
   useQuery({
     queryKey: ["abookauthor"],
-    queryFn: () => fetchABookAuthor(token, bookSlug),
+    queryFn: () => fetchABookAuthor(bookSlug),
   });
 
-export const useFetchAllBookAuthor = (token: string) =>
+export const useFetchAllBookAuthor = (params: FetchAllBookParams) =>
   useQuery({
-    queryKey: ["abookauthor"],
-    queryFn: () => fetchAllBookAuthor(token),
+    queryKey: ["abookauthor", params],
+    queryFn: () => fetchAllBookAuthor(params),
   });
 
 export const useUpdateBook = (bookSlug: string) =>

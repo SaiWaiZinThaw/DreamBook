@@ -297,7 +297,7 @@ const BookDetails = () => {
               </div>
             </div>
 
-            <div className="items-center gap-1.5 grid md:mx-[32px] pt-6 md:pt-[90px] h-[74px]">
+            <div className="items-center gap-1.5 grid md:mx-[32px] pt-6 md:pt-[30px] h-[74px]">
               <Label htmlFor="keywords" className="font-semibold md:text-[16px]">
                 Keywords
               </Label>
@@ -342,7 +342,7 @@ const BookDetails = () => {
               )}
             </div>
 
-            <div className="items-center gap-1.5 grid md:mx-[32px] pt-6 md:pt-[120px] h-[140px] md:h-[176px]">
+            <div className="items-center gap-1.5 grid md:mx-[32px] pt-6 md:pt-[60px] h-[140px] md:h-[176px]">
               <Label
                 htmlFor="description"
                 className="font-semibold md:text-[16px]"

@@ -92,7 +92,10 @@ const LatestBooks = () => {
                     {book.category.title}
                   </p>
                 </div>
-                <div className="flex items-center gap-3 mt-1">
+                <div
+                  onClick={() => navigate(`/profile/${book.user.userId}`)}
+                  className="flex items-center gap-3 mt-1 cursor-pointer"
+                >
                   <img
                     src={book.user.profilePicture}
                     alt={book.user.name}

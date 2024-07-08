@@ -65,15 +65,13 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
   }, [booksData]);
 
   return (
-
     <div className="flex flex-col w-full min-h-screen px-6 mx-0 lg:px-10">
       <div className="flex justify-between lg:gap-0 gap-4 mt-4 h-[30px] lg:h-[50px] w-full">
         <div className="flex items-center w-8/12 gap-3 lg:w-full">
-
           <img
             src={Sorting}
             alt="sorting"
-            className="w-4/12 md:w-auto lg:w-auto h-full"
+            className="w-4/12 h-full md:w-auto lg:w-auto"
           />
 
           <Select onValueChange={handleSortChange}>
@@ -100,24 +98,17 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
         />
       </div>
 
-
       <div className="grid w-full grid-cols-2 gap-2 p-4 py-6 gap-y-4 md:grid-cols-3 lg:p-10 lg:gap-3 lg:grid-cols-4">
-
         {!isBooksLoading &&
           booksData &&
           booksData.items.map((book: Book) => (
             <div
-
-            // onClick={() => viewBook(book.slug)}
-
               key={book.bookId}
               id={book.bookId}
               className="relative md:gap-2 bg-slate-100 shadow-md shadow-slate-200 py-2 lg:py-0 border rounded-[8px] min-w-[150px] lg:min-w-[190px] md:max-w-[170px] lg:h-[280px] book group"
             >
-
               <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                 <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
-
                   {favorites[book.bookId] ? (
                     <BsHeartFill
                       className="text-red-500 cursor-pointer"
@@ -138,7 +129,10 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
                   />
                 </div>
               </div>
-              <div onClick={() => viewBook(book.slug)} className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px] cursor-pointer">
+              <div
+                onClick={() => viewBook(book.slug)}
+                className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px] cursor-pointer"
+              >
                 <img
                   src={book.coverImage}
                   alt={book.coverImage}
@@ -160,13 +154,14 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
                     {book.category.title}
                   </p>
                 </div>
-                <div className="flex items-center gap-3 mt-1">
+                <div
+                  onClick={() => navigate(`/profile/${book.user.userId}`)}
+                  className="flex items-center gap-3 mt-1 cursor-pointer"
+                >
                   <img
                     src={book.user.profilePicture}
                     alt={book.user.name}
-
                     className="w-5 h-5 rounded-full lg:w-6 lg:h-6"
-
                   />
                   <h2 className="text-[12px] text-black lg:text-[13px]">
                     By {book.user.name}

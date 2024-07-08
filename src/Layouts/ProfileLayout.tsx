@@ -27,10 +27,11 @@ const ProfileLayout = () => {
   }, [!token]);
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full min-h-screen">
       <NavBar />
       <div className="flex w-full h-full">
-        <div className="flex flex-col md:gap-10 border-2 shadow-sm md:p-8 pt-8 md:pt-16 shoadw-border border-r-border w-[90px] md:w-[480px]">
+
+        <div className="min-h-screen flex flex-col md:gap-10 border-2 shadow-sm pt-8 md:p-8 md:pt-16 shoadw-border border-r-border w-[90px] md:w-[480px]">
           {!isLoading && data && (
             <div className="flex md:flex-row flex-col items-center gap-2 md:gap-4 md:px-5 py-4 profile">
               <img
