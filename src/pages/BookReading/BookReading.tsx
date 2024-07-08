@@ -118,7 +118,7 @@ const BookReading: React.FC = () => {
                   >
                     <div
                       style={{ width: `${progressPercentage}%` }}
-                      className="bg-blue-600 md:h-full"
+                      className="bg-blue-600 h-full"
                     />
                   </Progress>
                   <div className="mt-2 text-[13px] md:text-sm">{`Chapter ${currentChapterIndex} of ${totalChapters}`}</div>

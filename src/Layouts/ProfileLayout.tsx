@@ -30,21 +30,21 @@ const ProfileLayout = () => {
     <div className="w-full h-screen">
       <NavBar />
       <div className="flex w-full h-full">
-        <div className="flex flex-col md:gap-10 border-2 shadow-sm pt-8 md:p-8 md:pt-16 shoadw-border border-r-border w-[90px] md:w-[480px]">
+        <div className="flex flex-col md:gap-10 border-2 shadow-sm md:p-8 pt-8 md:pt-16 shoadw-border border-r-border w-[90px] md:w-[480px]">
           {!isLoading && data && (
-            <div className="flex flex-col items-center gap-2 py-4 md:gap-4 md:flex-row md:px-5 profile">
+            <div className="flex md:flex-row flex-col items-center gap-2 md:gap-4 md:px-5 py-4 profile">
               <img
                 src={data.profilePicture}
                 alt={data.profilePicture}
-                className="rounded-full md:w-[65px] h-[40px] w-[40px] md:h-[65px]"
+                className="rounded-full w-[40px] md:w-[65px] h-[40px] md:h-[65px]"
               />
-              <span className="font-bold md:text-base text-[10px] text-center">
+              <span className="font-bold text-[10px] text-center md:text-base">
                 {data.name}
               </span>
             </div>
           )}
 
-          <div className="flex flex-col justify-center h-full gap-3 md:h-auto md:gap-0">
+          <div className="flex flex-col justify-center gap-3 md:gap-0 h-full md:h-auto">
             <NavLink
               to={"/me/info"}
               className={({ isActive }) =>
@@ -55,9 +55,9 @@ const ProfileLayout = () => {
             >
               <div className="flex items-center gap-3">
                 <FaUser />
-                <span className="hidden md:block">Personal Information</span>
+                <span className="md:block hidden">Personal Information</span>
               </div>
-              <FaAngleRight className="hidden md:block" />
+              <FaAngleRight className="md:block hidden" />
             </NavLink>
 
             <NavLink
@@ -70,9 +70,9 @@ const ProfileLayout = () => {
             >
               <div className="flex items-center gap-3">
                 <ImBooks className="text-xl" />
-                <span className="hidden md:block">Book Lists</span>
+                <span className="md:block hidden">Book Lists</span>
               </div>
-              <FaAngleRight className="hidden md:block" />
+              <FaAngleRight className="md:block hidden" />
             </NavLink>
 
             <NavLink
@@ -85,9 +85,9 @@ const ProfileLayout = () => {
             >
               <div className="flex items-center gap-3">
                 <GoHeart className="text-xl" />
-                <span className="hidden md:block">Favorite Books</span>
+                <span className="md:block hidden">Favorite Books</span>
               </div>
-              <FaAngleRight className="hidden md:block" />
+              <FaAngleRight className="md:block hidden" />
             </NavLink>
 
             <NavLink
@@ -100,9 +100,9 @@ const ProfileLayout = () => {
             >
               <div className="flex items-center gap-3">
                 <IoMdBookmarks className="text-xl" />
-                <span className="hidden md:block">History</span>
+                <span className="md:block hidden">History</span>
               </div>
-              <FaAngleRight className="hidden md:block" />
+              <FaAngleRight className="md:block hidden" />
             </NavLink>
 
             <NavLink
@@ -115,9 +115,9 @@ const ProfileLayout = () => {
             >
               <div className="flex items-center gap-3">
                 <FaUser />
-                <span className="hidden md:block">Change Password</span>
+                <span className="md:block hidden">Change Password</span>
               </div>
-              <FaAngleRight className="hidden md:block" />
+              <FaAngleRight className="md:block hidden" />
             </NavLink>
 
             <NavLink
@@ -130,18 +130,18 @@ const ProfileLayout = () => {
             >
               <div className="flex items-center gap-3">
                 <FaTrashAlt />
-                <span className="hidden md:block">Recently Deleated</span>
+                <span className="md:block hidden">Recently Deleated</span>
               </div>
-              <FaAngleRight className="hidden md:block" />
+              <FaAngleRight className="md:block hidden" />
             </NavLink>
           </div>
 
           <button
             onClick={LogOut}
-            className="flex items-center justify-center gap-3 px-4 py-10 font-bold border-t border-border text-secondary-foreground"
+            className="flex justify-center items-center gap-3 px-4 py-10 border-t border-border font-bold text-secondary-foreground"
           >
-            <CiLogout className="text-2xl font-bold" />
-            <span className="hidden md:block">Sign Out</span>
+            <CiLogout className="font-bold text-2xl" />
+            <span className="md:block hidden">Sign Out</span>
           </button>
         </div>
         <Outlet />

@@ -24,7 +24,7 @@ const BookDashBoardLayout = () => {
   };
 
   return (
-    <div className="flex md:flex-row flex-col mx-0 px-0 w-full lg:h-screen">
+    <div className="flex md:flex-row flex-col mx-0 px-0 w-full md:h-screen">
       <div className="flex justify-between items-center md:hidden bg-primary p-4">
         <button className="text-white" onClick={toggleMenu}>
           <FiAlignJustify size={24} />

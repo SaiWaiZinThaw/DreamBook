@@ -221,7 +221,7 @@ const BookDetails = () => {
                 <img
                   src={fetchABookAuthor?.coverImage}
                   alt=""
-                  className="md:w-[86px] md:h-[129px]"
+                  className="w-[46px] md:w-[86px] md:h-[129px]"
                 />
               </div>
 
@@ -407,7 +407,7 @@ const BookDetails = () => {
                     </AlertDialogTrigger>
                     <AlertDialogContent className="bg-slate-50 rounded-none">
                       <AlertDialogHeader>
-                        <AlertDialogTitle className="font-extrabold text-red-600 text-xl">
+                        <AlertDialogTitle className="font-extrabold text-red-600 md:text-xl">
                           Are you sure want to delete?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
@@ -415,7 +415,7 @@ const BookDetails = () => {
                           recovered.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
-                      <AlertDialogFooter>
+                      <AlertDialogFooter className="mx-auto md:mx-0 rounded-[5px]">
                         <AlertDialogCancel className="border-none">
                           Cancel
                         </AlertDialogCancel>
@@ -423,7 +423,7 @@ const BookDetails = () => {
                           onClick={() =>
                             handleDeleteConfirm(fetchABookAuthor!.slug!)
                           }
-                          className="hover:bg-blue-400 rounded-[8px] text-slate-100 hover:text-slate-200"
+                          className="hover:bg-blue-400 mt-2 md:mt-0 rounded-[8px] text-slate-100 hover:text-slate-200"
                         >
                           Yes! Delete
                         </AlertDialogAction>
