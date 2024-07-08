@@ -1,7 +1,10 @@
 import { getToken } from "@/services/authService";
 import BaseURL from "../services/ApiEndPoint";
-import { BookHistoryData } from "@/types/types";
+import { fetchFavoriteBookData } from "@/types/types";
 
+interface FetchAllFavBookHistoryParams {
+  pageCount?: number;
+}
 const token = getToken();
 
 export const createBookHistory = async (bookSlug: string) => {
@@ -23,20 +26,31 @@ export const createBookHistory = async (bookSlug: string) => {
   return result;
 };
 
-export const getAllBookHistory = async () => {
-  const response: Response = await fetch(`${BaseURL}/history`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    mode: "cors",
-    method: "GET",
-    redirect: "follow",
-  });
+export const getAllBookHistory = async (
+  params: FetchAllFavBookHistoryParams
+) => {
+  const { pageCount } = params;
+
+  const queryParams = new URLSearchParams();
+  if (pageCount) {
+    queryParams.append("page", pageCount.toString());
+  }
+  const response: Response = await fetch(
+    `${BaseURL}/history?${queryParams.toString()}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors",
+      method: "GET",
+      redirect: "follow",
+    }
+  );
   const result = await response.json();
   if (!response.ok) {
     throw new Error(result.message);
   }
-  return result as BookHistoryData[];
+  return result as fetchFavoriteBookData;
 };
 
 export const deleteHistory = async (bookSlug: string) => {

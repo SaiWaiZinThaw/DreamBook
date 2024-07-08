@@ -1,20 +1,32 @@
-import { Sorting } from "@/assets";
-import { IoIosSearch } from "react-icons/io";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { useDeleteHistory, useFetchAllHistory } from "@/hooks/useBookHistory";
+import { useEffect, useState } from "react";
 import { FaTrashCan } from "react-icons/fa6";
-
+import { useNavigate, useSearchParams } from "react-router-dom";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 const History = () => {
-  const { data: getHistory, isLoading, refetch } = useFetchAllHistory();
+  const [searchParams, setSearchParams] = useSearchParams({
+    page: "1",
+  });
+  const navigate = useNavigate();
+  const [pageCount, setPageCount] = useState<number>(
+    parseInt(searchParams.get("page") || "1", 10)
+  );
+  const {
+    data: getHistory,
+    isLoading,
+    refetch,
+  } = useFetchAllHistory({
+    pageCount,
+  });
   const deleteHistory = useDeleteHistory();
-
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    event.preventDefault();
+    setPageCount(value);
+  };
   const handleDelete = (bookSlug: string) => {
     deleteHistory.mutate(bookSlug, {
       onSuccess: () => {
@@ -26,36 +38,23 @@ const History = () => {
     });
   };
 
+  useEffect(() => {
+    const params: any = {};
+
+    if (pageCount) {
+      params.page = pageCount.toString();
+    }
+
+    setSearchParams(params);
+  }, [setSearchParams, pageCount, setPageCount]);
+
   return (
     <div className="w-full h-full">
-      <div className="p-4 md:p-10">
-        <div className="flex md:flex-row flex-col justify-between items-center md:gap-0 md:mb-4 h-[100px] md:h-[50px]">
-          <div className="flex items-center gap-3 w-full">
-            <img src={Sorting} alt="sorting" className="h-[30px] md:h-[50px]" />
-            <Select>
-              <SelectTrigger className="w-[100px] md:w-[180px] h-[30px] md:h-[50px]">
-                <SelectValue placeholder="Sort by default" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="default">Sort by default</SelectItem>
-                <SelectItem value="random">Sort by random</SelectItem>
-                <SelectItem value="latest">Sort by Latest</SelectItem>
-                <SelectItem value="A-Z">Sort by A-Z</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <div className="w-auto md:w-[380px]">
-              <Input
-                icon={<IoIosSearch className="text-2xl" />}
-                placeholder="Search"
-                className="!border-black rounded-[8px] h-[30px] md:h-full"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="gap-2 md:gap-4 grid grid-cols-2 md:grid-cols-4 md:p-10">
+      <div className="flex flex-col justify-center w-full gap-2 p-4 md:gap-0 md:p-10">
+        <h1 className="text-xl font-bold text-center lg:text-2xl"> History</h1>
+        <div className="grid grid-cols-2 gap-2 md:p-10 md:gap-4 md:grid-cols-4">
           {!isLoading &&
-            getHistory?.map((item) => (
+            getHistory?.items.map((item) => (
               <div
                 key={item.book.title}
                 id={item.book.slug}
@@ -64,7 +63,7 @@ const History = () => {
                 <div className="group-hover:right-[5px] top-[10px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                   <div
                     onClick={() => handleDelete(item.book.slug)}
-                    className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8 cursor-pointer"
+                    className="flex items-center justify-center w-8 h-8 border rounded-full cursor-pointer bg-slate-50 drop-shadow-xl"
                   >
                     <FaTrashCan className="text-red-500" />
                   </div>
@@ -91,7 +90,12 @@ const History = () => {
                       {item.book.category.title}
                     </p>
                   </div>
-                  <div className="flex items-center gap-1 md:gap-3 mt-1">
+                  <div
+                    onClick={() =>
+                      navigate(`/profile/${item.book.user.userId}`)
+                    }
+                    className="flex items-center gap-1 mt-1 cursor-pointer md:gap-3"
+                  >
                     <img
                       src={item.user.profilePicture}
                       alt={item.user.name}
@@ -105,6 +109,18 @@ const History = () => {
               </div>
             ))}
         </div>
+        {!isLoading && (
+          <Stack className="self-center" spacing={1}>
+            <Pagination
+              color="primary"
+              count={getHistory?.meta.totalPages}
+              defaultPage={1}
+              boundaryCount={1}
+              onChange={handlePageChange}
+              page={pageCount}
+            />
+          </Stack>
+        )}
       </div>
     </div>
   );
