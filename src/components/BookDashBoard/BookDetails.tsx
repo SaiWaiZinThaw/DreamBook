@@ -25,6 +25,7 @@ import { useSoftDeleteBook } from "@/hooks/useDeleteBook";
 import DOMPurify from "dompurify";
 import "react-quill/dist/quill.snow.css";
 import Swal from "sweetalert2";
+import Switch from "../ui/toggle-switch";
 
 const BookDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -35,7 +36,7 @@ const BookDetails = () => {
   const { mutate: softDeleteBook } = useSoftDeleteBook();
   const { data: fetchABookAuthor, refetch } = useFetchABookAuthor(bookSlug!);
   const navigate = useNavigate();
-  const [isOn, setIsOn] = useState(true);
+  const [isOn, setIsOn] = useState(false);
   const [updateData, setUpdateData] = useState<updateBookType>({
     title: "",
     coverImage: undefined,
@@ -45,45 +46,30 @@ const BookDetails = () => {
     slug: "",
   });
 
-  const draftToggleButton = () => {
-    setIsOn(true);
-    setUpdateData((prev) => ({
-      ...prev,
-      status: "Draft",
-    }));
-    updateBook.mutate(updateData);
-  };
-
-  const publishToggleButton = () => {
-    setIsOn(false);
-    setUpdateData((prev) => ({
-      ...prev,
-      status: "Published",
-    }));
-    updateBook.mutate(updateData);
+  const handleToggle = () => {
+    setIsOn((prevIsOn) => {
+      const newIsOn = !prevIsOn;
+      setUpdateData((prevData) => ({
+        ...prevData,
+        status: newIsOn ? "Published" : "Draft",
+      }));
+      return newIsOn;
+    });
   };
 
   useEffect(() => {
     if (fetchABookAuthor) {
-      setUpdateData((prev) => ({
-        ...prev,
+      setUpdateData({
         title: fetchABookAuthor.title || "",
         description: fetchABookAuthor.description || "",
         keywords: fetchABookAuthor.keywords || [],
         slug: fetchABookAuthor.slug || "",
-      }));
-      if (fetchABookAuthor.keywords) {
-        setKeywords(fetchABookAuthor.keywords);
-      }
+        status: fetchABookAuthor.status || "Draft",
+      });
+      setKeywords(fetchABookAuthor.keywords || []);
+      setIsOn(fetchABookAuthor.status === "Published");
     }
   }, [fetchABookAuthor]);
-
-  const handleFileChange = (file: File) => {
-    setUpdateData((prev) => ({
-      ...prev,
-      coverImage: file,
-    }));
-  };
 
   useEffect(() => {
     if (updateBook.isError) {
@@ -92,9 +78,22 @@ const BookDetails = () => {
         text: updateBook.error.message,
         confirmButtonText: "Okay",
       });
-      setIsOn(false);
+      setIsOn(updateData.status === "Published");
     }
-  });
+  }, [updateBook.isError, updateBook.error, updateData.status]);
+
+  useEffect(() => {
+    if (updateBook.isSuccess) {
+      navigate(`/book-dashboard/${updateBook.data.slug}/book-details`);
+    }
+  }, [updateBook.isSuccess]);
+
+  const handleFileChange = (file: File) => {
+    setUpdateData((prev) => ({
+      ...prev,
+      coverImage: file,
+    }));
+  };
 
   const handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentKeyword(event.target.value);
@@ -111,12 +110,6 @@ const BookDetails = () => {
     }
   };
 
-  useEffect(() => {
-    if (fetchABookAuthor?.keywords) {
-      setKeywords(fetchABookAuthor.keywords);
-    }
-  }, [fetchABookAuthor]);
-
   const handleEditClick = () => {
     setIsEditing(true);
   };
@@ -128,14 +121,12 @@ const BookDetails = () => {
   const handleSaveClick = (e: any) => {
     e.preventDefault();
     updateBook.mutate(updateData);
-    console.log(updateData);
     setIsEditing(false);
   };
 
   const handleDeleteConfirm = (bookSlug: string) => {
     softDeleteBook(bookSlug, {
       onSuccess: () => {
-        console.log("Book is soft delete");
         refetch();
         navigate("/me/books");
       },
@@ -157,28 +148,20 @@ const BookDetails = () => {
 
   return (
     <div className="container w-full h-full p-0 m-0">
-      <div className="flex justify-between border-slate-300 border-b h-[50px] md:h-[80px]">
-        <h1 className="md:my-[20px] md:pl-[40px] font-extrabold md:text-2xl">
-          Book Details
-        </h1>
+      <div className="flex justify-between border-slate-300 border-b h-[50px] md:h-[80px] px-10">
+        <h1 className="self-center font-extrabold md:text-2xl">Book Details</h1>
 
-        <div className="flex md:gap-x-2 bg-slate-200 md:my-[13px] md:ml-[650px] rounded-[8px] w-[120px] md:w-[190px] h-[30px] md:h-[40px] text-slate-400">
-          <button
-            onClick={draftToggleButton}
-            className={`md:p-2 w-[91px] rounded-[8px] ${
-              isOn ? "bg-yellow-400 text-slate-100" : "bg-gray-200"
-            }`}
-          >
-            Draft
-          </button>
-          <button
-            onClick={publishToggleButton}
-            className={`md:p-2 w-[91px] rounded-[8px] ${
-              !isOn ? "bg-green-400 text-slate-100" : "bg-gray-200"
-            }`}
-          >
-            Public
-          </button>
+        <div className="flex items-center gap-1">
+          {(!isOn && (
+            <span className="text-2xl font-bold text-secondary-foreground">
+              Draft
+            </span>
+          )) || <span className="text-2xl font-bold text-primary">Public</span>}
+          <Switch
+            isOn={isOn}
+            handleToggle={handleToggle}
+            isDisabled={isEditing}
+          />
         </div>
       </div>
       <div className="h-full md:flex">

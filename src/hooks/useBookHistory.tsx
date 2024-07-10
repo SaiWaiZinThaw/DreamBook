@@ -5,20 +5,16 @@ import {
 } from "@/api/bookHistoryApi";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-interface FetchAllBookHistoryParams {
-  pageCount?: number;
-}
-
 export const useCreateBookHistory = () =>
   useMutation({
     mutationFn: ({ bookSlug }: { bookSlug: string }) =>
       createBookHistory(bookSlug),
   });
 
-export const useFetchAllHistory = (params: FetchAllBookHistoryParams) =>
+export const useFetchAllHistory = () =>
   useQuery({
-    queryKey: ["history", params],
-    queryFn: () => getAllBookHistory(params),
+    queryKey: ["history"],
+    queryFn: () => getAllBookHistory(),
   });
 
 export const useDeleteHistory = () =>

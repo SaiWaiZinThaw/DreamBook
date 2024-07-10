@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useFetchAuthorAChapter = (bookSlug: string) =>
   useQuery({
-    queryKey: ["authorChapter"],
+    queryKey: ["authorChapter", bookSlug],
     queryFn: () => getAuthorChapter(bookSlug),
     retry(failureCount, error) {
       return error.message === "404" && failureCount == 1 ? false : true;
