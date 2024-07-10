@@ -11,7 +11,7 @@ interface FetchAllBookParams {
 
 export const useFetchABookAuthor = (bookSlug: string) =>
   useQuery({
-    queryKey: ["abookauthor"],
+    queryKey: ["abookauthor", bookSlug],
     queryFn: () => fetchABookAuthor(bookSlug),
   });
 

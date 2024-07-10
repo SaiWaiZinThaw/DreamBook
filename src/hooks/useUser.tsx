@@ -4,18 +4,18 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useGetMe = (token: string) =>
   useQuery({
-    queryKey: ["me"],
+    queryKey: ["me", token],
     queryFn: () => fetchMyProfile(token),
   });
 
 export const useGetOther = (userId: string) =>
   useQuery({
-    queryKey: ["user"],
+    queryKey: ["user", userId],
     queryFn: () => fetchOtherProfile(userId),
   });
 
 export const useGetUserBook = (userId: string) =>
   useQuery({
-    queryKey: ["userBook"],
+    queryKey: ["userBook", userId],
     queryFn: () => getUserBook(userId),
   });

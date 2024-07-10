@@ -14,17 +14,17 @@ export const useCreateChapterProgress = () =>
 
 export const useFetchCurrentChapter = (bookSlug: string) =>
   useQuery({
-    queryKey: ["current-chapter"],
+    queryKey: ["current-chapter", bookSlug],
     queryFn: () => getCurrentChapter({ bookSlug }),
   });
 
 export const useUpdateChapterProgress = () =>
-    useMutation({
-      mutationFn: ({
-        bookSlug,
-        data,
-      }: {
-        bookSlug: string;
-        data: UpdateProgressData;
-      }) => fetchProgressUpdate(bookSlug, data),
-    });
+  useMutation({
+    mutationFn: ({
+      bookSlug,
+      data,
+    }: {
+      bookSlug: string;
+      data: UpdateProgressData;
+    }) => fetchProgressUpdate(bookSlug, data),
+  });
