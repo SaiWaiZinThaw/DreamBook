@@ -43,7 +43,9 @@ const CreateBook = () => {
   const [keywordError, setKeywordError] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [titleError, setTitleError] = useState(false);
+  const [categoryError, setCategoryError] = useState(false);
   const [isOrderActive, setIsOrderActive] = useState(false);
+  const [coverImageError, setCoverImageError] = useState(false);
   const token = getToken() || "";
   const { data: fetchMyProfile } = useGetMe(token);
   const { data: fetchCategories } = useFetchCategories();
@@ -204,18 +206,34 @@ const CreateBook = () => {
         categoryId: selectedId,
       }));
       setSelectedCategory(selectRef.current.value);
+    } else {
+      setCategoryError(true);
     }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (fetchMyProfile) {
+
+    setTitleError(false);
+    setKeywordError(false);
+    setCoverImageError(false);
+    setCategoryError(false);
+
+    if (!fetchMyProfile) {
       createBookMutation.mutate(formData);
       console.log(formData);
     } else if (formData.title.trim() === "") {
       setTitleError(true);
     } else if (formData.keywords.length === 0) {
       setKeywordError(true);
+    } else if (formData.coverImage === null) {
+      setCoverImageError(true);
+    } else if (formData.categoryId === "") {
+      setCategoryError(true);
+    }
+
+    if (!titleError && !keywordError && !coverImageError && !categoryError) {
+      createBookMutation.mutate(formData);
     }
   };
 
@@ -226,7 +244,11 @@ const CreateBook = () => {
         ...prev,
         coverImage: file,
       }));
+      setCoverImageError(false)
+    }else {
+      setCoverImageError(true);
     }
+   
   };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -242,6 +264,10 @@ const CreateBook = () => {
   const handleBlur = () => {
     setTitleError(formData.title.trim() === "");
     setKeywordError(formData.keywords.length === 0);
+    setCategoryError(formData.categoryId === "");
+    if(!formData.coverImage) {
+      setCoverImageError(true);
+    }
   };
 
   const handleDeleteKeyword = (indexToDelete: any) => {
@@ -305,6 +331,7 @@ const CreateBook = () => {
                 src={URL.createObjectURL(formData.coverImage)}
                 alt="Uploaded Cover"
                 className="rounded-[8px] w-full h-full object-cover"
+                onBlur={handleBlur}
               />
             ) : (
               <label
@@ -324,6 +351,7 @@ const CreateBook = () => {
                 </p>
               </label>
             )}
+
           </div>
           <div className="flex justify-center mt-[16px] h-[27px]">
             <input
@@ -331,14 +359,25 @@ const CreateBook = () => {
               name="coverImage"
               type="file"
               className="hidden"
+              onBlur={handleBlur}
               id="fileInput"
+              required
             />
             <label htmlFor="fileInput">
               <h1 className="font-extrabold text-primary md:text-[19px]">
                 Select Book Cover
               </h1>
             </label>
+
+            
           </div>
+
+         
+            {coverImageError && (
+              <p className="md:mt-[10px] ml-[20px] md:ml-[10px] font-bold text-[12px] text-red-500 md:text-sm">
+                * Cover image is required
+              </p>
+            )}
         </div>
 
 
@@ -399,6 +438,12 @@ const CreateBook = () => {
                   ))}
                 </select>
               </div>
+
+                {categoryError && (
+                  <p className="ml-[10px] font-bold text-[12px] text-red-500 md:text-sm">
+                    * Choose One Category
+                  </p>
+                )}
             </div>
 
             <div className="md:items-center gap-1.5 grid mx-auto pt-6 md:pt-[90px] md:pl-0 w-[366px] md:w-[603px] md:h-[74px]">
@@ -431,7 +476,7 @@ const CreateBook = () => {
                 </ul>
               </div>
               {keywordError && (
-                <div className="ml-[10px] font-bold text-red-500 text-sm">
+                <div className="ml-[10px] font-bold text-[12px] text-red-500 md:text-sm">
                   * Please add at least one keyword
                 </div>
               )}

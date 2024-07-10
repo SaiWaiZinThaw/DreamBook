@@ -194,6 +194,7 @@ const BookDetails = () => {
                   <BookCoverChange
                     onFileChange={handleFileChange}
                     coverImage={fetchABookAuthor!.coverImage}
+
                   />
                 ) : (
                   <img
@@ -215,7 +216,7 @@ const BookDetails = () => {
                   <img
                     src={fetchABookAuthor?.coverImage}
                     alt=""
-                    className="md:w-[86px] md:h-[129px]"
+                    className="w-[50px] md:w-[86px] md:h-[129px]"
                   />
                 </div>
 
@@ -264,7 +265,7 @@ const BookDetails = () => {
                       }}
                       value={updateData.title}
                       id="title"
-                      className="border-slate-300 border text-[12.5px] text-black md:text-[16px]"
+                      className="border-slate-300 border rounded-[5px] text-[12.5px] text-black md:text-[16px]"
                     />
                   ) : (
                     <h1
@@ -304,7 +305,7 @@ const BookDetails = () => {
                   Keywords
                 </Label>
                 {isEditing ? (
-                  <div className="w-[603px]">
+                  <div className="w-full">
                     <Input
                       type="text"
                       id="keywords"
@@ -344,7 +345,7 @@ const BookDetails = () => {
                 )}
               </div>
 
-              <div className="items-center gap-1.5 grid md:mx-[32px] pt-6 md:pt-[60px] h-[140px] md:h-[176px]">
+              <div className="items-center gap-1.5 grid md:mx-[32px] pt-[60px] h-[140px] md:h-[176px]">
                 <Label
                   htmlFor="description"
                   className="font-semibold md:text-[16px]"
@@ -362,7 +363,7 @@ const BookDetails = () => {
                         description: sanitizedContent,
                       }));
                     }}
-                    className="border-slate-300 pt-2 md:pt-[15px] pl-[25px] border rounded-[5px] md:h-[290px] text-[12.5px] md:text-[16px]"
+                    className="pt-2 md:pt-[15px] rounded-[5px] h-[120px] md:h-[290px] text-[12.5px] md:text-[16px]"
                     modules={quillModules}
                   />
                 ) : (
@@ -379,7 +380,7 @@ const BookDetails = () => {
               </div>
             </div>
 
-            <div className="flex justify-end mt-[50px] md:mt-[100px] md:mr-4 rounded-[8px] h-[43px]">
+            <div className="flex justify-end mt-[100px] md:mr-4 rounded-[8px] h-[43px]">
               <div className="">
                 {isEditing ? (
                   <>

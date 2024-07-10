@@ -125,7 +125,7 @@ const ChapterRead = () => {
         </div>
       </div>
 
-      <div className={`flex flex-col w-screen min-h-screen ${showChapters ? 'hidden md:flex' : ''}`}>
+      <div className={`flex flex-col w-screen ${showChapters ? 'hidden md:flex' : ''}`}>
         {isLoading && <p>Loading...</p>}
         {error && <p>Error loading chapter: {error.message}</p>}
         {getChapter && (
@@ -142,7 +142,7 @@ const ChapterRead = () => {
           </div>
         )}
 
-        <div className="flex justify-between mt-auto border border-t-slate-300">
+        <div className="flex justify-between mt-fit border border-t-slate-300">
           <button
             onClick={() => {
               if (currentChapterIndex > 1) {
