@@ -12,6 +12,8 @@ import { useFetchCurrentChapter } from "@/hooks/useChapterProgress";
 import { useCreateBookHistory } from "@/hooks/useBookHistory";
 import { useRelatedBook } from "@/hooks/useRelatedBook";
 import { FaArrowLeft } from "react-icons/fa";
+import { getToken } from "@/services/authService";
+import { useGetMe } from "@/hooks/useUser";
 
 const BookReading: React.FC = () => {
   const navigate = useNavigate();
@@ -26,14 +28,21 @@ const BookReading: React.FC = () => {
   const { data: fetchABook, isLoading } = useFetchABook(bookSlug!);
   const { data: getChapters } = useFetchAllChapters(bookSlug!);
   const { data: getChapterProgress } = useFetchCurrentChapter(bookSlug!);
-
+  const token = getToken();
+  const { data: me } = useGetMe(token!);
   const { data: relatedBook } = useRelatedBook(bookSlug!);
 
   const createCommentHandler = () => {
     setComment({ comment: "", slug: bookSlug! });
     createComment.mutate(comment);
   };
-
+  const profileNavigation = (id: number) => {
+    if (id === me?.userId) {
+      navigate("/me/info");
+    } else {
+      navigate(`/profile/${id}`);
+    }
+  };
   const startReadingHandler = () => {
     createBookHistory.mutate({ bookSlug: bookSlug! });
   };
@@ -81,9 +90,7 @@ const BookReading: React.FC = () => {
 
                 <div
                   className="flex items-center gap-2 cursor-pointer"
-                  onClick={() =>
-                    navigate(`/profile/${fetchABook?.user?.userId}`)
-                  }
+                  onClick={() => profileNavigation(fetchABook?.user.userId)}
                 >
                   <img
                     src={fetchABook?.user?.profilePicture}
@@ -211,7 +218,10 @@ const BookReading: React.FC = () => {
                       />
                       {book.category?.title}
                     </p>
-                    <h2 className="flex my-2 font-bold text-[12px] md:text-[13px]">
+                    <h2
+                      className="flex my-2 font-bold text-[12px] md:text-[13px] cursor-pointer"
+                      onClick={() => profileNavigation(book.user.userId)}
+                    >
                       <img
                         src={book.user?.profilePicture}
                         alt=""

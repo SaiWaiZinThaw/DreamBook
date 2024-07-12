@@ -30,7 +30,7 @@ const PasswordVisible: React.FC<PasswordVisibleProps> = ({
         className="absolute transform -translate-y-1/2 right-4 top-1/2"
         onClick={toggleVisibility}
       >
-        {visible ? <IoMdEyeOff /> : <IoMdEye />}
+        {visible ? <IoMdEye /> : <IoMdEyeOff />}
       </button>
       {error && <p className="text-red-600">{error}</p>}
     </div>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useFetchPopularBooks } from "@/hooks/useFetchBook";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "@/services/authService";
+import { useGetMe } from "@/hooks/useUser";
 
 const PopularBooks = () => {
   const { data: booksData, isLoading: isBooksLoading } = useFetchPopularBooks();
@@ -12,7 +13,7 @@ const PopularBooks = () => {
   const addFavorite = useAddFavorite();
   const removeFavorite = useRemoveFavorite();
   const navigate = useNavigate();
-
+  const { data: userData } = useGetMe(token!);
   const toggleFavorite = (bookId: string, bookSlug: string) => {
     if (token) {
       setFavorites((prevFavorites) => {
@@ -31,6 +32,14 @@ const PopularBooks = () => {
 
   const viewBook = (bookSlug: string) => {
     navigate(`/book/${bookSlug}`);
+  };
+
+  const profileNavigation = (id: number) => {
+    if (id === userData?.userId) {
+      navigate("/me/info");
+    } else {
+      navigate(`/profile/${id}`);
+    }
   };
 
   useEffect(() => {
@@ -105,7 +114,7 @@ const PopularBooks = () => {
                   </p>
                 </div>
                 <div
-                  onClick={() => navigate(`/profile/${book.user.userId}`)}
+                  onClick={() => profileNavigation(book.user.userId)}
                   className="flex items-center gap-3 mt-1 cursor-pointer"
                 >
                   <img

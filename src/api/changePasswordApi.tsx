@@ -2,7 +2,11 @@ import { getToken } from "@/services/authService";
 import BaseURL from "../services/ApiEndPoint";
 import { PasswordChangeData } from "@/types/types";
 
-export const changePasswordApi = async ({ data }: { data: PasswordChangeData }) => {
+export const changePasswordApi = async ({
+  data,
+}: {
+  data: PasswordChangeData;
+}) => {
   const token = getToken();
   const formData = new FormData();
 
@@ -20,5 +24,9 @@ export const changePasswordApi = async ({ data }: { data: PasswordChangeData }) 
     body: formData,
   });
 
-  return response;
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result.message);
+  }
+  return result;
 };

@@ -14,6 +14,7 @@ import { Sorting } from "@/assets";
 import { useAddFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
 import { useEffect, useState } from "react";
 import { getToken } from "@/services/authService";
+import { useGetMe } from "@/hooks/useUser";
 
 interface CategoryBooksProps {
   search: string;
@@ -35,12 +36,21 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
   const addFavorite = useAddFavorite();
   const removeFavorite = useRemoveFavorite();
   const token = getToken();
+  const me = useGetMe(token!);
   const handleSortChange = (value: string) => {
     setSortBy(value);
   };
 
   const viewBook = (bookSlug: string) => {
     navigate(`/book/${bookSlug}`);
+  };
+
+  const profileNavigation = (id: number) => {
+    if (id === me.data?.userId) {
+      navigate("/me/info");
+    } else {
+      navigate(`/profile/${id}`);
+    }
   };
 
   const toggleFavorite = (bookId: string, bookSlug: string) => {
@@ -166,7 +176,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
                   </p>
                 </div>
                 <div
-                  onClick={() => navigate(`/profile/${book.user.userId}`)}
+                  onClick={() => profileNavigation(book.user.userId)}
                   className="flex items-center gap-3 mt-1 cursor-pointer"
                 >
                   <img
