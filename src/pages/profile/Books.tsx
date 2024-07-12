@@ -17,6 +17,8 @@ import { HiPencil } from "react-icons/hi";
 import { useDebounce } from "use-debounce";
 import { useEffect, useState } from "react";
 import { useFetchAllBookAuthor } from "@/hooks/useFetchABookAuthor";
+import { getToken } from "@/services/authService";
+import { useGetMe } from "@/hooks/useUser";
 
 const Books = () => {
   const [searchParams, setSearchParams] = useSearchParams({
@@ -24,7 +26,8 @@ const Books = () => {
     category_ids: "[]",
     sortBy: "random",
   });
-
+  const token = getToken();
+  const { data: me } = useGetMe(token!);
   const [search, setSearch] = useState(searchParams.get("search") || "");
   const [deBounceSearch] = useDebounce(search, 500);
   const [sortBy, setSortBy] = useState(searchParams.get("sortBy") || "random");
@@ -46,6 +49,14 @@ const Books = () => {
   ) => {
     event.preventDefault();
     setPageCount(value);
+  };
+
+  const profileNavigation = (id: number) => {
+    if (id === me?.userId) {
+      navigate("/me/info");
+    } else {
+      navigate(`/profile/${id}`);
+    }
   };
 
   useEffect(() => {
@@ -150,7 +161,7 @@ const Books = () => {
                     </p>
                   </div>
                   <div
-                    onClick={() => navigate(`/profile/${book.user.userId}`)}
+                    onClick={() => profileNavigation(book.user.userId)}
                     className="flex items-center gap-1 mt-1 cursor-pointer md:gap-3"
                   >
                     <img

@@ -1,4 +1,6 @@
 import { useDeleteHistory, useFetchAllHistory } from "@/hooks/useBookHistory";
+import { useGetMe } from "@/hooks/useUser";
+import { getToken } from "@/services/authService";
 import { FaTrashCan } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
@@ -6,7 +8,8 @@ const History = () => {
   const navigate = useNavigate();
   const { data: getHistory, isLoading, refetch } = useFetchAllHistory();
   const deleteHistory = useDeleteHistory();
-
+  const token = getToken();
+  const { data: me } = useGetMe(token!);
   const handleDelete = (bookSlug: string) => {
     deleteHistory.mutate(bookSlug, {
       onSuccess: () => {
@@ -18,9 +21,13 @@ const History = () => {
     });
   };
 
-  if (!isLoading) {
-    console.log(getHistory);
-  }
+  const profileNavigation = (id: number) => {
+    if (id === me?.userId) {
+      navigate("/me/info");
+    } else {
+      navigate(`/profile/${id}`);
+    }
+  };
 
   return (
     <div className="w-full h-full">
@@ -67,9 +74,7 @@ const History = () => {
                         </p>
                       </div>
                       <div
-                        onClick={() =>
-                          navigate(`/profile/${item.book.user.userId}`)
-                        }
+                        onClick={() => profileNavigation(item.user.userId)}
                         className="flex items-center gap-1 mt-1 cursor-pointer md:gap-3"
                       >
                         <img

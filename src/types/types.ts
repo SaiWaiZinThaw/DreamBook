@@ -32,7 +32,7 @@ export type profileFetchData = {
 };
 
 export type otherProfileData = {
-  userId: string;
+  userId: number;
   name: string;
   profilePicture: string;
   bio: string;
@@ -72,7 +72,7 @@ export type Book = {
   user: {
     name: string;
     profilePicture: string;
-    userId: string;
+    userId: number;
   };
   category: {
     categoryId: string;
@@ -97,18 +97,18 @@ export type fetchBookData = {
 
 export type BookHistoryData = {
   book: Book;
-  userId: string;
+  userId: number;
   bookId: string;
   user: {
     name: string;
     profilePicture: string;
-    userId: string;
+    userId: number;
   };
 };
 
 export type favoriteBookData = {
   book: Book;
-  userId: string;
+  userId: number;
   bookId: string;
   user: {
     name: string;

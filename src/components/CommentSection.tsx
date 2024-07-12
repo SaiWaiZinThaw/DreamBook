@@ -48,6 +48,14 @@ const CommentSection = () => {
     setReplyText((prev) => ({ ...prev, [commentId]: text }));
   };
 
+  const profileNavigation = (id: number) => {
+    if (id === userData?.userId) {
+      navigate("/me/info");
+    } else {
+      navigate(`/profile/${id}`);
+    }
+  };
+
   const handleEditToggle = (commentId: number, currentText: string) => {
     setIsEditing((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
     if (!isEditing[commentId]) {
@@ -104,6 +112,10 @@ const CommentSection = () => {
   const handleDeleteReply = (replyId: number) => {
     deleteReplyComment.mutate(replyId);
   };
+
+  useEffect(() => {
+    console.log(deleteComment.status);
+  }, [deleteComment]);
 
   useEffect(() => {
     if (
@@ -270,16 +282,14 @@ const CommentSection = () => {
                         <img
                           src={reply.user.profilePicture}
                           alt={reply.user.name}
-                          onClick={() =>
-                            navigate(`/profile/${reply.user.userId}`)
-                          }
+                          onClick={() => profileNavigation(reply.user.userId)}
                           className="rounded-full w-[30px] h-[30px] md:w-[40px] md:h-[40px] cursor-pointer"
                         />
                         <div className="flex flex-col w-full gap-1">
                           <div className="flex flex-col">
                             <h3
                               onClick={() =>
-                                navigate(`/profile/${reply.user.userId}`)
+                                profileNavigation(reply.user.userId)
                               }
                               className="font-medium text-[10px] md:text-[13px] cursor-pointer"
                             >
