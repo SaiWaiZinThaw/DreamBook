@@ -3,25 +3,43 @@ import { useAddFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
 import { useEffect, useState } from "react";
 import { useFetchPopularBooks } from "@/hooks/useFetchBook";
 import { useNavigate } from "react-router-dom";
+import { getToken } from "@/services/authService";
+import { useGetMe } from "@/hooks/useUser";
+
 const PopularBooks = () => {
   const { data: booksData, isLoading: isBooksLoading } = useFetchPopularBooks();
   const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({});
+  const token = getToken();
   const addFavorite = useAddFavorite();
   const removeFavorite = useRemoveFavorite();
   const navigate = useNavigate();
+  const { data: userData } = useGetMe(token!);
   const toggleFavorite = (bookId: string, bookSlug: string) => {
-    setFavorites((prevFavorites) => {
-      const isFavorite = !prevFavorites[bookId];
-      if (isFavorite) {
-        addFavorite.mutate({ slug: bookSlug });
-      } else {
-        removeFavorite.mutate({ slug: bookSlug });
-      }
-      return { ...prevFavorites, [bookId]: isFavorite };
-    });
+    if (token) {
+      setFavorites((prevFavorites) => {
+        const isFavorite = !prevFavorites[bookId];
+        if (isFavorite) {
+          addFavorite.mutate({ slug: bookSlug });
+        } else {
+          removeFavorite.mutate({ slug: bookSlug });
+        }
+        return { ...prevFavorites, [bookId]: isFavorite };
+      });
+    } else {
+      navigate("/auth/login");
+    }
   };
+
   const viewBook = (bookSlug: string) => {
     navigate(`/book/${bookSlug}`);
+  };
+
+  const profileNavigation = (id: number) => {
+    if (id === userData?.userId) {
+      navigate("/me/info");
+    } else {
+      navigate(`/profile/${id}`);
+    }
   };
 
   useEffect(() => {
@@ -33,6 +51,13 @@ const PopularBooks = () => {
       setFavorites(newFavorites);
     }
   }, [booksData]);
+
+  useEffect(() => {
+    if (!token) {
+      setFavorites({});
+    }
+  }, [token]);
+
   return (
     <div className="w-full py-2 overflow-x-auto transition">
       <div className="flex mt-2 h-[280px] w-full">
@@ -42,7 +67,7 @@ const PopularBooks = () => {
             <div
               key={book.bookId}
               id={book.bookId}
-              className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] md:w-[232px] min-w-[200px] h-[280px] book group"
+              className="relative bg-slate-100 shadow-sm mr-[21px] border rounded-[8px] md:w-[232px] min-w-[200px] h-[280px] book group"
             >
               <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                 <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
@@ -70,7 +95,7 @@ const PopularBooks = () => {
                 <img
                   src={book.coverImage}
                   alt={book.coverImage}
-                  className="h-[140px]  min-w-[120px]"
+                  className="h-[140px] min-w-[120px]"
                 />
               </div>
 
@@ -89,7 +114,7 @@ const PopularBooks = () => {
                   </p>
                 </div>
                 <div
-                  onClick={() => navigate(`/profile/${book.user.userId}`)}
+                  onClick={() => profileNavigation(book.user.userId)}
                   className="flex items-center gap-3 mt-1 cursor-pointer"
                 >
                   <img

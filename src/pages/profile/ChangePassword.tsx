@@ -20,15 +20,14 @@ const ChangePassword = () => {
   const [passwordMismatchError, setPasswordMismatchError] = useState(false);
   const [oldPasswordError] = useState(false);
 
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (passwordData.newPassword !== confirmPassword) {
       setPasswordMismatchError(true);
       return;
+    } else {
+      passwordChange.mutate(passwordData);
     }
-
-    passwordChange.mutate(passwordData);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,16 +42,8 @@ const ChangePassword = () => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setConfirmPassword(e.target.value);
-    setPasswordMismatchError(false); // Reset mismatch error on change
+    setPasswordMismatchError(false);
   };
-
-  // const handleOldPasswordBlur = () => {
-  //   if (passwordData.oldPassword !== "correct_old_password") {
-  //     setOldPasswordError(true);
-  //   } else {
-  //     setOldPasswordError(false);
-  //   }
-  // };
 
   useEffect(() => {
     if (passwordChange.isSuccess) {
@@ -63,6 +54,7 @@ const ChangePassword = () => {
         timer: 1500,
       });
       setPasswordData({ oldPassword: "", newPassword: "" });
+      setConfirmPassword("");
     }
   }, [passwordChange.isSuccess]);
 
@@ -70,11 +62,12 @@ const ChangePassword = () => {
     if (passwordChange.isError) {
       Swal.fire({
         icon: "error",
-        title: "Your Password is not change",
+        title: passwordChange.error.message,
         showConfirmButton: false,
         timer: 1500,
       });
       setPasswordData({ oldPassword: "", newPassword: "" });
+      setConfirmPassword("");
     }
   }, [passwordChange.isError]);
 
@@ -94,6 +87,8 @@ const ChangePassword = () => {
         >
           <div className="relative">
             <Input
+              required
+              value={passwordData.oldPassword}
               onChange={handleInputChange}
               name="oldPassword"
               type={showOldPassword ? "text" : "password"}
@@ -108,7 +103,7 @@ const ChangePassword = () => {
               className="absolute transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
               onClick={() => setShowOldPassword(!showOldPassword)}
             >
-              {showOldPassword ? <FaEyeSlash /> : <FaEye />}
+              {showOldPassword ? <FaEye /> : <FaEyeSlash />}
             </div>
             {oldPasswordError && (
               <p className="mt-1 text-xs text-red-500">
@@ -119,6 +114,7 @@ const ChangePassword = () => {
 
           <div className="relative">
             <Input
+              required
               onChange={handleInputChange}
               className="h-10 md:h-auto text-[13px] md:placeholder:text-md md:text-md placeholder:text-[13px]"
               value={passwordData.newPassword}
@@ -130,12 +126,13 @@ const ChangePassword = () => {
               className="absolute transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
               onClick={() => setShowNewPassword(!showNewPassword)}
             >
-              {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+              {showNewPassword ? <FaEye /> : <FaEyeSlash />}
             </div>
           </div>
 
           <div className="relative">
             <Input
+              required
               onChange={handleConfirmPasswordChange}
               value={confirmPassword}
               name="confirmPassword"
@@ -151,7 +148,7 @@ const ChangePassword = () => {
               className="absolute transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
-              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
             </div>
             {passwordMismatchError && (
               <p className="mt-1 text-xs text-red-500">

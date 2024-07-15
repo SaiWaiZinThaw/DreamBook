@@ -12,6 +12,8 @@ import { useFetchCurrentChapter } from "@/hooks/useChapterProgress";
 import { useCreateBookHistory } from "@/hooks/useBookHistory";
 import { useRelatedBook } from "@/hooks/useRelatedBook";
 import { FaArrowLeft } from "react-icons/fa";
+import { getToken } from "@/services/authService";
+import { useGetMe } from "@/hooks/useUser";
 
 const BookReading: React.FC = () => {
   const navigate = useNavigate();
@@ -26,14 +28,21 @@ const BookReading: React.FC = () => {
   const { data: fetchABook, isLoading } = useFetchABook(bookSlug!);
   const { data: getChapters } = useFetchAllChapters(bookSlug!);
   const { data: getChapterProgress } = useFetchCurrentChapter(bookSlug!);
-
+  const token = getToken();
+  const { data: me } = useGetMe(token!);
   const { data: relatedBook } = useRelatedBook(bookSlug!);
 
   const createCommentHandler = () => {
     setComment({ comment: "", slug: bookSlug! });
     createComment.mutate(comment);
   };
-
+  const profileNavigation = (id: number) => {
+    if (id === me?.userId) {
+      navigate("/me/info");
+    } else {
+      navigate(`/profile/${id}`);
+    }
+  };
   const startReadingHandler = () => {
     createBookHistory.mutate({ bookSlug: bookSlug! });
   };
@@ -54,13 +63,15 @@ const BookReading: React.FC = () => {
   }, [createComment.isSuccess]);
 
   return (
-    <div className="flex md:flex-row flex-col px-10 md:px-20 w-full min-h-screen">
+    <div className="flex flex-col w-full min-h-screen px-10 md:flex-row md:px-20">
       <div className="flex-col items-center md:px-10 pt-[30px] md:pt-20 md:border-r border-border md:w-10/12 h-full">
         {fetchABook && !isLoading && (
           <div className="flex flex-col gap-[20px] w-full h-full">
             <div className="flex md:flex-row flex-col md:gap-[100px] md:px-20 md:pb-20 w-full">
-
-              <div onClick={() => navigate(-1)} className="flex md:hidden text-blue-700 text-sm">
+              <div
+                onClick={() => navigate(-1)}
+                className="flex text-sm text-blue-700 md:hidden"
+              >
                 <FaArrowLeft className="mt-[2.5px] mr-1" />
                 <h1>Back</h1>
               </div>
@@ -73,9 +84,14 @@ const BookReading: React.FC = () => {
                 />
               </div>
               <div className="flex flex-col justify-center gap-3 md:w-[400px]">
-                <h1 className="font-extrabold md:text-3xl">{fetchABook.title}</h1>
+                <h1 className="font-extrabold md:text-3xl">
+                  {fetchABook.title}
+                </h1>
 
-                <div className="flex items-center gap-2">
+                <div
+                  className="flex items-center gap-2 cursor-pointer"
+                  onClick={() => profileNavigation(fetchABook?.user.userId)}
+                >
                   <img
                     src={fetchABook?.user?.profilePicture}
                     alt={fetchABook?.user?.name}
@@ -114,11 +130,11 @@ const BookReading: React.FC = () => {
                   <Progress
                     value={progressPercentage}
                     max={100}
-                    className="relative bg-gray-200 rounded-full w-full h-2 overflow-hidden"
+                    className="relative w-full h-2 overflow-hidden bg-gray-200 rounded-full"
                   >
                     <div
                       style={{ width: `${progressPercentage}%` }}
-                      className="bg-blue-600 h-full"
+                      className="h-full bg-blue-600"
                     />
                   </Progress>
                   <div className="mt-2 text-[13px] md:text-sm">{`Chapter ${currentChapterIndex} of ${totalChapters}`}</div>
@@ -166,7 +182,7 @@ const BookReading: React.FC = () => {
         )}
       </div>
 
-      <div className="md:mx-4 w-full">
+      <div className="w-full md:mx-4">
         <h1 className="mt-4 font-semibold text-center text-md">
           Related Books
         </h1>
@@ -174,7 +190,7 @@ const BookReading: React.FC = () => {
         <div className="flex flex-col mx-2">
           {relatedBook?.pages.map((page, i) => (
             <div
-              className="flex flex-row md:flex-col gap-x-3 md:gap-x-0 overflow-x-auto md:overflow-x-hidden"
+              className="flex flex-row overflow-x-auto md:flex-col gap-x-3 md:gap-x-0 md:overflow-x-hidden"
               key={i}
             >
               {page.items.map((book) => (
@@ -191,7 +207,9 @@ const BookReading: React.FC = () => {
                   </div>
 
                   <div className="ml-2">
-                    <h1 className="font-bold text-[14px] md:text-[15px]">{book.title}</h1>
+                    <h1 className="font-bold text-[14px] md:text-[15px]">
+                      {book.title}
+                    </h1>
                     <p className="flex mt-1 font-Inter font-normal text-[11px] text-gray-500 lg:text-[12px]">
                       <img
                         src={book.category?.icon}
@@ -200,7 +218,10 @@ const BookReading: React.FC = () => {
                       />
                       {book.category?.title}
                     </p>
-                    <h2 className="flex my-2 font-bold text-[12px] md:text-[13px]">
+                    <h2
+                      className="flex my-2 font-bold text-[12px] md:text-[13px] cursor-pointer"
+                      onClick={() => profileNavigation(book.user.userId)}
+                    >
                       <img
                         src={book.user?.profilePicture}
                         alt=""
@@ -214,7 +235,6 @@ const BookReading: React.FC = () => {
             </div>
           ))}
         </div>
-
       </div>
     </div>
   );

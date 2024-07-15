@@ -67,11 +67,9 @@ const Hero = () => {
         </div>
       </div>
 
-
       <div className="flex flex-col p-2 items-center px-5 gap-4 md:gap-0 md:flex-row md:justify-center md:gap-x-4 md:mt-[60px] w-screen md:h-[220px]">
         <div
           className=" flex flex-col min-h-[150px] gap-1 md:gap-3 bg-opacity-88 bg-no-repeat w-full md:w-[400px] h-full bg-cover p-5 md:p-9 rounded-[10px]    text-white"
-
           style={{ backgroundImage: `url(${About})` }}
         >
           <h1 className="text-xl font-semibold">About Us</h1>
@@ -81,7 +79,6 @@ const Hero = () => {
           </p>
         </div>
         <div
-
           className="flex flex-col min-h-[120px] gap-1 md:gap-3 bg-opacity-88 bg-no-repeat w-full md:w-[400px] h-full bg-cover p-5 md:p-9 rounded-[10px]    text-white"
           style={{ backgroundImage: `url(${FeatureBg})` }}
         >
@@ -92,9 +89,7 @@ const Hero = () => {
           </p>
         </div>
         <div
-
           className="flex flex-col min-h-[120px] gap-1 md:gap-3 bg-opacity-88 bg-no-repeat w-full md:w-[400px] h-full bg-cover p-5 md:p-9 rounded-[10px]  text-white"
-
           style={{ backgroundImage: `url(${Visit})` }}
         >
           <h1 className="text-xl font-semibold">Visit Now</h1>
@@ -134,7 +129,7 @@ const Hero = () => {
                     `library?category_ids=${encodedCategoryIds}&sort_by=random&page=1`
                   );
                 }}
-                className="flex border-slate-300 bg-slate-50 shadow-md pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md cursor-pointer"
+                className="flex border-slate-300 bg-slate-50 shadow-sm pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md cursor-pointer"
               >
                 <img
                   src={category.icon}
@@ -148,9 +143,7 @@ const Hero = () => {
         </div>
       </div>
 
-
       <div className="mt-[50px] w-screen  md:h-[400px] p-6 md:p-10">
-
         <div className="flex justify-between">
           <h1 className="text-xl font-bold">Latest Books</h1>
           <a href="" className="font-medium text-md">
@@ -182,9 +175,7 @@ const Hero = () => {
         </h1>
         {faqItems.map((item, index) => (
           <Accordion
-
             className="md:max-w-[1400px] w-full md:self-center"
-
             key={index}
             type="single"
             collapsible

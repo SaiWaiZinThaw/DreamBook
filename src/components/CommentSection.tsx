@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useGetMe } from "@/hooks/useUser";
 import { getToken } from "@/services/authService";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useCreateReplyComment,
   useDeleteComment,
@@ -28,7 +28,7 @@ const CommentSection = () => {
     isFetchingNextPage,
     refetch,
   } = useGetComments(bookSlug!);
-
+  const navigate = useNavigate();
   const [replyText, setReplyText] = useState<{ [key: number]: string }>({});
   const [isEditing, setIsEditing] = useState<{ [key: number]: boolean }>({});
   const [editCommentText, setEditCommentText] = useState<{
@@ -46,6 +46,14 @@ const CommentSection = () => {
 
   const handleReplyChange = (commentId: number, text: string) => {
     setReplyText((prev) => ({ ...prev, [commentId]: text }));
+  };
+
+  const profileNavigation = (id: number) => {
+    if (id === userData?.userId) {
+      navigate("/me/info");
+    } else {
+      navigate(`/profile/${id}`);
+    }
   };
 
   const handleEditToggle = (commentId: number, currentText: string) => {
@@ -106,6 +114,10 @@ const CommentSection = () => {
   };
 
   useEffect(() => {
+    console.log(deleteComment.status);
+  }, [deleteComment]);
+
+  useEffect(() => {
     if (
       deleteComment.isSuccess ||
       updateComment.isSuccess ||
@@ -149,11 +161,17 @@ const CommentSection = () => {
                 <img
                   src={comment.user.profilePicture}
                   alt={comment.user.name}
-                  className="rounded-full w-[30px] md:w-[45px] h-[30px] md:h-[45px]"
+                  onClick={() => navigate(`/profile/${comment.user.userId}`)}
+                  className="rounded-full w-[30px] md:w-[45px] h-[30px] md:h-[45px] cursor-pointer"
                 />
                 <div className="flex flex-col justify-center gap-1 w-full">
                   <div className="flex flex-col">
-                    <h3 className="font-medium text-[15px] md:text-[18px]">
+                    <h3
+                      onClick={() =>
+                        navigate(`/profile/${comment.user.userId}`)
+                      }
+                      className="font-medium text-[15px] md:text-[18px] cursor-pointer "
+                    >
                       {comment.user.name}
                     </h3>
                     <span className="text-[9px] text-secondary-foreground md:text-[11px]">
@@ -264,11 +282,19 @@ const CommentSection = () => {
                         <img
                           src={reply.user.profilePicture}
                           alt={reply.user.name}
-                          className="rounded-full w-[30px] md:w-[40px] h-[30px] md:h-[40px]"
+
+                          onClick={() => profileNavigation(reply.user.userId)}
+                          className="rounded-full w-[30px] h-[30px] md:w-[40px] md:h-[40px] cursor-pointer"
+
                         />
                         <div className="flex flex-col gap-1 w-full">
                           <div className="flex flex-col">
-                            <h3 className="font-medium text-[10px] md:text-[13px]">
+                            <h3
+                              onClick={() =>
+                                profileNavigation(reply.user.userId)
+                              }
+                              className="font-medium text-[10px] md:text-[13px] cursor-pointer"
+                            >
                               {reply.user.name}
                             </h3>
                             <span className="text-[8px] text-secondary-foreground md:text-[9px]">

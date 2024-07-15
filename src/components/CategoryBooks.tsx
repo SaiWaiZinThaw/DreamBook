@@ -13,6 +13,8 @@ import { Book, fetchBookData } from "@/types/types";
 import { Sorting } from "@/assets";
 import { useAddFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
 import { useEffect, useState } from "react";
+import { getToken } from "@/services/authService";
+import { useGetMe } from "@/hooks/useUser";
 
 interface CategoryBooksProps {
   search: string;
@@ -33,7 +35,8 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
   const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({});
   const addFavorite = useAddFavorite();
   const removeFavorite = useRemoveFavorite();
-
+  const token = getToken();
+  const me = useGetMe(token!);
   const handleSortChange = (value: string) => {
     setSortBy(value);
   };
@@ -42,17 +45,35 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
     navigate(`/book/${bookSlug}`);
   };
 
-  const toggleFavorite = (bookId: string, bookSlug: string) => {
-    setFavorites((prevFavorites) => {
-      const isFavorite = !prevFavorites[bookId];
-      if (isFavorite) {
-        addFavorite.mutate({ slug: bookSlug });
-      } else {
-        removeFavorite.mutate({ slug: bookSlug });
-      }
-      return { ...prevFavorites, [bookId]: isFavorite };
-    });
+  const profileNavigation = (id: number) => {
+    if (id === me.data?.userId) {
+      navigate("/me/info");
+    } else {
+      navigate(`/profile/${id}`);
+    }
   };
+
+  const toggleFavorite = (bookId: string, bookSlug: string) => {
+    if (token) {
+      setFavorites((prevFavorites) => {
+        const isFavorite = !prevFavorites[bookId];
+        if (isFavorite) {
+          addFavorite.mutate({ slug: bookSlug });
+        } else {
+          removeFavorite.mutate({ slug: bookSlug });
+        }
+        return { ...prevFavorites, [bookId]: isFavorite };
+      });
+    } else {
+      navigate("/auth/login");
+    }
+  };
+
+  useEffect(() => {
+    if (!token) {
+      setFavorites({});
+    }
+  });
 
   useEffect(() => {
     if (booksData) {
@@ -105,7 +126,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
             <div
               key={book.bookId}
               id={book.bookId}
-              className="relative md:gap-2 bg-slate-100 shadow-md shadow-slate-200 py-2 lg:py-0 border rounded-[8px] min-w-[150px] lg:min-w-[190px] md:max-w-[170px] lg:h-[280px] book group"
+              className="relative md:gap-2 bg-slate-100 shadow-sm shadow-slate-200 py-2 lg:py-0 border rounded-[8px] min-w-[150px] lg:min-w-[190px] md:max-w-[170px] lg:h-[280px] book group"
             >
               <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                 <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
@@ -155,7 +176,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
                   </p>
                 </div>
                 <div
-                  onClick={() => navigate(`/profile/${book.user.userId}`)}
+                  onClick={() => profileNavigation(book.user.userId)}
                   className="flex items-center gap-3 mt-1 cursor-pointer"
                 >
                   <img

@@ -4,12 +4,13 @@ import Stack from "@mui/material/Stack";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useGetFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
+import { getToken } from "@/services/authService";
+import { useGetMe } from "@/hooks/useUser";
 
 const Fav = () => {
   const [searchParams, setSearchParams] = useSearchParams({
     page: "1",
   });
-
   const [pageCount, setPageCount] = useState<number>(
     parseInt(searchParams.get("page") || "1", 10)
   );
@@ -19,7 +20,8 @@ const Fav = () => {
 
   const removeFavorite = useRemoveFavorite();
   const navigate = useNavigate();
-
+  const token = getToken();
+  const { data: me } = useGetMe(token!);
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
     value: number
@@ -46,10 +48,15 @@ const Fav = () => {
     book?.classList.add("hidden");
     removeFavorite.mutate({ slug: bookSlug });
   };
-
+  const profileNavigation = (id: number) => {
+    if (id === me?.userId) {
+      navigate("/me/info");
+    } else {
+      navigate(`/profile/${id}`);
+    }
+  };
   return (
     <div className="w-full h-full">
-
       <div className="flex flex-col justify-center w-full gap-5 p-4 md:p-10">
         <h1 className="text-xl font-bold text-center lg:text-2xl">
           Favorite Books
@@ -63,16 +70,16 @@ const Fav = () => {
                 className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] min-w-[130px] max-w-[250px] h-[280px] book group"
               >
                 <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                     <BsHeartFill
                       className="text-red-500 cursor-pointer"
                       onClick={(event) => hideBook(event, item.book.slug)}
                     />
                   </div>
 
-                  <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
+                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
                     <BsEyeFill
-                      className="text-slate-500 cursor-pointer"
+                      className="cursor-pointer text-slate-500"
                       onClick={() => navigate(`/book/${item.book.slug}`)}
                     />
                   </div>
@@ -100,15 +107,13 @@ const Fav = () => {
                     </p>
                   </div>
                   <div
-                    onClick={() =>
-                      navigate(`/profile/${item.book.user.userId}`)
-                    }
+                    onClick={() => profileNavigation(item.book.user.userId)}
                     className="flex items-center gap-3 mt-1 cursor-pointer"
                   >
                     <img
                       src={item.book.user.profilePicture}
                       alt={item.book.user.name}
-                      className="rounded-full w-6 h-6"
+                      className="w-6 h-6 rounded-full"
                     />
                     <h2 className="font-medium text-[13px] text-black">
                       By {item.book.user.name}
