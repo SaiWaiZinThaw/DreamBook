@@ -88,19 +88,19 @@ const LibraryLayout = () => {
   }, [deBounceSearch, sortBy, setSearchParams, selectedCategories, pageCount]);
 
   return (
-    <div className="mx-0 px-0 w-full container">
+    <div className="container w-full px-0 mx-0">
       <div
         className="flex flex-col justify-center items-center gap-4 bg-cover bg-no-repeat w-screen h-[370px] text-white"
         style={{ backgroundImage: `url(${LibraryHero})` }}
       >
-        <h1 className="font-extrabold text-4xl">Library</h1>
+        <h1 className="text-4xl font-extrabold">Library</h1>
         <h2 className="font-medium md:text-xl">Explore your favorite books</h2>
         <h2 className="font-medium md:text-xl">
           Reading is the best to get idea , Keep Reading
         </h2>
       </div>
 
-      <div className="md:flex mt-4 w-full">
+      <div className="w-full mt-4 md:flex">
         <div className="md:block border-slate-400 hidden mt-2 md:px-4 border-r w-[400px]">
           <h1 className="flex justify-center mt-[20px] font-extrabold text-2xl text-black">
             Categories
@@ -134,10 +134,13 @@ const LibraryLayout = () => {
         <div className="flex flex-col items-center w-full">
           <CategoryBooks
             search={search}
+            setPageCount={setPageCount}
             setSearch={setSearch}
             setSortBy={setSortBy}
             booksData={booksData}
             isBooksLoading={isBooksLoading}
+            selectedCategories={selectedCategories}
+            setSelectedCategories={setSelectedCategories}
           />
 
           {!isBooksLoading && (

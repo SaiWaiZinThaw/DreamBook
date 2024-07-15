@@ -61,13 +61,13 @@ const Fav = () => {
         <h1 className="text-xl font-bold text-center lg:text-2xl">
           Favorite Books
         </h1>
-        <div className="grid grid-cols-2 gap-2 md:p-10 md:gap-4 md:grid-cols-4">
+        <div className="grid grid-cols-2 md:p-10 lg:gap-4 lg:grid-cols-4">
           {!isLoading &&
             data?.items.map((item: any) => (
               <div
                 key={item.book.title}
                 id={item.book.slug}
-                className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] min-w-[130px] max-w-[250px] h-[280px] book group"
+                className="relative bg-slate-50 shadow-sm mr-[21px] border rounded-[8px] lg:w-[232px] min-w-[180px] max-w-[210px] h-[280px] book group"
               >
                 <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                   <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">

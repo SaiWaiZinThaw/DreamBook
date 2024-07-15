@@ -19,7 +19,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import useChapterCreate from "@/hooks/useChapterCreate";
+import { useChapterCreate, useChapterUpdate } from "@/hooks/useChapterCreate";
 import { createChapterData } from "@/types/types";
 import ChapterForm from "./ChapterForm";
 import { useParams } from "react-router-dom";
@@ -40,10 +40,20 @@ const Chapters = () => {
     priority: 0,
     slug: "",
   });
-
+  const [currentEditChapter, setCurrentEditChapter] = useState("0");
+  const updateChapter = useChapterUpdate(currentEditChapter);
   const deleteChapter = useDeleteChapter();
   const [open, setOpen] = useState(false);
-
+  const [editOpen, setEditOpen] = useState(false);
+  const [chapterUpdateData, setChapterUpdateData] = useState<createChapterData>(
+    {
+      title: "",
+      content: "",
+      status: "Published",
+      priority: 0,
+      slug: "",
+    }
+  );
   const deleteHandler = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
@@ -52,41 +62,50 @@ const Chapters = () => {
     deleteChapter.mutate(chapterId!);
   };
 
+  const editHandler = (chapter: any, id: string) => {
+    setCurrentEditChapter(id);
+    setChapterUpdateData(chapter);
+    setEditOpen(true);
+  };
+
+  const handleEditSaveButton = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    const data = { ...chapterUpdateData, slug: bookSlug! };
+    updateChapter.mutate(data);
+  };
+
   const { data, isLoading, refetch } = useFetchAuthorAChapter(bookSlug!);
 
   useEffect(() => {
     if (deleteChapter.isSuccess) {
-      alert("success");
+      Swal.fire({
+        icon: "success",
+        text: "Chapter Deleted",
+        timer: 2000,
+      });
       refetch();
     }
   }, [deleteChapter.isSuccess]);
-
-  useEffect(() => {
-    if (createChapterMutation.isSuccess) {
-      setChapterData({
-        title: "",
-        content: "",
-        status: "Published",
-        priority: 0,
-        slug: "",
-      });
-      setOpen(false);
-      refetch();
-    }
-    if (createChapterMutation.isError) {
-      Swal.fire({
-        title: "Auto close alert!",
-        text: "I will close in 2 seconds.",
-        timer: 2000,
-      });
-    }
-  }, [createChapterMutation.isSuccess]);
 
   useEffect(() => {
     if (createChapterMutation.isError) {
       alert(createChapterMutation.error);
     }
   }, [createChapterMutation.isError]);
+
+  useEffect(() => {
+    if (updateChapter.isSuccess) {
+      setEditOpen(false);
+      Swal.fire({
+        icon: "success",
+        text: "Chapter Updated  ",
+        timer: 2000,
+      });
+      refetch();
+    }
+  }, [updateChapter.isSuccess]);
 
   const handleButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -120,7 +139,12 @@ const Chapters = () => {
                         <HiOutlineDotsVertical className="text-xl" />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent className="flex flex-col items-center justify-center">
-                        <DropdownMenuItem className="border-b border-border text-primary">
+                        <DropdownMenuItem
+                          className="border-b border-border text-primary"
+                          onClick={() =>
+                            editHandler(chapter, chapter.chapterId)
+                          }
+                        >
                           Edit
                         </DropdownMenuItem>
                         <DropdownMenuItem
@@ -139,7 +163,6 @@ const Chapters = () => {
                       __html: DOMPurify.sanitize(chapter?.content!),
                     }}
                   />
-                  {/* <div >{chapter.content}</div> */}
                 </div>
               ))}
           </div>
@@ -218,6 +241,28 @@ const Chapters = () => {
                         <DialogFooter className="mx-auto md:ml-[683px] w-[135px] h-[43px]">
                           <Button
                             onClick={handleButton}
+                            type="submit"
+                            className="hover:bg-blue-500 text-slate-200 hover:text-300"
+                          >
+                            Save
+                          </Button>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
+                    <Dialog open={editOpen} onOpenChange={setEditOpen}>
+                      <DialogContent className="bg-slate-50">
+                        <DialogHeader className="flex items-center justify-center">
+                          <DialogTitle className="text-xl font-bold">
+                            Updating A Chapter
+                          </DialogTitle>
+                        </DialogHeader>
+                        <ChapterForm
+                          chapterData={chapterUpdateData}
+                          setChapterData={setChapterUpdateData}
+                        />
+                        <DialogFooter className=" w-[135px] h-[43px]">
+                          <Button
+                            onClick={handleEditSaveButton}
                             type="submit"
                             className="hover:bg-blue-500 text-slate-200 hover:text-300"
                           >

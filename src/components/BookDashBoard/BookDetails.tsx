@@ -78,7 +78,7 @@ const BookDetails = () => {
         text: updateBook.error.message,
         confirmButtonText: "Okay",
       });
-      setIsOn(updateData.status === "Published");
+      setIsOn(!isOn);
     }
   }, [updateBook.isError, updateBook.error, updateData.status]);
 
@@ -151,17 +151,26 @@ const BookDetails = () => {
       <div className="flex justify-between border-slate-300 border-b h-[50px] md:h-[80px] px-10">
         <h1 className="self-center font-extrabold md:text-2xl">Book Details</h1>
 
-        <div className="flex items-center gap-1">
-          {(!isOn && (
-            <span className="text-2xl font-bold text-secondary-foreground">
-              Draft
+        <div className="flex flex-col justify-center">
+          {isEditing && (
+            <span className="text-lg font-semibold text-[#6E8894] self-end">
+              *Unsaved
             </span>
-          )) || <span className="text-2xl font-bold text-primary">Public</span>}
-          <Switch
-            isOn={isOn}
-            handleToggle={handleToggle}
-            isDisabled={isEditing}
-          />
+          )}
+          <div className="flex items-center gap-1">
+            {(!isOn && (
+              <span className="text-xl font-bold text-secondary-foreground">
+                Draft
+              </span>
+            )) || (
+              <span className="text-xl font-bold text-primary">Public</span>
+            )}
+            <Switch
+              isOn={isOn}
+              handleToggle={handleToggle}
+              isDisabled={isEditing}
+            />
+          </div>
         </div>
       </div>
       <div className="h-full md:flex">
