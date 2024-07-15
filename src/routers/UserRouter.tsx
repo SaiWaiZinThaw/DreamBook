@@ -8,6 +8,7 @@ import ChapterReading from "@/pages/BookReading/ChapterReading";
 import BookReadingLayout from "@/pages/BookReading/BookReadingLayout";
 import Chapter from "@/pages/BookReading/Chapter";
 import NotFound from "@/Layouts/NotFound";
+import CommentSection from "@/components/CommentSection";
 import OtherUserProfile from "@/pages/OtherUserProfile";
 
 const UserRouter: RouteObject[] = [
@@ -27,6 +28,10 @@ const UserRouter: RouteObject[] = [
         index: true,
         element: <BookReading />,
       },
+      {
+        path: "comments",
+        element: <CommentSection/>
+      }
     ],
   },
 

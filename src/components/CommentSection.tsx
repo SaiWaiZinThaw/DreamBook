@@ -141,11 +141,11 @@ const CommentSection = () => {
       <span className="flex items-center gap-2">
         <h1 className="font-semibold md:text-lg">Reader's Review</h1>
         {comments ? (
-          <span className="flex items-center justify-center p-1 text-sm font-bold bg-blue-200 rounded-full md:px-2 md:py-1 min-w-8 min-h-6 text-primary">
+          <span className="flex justify-center items-center bg-blue-200 md:px-2 md:py-1 p-1 rounded-full min-w-8 min-h-6 font-bold text-primary text-sm">
             {comments.pages[0].meta.totalItems}
           </span>
         ) : (
-          <span className="flex items-center justify-center p-1 text-sm font-bold bg-blue-200 rounded-full md:px-2 md:py-1 min-w-8 min-h-6 text-primary">
+          <span className="flex justify-center items-center bg-blue-200 md:px-2 md:py-1 p-1 rounded-full min-w-8 min-h-6 font-bold text-primary text-sm">
             0
           </span>
         )}
@@ -164,7 +164,7 @@ const CommentSection = () => {
                   onClick={() => navigate(`/profile/${comment.user.userId}`)}
                   className="rounded-full w-[30px] md:w-[45px] h-[30px] md:h-[45px] cursor-pointer"
                 />
-                <div className="flex flex-col justify-center w-full gap-1">
+                <div className="flex flex-col justify-center gap-1 w-full">
                   <div className="flex flex-col">
                     <h3
                       onClick={() =>
@@ -188,18 +188,18 @@ const CommentSection = () => {
                           [comment.commentId]: e.target.value,
                         }))
                       }
-                      className="w-full md:m-2 p-2 border  border-border rounded-[5px] resize-none"
+                      className="md:m-2 p-2 border border-border rounded-[5px] w-full resize-none"
                     />
                   ) : (
                     <p className="text-[14px] md:text-[16px]">
                       {comment.comment}
                     </p>
                   )}
-                  <div className="flex self-end gap-3">
+                  <div className="flex gap-3 self-end">
                     {!userIsLoading &&
                       userData?.userId === comment.user.userId && (
                         <Button
-                          className="!bg-primary px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px]"
+                          className="!bg-primary px-8 rounded-[4px] w-8 md:w-10 h-6 md:h-8 text-[10px] !md:text-[12px]"
                           onClick={() =>
                             handleEditToggle(comment.commentId, comment.comment)
                           }
@@ -211,7 +211,7 @@ const CommentSection = () => {
                       <div className="flex items-center gap-3">
                         <Button
                           onClick={() => handleSaveComment(comment.commentId)}
-                          className="!bg-primary px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px]"
+                          className="!bg-primary px-8 rounded-[4px] w-8 md:w-10 h-6 md:h-8 text-[10px] !md:text-[12px]"
                         >
                           Save
                         </Button>
@@ -224,7 +224,7 @@ const CommentSection = () => {
                             onClick={() =>
                               deleteComment.mutate(comment.commentId)
                             }
-                            className="!bg-red-500 px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px]"
+                            className="!bg-red-500 px-8 rounded-[4px] w-8 md:w-10 h-6 md:h-8 text-[10px] !md:text-[12px]"
                           >
                             Delete
                           </Button>
@@ -232,7 +232,7 @@ const CommentSection = () => {
                       </div>
                     ) : (
                       <Button
-                        className="!bg-primary px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px]"
+                        className="!bg-primary px-8 rounded-[4px] w-8 md:w-10 h-6 md:h-8 text-[10px] !md:text-[12px]"
                         onClick={() => handleReplyToggle(comment.commentId)}
                       >
                         {isReplying[comment.commentId] ? "Cancel" : "Reply"}
@@ -244,7 +244,7 @@ const CommentSection = () => {
                       <img
                         src={userData?.profilePicture}
                         alt={userData?.name}
-                        className="rounded-full w-[30px] h-[30px] md:w-[40px] md:h-[40px]"
+                        className="rounded-full w-[30px] md:w-[40px] h-[30px] md:h-[40px]"
                       />
                       <textarea
                         placeholder="Reply here"
@@ -255,7 +255,7 @@ const CommentSection = () => {
                         className="p-2 border border-border rounded-[5px] w-[400px] h-[18] text-sm resize-none self-start"
                       ></textarea>
                       <Button
-                        className="!bg-primary px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px] self-end"
+                        className="!bg-primary px-8 rounded-[4px] w-8 md:w-10 h-6 md:h-8 text-[10px] !md:text-[12px] self-end"
                         onClick={() => handleReplyComment(comment.commentId)}
                       >
                         Done
@@ -267,13 +267,13 @@ const CommentSection = () => {
                             [comment.commentId]: false,
                           }))
                         }
-                        className="!bg-primary px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px] self-end"
+                        className="!bg-primary px-8 rounded-[4px] w-8 md:w-10 h-6 md:h-8 text-[10px] !md:text-[12px] self-end"
                       >
                         Cancel
                       </Button>
                     </div>
                   )}
-                  <div className="pl-4 ml-8 border-l-2 border-gray-300">
+                  <div className="border-gray-300 ml-8 pl-4 border-l-2">
                     {comment.replies.map((reply) => (
                       <div
                         className="flex gap-2 md:min-h-[100px]"
@@ -282,10 +282,12 @@ const CommentSection = () => {
                         <img
                           src={reply.user.profilePicture}
                           alt={reply.user.name}
+
                           onClick={() => profileNavigation(reply.user.userId)}
                           className="rounded-full w-[30px] h-[30px] md:w-[40px] md:h-[40px] cursor-pointer"
+
                         />
-                        <div className="flex flex-col w-full gap-1">
+                        <div className="flex flex-col gap-1 w-full">
                           <div className="flex flex-col">
                             <h3
                               onClick={() =>
@@ -295,7 +297,7 @@ const CommentSection = () => {
                             >
                               {reply.user.name}
                             </h3>
-                            <span className="text-[8px] md:text-[9px] text-secondary-foreground">
+                            <span className="text-[8px] text-secondary-foreground md:text-[9px]">
                               {format(
                                 parseISO(reply.createdAt),
                                 "eeee do MMM, yyyy"
@@ -312,18 +314,18 @@ const CommentSection = () => {
                                   [reply.id]: e.target.value,
                                 }))
                               }
-                              className="m-2 p-2 border border-border text-[10px] md:text-[13px] rounded-[5px] resize-none"
+                              className="m-2 p-2 border border-border rounded-[5px] text-[10px] md:text-[13px] resize-none"
                             />
                           ) : (
                             <p className="text-[13px] md:text-[16px]">
                               {reply.comment}
                             </p>
                           )}
-                          <div className="flex self-end gap-3">
+                          <div className="flex gap-3 self-end">
                             {!userIsLoading &&
                               userData?.userId === reply.user.userId && (
                                 <Button
-                                  className="!bg-primary px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px]"
+                                  className="!bg-primary px-8 rounded-[4px] w-8 md:w-10 h-6 md:h-8 text-[10px] !md:text-[12px]"
                                   onClick={() =>
                                     handleEditReplyToggle(
                                       reply.id,
@@ -340,7 +342,7 @@ const CommentSection = () => {
                                   onClick={() =>
                                     handleSaveReplyComment(reply.id)
                                   }
-                                  className="!bg-primary px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px]"
+                                  className="!bg-primary px-8 rounded-[4px] w-8 md:w-10 h-6 md:h-8 text-[10px] !md:text-[12px]"
                                 >
                                   Save
                                 </Button>
@@ -351,7 +353,7 @@ const CommentSection = () => {
                                 ) : (
                                   <Button
                                     onClick={() => handleDeleteReply(reply.id)}
-                                    className="!bg-red-500 px-8 rounded-[4px] md:w-10 md:h-8 text-[10px] w-8 h-6 !md:text-[12px]"
+                                    className="!bg-red-500 px-8 rounded-[4px] w-8 md:w-10 h-6 md:h-8 text-[10px] !md:text-[12px]"
                                   >
                                     Delete
                                   </Button>

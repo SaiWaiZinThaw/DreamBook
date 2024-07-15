@@ -29,9 +29,11 @@ export const BookCoverChange: React.FC<FileUploadProps> = ({
           className="top-0 left-0 absolute opacity-0 hover:opacity-20 w-full h-full text-white cursor-pointer"
           onChange={handleFileChange}
         />
+
+{/* className="md:mx-[52.5px] md:my-[30px] p-3 w-[100px] md:w-[127px] h-[150px] md:h-[191px]" */}
         {coverImage ? (
           <div
-            className="flex justify-center items-center mx-[52.5px] my-[30px] w-[127px] h-[191px]"
+            className="flex justify-center items-center mx-[20px] md:mx-[52.5px] my-[13px] md:my-[30px] w-[100px] md:w-[127px] h-[150px] md:h-[191px]"
             style={{
               backgroundImage: imagePreview
                 ? `url(${imagePreview})`

@@ -64,10 +64,12 @@ const BookDetails = () => {
         description: fetchABookAuthor.description || "",
         keywords: fetchABookAuthor.keywords || [],
         slug: fetchABookAuthor.slug || "",
+
         status: fetchABookAuthor.status || "Draft",
       });
       setKeywords(fetchABookAuthor.keywords || []);
       setIsOn(fetchABookAuthor.status === "Published");
+
     }
   }, [fetchABookAuthor]);
 
@@ -147,6 +149,7 @@ const BookDetails = () => {
   };
 
   return (
+
     <div className="container w-full h-full p-0 m-0">
       <div className="flex justify-between border-slate-300 border-b h-[50px] md:h-[80px] px-10">
         <h1 className="self-center font-extrabold md:text-2xl">Book Details</h1>
@@ -156,6 +159,7 @@ const BookDetails = () => {
             <span className="text-lg font-semibold text-[#6E8894] self-end">
               *Unsaved
             </span>
+
           )}
           <div className="flex items-center gap-1">
             {(!isOn && (
@@ -171,9 +175,10 @@ const BookDetails = () => {
               isDisabled={isEditing}
             />
           </div>
+
         </div>
       </div>
-      <div className="h-full md:flex">
+      <div className="md:flex h-full">
         <div className="md:flex md:flex-row-reverse">
           <div className="flex md:flex-col justify-center md:ml-[35px]">
             <div className="order-1 md:order-none md:mx-8 mt-[32px] md:w-[232px] md:h-[289px]">
@@ -186,6 +191,7 @@ const BookDetails = () => {
                   <BookCoverChange
                     onFileChange={handleFileChange}
                     coverImage={fetchABookAuthor!.coverImage}
+
                   />
                 ) : (
                   <img
@@ -207,7 +213,7 @@ const BookDetails = () => {
                   <img
                     src={fetchABookAuthor?.coverImage}
                     alt=""
-                    className="md:w-[86px] md:h-[129px]"
+                    className="w-[50px] md:w-[86px] md:h-[129px]"
                   />
                 </div>
 
@@ -256,7 +262,7 @@ const BookDetails = () => {
                       }}
                       value={updateData.title}
                       id="title"
-                      className="border-slate-300 border text-[12.5px] text-black md:text-[16px]"
+                      className="border-slate-300 border rounded-[5px] text-[12.5px] text-black md:text-[16px]"
                     />
                   ) : (
                     <h1
@@ -288,7 +294,7 @@ const BookDetails = () => {
                 </div>
               </div>
 
-              <div className="items-center gap-1.5 grid md:mx-[32px] pt-6 md:pt-[90px] h-[74px]">
+              <div className="items-center gap-1.5 grid md:mx-[32px] pt-6 md:pt-[30px] h-[74px]">
                 <Label
                   htmlFor="keywords"
                   className="font-semibold md:text-[16px]"
@@ -296,7 +302,7 @@ const BookDetails = () => {
                   Keywords
                 </Label>
                 {isEditing ? (
-                  <div className="w-[603px]">
+                  <div className="w-full">
                     <Input
                       type="text"
                       id="keywords"
@@ -323,7 +329,7 @@ const BookDetails = () => {
                   <div className="flex">
                     {keywords.map((keyword, index) => (
                       <div key={index} className="flex items-center">
-                        <span className="flex px-3 py-1 mb-2 mr-2 text-sm font-semibold bg-gray-200 rounded-full text-slate-950">
+                        <span className="flex bg-gray-200 mr-2 mb-2 px-3 py-1 rounded-full font-semibold text-slate-950 text-sm">
                           {keyword}
                           <BsX
                             onClick={() => handleDeleteKeyword(index)}
@@ -336,7 +342,7 @@ const BookDetails = () => {
                 )}
               </div>
 
-              <div className="items-center gap-1.5 grid md:mx-[32px] pt-6 md:pt-[120px] h-[140px] md:h-[176px]">
+              <div className="items-center gap-1.5 grid md:mx-[32px] pt-[60px] h-[140px] md:h-[176px]">
                 <Label
                   htmlFor="description"
                   className="font-semibold md:text-[16px]"
@@ -354,7 +360,7 @@ const BookDetails = () => {
                         description: sanitizedContent,
                       }));
                     }}
-                    className="border-slate-300 pt-2 md:pt-[15px] pl-[25px] border rounded-[5px] md:h-[290px] text-[12.5px] md:text-[16px]"
+                    className="pt-2 md:pt-[15px] rounded-[5px] h-[120px] md:h-[290px] text-[12.5px] md:text-[16px]"
                     modules={quillModules}
                   />
                 ) : (
@@ -370,6 +376,7 @@ const BookDetails = () => {
                 )}
               </div>
             </div>
+
 
             <div className="flex justify-end mt-[50px] md:mt-[170px] md:mr-4 rounded-[8px] h-[43px]">
               <div className="">
@@ -399,9 +406,9 @@ const BookDetails = () => {
                           Delete
                         </Button>
                       </AlertDialogTrigger>
-                      <AlertDialogContent className="rounded-none bg-slate-50">
+                      <AlertDialogContent className="bg-slate-50 rounded-none">
                         <AlertDialogHeader>
-                          <AlertDialogTitle className="text-xl font-extrabold text-red-600">
+                          <AlertDialogTitle className="font-extrabold text-red-600 text-xl">
                             Are you sure want to delete?
                           </AlertDialogTitle>
                           <AlertDialogDescription>
