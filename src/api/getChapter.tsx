@@ -23,6 +23,26 @@ export const getAuthorChapter = async (bookSlug: string) => {
   return result as fetchChapterData;
 };
 
+export const getAuthorAChapter = async (chapterId: string) => {
+  const response: Response = await fetch(
+    `${BaseURL}/chapters/author/${chapterId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors",
+      method: "GET",
+      redirect: "follow",
+    }
+  );
+
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(`${response.status}`);
+  }
+  return result as fetchChapterData;
+};
+
 export const deleteChapter = async (chapterId: string) => {
   const response: Response = await fetch(`${BaseURL}/chapters/${chapterId}`, {
     headers: {

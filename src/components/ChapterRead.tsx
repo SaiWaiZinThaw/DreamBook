@@ -28,23 +28,34 @@ const ChapterRead = () => {
 
   const [activeChapterId, setActiveChapterId] = useState<number | null>(null);
   const createChapterProgress = useCreateChapterProgress();
-  const { data: getChapterProgress, error: progressError } = useFetchCurrentChapter(bookSlug!);
+  const { data: getChapterProgress, error: progressError } =
+    useFetchCurrentChapter(bookSlug!);
   const updateProgress = useUpdateChapterProgress();
   const [showChapters, setShowChapters] = useState(false);
 
   useEffect(() => {
     if (getChapterProgress?.chapterId) {
       setParsedChapterId(getChapterProgress.chapterId);
-      console.log('Fetched chapter progress:', getChapterProgress.chapterId);
+      console.log("Fetched chapter progress:", getChapterProgress.chapterId);
     } else if (chapterId) {
       setParsedChapterId(parseInt(chapterId, 10));
     }
   }, [getChapterProgress, chapterId]);
 
   useEffect(() => {
-    if (progressError && (progressError as any).response?.status === 404 && chapterId) {
-      console.log('Creating chapter progress due to 404 error:', { bookSlug, chapterId });
-      createChapterProgress.mutate({ slug: bookSlug!, chapterId: parseInt(chapterId, 10) });
+    if (
+      progressError &&
+      (progressError as any).response?.status === 404 &&
+      chapterId
+    ) {
+      console.log("Creating chapter progress due to 404 error:", {
+        bookSlug,
+        chapterId,
+      });
+      createChapterProgress.mutate({
+        slug: bookSlug!,
+        chapterId: parseInt(chapterId, 10),
+      });
     }
   }, [progressError, chapterId, bookSlug, createChapterProgress]);
 
@@ -52,30 +63,40 @@ const ChapterRead = () => {
     navigate(`/${bookSlug}/chapter/${id}`);
     setParsedChapterId(id);
     setActiveChapterId(id);
-  
+
     if (getChapterProgress?.chapterId === id) {
       updateProgress.mutate({ bookSlug: bookSlug!, data: { chapterId: id } });
     } else {
-      console.log('Creating new progress:', { bookSlug, chapterId: id });
+      console.log("Creating new progress:", { bookSlug, chapterId: id });
       createChapterProgress.mutate({ slug: bookSlug!, chapterId: id });
     }
     setShowChapters(false);
-  
 
-    if (currentChapterIndex < totalChapters && id === getChapters[currentChapterIndex].chapterId) {
+    if (
+      currentChapterIndex < totalChapters &&
+      id === getChapters[currentChapterIndex].chapterId
+    ) {
       const nextChapterId = getChapters[currentChapterIndex].chapterId;
       setParsedChapterId(nextChapterId);
       setActiveChapterId(nextChapterId);
-  
+
       if (getChapterProgress?.chapterId === nextChapterId) {
-        updateProgress.mutate({ bookSlug: bookSlug!, data: { chapterId: nextChapterId } });
+        updateProgress.mutate({
+          bookSlug: bookSlug!,
+          data: { chapterId: nextChapterId },
+        });
       } else {
-        console.log('Creating new progress:', { bookSlug, chapterId: nextChapterId });
-        createChapterProgress.mutate({ slug: bookSlug!, chapterId: nextChapterId });
+        console.log("Creating new progress:", {
+          bookSlug,
+          chapterId: nextChapterId,
+        });
+        createChapterProgress.mutate({
+          slug: bookSlug!,
+          chapterId: nextChapterId,
+        });
       }
     }
   };
-  
 
   useEffect(() => {
     if (updateProgress.isSuccess) {
@@ -93,16 +114,23 @@ const ChapterRead = () => {
   const totalChapters = getChapters?.length;
 
   return (
-    <div className="flex md:flex-row flex-col">
-      <div className="flex md:flex-row flex-col">
+    <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row">
         <div className="flex border-slate-300 md:hidden shadow-md border-b w-screen h-[50px]">
-          <FiAlignJustify onClick={() => setShowChapters(!showChapters)} className="mt-3 ml-4 text-2xl cursor-pointer" />
+          <FiAlignJustify
+            onClick={() => setShowChapters(!showChapters)}
+            className="mt-3 ml-4 text-2xl cursor-pointer"
+          />
           <img src={LogoBlue} className="ml-4 w-[160px] h-[50px]" />
         </div>
-        <div className={`md:pl-[26px] pl-2 md:border md:border-r-slate-300 w-[120px] md:w-[267px] h-screen ${showChapters ? '' : 'hidden md:block'}`}>
+        <div
+          className={`md:pl-[26px] pl-2 md:border md:border-r-slate-300 w-[120px] md:w-[267px] h-screen ${
+            showChapters ? "" : "hidden md:block"
+          }`}
+        >
           <div
             className="flex my-2 md:my-[12.5px] md:w-[83px] md:h-[28px] text-[14px] text-blue-700 md:text-[16px] text-opacity-60 cursor-pointer"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate(`/book/${bookSlug}`)}
           >
             <FaArrowLeft className="mx-2 mt-1" />
             <h2>Back</h2>
@@ -113,8 +141,11 @@ const ChapterRead = () => {
             {getChapters &&
               getChapters.map((chapter: any) => (
                 <li
-                  className={`md:mb-[16px] text-[12px] md:text-[16px] mb-2 cursor-pointer ${chapter.chapterId === activeChapterId ? "text-primary font-semibold" : ""
-                    }`}
+                  className={`md:mb-[16px] text-[12px] md:text-[16px] mb-2 cursor-pointer ${
+                    chapter.chapterId === activeChapterId
+                      ? "text-primary font-semibold"
+                      : ""
+                  }`}
                   key={chapter.chapterId}
                   onClick={() => handleChapterSelect(chapter.chapterId)}
                 >
@@ -125,7 +156,12 @@ const ChapterRead = () => {
         </div>
       </div>
 
-      <div className={`flex flex-col w-screen ${showChapters ? 'hidden md:flex' : ''}`}>
+      <div
+        className={`flex flex-col w-screen min-h-screen ${
+          showChapters ? "hidden md:flex" : ""
+        }`}
+      >
+
         {isLoading && <p>Loading...</p>}
         {error && <p>Error loading chapter: {error.message}</p>}
         {getChapter && (
@@ -181,4 +217,3 @@ const ChapterRead = () => {
 };
 
 export default ChapterRead;
-

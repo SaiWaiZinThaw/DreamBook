@@ -31,10 +31,13 @@ const BookReading: React.FC = () => {
   const token = getToken();
   const { data: me } = useGetMe(token!);
   const { data: relatedBook } = useRelatedBook(bookSlug!);
-
   const createCommentHandler = () => {
-    setComment({ comment: "", slug: bookSlug! });
-    createComment.mutate(comment);
+    if (token) {
+      setComment({ comment: "", slug: bookSlug! });
+      createComment.mutate(comment);
+    } else {
+      navigate("/auth/login");
+    }
   };
   const profileNavigation = (id: number) => {
     if (id === me?.userId) {
