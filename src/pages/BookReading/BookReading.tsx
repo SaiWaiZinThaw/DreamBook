@@ -67,7 +67,7 @@ const BookReading: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full min-h-screen px-10 md:flex-row md:px-20">
-      <div className="flex-col items-center md:px-10 pt-[30px] md:pt-20 md:border-r border-border md:w-10/12 h-full">
+      <div className="flex-col items-center md:px-10 pt-[30px] md:pt-20 md:border-r  border-border md:w-10/12 h-full">
         {fetchABook && !isLoading && (
           <div className="flex flex-col gap-[20px] w-full h-full">
             <div className="flex md:flex-row flex-col md:gap-[100px] md:px-20 md:pb-20 w-full">
@@ -185,7 +185,7 @@ const BookReading: React.FC = () => {
         )}
       </div>
 
-      <div className="w-full md:mx-4">
+      <div className="w-2 /12 md:mx-2">
         <h1 className="mt-4 font-semibold text-center text-md">
           Related Books
         </h1>
