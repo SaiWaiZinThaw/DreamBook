@@ -4,15 +4,16 @@ import { Button } from "./ui/button";
 import { NavLink } from "react-router-dom";
 import { getToken } from "@/services/authService";
 import { useGetMe } from "@/hooks/useUser";
-import { FaHeart } from "react-icons/fa";
+import { FaAngleDown, FaHeart } from "react-icons/fa";
 import ProfileDropdown from "./ui/profile-dropdown";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useAuth } from "../contexts/AuthContext";
+import { Skeleton } from "./ui/skeleton";
 
 const NavBar = () => {
   const token = getToken() || "";
   const { setShowMenu } = useAuth();
-  const { data, isLoading, isSuccess } = useGetMe(token);
+  const { data, isLoading } = useGetMe(token);
   return (
     <div className="flex justify-between items-center bg-white shadow-slate-300 shadow-sm px-6 lg:px-40 py-2 lg:py-6 w-full h-[70px] font-Inter">
       <div className="flex items-center gap-3">
@@ -81,7 +82,14 @@ const NavBar = () => {
             <FaHeart className="text-lg font-bold text-red-600" />
             <span className="text-sm font-semibold">Fav Books</span>
           </NavLink>
-          {!isLoading && data && isSuccess && <ProfileDropdown data={data} />}
+          {isLoading ? (
+            <div className="flex items-center gap-2">
+              <Skeleton className="w-10 h-10 bg-gray-200 rounded-full" />
+              <FaAngleDown />
+            </div>
+          ) : (
+            <ProfileDropdown data={data!} />
+          )}
         </div>
       )}
     </div>

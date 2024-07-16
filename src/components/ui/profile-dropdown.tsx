@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,11 +18,13 @@ import { MdDarkMode } from "react-icons/md";
 import { logout } from "@/services/authService";
 import { CiLogout } from "react-icons/ci";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
   const navigate = useNavigate();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
-
+  const { setDarkMode } = useAuth();
+  const [theme, setTheme] = useState("light");
   const logoutHandler = () => {
     setShowLogoutDialog(true);
   };
@@ -32,6 +34,14 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
     navigate("/");
     logout();
   };
+
+  useEffect(() => {
+    if (theme === "light") {
+      setDarkMode(false);
+    } else {
+      setDarkMode(true);
+    }
+  }, [theme]);
 
   const cancelLogout = () => {
     setShowLogoutDialog(false);
@@ -99,6 +109,9 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               <Input
                 className="w-1 h-1 rounded-none md:w-3 md:h-3"
                 type="radio"
+                value="light"
+                checked={theme === "light"}
+                onChange={(event) => setTheme(event.currentTarget.value)}
                 name="theme"
                 id="light"
               />
@@ -112,6 +125,9 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
                 className="w-1 h-1 rounded-none md:w-3 md:h-3"
                 type="radio"
                 name="theme"
+                value="dark"
+                checked={theme === "dark"}
+                onChange={(event) => setTheme(event.currentTarget.value)}
                 id="dark"
               />
               <label className="flex items-center gap-1" htmlFor="dark">
@@ -169,4 +185,3 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
 };
 
 export default ProfileDropdown;
-

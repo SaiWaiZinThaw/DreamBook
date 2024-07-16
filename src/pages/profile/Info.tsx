@@ -55,7 +55,6 @@ const Info = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     profileSetup.mutate(profileData);
-    console.log(profileData);
   };
 
   useEffect(() => {
@@ -78,15 +77,15 @@ const Info = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full h-full">
+    <div className="flex items-center justify-center w-full h-full">
       <div className="flex flex-col items-center pb-10">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center gap-6 p-4 md:p-0 w-full md:w-[460px] font-Inter"
         >
-          <h1 className="font-bold text-2xl text-white">Create an account</h1>
+          <h1 className="text-2xl font-bold text-white">Create an account</h1>
           <FileUpload onFileChange={handleFileChange} />
-          <Label htmlFor="picture" className="font-Inter text-black">
+          <Label htmlFor="picture" className="text-black font-Inter">
             Upload Photo
           </Label>
           <Input
@@ -106,14 +105,12 @@ const Info = () => {
           <div className="bg-white p-4 border border-border rounded-[5px] w-full h-12 font-Inter font-semibold text-secondary-foreground text-sm text-opacity-50">
             {data?.email}
           </div>
-          <div className="flex items-center gap-5 w-full">
+          <div className="flex items-center w-full gap-5">
             <select
               className="flex justify-center items-center px-4 border border-border rounded-[5px] h-10 md:h-12 text-sm"
               value={countryCodeNumber}
               onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                 setCountryCodeNumber(event.target.value);
-                console.log(event.target.value);
-                console.log(countryCodeNumber);
               }}
             >
               {countryCodes.map((code, index) => (
@@ -138,7 +135,6 @@ const Info = () => {
             className="flex justify-center items-center px-4 border border-border rounded-[5px] w-full h-10 md:h-12 text-sm"
             value={profileData.gender}
             onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-              console.log(profileData);
               setProfileData((prev) => ({
                 ...prev,
                 gender: event.target.value,

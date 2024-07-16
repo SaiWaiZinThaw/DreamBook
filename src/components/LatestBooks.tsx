@@ -4,6 +4,7 @@ import { useAddFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
 import { usefetchLatestBooks } from "@/hooks/useFetchBook";
 import { getToken } from "@/services/authService";
 import BookCard from "./BookCard";
+import BookCardSkeleton from "./BookCardSkeleton";
 
 const LatestBooks = () => {
   const { data: booksData, isLoading: isBooksLoading } = usefetchLatestBooks();
@@ -47,18 +48,29 @@ const LatestBooks = () => {
 
   return (
     <div className="py-2 overflow-x-auto transition md:p-3">
-      <div className="flex w-full h-[280px]">
-        {!isBooksLoading &&
-          booksData &&
-          booksData.items.map((book) => (
-            <BookCard
-              key={book.bookId}
-              book={book}
-              favorites={favorites}
-              toggleFavorite={toggleFavorite}
-            />
-          ))}
-      </div>
+      {isBooksLoading ? (
+        <div className="flex w-full h-[280px]">
+          <BookCardSkeleton key="skeleton-1" />
+          <BookCardSkeleton key="skeleton-2" />
+          <BookCardSkeleton key="skeleton-3" />
+          <BookCardSkeleton className="hidden lg:block" key="skeleton-4" />
+          <BookCardSkeleton className="hidden lg:block" key="skeleton-5" />
+          <BookCardSkeleton className="hidden lg:block" key="skeleton-6" />
+        </div>
+      ) : (
+        booksData && (
+          <div className="flex w-full h-[280px]">
+            {booksData.items.map((book) => (
+              <BookCard
+                key={book.bookId}
+                book={book}
+                favorites={favorites}
+                toggleFavorite={toggleFavorite}
+              />
+            ))}
+          </div>
+        )
+      )}
     </div>
   );
 };
