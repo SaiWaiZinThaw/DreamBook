@@ -16,6 +16,14 @@ import { useEffect, useState } from "react";
 import { getToken } from "@/services/authService";
 import BookCard from "./BookCard";
 import { useFetchCategories } from "@/hooks/useFetchCategories";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface CategoryBooksProps {
   search: string;
@@ -92,30 +100,34 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
     <div className="flex flex-col w-full min-h-screen px-6 mx-0 lg:px-10">
       <div className="flex justify-between lg:gap-0 gap-4 mt-4 h-[30px] lg:h-[50px] w-full">
         <div className="relative flex items-center w-8/12 gap-3 lg:w-full">
-          <img
-            src={Sorting}
-            alt="sorting"
-            className="w-4/12 h-full md:w-auto lg:w-auto"
-          />
-          <div className="bg-white w-[100px] hidden top-0">
-            {!isLoading && data
-              ? data.map((item) => (
-                  <label
-                    key={item.categoryId}
-                    id={item.categoryId}
-                    className="flex items-center gap-2 font-medium  md:text-[16px] text-[10px]"
-                  >
-                    <Checkbox
-                      onCheckedChange={() => {
-                        categoryHandler(item.categoryId);
-                      }}
-                      checked={selectedCategories.includes(item.categoryId)}
-                    />
-                    {item.title}
-                  </label>
-                ))
-              : "Loading"}
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger className=" w-[45px] h-full md:hidden">
+              <img src={Sorting} alt="sorting" className="w-full h-full" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Categories</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {!isLoading && data
+                ? data.map((item) => (
+                    <DropdownMenuItem>
+                      <label
+                        key={item.categoryId}
+                        id={item.categoryId}
+                        className="flex items-center gap-2 font-medium md:text-[16px] text-[10px]"
+                      >
+                        <Checkbox
+                          onCheckedChange={() => {
+                            categoryHandler(item.categoryId);
+                          }}
+                          checked={selectedCategories.includes(item.categoryId)}
+                        />
+                        {item.title}
+                      </label>
+                    </DropdownMenuItem>
+                  ))
+                : "Loading"}
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           <Select onValueChange={handleSortChange}>
             <SelectTrigger className="w-8/12 lg:w-[180px] h-full text-xs lg:text-md">
