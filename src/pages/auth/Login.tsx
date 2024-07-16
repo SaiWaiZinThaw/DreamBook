@@ -33,7 +33,6 @@ const Login = () => {
 
   useEffect(() => {
     if (LoginAccount.isSuccess) {
-      console.log(LoginAccount.data);
       const authToken = LoginAccount.data.access_token;
       delete LoginAccount.data.access_token;
       login(authToken);
@@ -54,7 +53,6 @@ const Login = () => {
 
   const onSubmit = (data: LoginSchemaType) => {
     LoginAccount.mutate(data);
-    console.log(data);
   };
 
   const handleValidationErrors = () => {

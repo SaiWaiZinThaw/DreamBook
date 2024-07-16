@@ -22,12 +22,14 @@ import { useFetchTrendingCategories } from "@/hooks/useFetchCategories";
 import { faqItems } from "@/variables";
 import PopularBooks from "./PopularBooks";
 import LatestBooks from "./LatestBooks";
+import { Skeleton } from "./ui/skeleton";
 
 const Hero = () => {
-  const { data: fetchTrendingCategories } = useFetchTrendingCategories();
+  const { data: fetchTrendingCategories, isLoading } =
+    useFetchTrendingCategories();
   const navigate = useNavigate();
   return (
-    <div className="container px-0 mx-0 md:flex-none">
+    <div className="px-0 mx-0 md:flex-none">
       <div
         className="flex  md:flex-row flex-col items-center md:items-start gap-6 md:gap-0 bg-slate-100 bg-cover p-6 md:p-10 md:pt-20 w-screen md:h-[700px]"
         style={{ backgroundImage: `url(${HeroBg})` }}
@@ -111,34 +113,56 @@ const Hero = () => {
       <div className="p-6 md:p-10 w-screen md:h-[250px]">
         <div className="flex justify-between">
           <h1 className="text-xl font-bold">Trending Category</h1>
-          <a href="" className="font-medium text-md">
-            View More &gt;
-          </a>
         </div>
         <div className="flex justify-center mt-11">
           <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
-            {fetchTrendingCategories?.map((category: any) => (
-              <div
-                key={category.categoryId}
-                onClick={() => {
-                  const categoryIdArray = [category.categoryId];
-                  const encodedCategoryIds = encodeURIComponent(
-                    JSON.stringify(categoryIdArray)
-                  );
-                  navigate(
-                    `library?category_ids=${encodedCategoryIds}&sort_by=random&page=1`
-                  );
-                }}
-                className="flex border-slate-300 bg-slate-50 shadow-sm pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md cursor-pointer"
-              >
-                <img
-                  src={category.icon}
-                  className="mr-[38px] ml-[12px] w-[35px] h-[35px]"
-                  alt=""
+            {isLoading ? (
+              <>
+                <Skeleton
+                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  key="category1"
                 />
-                <h1 className="pt-[5px]">{category.title}</h1>
-              </div>
-            ))}
+                <Skeleton
+                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  key="category2"
+                />
+                <Skeleton
+                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  key="category3"
+                />
+                <Skeleton
+                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  key="category4"
+                />
+                <Skeleton
+                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  key="category5"
+                />
+              </>
+            ) : (
+              fetchTrendingCategories?.map((category: any) => (
+                <div
+                  key={category.categoryId}
+                  onClick={() => {
+                    const categoryIdArray = [category.categoryId];
+                    const encodedCategoryIds = encodeURIComponent(
+                      JSON.stringify(categoryIdArray)
+                    );
+                    navigate(
+                      `library?category_ids=${encodedCategoryIds}&sort_by=random&page=1`
+                    );
+                  }}
+                  className="flex border-slate-300 bg-slate-50 shadow-sm pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md cursor-pointer"
+                >
+                  <img
+                    src={category.icon}
+                    className="mr-[38px] ml-[12px] w-[35px] h-[35px]"
+                    alt=""
+                  />
+                  <h1 className="pt-[5px]">{category.title}</h1>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

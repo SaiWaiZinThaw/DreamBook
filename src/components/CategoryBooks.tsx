@@ -7,6 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { BookFloatAnimation } from "@/assets";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router-dom";
 import { Book, fetchBookData } from "@/types/types";
@@ -24,6 +25,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import BookCardSkeleton from "./BookCardSkeleton";
 
 interface CategoryBooksProps {
   search: string;
@@ -97,7 +99,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
   }, [booksData]);
 
   return (
-    <div className="flex flex-col w-full min-h-screen px-6 mx-0 lg:px-10">
+    <div className="flex flex-col w-full min-h-[600px] lg:min-h-screen px-6 mx-0 lg:px-10">
       <div className="flex justify-between lg:gap-0 gap-4 mt-4 h-[30px] lg:h-[50px] w-full">
         <div className="relative flex items-center w-8/12 gap-3 lg:w-full">
           <DropdownMenu>
@@ -109,7 +111,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
               <DropdownMenuSeparator />
               {!isLoading && data
                 ? data.map((item) => (
-                    <DropdownMenuItem>
+                    <DropdownMenuItem key={item.categoryId}>
                       <label
                         key={item.categoryId}
                         id={item.categoryId}
@@ -155,7 +157,18 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
       </div>
 
       <div className="grid w-full grid-cols-2 gap-2 py-6 gap-y-4 md:grid-cols-3 lg:gap-4 lg:grid-cols-4">
-        {!isBooksLoading &&
+        {isBooksLoading ? (
+          <>
+            <BookCardSkeleton key="BookSkeleton-1" />
+            <BookCardSkeleton key="BookSkeleton-2" />
+            <BookCardSkeleton key="BookSkeleton-3" />
+            <BookCardSkeleton key="BookSkeleton-4" />
+            <BookCardSkeleton key="BookSkeleton-5" />
+            <BookCardSkeleton key="BookSkeleton-6" />
+            <BookCardSkeleton key="BookSkeleton-7" />
+            <BookCardSkeleton key="BookSkeleton-8" />
+          </>
+        ) : (
           booksData &&
           booksData.items.map((book: Book) => (
             <BookCard
@@ -164,8 +177,19 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
               favorites={favorites}
               toggleFavorite={toggleFavorite}
             />
-          ))}
+          ))
+        )}
       </div>
+      {booksData?.items.length === 0 && (
+        <div className="top-0 bottom-0 left-0 flex flex-col items-center justify-center w-full mx-auto my-auto ">
+          <img
+            src={BookFloatAnimation}
+            alt=""
+            className="mb-[10px] w-[88px] h-[79px] book-animation"
+          />
+          <span className="mt-2 text-2xl text-gray-300">No Book Found</span>
+        </div>
+      )}
     </div>
   );
 };

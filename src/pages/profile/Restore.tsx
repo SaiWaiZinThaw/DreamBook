@@ -28,12 +28,8 @@ const Restore = () => {
   const handleRestore = (bookSlugs: string[]) => {
     restoreBookMutation(bookSlugs, {
       onSuccess: () => {
-        console.log("Books restored successfully");
         refetch();
         navigate("/me/books");
-      },
-      onError: (error) => {
-        console.error("Error restoring books:", error);
       },
     });
   };
@@ -41,12 +37,8 @@ const Restore = () => {
   const handleDelete = (bookSlugs: string[]) => {
     hardDelete(bookSlugs, {
       onSuccess: () => {
-        console.log("Books hard deleted successfully");
         setSelectedBooks([]);
         refetch();
-      },
-      onError: (error) => {
-        console.error("Error hard deleting books:", error);
       },
     });
   };
@@ -87,7 +79,7 @@ const Restore = () => {
   };
 
   return (
-    <div className="mt-5 w-full">
+    <div className="w-full mt-5">
       <div className="p-4 md:p-10">
         <div className="flex justify-between mx-4 mb-4">
           <DropdownMenu>
@@ -118,7 +110,7 @@ const Restore = () => {
 
         <div className="flex mx-4 my-5">
           <div
-            className="flex bg-slate-300 mr-2 p-2 rounded w-fit h-fit"
+            className="flex p-2 mr-2 rounded bg-slate-300 w-fit h-fit"
             onClick={handleRestoreAll}
           >
             <PiArrowClockwiseBold className="mt-[2.5px] md:mt-[3.5px] mr-1" />
@@ -126,7 +118,7 @@ const Restore = () => {
           </div>
 
           <div
-            className="flex bg-red-600 p-2 rounded w-fit h-fit text-slate-200"
+            className="flex p-2 bg-red-600 rounded w-fit h-fit text-slate-200"
             onClick={handleDeleteAll}
           >
             <FaTrashCan className="mt-[3px] md:mt-1 mr-1 w-3 md:w-4" />
@@ -135,7 +127,7 @@ const Restore = () => {
         </div>
 
         {viewMode === "card" ? (
-          <ul className="flex gap-x-4 mx-4">
+          <ul className="flex mx-4 gap-x-4">
             {fetchBooksAuthor?.items?.map((book: any) => (
               <div
                 key={book.id}
@@ -168,8 +160,10 @@ const Restore = () => {
                   />
                 </div>
                 <li className="mb-4">
-                  <h2 className="px-3 font-semibold md:text-xl">{book.title}</h2>
-                  <div className="flex justify-center items-center">
+                  <h2 className="px-3 font-semibold md:text-xl">
+                    {book.title}
+                  </h2>
+                  <div className="flex items-center justify-center">
                     <div
                       onClick={() => handleRestore([book.slug])}
                       className="flex my-2 mr-5 text-blue-600"
@@ -219,7 +213,7 @@ const Restore = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex gap-x-4 ml-auto">
+                  <div className="flex ml-auto gap-x-4">
                     <button
                       onClick={() => handleRestore([book.slug])}
                       className="text-blue-600 hover:text-blue-900"

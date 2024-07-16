@@ -2,7 +2,7 @@ import { FooterImg, GooglePLay, AppStore } from "@/assets";
 
 const Footer = () => {
   return (
-    <div className="container px-0 mx-0">
+    <div className="px-0 mx-0 ">
       <div className="flex flex-col w-screen p-12 mt-10 bg-blue-600 bg-opacity-75 md:items-center md:px-20">
         <img
           src={FooterImg}
