@@ -30,7 +30,9 @@ const History = () => {
   return (
     <div className="w-full h-full">
       <div className="flex flex-col justify-center w-full gap-2 p-4 md:gap-0 md:p-10">
-        <h1 className="text-xl font-bold text-center lg:text-2xl">History</h1>
+        <h1 className="text-xl font-bold text-center lg:text-2xl dark:text-white">
+          History
+        </h1>
         {isLoading ? (
           <div className="grid grid-cols-2 gap-2 py-4 md:gap-4 md:grid-cols-4">
             <BookCardSkeleton />
@@ -46,7 +48,7 @@ const History = () => {
                   <div
                     key={item.book.title}
                     id={item.book.title}
-                    className="relative bg-slate-50 shadow-sm mr-[21px] border rounded-[8px] lg:w-[232px] min-w-[180px] max-w-[210px] h-[280px] book group"
+                    className="relative dark:text-white dark:bg-[#2F2F2F] dark:border-none bg-slate-50 shadow-sm mr-[21px] border rounded-[8px] lg:w-[232px] min-w-[180px] max-w-[210px] h-[280px] book group"
                   >
                     <div className="group-hover:right-[5px] top-[10px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                       <div
@@ -56,7 +58,7 @@ const History = () => {
                         <FaTrashCan className="text-red-500" />
                       </div>
                     </div>
-                    <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                    <div className="flex justify-center items-center dark:bg-[#3D3D3D] bg-slate-300 m-2 rounded-[8px] h-[160px]">
                       <img
                         src={item.book.coverImage}
                         alt={item.book.coverImage}
@@ -74,7 +76,7 @@ const History = () => {
                           alt={item.book.category.title}
                           className="w-[18px] md:w-6"
                         />
-                        <p className="line-clamp-1 font-Inter text-[11px] text-secondary-foreground md:text-[12px]">
+                        <p className="line-clamp-1 font-Inter text-[11px] text-secondary-foreground md:text-[12px] dark:text-white">
                           {item.book.category.title}
                         </p>
                       </div>
@@ -87,7 +89,7 @@ const History = () => {
                           alt={item.user.name}
                           className="rounded-full w-[18px] md:w-6 h-[18px] md:h-6"
                         />
-                        <h2 className="font-semibold text-[12px] text-black md:text-[13px]">
+                        <h2 className="font-semibold text-[12px] text-black md:text-[13px] dark:text-white">
                           By {item.user.name}
                         </h2>
                       </div>

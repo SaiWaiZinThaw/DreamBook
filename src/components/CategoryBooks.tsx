@@ -103,10 +103,10 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
       <div className="flex justify-between lg:gap-0 gap-4 mt-4 h-[30px] lg:h-[50px] w-full">
         <div className="relative flex items-center w-8/12 gap-3 lg:w-full">
           <DropdownMenu>
-            <DropdownMenuTrigger className=" w-[45px] h-full md:hidden">
+            <DropdownMenuTrigger className=" w-[45px]  h-full md:hidden">
               <img src={Sorting} alt="sorting" className="w-full h-full" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent className="dark:bg-dark-bg">
               <DropdownMenuLabel>Categories</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {!isLoading && data
@@ -132,7 +132,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
           </DropdownMenu>
 
           <Select onValueChange={handleSortChange}>
-            <SelectTrigger className="w-8/12 lg:w-[180px] h-full text-xs lg:text-md">
+            <SelectTrigger className="w-8/12 lg:w-[180px] dark:border-dark-border dark:text-white h-full text-xs lg:text-md">
               <SelectValue placeholder="Sort" />
             </SelectTrigger>
             <SelectContent>
@@ -148,7 +148,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
           icon={<IoIosSearch className="lg:text-2xl" />}
           placeholder="Search"
           value={search}
-          className="!border-black rounded-[8px] w-full lg:w-[280px] h-full lg:h-[42px] text-xs lg:text-md placeholder:text-xs"
+          className="!border-black dark:bg-dark-bg dark:text-white dark:placeholder:text-white dark:!border-dark-border border rounded-[8px] w-full lg:w-[280px] h-full lg:h-[42px] text-xs lg:text-md placeholder:text-xs"
           onChange={(event) => {
             setSearch(event.target.value);
             setPageCount(1);

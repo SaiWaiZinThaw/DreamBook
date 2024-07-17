@@ -88,7 +88,7 @@ const Books = () => {
         <div className="flex justify-between lg:gap-0 gap-4 mt-4 h-[45px] lg:h-[50px] w-full">
           <div className="relative flex items-center w-8/12 gap-3 md:max-w-[280px] lg:w-full max-w-[100px]">
             <Select onValueChange={handleSortChange}>
-              <SelectTrigger className="w-8/12 md:max-w-[280px] max-w-[100px] h-full text-xs lg:text-md">
+              <SelectTrigger className="dark:border-dark-border dark:text-white w-8/12 md:max-w-[280px] max-w-[100px] h-full text-xs lg:text-md">
                 <SelectValue placeholder="Sort" />
               </SelectTrigger>
               <SelectContent>
@@ -104,7 +104,7 @@ const Books = () => {
             icon={<IoIosSearch className="lg:text-2xl" />}
             placeholder="Search"
             value={search}
-            className="!border-black rounded-[8px] max-w-[200px] md:max-w-[280px] h-full lg:h-[42px] text-xs lg:text-md placeholder:text-xs"
+            className="dark:text-white dark:placeholder:text-white dark:bg-dark-bg dark:!border-dark-border !border-black rounded-[8px] max-w-[200px] md:max-w-[280px] h-full lg:h-[42px] text-xs lg:text-md placeholder:text-xs"
             onChange={(event) => {
               setSearch(event.target.value);
               setPageCount(1);
@@ -131,7 +131,7 @@ const Books = () => {
               <div
                 key={book.bookId}
                 id={book.bookId}
-                className="relative bg-slate-50 shadow-sm mr-[21px] border-border rounded-[8px] border lg:w-[232px] min-w-[160px] max-w-[210px] h-[280px] book group"
+                className="relative dark:text-white dark:bg-[#2F2F2F] dark:border-none bg-slate-50 shadow-sm mr-[21px] border-border rounded-[8px] border lg:w-[232px] min-w-[160px] max-w-[210px] h-[280px] book group"
               >
                 <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                   <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
@@ -141,7 +141,7 @@ const Books = () => {
                     />
                   </div>
                 </div>
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                <div className="flex justify-center items-center dark:bg-[#3D3D3D] bg-slate-300 m-2 rounded-[8px] h-[160px]">
                   <img
                     src={book.coverImage}
                     alt={book.title}
@@ -159,7 +159,7 @@ const Books = () => {
                       alt={book.category.title}
                       className="w-6"
                     />
-                    <p className="font-Inter text-[12px] text-secondary-foreground">
+                    <p className="font-Inter text-[12px] text-secondary-foreground dark:text-white">
                       {book.category.title}
                     </p>
                   </div>
@@ -172,7 +172,7 @@ const Books = () => {
                       alt={book.user.name}
                       className="w-6 h-6 rounded-full"
                     />
-                    <h2 className="text-[13px] text-black">
+                    <h2 className="text-[13px] text-black dark:text-white">
                       By {book.user.name}
                     </h2>
                   </div>

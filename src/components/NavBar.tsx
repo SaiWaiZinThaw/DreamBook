@@ -15,7 +15,7 @@ const NavBar = () => {
   const { setShowMenu } = useAuth();
   const { data, isLoading } = useGetMe(token);
   return (
-    <div className="flex justify-between items-center bg-white shadow-slate-300 shadow-sm px-6 lg:px-40 py-2 lg:py-6 w-full h-[70px] font-Inter">
+    <div className="flex justify-between items-center dark:bg-dark-bg bg-white shadow-slate-300 shadow-sm px-6 lg:px-40 py-2 lg:py-6 w-full h-[70px] font-Inter">
       <div className="flex items-center gap-3">
         <button
           onClick={() => setShowMenu(true)}
@@ -33,8 +33,8 @@ const NavBar = () => {
         <NavLink
           className={({ isActive }) =>
             isActive
-              ? "bg-primary !text-primary-foreground h-10 w-32 rounded-md"
-              : "text-black"
+              ? "bg-primary  !text-primary-foreground h-10 w-32 rounded-md"
+              : "text-black dark:text-white"
           }
           to={"/"}
         >
@@ -44,7 +44,7 @@ const NavBar = () => {
           className={({ isActive }) =>
             isActive
               ? "bg-primary !text-primary-foreground h-10 w-32 rounded-md"
-              : "text-black"
+              : "text-black dark:text-white"
           }
           to={"/library"}
         >
@@ -54,7 +54,7 @@ const NavBar = () => {
           className={({ isActive }) =>
             isActive
               ? "bg-primary !text-primary-foreground h-10 w-32 rounded-md"
-              : "text-black"
+              : "text-black dark:text-white"
           }
           to={"/book-create"}
         >
@@ -80,12 +80,14 @@ const NavBar = () => {
             to="/me/fav"
           >
             <FaHeart className="text-lg font-bold text-red-600" />
-            <span className="text-sm font-semibold">Fav Books</span>
+            <span className="text-sm font-semibold dark:text-white">
+              Fav Books
+            </span>
           </NavLink>
           {isLoading ? (
             <div className="flex items-center gap-2">
               <Skeleton className="w-10 h-10 bg-gray-200 rounded-full" />
-              <FaAngleDown />
+              <FaAngleDown className="dark:text-white" />
             </div>
           ) : (
             <ProfileDropdown data={data!} />

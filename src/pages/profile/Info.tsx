@@ -78,21 +78,26 @@ const Info = () => {
 
   return (
     <div className="flex items-center justify-center w-full h-full">
-      <div className="flex flex-col items-center pb-10">
+      <div className="flex flex-col items-center p-10">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center gap-6 p-4 md:p-0 w-full md:w-[460px] font-Inter"
         >
-          <h1 className="text-2xl font-bold text-white">Create an account</h1>
+          <h1 className="text-2xl font-bold text-black dark:text-white">
+            Create an account
+          </h1>
           <FileUpload onFileChange={handleFileChange} />
-          <Label htmlFor="picture" className="text-black font-Inter">
+          <Label
+            htmlFor="picture"
+            className="text-black font-Inter dark:text-white"
+          >
             Upload Photo
           </Label>
           <Input
             type="text"
             id="name"
             placeholder="Full Name"
-            className="h-10 md:h-auto text-[13px] md:placeholder:text-md md:text-md placeholder:text-[13px]"
+            className="h-10 dark:text-white dark:placeholder:text-white dark:bg-dark-bg dark:border-dark-border md:h-auto text-[13px] md:placeholder:text-md md:text-md placeholder:text-[13px]"
             value={profileData.name}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setProfileData((prev) => ({
@@ -102,12 +107,12 @@ const Info = () => {
             }}
           />
 
-          <div className="bg-white p-4 border border-border rounded-[5px] w-full h-12 font-Inter font-semibold text-secondary-foreground text-sm text-opacity-50">
+          <div className="bg-white  dark:placeholder:text-white dark:bg-dark-bg dark:border-dark-border p-4 border border-border rounded-[5px] w-full h-12 font-Inter font-semibold text-secondary-foreground text-sm text-opacity-50">
             {data?.email}
           </div>
           <div className="flex items-center w-full gap-5">
             <select
-              className="flex justify-center items-center px-4 border border-border rounded-[5px] h-10 md:h-12 text-sm"
+              className="flex justify-center dark:text-white dark:placeholder:text-white dark:bg-dark-bg dark:border-dark-border items-center px-4 border border-border rounded-[5px] h-10 md:h-12 text-sm"
               value={countryCodeNumber}
               onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                 setCountryCodeNumber(event.target.value);
@@ -124,7 +129,7 @@ const Info = () => {
               id="phone"
               placeholder="Phone"
               value={localPhoneNumber}
-              className="h-10 md:h-auto text-[13px] md:placeholder:text-md md:text-md placeholder:text-[13px]"
+              className="h-10 dark:text-white dark:placeholder:text-white dark:bg-dark-bg dark:border-dark-border md:h-auto text-[13px] md:placeholder:text-md md:text-md placeholder:text-[13px]"
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setLocalPhoneNumber(event.target.value);
               }}
@@ -132,7 +137,7 @@ const Info = () => {
           </div>
 
           <select
-            className="flex justify-center items-center px-4 border border-border rounded-[5px] w-full h-10 md:h-12 text-sm"
+            className="flex justify-center items-center px-4 border border-border dark:text-white dark:placeholder:text-white dark:bg-dark-bg dark:border-dark-border rounded-[5px] w-full h-10 md:h-12 text-sm"
             value={profileData.gender}
             onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
               setProfileData((prev) => ({
@@ -150,7 +155,7 @@ const Info = () => {
           <textarea
             name="bio"
             id="bio"
-            className="placeholder:opacity-70 p-4 border border-border rounded-[5px] w-full placeholder:text-black"
+            className="placeholder:opacity-70 dark:text-white dark:placeholder:text-white dark:bg-dark-bg dark:border-dark-border p-4 border border-border rounded-[5px] w-full placeholder:text-black"
             placeholder="Bio"
             value={profileData.bio}
             onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
