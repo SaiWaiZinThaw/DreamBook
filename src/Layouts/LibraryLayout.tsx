@@ -91,7 +91,7 @@ const LibraryLayout = () => {
   return (
     <div className="w-full px-0 mx-0 ">
       <div
-        className="flex flex-col justify-center items-center gap-4 bg-cover bg-no-repeat w-screen h-[370px] text-white"
+        className="flex flex-col dark:text-white justify-center items-center gap-4 bg-cover bg-no-repeat w-screen h-[370px] text-white dark:bg-blend-multiply dark:bg-blue-300"
         style={{ backgroundImage: `url(${LibraryHero})` }}
       >
         <h1 className="text-4xl font-extrabold">Library</h1>
@@ -103,12 +103,12 @@ const LibraryLayout = () => {
 
       <div className="w-full mt-4 md:flex">
         <div className="md:block border-slate-400 hidden mt-2 md:px-4 border-r w-[400px]">
-          <h1 className="flex justify-center mt-[20px] font-extrabold text-2xl text-black">
+          <h1 className="flex justify-center mt-[20px] dark:text-white font-extrabold text-2xl text-black">
             Categories
           </h1>
 
           {!isLoading && data ? (
-            <div className="flex flex-col justify-start gap-3 mt-[30px] ml-[30px]">
+            <div className="dark:text-white flex flex-col justify-start gap-3 mt-[30px] ml-[30px]">
               <label className="flex items-center gap-2 font-medium text-lg md:text-[16px]">
                 <Checkbox
                   onCheckedChange={handleSelectAll}
@@ -161,6 +161,7 @@ const LibraryLayout = () => {
             <Stack spacing={1}>
               <Pagination
                 color="primary"
+                className="dark:text-white"
                 count={booksData?.meta.totalPages}
                 defaultPage={1}
                 boundaryCount={1}

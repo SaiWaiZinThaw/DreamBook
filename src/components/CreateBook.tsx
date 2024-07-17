@@ -296,7 +296,7 @@ const CreateBook = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center w-full h-full">
+    <div className="flex flex-col justify-center w-full h-full dark:bg-dark-bg">
       <div className="flex gap-2 mx-9 my-[10px] md:mt-[45px] md:ml-[110px] w-full md:w-[660px] h-[53px] text-md">
         <div
           className="flex items-center md:mt-[19.5px] md:w-[83px] md:h-[28px] text-blue-700 text-opacity-60 cursor-pointer"
@@ -307,7 +307,7 @@ const CreateBook = () => {
         </div>
 
         <div className="md:ml-[20px]">
-          <h1 className="mt-[13.5px] font-bold text-md md:text-3xl">
+          <h1 className="mt-[13.5px] font-bold text-md md:text-3xl dark:text-white">
             Creating A New Book
           </h1>
         </div>
@@ -372,13 +372,16 @@ const CreateBook = () => {
         <div className="md:ml-[50px] md:w-[667px]">
           <div className="md:h-[581px]">
             <div className="md:items-center gap-1.5 grid mx-auto md:pt-[30px] md:w-[603px] md:h-[74px]">
-              <Label htmlFor="title" className="font-semibold md:text-[16px]">
+              <Label
+                htmlFor="title"
+                className="font-semibold md:text-[16px] dark:text-white"
+              >
                 Title
               </Label>
               <div className="relative">
                 <Input
                   onChange={handleTitleChange}
-                  className="w-full md:w-[603px] h-[25px] md:h-[45px] text-[12px] md:text-[14px]"
+                  className="w-full md:w-[603px] h-[25px] md:h-[45px] text-[12px] dark:text-white dark:placeholder:text-white md:text-[14px] dark:bg-dark-bg"
                   value={formData.title}
                   name="title"
                   type="text"
@@ -399,7 +402,7 @@ const CreateBook = () => {
             <div className="md:items-center gap-1.5 grid mx-auto pt-6 md:pt-[60px] w-[366px] md:w-[603px] md:h-[74px]">
               <Label
                 htmlFor="category"
-                className="font-semibold md:text-[16px]"
+                className="font-semibold md:text-[16px] dark:text-white"
               >
                 Category
               </Label>
@@ -407,7 +410,7 @@ const CreateBook = () => {
                 <select
                   name="category"
                   id="category"
-                  className={`border-slate-300 pl-[16px] border rounded h-[35px] w-full md:w-[603px] lg:h-[45px] font-extrabold ${
+                  className={`border-slate-300 pl-[16px] border dark:bg-dark-bg rounded h-[35px] w-full md:w-[603px] lg:h-[45px] font-extrabold ${
                     selectedCategory === "" ? "text-slate-300" : ""
                   }`}
                   ref={selectRef}
@@ -443,13 +446,13 @@ const CreateBook = () => {
             <div className="md:items-center gap-1.5 grid mx-auto pt-6 md:pt-[90px] md:pl-0 w-[366px] md:w-[603px] md:h-[74px]">
               <Label
                 htmlFor="keywords"
-                className="font-semibold md:text-[16px]"
+                className="font-semibold md:text-[16px] dark:text-white"
               >
                 Keywords
               </Label>
               <Input
                 onChange={handleKeywordChange}
-                className="w-full md:w-[603px] h-[25px] md:h-[45px]"
+                className="w-full md:w-[603px] h-[25px] md:h-[45px] dark:bg-dark-bg dark:text-white "
                 value={currentKeyword}
                 onKeyPress={handleKeyPress}
                 name="keywords"
@@ -482,13 +485,13 @@ const CreateBook = () => {
             <div className="md:items-center gap-1.5 grid mx-auto pt-6 md:pt-[120px] md:pl-0 w-full md:w-[603px] md:h-[176px]">
               <Label
                 htmlFor="description"
-                className="font-semibold md:text-[16px]"
+                className="font-semibold md:text-[16px] dark:text-white"
               >
                 Description
               </Label>
               <div
                 ref={quillRef}
-                className="border-slate-300 border rounded w-full md:w-[603px] h-[200px]"
+                className="border-slate-300 border rounded w-full md:w-[603px] h-[200px] dark:text-white"
               />
               <div className="relative">
                 <div className="bottom-0.5 md:bottom-0 absolute mb-[8px] md:ml-[25px]">

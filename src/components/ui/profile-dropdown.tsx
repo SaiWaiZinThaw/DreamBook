@@ -23,8 +23,8 @@ import { useAuth } from "@/contexts/AuthContext";
 const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
   const navigate = useNavigate();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
-  const { setDarkMode } = useAuth();
-  const [theme, setTheme] = useState("light");
+  const { setThemeInStorage, getThemeInStorage } = useAuth();
+  const [theme, setTheme] = useState(getThemeInStorage() || "light");
   const logoutHandler = () => {
     setShowLogoutDialog(true);
   };
@@ -36,11 +36,7 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
   };
 
   useEffect(() => {
-    if (theme === "light") {
-      setDarkMode(false);
-    } else {
-      setDarkMode(true);
-    }
+    setThemeInStorage(theme);
   }, [theme]);
 
   const cancelLogout = () => {
@@ -56,7 +52,7 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
             alt={data.name}
             className="rounded-full w-10 h-10"
           />
-          <FaAngleDown />
+          <FaAngleDown className="dark:text-white" />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>
@@ -111,7 +107,10 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
                 type="radio"
                 value="light"
                 checked={theme === "light"}
-                onChange={(event) => setTheme(event.currentTarget.value)}
+                onChange={(event) => {
+                  setTheme(event.currentTarget.value);
+                  window.location.reload();
+                }}
                 name="theme"
                 id="light"
               />
@@ -127,7 +126,10 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
                 name="theme"
                 value="dark"
                 checked={theme === "dark"}
-                onChange={(event) => setTheme(event.currentTarget.value)}
+                onChange={(event) => {
+                  setTheme(event.currentTarget.value);
+                  window.location.reload();
+                }}
                 id="dark"
               />
               <label className="flex items-center gap-1" htmlFor="dark">

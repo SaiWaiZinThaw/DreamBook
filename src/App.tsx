@@ -9,9 +9,10 @@ function App() {
   const AuthRouting = useRoutes(AuthRouter);
   const BookRouting = useRoutes(BookRouter);
   const ProfileRouting = useRoutes(ProfileRouter);
-  const { darkMode } = useAuth();
+  const { getThemeInStorage } = useAuth();
+  const Theme = getThemeInStorage();
   return (
-    <div className={`${darkMode ? "dark" : ""} font-Inter `}>
+    <div className={`${Theme} font-Inter `}>
       <Routes>
         <Route path="/*" element={UserRouting} />
         <Route path="/auth/*" element={AuthRouting} />
