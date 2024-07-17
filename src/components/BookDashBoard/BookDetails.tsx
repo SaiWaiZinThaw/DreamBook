@@ -150,24 +150,24 @@ const BookDetails = () => {
 
   return (
 
-    <div className="container w-full h-full p-0 m-0">
-      <div className="flex justify-between border-slate-300 border-b h-[50px] md:h-[80px] px-10">
-        <h1 className="self-center font-extrabold md:text-2xl">Book Details</h1>
+    <div className="m-0 p-0 w-full h-full container">
+      <div className="flex justify-between border-slate-300 px-10 border-b h-[50px] md:h-[80px]">
+        <h1 className="font-extrabold md:text-2xl self-center">Book Details</h1>
 
         <div className="flex flex-col justify-center">
           {isEditing && (
-            <span className="text-lg font-semibold text-[#6E8894] self-end">
+            <span className="font-semibold text-[#6E8894] text-lg self-end">
               *Unsaved
             </span>
 
           )}
           <div className="flex items-center gap-1">
             {(!isOn && (
-              <span className="text-xl font-bold text-secondary-foreground">
+              <span className="font-bold text-secondary-foreground text-xl">
                 Draft
               </span>
             )) || (
-              <span className="text-xl font-bold text-primary">Public</span>
+              <span className="font-bold text-primary text-xl">Public</span>
             )}
             <Switch
               isOn={isOn}
@@ -178,15 +178,15 @@ const BookDetails = () => {
 
         </div>
       </div>
-      <div className="md:flex h-full">
-        <div className="md:flex md:flex-row-reverse">
-          <div className="flex md:flex-col justify-center md:ml-[35px]">
-            <div className="order-1 md:order-none md:mx-8 mt-[32px] md:w-[232px] md:h-[289px]">
+      <div className="lg:flex h-full">
+        <div className="lg:flex lg:flex-row-reverse">
+          <div className="flex lg:flex-col justify-center md:ml-[35px]">
+            <div className="order-1 lg:order-none md:mx-8 mt-[32px] md:w-[232px] md:h-[289px]">
               <h1 className="flex justify-center mb-[18.5px] font-bold text-[14px] md:text-xl">
                 Cover Image
               </h1>
 
-              <div className="border-slate-500 border border-dotted rounded-[8px] md:h-[252px]">
+              <div className="flex justify-center items-center border-slate-500 border border-dotted rounded-[8px] md:w-[232px] md:h-[252px]">
                 {isEditing ? (
                   <BookCoverChange
                     onFileChange={handleFileChange}
@@ -197,13 +197,13 @@ const BookDetails = () => {
                   <img
                     src={fetchABookAuthor?.coverImage}
                     alt=""
-                    className="md:mx-[52.5px] md:my-[30px] p-3 w-[100px] md:w-[127px] h-[150px] md:h-[191px]"
+                    className="p-3 w-[100px] md:w-[127px] h-[150px] md:h-[191px]"
                   />
                 )}
               </div>
             </div>
 
-            <div className="order-2 mx-8 mt-[30px] md:none-order md:mt-[84px] md:w-[232px] md:h-[314px]">
+            <div className="order-2 mx-8 mt-[30px] lg:none-order lg:mt-[84px] md:w-[232px] md:h-[314px]">
               <h1 className="flex justify-center mb-[11px] font-bold text-[14px] md:text-xl">
                 Preview Card Design
               </h1>
@@ -242,7 +242,7 @@ const BookDetails = () => {
             </div>
           </div>
 
-          <div className="border-slate-300 order-3 md:order-none ml-[12px] md:border-r md:w-[667px]">
+          <div className="border-slate-300 order-3 md:order-none ml-[12px] lg:border-r lg:w-[667px]">
             <div className="md:h-[581px]">
               <div className="items-center gap-1.5 grid md:mx-[32px] pt-2 md:pt-[30px] md:h-[74px]">
                 <Label htmlFor="title" className="font-semibold md:text-[16px]">
@@ -342,7 +342,7 @@ const BookDetails = () => {
                 )}
               </div>
 
-              <div className="items-center gap-1.5 grid md:mx-[32px] pt-[60px] h-[140px] md:h-[176px]">
+              <div className="items-center gap-1.5 grid md:mx-[32px] pt-[30px] md:pt-[60px] h-[140px] md:h-[176px]">
                 <Label
                   htmlFor="description"
                   className="font-semibold md:text-[16px]"
@@ -378,7 +378,7 @@ const BookDetails = () => {
             </div>
 
 
-            <div className="flex justify-end mt-[50px] md:mt-[170px] md:mr-4 rounded-[8px] h-[43px]">
+            <div className="flex justify-end mt-[50px] md:mt-[120px] lg:mt-[170px] md:mr-4 rounded-[8px] h-[43px]">
               <div className="">
                 {isEditing ? (
                   <>

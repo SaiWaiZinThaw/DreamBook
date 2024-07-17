@@ -38,7 +38,7 @@ const BookDashBoardLayout = () => {
         <img
           src={FooterImg}
           alt=""
-          className="border-slate-300 mx-auto py-4 border-b w-[180px] lg:w-[223px]"
+          className="border-slate-300 mx-auto py-4 border-b w-[180px] md:w-[223px]"
         />
 
         <div className="flex flex-col gap-4 mt-6">
@@ -54,9 +54,9 @@ const BookDashBoardLayout = () => {
             <img
               src={LightMenuBook}
               alt=""
-              className="mr-2 w-4 sm:w-6 lg:w-6 h-4 sm:h-6 lg:h-8"
+              className="mr-2 w-4 md:w-6 h-6 md:h-8"
             />
-            <h1 className="font-semibold text-slate-100 lg:text-lg">
+            <h1 className="font-semibold text-slate-100 md:text-lg">
               Book Details
             </h1>
           </NavLink>
@@ -73,9 +73,9 @@ const BookDashBoardLayout = () => {
             <img
               src={ChapterOutline}
               alt=""
-              className="mr-2 w-4 sm:w-6 lg:w-6 h-4 sm:h-6 lg:h-8"
+              className="mr-2 w-4 md:w-6 h-4 md:h-8"
             />
-            <h1 className="font-semibold text-slate-100 lg:text-lg">Chapters</h1>
+            <h1 className="font-semibold text-slate-100 md:text-lg">Chapters</h1>
           </NavLink>
 
           <NavLink
@@ -90,9 +90,9 @@ const BookDashBoardLayout = () => {
             <img
               src={LightCommentOutline}
               alt=""
-              className="mr-2 w-4 sm:w-6 lg:w-6 h-4 sm:h-6 lg:h-8"
+              className="mr-2 w-4 md:w-6 h-4 md:h-8"
             />
-            <h1 className="font-semibold text-slate-100 lg:text-lg">Comments</h1>
+            <h1 className="font-semibold text-slate-100 md:text-lg">Comments</h1>
           </NavLink>
         </div>
 
@@ -100,8 +100,8 @@ const BookDashBoardLayout = () => {
           className="flex border-slate-300 mt-auto pt-4 pl-4 border-t h-16 text-white cursor-pointer"
           onClick={() => navigate(`/me/books`)}
         >
-          <FaArrowLeft className="mt-1 mr-2 lg:w-5 lg:h-5" />
-          <h1 className="font-medium lg:text-lg">Exit to Booklists</h1>
+          <FaArrowLeft className="mt-1 mr-2 md:w-5 md:h-5" />
+          <h1 className="font-medium md:text-lg">Exit to Booklists</h1>
         </div>
       </div>
 

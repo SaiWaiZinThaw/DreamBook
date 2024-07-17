@@ -54,6 +54,7 @@ export const LoginAPi = async ({
   return result;
 };
 
+
 export const profileSetupApi = async ({ data }: { data: ProfileSetupData }) => {
   const token = getToken();
   const formData = new FormData();
@@ -62,7 +63,11 @@ export const profileSetupApi = async ({ data }: { data: ProfileSetupData }) => {
   if (data.profilePicture) {
     formData.append("profilePicture", data.profilePicture);
   }
-  formData.append("phoneNumber", data.phoneNumber || "");
+  if(data.localNumber) {
+    formData.append("localNumber", data.localNumber);
+  }
+  
+  formData.append("countryCode", data.countryCode);
   if (data.bio) {
     formData.append("bio", data.bio);
   }
@@ -81,3 +86,4 @@ export const profileSetupApi = async ({ data }: { data: ProfileSetupData }) => {
 
   return response;
 };
+
