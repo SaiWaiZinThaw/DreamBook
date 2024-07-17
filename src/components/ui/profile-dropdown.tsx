@@ -44,13 +44,13 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
   };
 
   return (
-    <div className="flex items-center ">
+    <div className="flex items-center">
       <DropdownMenu>
         <DropdownMenuTrigger className="flex items-center gap-2">
           <img
             src={data.profilePicture}
             alt={data.name}
-            className="w-10 h-10 rounded-full"
+            className="rounded-full w-10 h-10"
           />
           <FaAngleDown className="dark:text-white" />
         </DropdownMenuTrigger>
@@ -60,11 +60,11 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               <img
                 src={data.profilePicture}
                 alt={data.name}
-                className="w-10 h-10 rounded-full"
+                className="rounded-full w-10 h-10"
               />
               <div className="flex flex-col">
-                <p className="text-lg font-bold text-black">{data.name}</p>
-                <p className="text-sm opacity-50">{data.email}</p>
+                <p className="font-bold text-black text-lg">{data.name}</p>
+                <p className="opacity-50 text-sm">{data.email}</p>
               </div>
             </div>
           </DropdownMenuLabel>
@@ -101,9 +101,9 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
           </DropdownMenuLabel>
 
           <div className="flex flex-col gap-2 pb-2 text-sm">
-            <div className="flex items-center gap-2 px-2 mx-4">
+            <div className="flex items-center gap-2 mx-4 px-2">
               <Input
-                className="w-1 h-1 rounded-none md:w-3 md:h-3"
+                className="rounded-none w-1 md:w-3 h-1 md:h-3"
                 type="radio"
                 value="light"
                 checked={theme === "light"}
@@ -119,9 +119,9 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               </label>
             </div>
 
-            <div className="flex items-center gap-2 px-2 mx-4">
+            <div className="flex items-center gap-2 mx-4 px-2">
               <Input
-                className="w-1 h-1 rounded-none md:w-3 md:h-3"
+                className="rounded-none w-1 md:w-3 h-1 md:h-3"
                 type="radio"
                 name="theme"
                 value="dark"
@@ -137,9 +137,9 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               </label>
             </div>
 
-            <div className="flex items-center gap-2 px-2 pb-2 mx-4 border-b border-border">
+            <div className="flex items-center gap-2 mx-4 px-2 pb-2 border-b border-border">
               <Input
-                className="w-1 h-1 rounded-none md:w-3 md:h-3"
+                className="rounded-none w-1 md:w-3 h-1 md:h-3"
                 type="radio"
                 name="theme"
                 id="system"
@@ -152,7 +152,7 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               onClick={logoutHandler}
               className="flex items-center gap-1 font-medium text-primary"
             >
-              <CiLogout className="text-lg font-bold" />
+              <CiLogout className="font-bold text-lg" />
               Log Out
             </button>
           </DropdownMenuLabel>
@@ -160,21 +160,21 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
       </DropdownMenu>
 
       {showLogoutDialog && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="p-6 bg-white rounded-lg shadow-lg">
-            <h2 className="text-lg font-semibold">
+        <div className="z-50 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+          <div className="bg-white shadow-lg p-6 rounded-lg">
+            <h2 className="font-semibold text-lg">
               Are you sure you want to log out?
             </h2>
             <div className="flex justify-end gap-4 mt-4">
               <button
                 onClick={cancelLogout}
-                className="px-4 py-2 bg-gray-200 rounded-md"
+                className="bg-gray-200 px-4 py-2 rounded-md"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmLogout}
-                className="px-4 py-2 text-white bg-red-500 rounded-md"
+                className="bg-red-500 px-4 py-2 rounded-md text-white"
               >
                 Log Out
               </button>

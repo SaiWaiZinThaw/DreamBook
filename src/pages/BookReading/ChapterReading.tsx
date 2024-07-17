@@ -1,11 +1,11 @@
-import { ChapterRead, NavBar } from "@/components"
+import { ChapterRead } from "@/components"
 
 const ChapterReading = () => {
   return (
-    <div className="w-full overflow-x-hidden">
-      <div className="md:block hidden">
+    <div className="w-full h-screen overflow-x-hidden">
+      {/* <div className="md:block hidden">
         <NavBar />
-      </div>
+      </div> */}
       <ChapterRead/>
     </div>
   )
