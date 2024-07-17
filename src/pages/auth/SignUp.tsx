@@ -26,7 +26,6 @@ const SignUp = () => {
 
   useEffect(() => {
     if (createAccount.isSuccess) {
-      console.log(createAccount.data);
       const authToken = createAccount.data.access_token;
       delete createAccount.data.access_token;
       login(authToken);

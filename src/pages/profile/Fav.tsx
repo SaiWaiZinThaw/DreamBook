@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useGetFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
 import { getToken } from "@/services/authService";
 import { useGetMe } from "@/hooks/useUser";
+import BookCardSkeleton from "@/components/BookCardSkeleton";
 
 const Fav = () => {
   const [searchParams, setSearchParams] = useSearchParams({
@@ -57,13 +58,21 @@ const Fav = () => {
   };
   return (
     <div className="w-full h-full">
-      <div className="flex flex-col justify-center w-full gap-5 p-4 md:p-10">
+      <div className="flex flex-col justify-center w-full gap-5 p-10 md:p-10">
         <h1 className="text-xl font-bold text-center lg:text-2xl">
           Favorite Books
         </h1>
-        <div className="grid grid-cols-2 md:p-10 lg:gap-4 lg:grid-cols-4">
-          {!isLoading &&
-            data?.items.map((item: any) => (
+
+        {isLoading ? (
+          <div className="grid grid-cols-2 gap-2 md:py-10 md:gap-4 md:grid-cols-4">
+            <BookCardSkeleton />
+            <BookCardSkeleton />
+            <BookCardSkeleton />
+            <BookCardSkeleton />
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:p-10 md:gap-4 md:grid-cols-4">
+            {data?.items.map((item: any) => (
               <div
                 key={item.book.title}
                 id={item.book.slug}
@@ -122,7 +131,8 @@ const Fav = () => {
                 </div>
               </div>
             ))}
-        </div>
+          </div>
+        )}
         {!isLoading && (
           <Stack className="self-center" spacing={1}>
             <Pagination

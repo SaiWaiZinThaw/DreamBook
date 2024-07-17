@@ -22,12 +22,15 @@ import { useFetchTrendingCategories } from "@/hooks/useFetchCategories";
 import { faqItems } from "@/variables";
 import PopularBooks from "./PopularBooks";
 import LatestBooks from "./LatestBooks";
-import "../App.css"
+import { Skeleton } from "./ui/skeleton";
 import { useState, useEffect } from "react";
+
 
 const Hero = () => {
   const [animate, setAnimate] = useState(false);
-  const { data: fetchTrendingCategories } = useFetchTrendingCategories();
+
+  const { data: fetchTrendingCategories, isLoading } =
+    useFetchTrendingCategories();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,7 +38,8 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="md:flex-none mx-0 px-0 container">
+
+    <div className="px-0 mx-0 md:flex-none">
       <div
         className="flex md:flex-row flex-col items-center md:items-start gap-6 md:gap-0 bg-slate-100 bg-cover p-6 md:p-10 md:pt-20 w-screen md:h-[700px]"
         style={{ backgroundImage: `url(${HeroBg})` }}
@@ -118,35 +122,57 @@ const Hero = () => {
 
       <div className="p-6 md:p-10 w-screen md:h-[250px]">
         <div className="flex justify-between">
-          <h1 className="font-bold text-xl">Trending Category</h1>
-          <a href="" className="font-medium text-md">
-            View More &gt;
-          </a>
+          <h1 className="text-xl font-bold">Trending Category</h1>
         </div>
         <div className="flex justify-center mt-11">
-          <div className="gap-6 grid grid-cols-1 md:grid-cols-3 w-full">
-            {fetchTrendingCategories?.map((category: any) => (
-              <div
-                key={category.categoryId}
-                onClick={() => {
-                  const categoryIdArray = [category.categoryId];
-                  const encodedCategoryIds = encodeURIComponent(
-                    JSON.stringify(categoryIdArray)
-                  );
-                  navigate(
-                    `library?category_ids=${encodedCategoryIds}&sort_by=random&page=1`
-                  );
-                }}
-                className="flex border-slate-300 bg-slate-50 shadow-sm pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md cursor-pointer"
-              >
-                <img
-                  src={category.icon}
-                  className="mr-[38px] ml-[12px] w-[35px] h-[35px]"
-                  alt=""
+          <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
+            {isLoading ? (
+              <>
+                <Skeleton
+                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  key="category1"
                 />
-                <h1 className="pt-[5px]">{category.title}</h1>
-              </div>
-            ))}
+                <Skeleton
+                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  key="category2"
+                />
+                <Skeleton
+                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  key="category3"
+                />
+                <Skeleton
+                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  key="category4"
+                />
+                <Skeleton
+                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  key="category5"
+                />
+              </>
+            ) : (
+              fetchTrendingCategories?.map((category: any) => (
+                <div
+                  key={category.categoryId}
+                  onClick={() => {
+                    const categoryIdArray = [category.categoryId];
+                    const encodedCategoryIds = encodeURIComponent(
+                      JSON.stringify(categoryIdArray)
+                    );
+                    navigate(
+                      `library?category_ids=${encodedCategoryIds}&sort_by=random&page=1`
+                    );
+                  }}
+                  className="flex border-slate-300 bg-slate-50 shadow-sm pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md cursor-pointer"
+                >
+                  <img
+                    src={category.icon}
+                    className="mr-[38px] ml-[12px] w-[35px] h-[35px]"
+                    alt=""
+                  />
+                  <h1 className="pt-[5px]">{category.title}</h1>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

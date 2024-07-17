@@ -18,7 +18,8 @@ const ChapterRead = () => {
     chapterId?: string;
   }>();
   const navigate = useNavigate();
-  const { data: getChapters } = useFetchAllChapters(bookSlug!);
+  const { data: getChapters, isLoading: chapterIsLoading } =
+    useFetchAllChapters(bookSlug!);
   const [parsedChapterId, setParsedChapterId] = useState<number | null>(null);
   const {
     data: getChapter,
@@ -40,11 +41,19 @@ const ChapterRead = () => {
   useEffect(() => {
     if (getChapterProgress?.chapterId) {
       setParsedChapterId(getChapterProgress.chapterId);
-      console.log("Fetched chapter progress:", getChapterProgress.chapterId);
     } else if (chapterId) {
       setParsedChapterId(parseInt(chapterId, 10));
     }
   }, [getChapterProgress, chapterId]);
+
+  useEffect(() => {
+    if (getChapterProgress) {
+      navigate(`/${bookSlug}/chapter/${getChapterProgress}`);
+    }
+    if (!chapterIsLoading) {
+      navigate(`/${bookSlug}/chapter/${getChapters[0].chapterId}`);
+    }
+  }, [getChapter]);
 
   useEffect(() => {
     if (
@@ -52,10 +61,6 @@ const ChapterRead = () => {
       (progressError as any).response?.status === 404 &&
       chapterId
     ) {
-      console.log("Creating chapter progress due to 404 error:", {
-        bookSlug,
-        chapterId,
-      });
       createChapterProgress.mutate({
         slug: bookSlug!,
         chapterId: parseInt(chapterId, 10),
@@ -71,7 +76,6 @@ const ChapterRead = () => {
     if (getChapterProgress?.chapterId === id) {
       updateProgress.mutate({ bookSlug: bookSlug!, data: { chapterId: id } });
     } else {
-      console.log("Creating new progress:", { bookSlug, chapterId: id });
       createChapterProgress.mutate({ slug: bookSlug!, chapterId: id });
     }
     setShowChapters(false);
@@ -90,10 +94,6 @@ const ChapterRead = () => {
           data: { chapterId: nextChapterId },
         });
       } else {
-        console.log("Creating new progress:", {
-          bookSlug,
-          chapterId: nextChapterId,
-        });
         createChapterProgress.mutate({
           slug: bookSlug!,
           chapterId: nextChapterId,
@@ -101,15 +101,6 @@ const ChapterRead = () => {
       }
     }
   };
-
-  useEffect(() => {
-    if (updateProgress.isSuccess) {
-      console.log("Update Progress Success:", updateProgress.data);
-    }
-    if (updateProgress.isError) {
-      console.error("Update Progress Error:", updateProgress.error);
-    }
-  }, [updateProgress]);
 
   const currentChapterIndex =
     getChapters?.findIndex(
@@ -165,7 +156,6 @@ const ChapterRead = () => {
           showChapters ? "hidden md:flex" : ""
         }`}
       >
-
         {isLoading && <p>Loading...</p>}
         {error && <p>Error loading chapter: {error.message}</p>}
         {getChapter && (
@@ -204,6 +194,7 @@ const ChapterRead = () => {
               <div></div>
             )
           }
+
 
           <div className="flex items-center text-[14px] md:text-[16px]">
             {currentChapterIndex} / {totalChapters}

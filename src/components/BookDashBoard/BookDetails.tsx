@@ -69,7 +69,6 @@ const BookDetails = () => {
       });
       setKeywords(fetchABookAuthor.keywords || []);
       setIsOn(fetchABookAuthor.status === "Published");
-
     }
   }, [fetchABookAuthor]);
 
@@ -132,9 +131,6 @@ const BookDetails = () => {
         refetch();
         navigate("/me/books");
       },
-      onError: (error) => {
-        console.log("Error to delete", error);
-      },
     });
   };
 
@@ -154,12 +150,12 @@ const BookDetails = () => {
       <div className="flex justify-between border-slate-300 px-10 border-b h-[50px] md:h-[80px]">
         <h1 className="font-extrabold md:text-2xl self-center">Book Details</h1>
 
+
         <div className="flex flex-col justify-center">
           {isEditing && (
             <span className="font-semibold text-[#6E8894] text-lg self-end">
               *Unsaved
             </span>
-
           )}
           <div className="flex items-center gap-1">
             {(!isOn && (
@@ -175,13 +171,17 @@ const BookDetails = () => {
               isDisabled={isEditing}
             />
           </div>
-
         </div>
       </div>
       <div className="lg:flex h-full">
         <div className="lg:flex lg:flex-row-reverse">
           <div className="flex lg:flex-col justify-center md:ml-[35px]">
             <div className="order-1 lg:order-none md:mx-8 mt-[32px] md:w-[232px] md:h-[289px]">
+
+      <div className="h-full md:flex">
+        <div className="md:flex md:flex-row-reverse">
+          <div className="flex md:flex-col justify-center md:ml-[35px]">
+            <div className="order-1 md:order-none md:mx-8 mt-[32px] md:w-[232px] md:h-[289px]">
               <h1 className="flex justify-center mb-[18.5px] font-bold text-[14px] md:text-xl">
                 Cover Image
               </h1>
@@ -191,7 +191,6 @@ const BookDetails = () => {
                   <BookCoverChange
                     onFileChange={handleFileChange}
                     coverImage={fetchABookAuthor!.coverImage}
-
                   />
                 ) : (
                   <img
@@ -329,7 +328,7 @@ const BookDetails = () => {
                   <div className="flex">
                     {keywords.map((keyword, index) => (
                       <div key={index} className="flex items-center">
-                        <span className="flex bg-gray-200 mr-2 mb-2 px-3 py-1 rounded-full font-semibold text-slate-950 text-sm">
+                        <span className="flex px-3 py-1 mb-2 mr-2 text-sm font-semibold bg-gray-200 rounded-full text-slate-950">
                           {keyword}
                           <BsX
                             onClick={() => handleDeleteKeyword(index)}
@@ -379,6 +378,7 @@ const BookDetails = () => {
 
 
             <div className="flex justify-end mt-[50px] md:mt-[120px] lg:mt-[170px] md:mr-4 rounded-[8px] h-[43px]">
+            <div className="flex justify-end mt-[50px] md:mt-[170px] md:mr-4 rounded-[8px] h-[43px]">
               <div className="">
                 {isEditing ? (
                   <>
@@ -406,9 +406,9 @@ const BookDetails = () => {
                           Delete
                         </Button>
                       </AlertDialogTrigger>
-                      <AlertDialogContent className="bg-slate-50 rounded-none">
+                      <AlertDialogContent className="rounded-none bg-slate-50">
                         <AlertDialogHeader>
-                          <AlertDialogTitle className="font-extrabold text-red-600 text-xl">
+                          <AlertDialogTitle className="text-xl font-extrabold text-red-600">
                             Are you sure want to delete?
                           </AlertDialogTitle>
                           <AlertDialogDescription>
