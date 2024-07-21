@@ -7,8 +7,6 @@ interface AuthContextType {
   logout: () => void;
   showMenu: boolean;
   setShowMenu: (value: boolean) => void;
-  setThemeInStorage: (theme: string) => void;
-  getThemeInStorage: () => string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -18,13 +16,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const initialToken = authService.getToken() || null;
   const [showMenu, setShowMenu] = useState<boolean>(false);
-  const setThemeInStorage = (theme: string) => {
-    localStorage.setItem("theme", theme);
-  };
-
-  const getThemeInStorage = () => {
-    return localStorage.getItem("theme");
-  };
 
   const login = (token: string) => {
     authService.login(token);
@@ -32,6 +23,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const logout = () => {
     authService.logout();
+    localStorage.removeItem("theme");
   };
 
   return (
@@ -42,8 +34,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         logout,
         showMenu,
         setShowMenu,
-        setThemeInStorage,
-        getThemeInStorage,
       }}
     >
       {children}

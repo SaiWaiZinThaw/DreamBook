@@ -18,6 +18,7 @@ const LibraryLayout = () => {
     sortBy: "random",
   });
 
+  const Theme = localStorage.getItem("theme");
   const [search, setSearch] = useState(searchParams.get("search") || "");
   const [deBounceSearch] = useDebounce(search, 500);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
@@ -161,7 +162,14 @@ const LibraryLayout = () => {
             <Stack spacing={1}>
               <Pagination
                 color="primary"
-                className="dark:text-white"
+                sx={{
+                  "& .MuiPaginationItem-root": {
+                    color: Theme === "dark" ? "white" : "inherit",
+                  },
+                  "& .MuiPaginationItem-ellipsis": {
+                    color: Theme === "dark" ? "white" : "inherit",
+                  },
+                }}
                 count={booksData?.meta.totalPages}
                 defaultPage={1}
                 boundaryCount={1}
