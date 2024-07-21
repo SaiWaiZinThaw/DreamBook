@@ -8,6 +8,7 @@ import { useFetchAllBooks } from "@/hooks/useFetchBook";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useDebounce } from "use-debounce";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const LibraryLayout = () => {
   const { data, isLoading } = useFetchCategories();
@@ -88,7 +89,7 @@ const LibraryLayout = () => {
   }, [deBounceSearch, sortBy, setSearchParams, selectedCategories, pageCount]);
 
   return (
-    <div className="container w-full px-0 mx-0">
+    <div className="w-full px-0 mx-0 ">
       <div
         className="flex flex-col justify-center items-center gap-4 bg-cover bg-no-repeat w-screen h-[370px] text-white"
         style={{ backgroundImage: `url(${LibraryHero})` }}
@@ -106,29 +107,42 @@ const LibraryLayout = () => {
             Categories
           </h1>
 
-          <div className="flex flex-col justify-start gap-3 mt-[30px] ml-[30px]">
-            <label className="flex items-center gap-2 font-medium text-lg md:text-[16px]">
-              <Checkbox onCheckedChange={handleSelectAll} checked={selectAll} />
-              All
-            </label>
-            {!isLoading && data
-              ? data.map((item) => (
-                  <label
-                    key={item.categoryId}
-                    id={item.categoryId}
-                    className="flex items-center gap-2 font-medium text-lg md:text-[16px]"
-                  >
-                    <Checkbox
-                      onCheckedChange={() => {
-                        categoryHandler(item.categoryId);
-                      }}
-                      checked={selectedCategories.includes(item.categoryId)}
-                    />
-                    {item.title}
-                  </label>
-                ))
-              : "Loading"}
-          </div>
+          {!isLoading && data ? (
+            <div className="flex flex-col justify-start gap-3 mt-[30px] ml-[30px]">
+              <label className="flex items-center gap-2 font-medium text-lg md:text-[16px]">
+                <Checkbox
+                  onCheckedChange={handleSelectAll}
+                  checked={selectAll}
+                />
+                All
+              </label>
+              {data.map((item) => (
+                <label
+                  key={item.categoryId}
+                  id={item.categoryId}
+                  className="flex items-center gap-2 font-medium text-lg md:text-[16px]"
+                >
+                  <Checkbox
+                    onCheckedChange={() => {
+                      categoryHandler(item.categoryId);
+                    }}
+                    checked={selectedCategories.includes(item.categoryId)}
+                  />
+                  {item.title}
+                </label>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col justify-start gap-5 mt-[30px] ml-[30px]">
+              <Skeleton className="w-full h-[26px] bg-slate-200 rounded-[2px]" />
+              <Skeleton className="w-full h-[26px] bg-slate-200 rounded-[2px]" />
+              <Skeleton className="w-full h-[26px] bg-slate-200 rounded-[2px]" />
+              <Skeleton className="w-full h-[26px] bg-slate-200 rounded-[2px]" />
+              <Skeleton className="w-full h-[26px] bg-slate-200 rounded-[2px]" />
+              <Skeleton className="w-full h-[26px] bg-slate-200 rounded-[2px]" />
+              <Skeleton className="w-full h-[26px] bg-slate-200 rounded-[2px]" />
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col items-center w-full">
@@ -143,7 +157,7 @@ const LibraryLayout = () => {
             setSelectedCategories={setSelectedCategories}
           />
 
-          {!isBooksLoading && (
+          {!isBooksLoading && booksData?.items.length !== 0 && (
             <Stack spacing={1}>
               <Pagination
                 color="primary"

@@ -84,7 +84,6 @@ const CommentSection = () => {
   };
 
   const handleSaveReplyComment = (replyId: number) => {
-    console.log(replyId);
     if (editReplyCommentText[replyId]) {
       updateReply.mutate({
         commentId: replyId,
@@ -114,10 +113,6 @@ const CommentSection = () => {
   };
 
   useEffect(() => {
-    console.log(deleteComment.status);
-  }, [deleteComment]);
-
-  useEffect(() => {
     if (
       deleteComment.isSuccess ||
       updateComment.isSuccess ||
@@ -141,11 +136,11 @@ const CommentSection = () => {
       <span className="flex items-center gap-2">
         <h1 className="font-semibold md:text-lg">Reader's Review</h1>
         {comments ? (
-          <span className="flex justify-center items-center bg-blue-200 md:px-2 md:py-1 p-1 rounded-full min-w-8 min-h-6 font-bold text-primary text-sm">
+          <span className="flex items-center justify-center p-1 text-sm font-bold bg-blue-200 rounded-full md:px-2 md:py-1 min-w-8 min-h-6 text-primary">
             {comments.pages[0].meta.totalItems}
           </span>
         ) : (
-          <span className="flex justify-center items-center bg-blue-200 md:px-2 md:py-1 p-1 rounded-full min-w-8 min-h-6 font-bold text-primary text-sm">
+          <span className="flex items-center justify-center p-1 text-sm font-bold bg-blue-200 rounded-full md:px-2 md:py-1 min-w-8 min-h-6 text-primary">
             0
           </span>
         )}
@@ -164,7 +159,7 @@ const CommentSection = () => {
                   onClick={() => navigate(`/profile/${comment.user.userId}`)}
                   className="rounded-full w-[30px] md:w-[45px] h-[30px] md:h-[45px] cursor-pointer"
                 />
-                <div className="flex flex-col justify-center gap-1 w-full">
+                <div className="flex flex-col justify-center w-full gap-1">
                   <div className="flex flex-col">
                     <h3
                       onClick={() =>
@@ -195,7 +190,7 @@ const CommentSection = () => {
                       {comment.comment}
                     </p>
                   )}
-                  <div className="flex gap-3 self-end">
+                  <div className="flex self-end gap-3">
                     {!userIsLoading &&
                       userData?.userId === comment.user.userId && (
                         <Button
@@ -273,7 +268,7 @@ const CommentSection = () => {
                       </Button>
                     </div>
                   )}
-                  <div className="border-gray-300 ml-8 pl-4 border-l-2">
+                  <div className="pl-4 ml-8 border-l-2 border-gray-300">
                     {comment.replies.map((reply) => (
                       <div
                         className="flex gap-2 md:min-h-[100px]"
@@ -282,12 +277,10 @@ const CommentSection = () => {
                         <img
                           src={reply.user.profilePicture}
                           alt={reply.user.name}
-
                           onClick={() => profileNavigation(reply.user.userId)}
                           className="rounded-full w-[30px] h-[30px] md:w-[40px] md:h-[40px] cursor-pointer"
-
                         />
-                        <div className="flex flex-col gap-1 w-full">
+                        <div className="flex flex-col w-full gap-1">
                           <div className="flex flex-col">
                             <h3
                               onClick={() =>
@@ -321,7 +314,7 @@ const CommentSection = () => {
                               {reply.comment}
                             </p>
                           )}
-                          <div className="flex gap-3 self-end">
+                          <div className="flex self-end gap-3">
                             {!userIsLoading &&
                               userData?.userId === reply.user.userId && (
                                 <Button

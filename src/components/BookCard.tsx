@@ -31,7 +31,7 @@ const BookCard: React.FC<BookCardProps> = ({
     <div
       key={book.bookId}
       id={book.bookId}
-      className="relative bg-slate-50 shadow-sm mr-[21px] border rounded-[8px] lg:w-[232px] min-w-[180px] max-w-[210px] h-[280px] book group"
+      className="relative bg-slate-50 shadow-sm mr-[21px] border rounded-[8px]  lg:w-[232px] min-w-[160px] max-w-[210px] h-[280px] book group"
     >
       <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
         <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
@@ -59,7 +59,7 @@ const BookCard: React.FC<BookCardProps> = ({
         <img
           src={book.coverImage}
           alt={book.title}
-          className="min-w-[120px] h-[140px]"
+          className="w-[120px] h-[140px]"
         />
       </div>
 

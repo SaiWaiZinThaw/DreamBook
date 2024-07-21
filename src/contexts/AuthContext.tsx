@@ -7,6 +7,8 @@ interface AuthContextType {
   logout: () => void;
   showMenu: boolean;
   setShowMenu: (value: boolean) => void;
+  darkMode: boolean;
+  setDarkMode: (value: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -16,6 +18,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const initialToken = authService.getToken() || null;
   const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
   const login = (token: string) => {
     authService.login(token);
   };
@@ -26,7 +29,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <AuthContext.Provider
-      value={{ token: initialToken, login, logout, showMenu, setShowMenu }}
+      value={{
+        token: initialToken,
+        login,
+        logout,
+        showMenu,
+        setShowMenu,
+        darkMode,
+        setDarkMode,
+      }}
     >
       {children}
     </AuthContext.Provider>
@@ -40,4 +51,3 @@ export const useAuth = () => {
   }
   return context;
 };
-

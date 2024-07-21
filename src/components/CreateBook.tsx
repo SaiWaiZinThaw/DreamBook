@@ -58,7 +58,6 @@ const CreateBook = () => {
     status: "Draft",
     categoryId: "",
   });
-  console.log(token);
 
   useEffect(() => {
     if (quillRef.current) {
@@ -221,7 +220,6 @@ const CreateBook = () => {
 
     if (!fetchMyProfile) {
       createBookMutation.mutate(formData);
-      console.log(formData);
     } else if (formData.title.trim() === "") {
       setTitleError(true);
     } else if (formData.keywords.length === 0) {
@@ -244,11 +242,10 @@ const CreateBook = () => {
         ...prev,
         coverImage: file,
       }));
-      setCoverImageError(false)
-    }else {
+      setCoverImageError(false);
+    } else {
       setCoverImageError(true);
     }
-   
   };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -265,7 +262,7 @@ const CreateBook = () => {
     setTitleError(formData.title.trim() === "");
     setKeywordError(formData.keywords.length === 0);
     setCategoryError(formData.categoryId === "");
-    if(!formData.coverImage) {
+    if (!formData.coverImage) {
       setCoverImageError(true);
     }
   };
@@ -299,10 +296,8 @@ const CreateBook = () => {
   };
 
   return (
-
     <div className="flex flex-col justify-center w-full h-full">
       <div className="flex gap-2 mx-9 my-[10px] md:mt-[45px] md:ml-[110px] w-full md:w-[660px] h-[53px] text-md">
-
         <div
           className="flex items-center md:mt-[19.5px] md:w-[83px] md:h-[28px] text-blue-700 text-opacity-60 cursor-pointer"
           onClick={() => navigate(-1)}
@@ -311,21 +306,19 @@ const CreateBook = () => {
           <h2 className="text-[12px] md:text-lg">Back</h2>
         </div>
 
-
         <div className="md:ml-[20px]">
-          <h1 className="mt-[13.5px] font-bold text-md md:text-3xl">Creating A New Book</h1>
-
+          <h1 className="mt-[13.5px] font-bold text-md md:text-3xl">
+            Creating A New Book
+          </h1>
         </div>
       </div>
 
       <form
-
         className="flex md:flex-row flex-col items-center md:items-start md:ml-[20px]"
         onSubmit={handleSubmit}
       >
         <div className="md:mt-[60px] md:ml-[110px] w-[200px] md:w-[199px] md:h-[327px]">
           <div className="md:h-[284px]">
-
             {formData.coverImage instanceof File ? (
               <img
                 src={URL.createObjectURL(formData.coverImage)}
@@ -351,7 +344,6 @@ const CreateBook = () => {
                 </p>
               </label>
             )}
-
           </div>
           <div className="flex justify-center mt-[16px] h-[27px]">
             <input
@@ -368,21 +360,16 @@ const CreateBook = () => {
                 Select Book Cover
               </h1>
             </label>
-
-            
           </div>
 
-         
-            {coverImageError && (
-              <p className="md:mt-[10px] ml-[20px] md:ml-[10px] font-bold text-[12px] text-red-500 md:text-sm">
-                * Cover image is required
-              </p>
-            )}
+          {coverImageError && (
+            <p className="md:mt-[10px] ml-[20px] md:ml-[10px] font-bold text-[12px] text-red-500 md:text-sm">
+              * Cover image is required
+            </p>
+          )}
         </div>
 
-
         <div className="md:ml-[50px] md:w-[667px]">
-
           <div className="md:h-[581px]">
             <div className="md:items-center gap-1.5 grid mx-auto md:pt-[30px] md:w-[603px] md:h-[74px]">
               <Label htmlFor="title" className="font-semibold md:text-[16px]">
@@ -410,7 +397,10 @@ const CreateBook = () => {
             </div>
 
             <div className="md:items-center gap-1.5 grid mx-auto pt-6 md:pt-[60px] w-[366px] md:w-[603px] md:h-[74px]">
-              <Label htmlFor="category" className="font-semibold md:text-[16px]">
+              <Label
+                htmlFor="category"
+                className="font-semibold md:text-[16px]"
+              >
                 Category
               </Label>
               <div className="relative">
@@ -424,7 +414,11 @@ const CreateBook = () => {
                   onChange={handleChange}
                   defaultValue=""
                 >
-                  <option value="" disabled className="font-extrabold text-[12px]">
+                  <option
+                    value=""
+                    disabled
+                    className="font-extrabold text-[12px]"
+                  >
                     Select Category
                   </option>
                   {fetchCategories?.map((category: any) => (
@@ -439,15 +433,18 @@ const CreateBook = () => {
                 </select>
               </div>
 
-                {categoryError && (
-                  <p className="ml-[10px] font-bold text-[12px] text-red-500 md:text-sm">
-                    * Choose One Category
-                  </p>
-                )}
+              {categoryError && (
+                <p className="ml-[10px] font-bold text-[12px] text-red-500 md:text-sm">
+                  * Choose One Category
+                </p>
+              )}
             </div>
 
             <div className="md:items-center gap-1.5 grid mx-auto pt-6 md:pt-[90px] md:pl-0 w-[366px] md:w-[603px] md:h-[74px]">
-              <Label htmlFor="keywords" className="font-semibold md:text-[16px]">
+              <Label
+                htmlFor="keywords"
+                className="font-semibold md:text-[16px]"
+              >
                 Keywords
               </Label>
               <Input
@@ -460,11 +457,11 @@ const CreateBook = () => {
                 id="keywords"
               />
               <div>
-                <ul className="absolute flex space-x-2 ml-4">
+                <ul className="absolute flex ml-4 space-x-2">
                   {formData.keywords.map((keyword, index) => (
                     <li
                       key={index}
-                      className="flex border-primary px-2 py-1 border border-opacity-55 rounded-md text-slate-600"
+                      className="flex px-2 py-1 border rounded-md border-primary border-opacity-55 text-slate-600"
                     >
                       {keyword}
                       <BsX

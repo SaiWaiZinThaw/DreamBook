@@ -157,7 +157,6 @@ const ProfileSetup = () => {
               ...prev,
               gender: event.target.value,
             }));
-            console.log(profileData);
           }}
         >
           <option value="Male">Male</option>

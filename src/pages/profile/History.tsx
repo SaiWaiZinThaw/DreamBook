@@ -1,3 +1,4 @@
+import BookCardSkeleton from "@/components/BookCardSkeleton";
 import { useDeleteHistory, useFetchAllHistory } from "@/hooks/useBookHistory";
 import { useGetMe } from "@/hooks/useUser";
 import { getToken } from "@/services/authService";
@@ -15,9 +16,6 @@ const History = () => {
       onSuccess: () => {
         refetch();
       },
-      onError: (error) => {
-        console.error("Error deleting history:", error);
-      },
     });
   };
 
@@ -33,9 +31,16 @@ const History = () => {
     <div className="w-full h-full">
       <div className="flex flex-col justify-center w-full gap-2 p-4 md:gap-0 md:p-10">
         <h1 className="text-xl font-bold text-center lg:text-2xl">History</h1>
-        <div className="grid grid-cols-2 gap-2 md:p-10 md:gap-4 md:grid-cols-4">
-          {!isLoading &&
-            getHistory?.map(
+        {isLoading ? (
+          <div className="grid grid-cols-2 gap-2 py-4 md:gap-4 md:grid-cols-4">
+            <BookCardSkeleton />
+            <BookCardSkeleton />
+            <BookCardSkeleton />
+            <BookCardSkeleton />
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-2 py-4 md:gap-4 md:grid-cols-4">
+            {getHistory?.map(
               (item) =>
                 item.book && (
                   <div
@@ -90,7 +95,8 @@ const History = () => {
                   </div>
                 )
             )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
