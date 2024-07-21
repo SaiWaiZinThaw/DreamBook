@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,13 +18,13 @@ import { MdDarkMode } from "react-icons/md";
 import { logout } from "@/services/authService";
 import { CiLogout } from "react-icons/ci";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import useLocalStorage from "react-use-localstorage";
 
 const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
   const navigate = useNavigate();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
-  const { setThemeInStorage, getThemeInStorage } = useAuth();
-  const [theme, setTheme] = useState(getThemeInStorage() || "light");
+  const [theme, setTheme] = useLocalStorage("theme", "light");
+
   const logoutHandler = () => {
     setShowLogoutDialog(true);
   };
@@ -34,10 +34,6 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
     navigate("/");
     logout();
   };
-
-  useEffect(() => {
-    setThemeInStorage(theme);
-  }, [theme]);
 
   const cancelLogout = () => {
     setShowLogoutDialog(false);
@@ -50,7 +46,7 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
           <img
             src={data.profilePicture}
             alt={data.name}
-            className="rounded-full w-10 h-10"
+            className="w-10 h-10 rounded-full"
           />
           <FaAngleDown className="dark:text-white" />
         </DropdownMenuTrigger>
@@ -60,11 +56,11 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               <img
                 src={data.profilePicture}
                 alt={data.name}
-                className="rounded-full w-10 h-10"
+                className="w-10 h-10 rounded-full"
               />
               <div className="flex flex-col">
-                <p className="font-bold text-black text-lg">{data.name}</p>
-                <p className="opacity-50 text-sm">{data.email}</p>
+                <p className="text-lg font-bold text-black">{data.name}</p>
+                <p className="text-sm opacity-50">{data.email}</p>
               </div>
             </div>
           </DropdownMenuLabel>
@@ -101,9 +97,9 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
           </DropdownMenuLabel>
 
           <div className="flex flex-col gap-2 pb-2 text-sm">
-            <div className="flex items-center gap-2 mx-4 px-2">
+            <div className="flex items-center gap-2 px-2 mx-4">
               <Input
-                className="rounded-none w-1 md:w-3 h-1 md:h-3"
+                className="w-1 h-1 rounded-none md:w-3 md:h-3"
                 type="radio"
                 value="light"
                 checked={theme === "light"}
@@ -119,9 +115,9 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               </label>
             </div>
 
-            <div className="flex items-center gap-2 mx-4 px-2">
+            <div className="flex items-center gap-2 px-2 mx-4">
               <Input
-                className="rounded-none w-1 md:w-3 h-1 md:h-3"
+                className="w-1 h-1 rounded-none md:w-3 md:h-3"
                 type="radio"
                 name="theme"
                 value="dark"
@@ -137,12 +133,18 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               </label>
             </div>
 
-            <div className="flex items-center gap-2 mx-4 px-2 pb-2 border-b border-border">
+            <div className="flex items-center gap-2 px-2 pb-2 mx-4 border-b border-border">
               <Input
-                className="rounded-none w-1 md:w-3 h-1 md:h-3"
+                className="w-1 h-1 rounded-none md:w-3 md:h-3"
                 type="radio"
                 name="theme"
+                value="system"
+                onChange={(event) => {
+                  setTheme(event.currentTarget.value);
+                  window.location.reload();
+                }}
                 id="system"
+                checked={theme === "system"}
               />
               <label htmlFor="system">System</label>
             </div>
@@ -152,7 +154,7 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
               onClick={logoutHandler}
               className="flex items-center gap-1 font-medium text-primary"
             >
-              <CiLogout className="font-bold text-lg" />
+              <CiLogout className="text-lg font-bold" />
               Log Out
             </button>
           </DropdownMenuLabel>
@@ -160,21 +162,21 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
       </DropdownMenu>
 
       {showLogoutDialog && (
-        <div className="z-50 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white shadow-lg p-6 rounded-lg">
-            <h2 className="font-semibold text-lg">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="p-6 bg-white rounded-lg shadow-lg">
+            <h2 className="text-lg font-semibold">
               Are you sure you want to log out?
             </h2>
             <div className="flex justify-end gap-4 mt-4">
               <button
                 onClick={cancelLogout}
-                className="bg-gray-200 px-4 py-2 rounded-md"
+                className="px-4 py-2 bg-gray-200 rounded-md"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmLogout}
-                className="bg-red-500 px-4 py-2 rounded-md text-white"
+                className="px-4 py-2 text-white bg-red-500 rounded-md"
               >
                 Log Out
               </button>

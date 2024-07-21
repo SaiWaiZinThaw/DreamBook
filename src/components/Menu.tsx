@@ -1,32 +1,53 @@
+import { useEffect, useRef } from "react";
 import { LogoBlue } from "@/assets";
 import { RxCross1 } from "react-icons/rx";
 import { NavLink } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useAuth } from "../contexts/AuthContext";
+
 const Menu = () => {
   const { showMenu, setShowMenu } = useAuth();
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      setShowMenu(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showMenu]);
+
   return (
     <div
-      className={`absolute w-full h-full flex flex-col items-center duration-300  bg-white  transform p-6 ${
-        showMenu ? "translate-x-0" : "-translate-x-full "
+      ref={menuRef}
+      className={`fixed inset-0 z-50 w-[50%] flex flex-col items-center dark:bg-black bg-white p-6 transition-transform duration-300 ${
+        showMenu ? "translate-x-0" : "-translate-x-full"
       }`}
     >
-      <button className="self-end" onClick={() => setShowMenu(false)}>
-        <RxCross1 />
+      <button className="self-end mb-4" onClick={() => setShowMenu(false)}>
+        <RxCross1 className="w-6 h-6 dark:text-white" />
       </button>
-      <div className="flex flex-col items-center w-[200px] mt-5">
+      <div className="w-[200px]">
         <NavLink onClick={() => setShowMenu(false)} to={"/"}>
-          <div className="w-full ">
-            <img src={LogoBlue} alt="Logo" className="w-full" />
-          </div>
+          <img src={LogoBlue} alt="Logo" className="w-full" />
         </NavLink>
-        <nav className="flex flex-col items-center gap-3 p-5">
+        <nav className="flex flex-col items-center gap-3 mt-5">
           <NavLink
             onClick={() => setShowMenu(false)}
             className={({ isActive }) =>
               isActive
-                ? "bg-primary !text-primary-foreground h-10 w-32 rounded-md"
-                : "text-black"
+                ? "w-32 h-10 rounded-md bg-primary text-primary-foreground "
+                : "text-black dark:text-white"
             }
             to={"/"}
           >
@@ -36,8 +57,8 @@ const Menu = () => {
             onClick={() => setShowMenu(false)}
             className={({ isActive }) =>
               isActive
-                ? "bg-primary !text-primary-foreground h-10 w-32 rounded-md"
-                : "text-black"
+                ? "w-32 h-10 rounded-md bg-primary text-primary-foreground"
+                : "text-black dark:text-white"
             }
             to={"/library"}
           >
@@ -47,8 +68,8 @@ const Menu = () => {
             onClick={() => setShowMenu(false)}
             className={({ isActive }) =>
               isActive
-                ? "bg-primary !text-primary-foreground h-10 w-32 rounded-md"
-                : "text-black"
+                ? "w-32 h-10 rounded-md bg-primary text-primary-foreground"
+                : "text-black dark:text-white"
             }
             to={"/book-create"}
           >

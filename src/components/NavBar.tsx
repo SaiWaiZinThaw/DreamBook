@@ -19,7 +19,7 @@ const NavBar = () => {
       <div className="flex items-center gap-3">
         <button
           onClick={() => setShowMenu(true)}
-          className="lg:hidden font-bold text-xl"
+          className="text-xl font-bold lg:hidden dark:text-white"
         >
           <RxHamburgerMenu />
         </button>
@@ -29,7 +29,7 @@ const NavBar = () => {
           </div>
         </NavLink>
       </div>
-      <nav className="lg:flex items-center gap-5 hidden">
+      <nav className="items-center hidden gap-5 lg:flex">
         <NavLink
           className={({ isActive }) =>
             isActive
@@ -64,7 +64,7 @@ const NavBar = () => {
 
       {!token ? (
         <div className="flex items-center gap-2">
-          <NavLink className="lg:block hidden" to="/auth/login">
+          <NavLink className="hidden lg:block" to="/auth/login">
             <Button variant={"ghost"} className="flex items-center gap-2">
               <HiMiniUserCircle className="text-2xl" /> Login
             </Button>
@@ -76,14 +76,13 @@ const NavBar = () => {
       ) : (
         <div className="flex items-center gap-4">
           <NavLink
-            className="lg:flex flex-col justify-end items-center hidden"
+            className="flex-col items-center justify-end hidden lg:flex"
             to="/me/fav"
           >
             <FaHeart className="text-lg font-bold text-red-600" />
             <span className="text-sm font-semibold dark:text-white">
               Fav Books
             </span>
-
           </NavLink>
           {isLoading ? (
             <div className="flex items-center gap-2">

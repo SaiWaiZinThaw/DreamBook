@@ -58,9 +58,9 @@ const OtherUserProfile = () => {
     }
   }, [userBookData]);
   return (
-    <div className="flex flex-col items-center w-full h-full gap-3">
+    <div className="flex flex-col items-center w-full h-full gap-3 dark:bg-dark-bg">
       <Nav />
-      <div className="flex flex-col w-full h-full p-10">
+      <div className="flex flex-col w-full h-full p-10 ">
         {!ProfileIsLoading && (
           <div className="flex items-center justify-center w-full gap-5 p-4 border-b rounded-sm shadow-sm md:gap-20 md:flex-row border-b-border shadow-border ">
             <div className="flex flex-col items-center gap-2 ">
@@ -76,29 +76,35 @@ const OtherUserProfile = () => {
             <div className="flex flex-col gap-5 md:gap-10">
               <div className="flex h-full gap-5 md:gap-10">
                 <div className="flex flex-col">
-                  <span className="text-sm font-bold md:text-lg ">Joined</span>
-                  <p className="text-sm font-medium">
+                  <span className="text-sm font-bold md:text-lg dark:text-white">
+                    Joined
+                  </span>
+                  <p className="text-sm font-medium dark:text-white">
                     {format(parseISO(userData?.cratedAt!), " MMM, yyyy")}
                   </p>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-sm font-bold md:text-lg ">Gender</span>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-bold md:text-lg dark:text-white ">
+                    Gender
+                  </span>
+                  <span className="text-sm font-medium dark:text-white">
                     {userData?.gender}
                   </span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-sm font-bold md:text-lg ">
+                  <span className="text-sm font-bold md:text-lg dark:text-white ">
                     Total Books
                   </span>
-                  <span className="text-sm font-medium text-center">
+                  <span className="text-sm font-medium text-center dark:text-white">
                     {userBookData?.pages[0].meta.totalItems}
                   </span>
                 </div>
               </div>
               <div className="flex flex-col">
-                <span className="text-sm font-bold md:text-lg ">Bio</span>
-                <p className="text-sm font-medium line-clamp-1">
+                <span className="text-sm font-bold md:text-lg dark:text-white">
+                  Bio
+                </span>
+                <p className="text-sm font-medium line-clamp-1 dark:text-white">
                   {userData?.bio}
                 </p>
               </div>
@@ -106,15 +112,17 @@ const OtherUserProfile = () => {
           </div>
         )}
         {!BookIsLoading && (
-          <div className="flex flex-col items-center p-5">
-            <h2 className="text-3xl font-bold text-bold">Books</h2>
+          <div className="flex flex-col items-center p-5 dark:text-white">
+            <h2 className="text-3xl font-bold text-bold dark:text-white">
+              Books
+            </h2>
             <div className="grid grid-cols-2 gap-5 p-3">
               {userBookData?.pages.map((item) =>
                 item.items.map((book) => (
                   <div
                     key={book.title}
                     id={book.slug}
-                    className="relative bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] min-w-[150px] max-w-[232px] h-[280px] book group"
+                    className="relative dark:text-white dark:bg-[#2F2F2F] dark:border-none bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] min-w-[150px] max-w-[232px] h-[280px] book group"
                   >
                     <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                       <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
@@ -142,7 +150,7 @@ const OtherUserProfile = () => {
                         />
                       </div>
                     </div>
-                    <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                    <div className="flex justify-center items-center dark:bg-[#3D3D3D] bg-slate-300 m-2 rounded-[8px] h-[160px]">
                       <img
                         src={book.coverImage}
                         alt={book.coverImage}

@@ -88,7 +88,7 @@ const Books = () => {
         <div className="flex justify-between lg:gap-0 gap-4 mt-4 h-[45px] lg:h-[50px] w-full">
           <div className="relative flex items-center w-8/12 gap-3 md:max-w-[280px] lg:w-full max-w-[100px]">
             <Select onValueChange={handleSortChange}>
-              <SelectTrigger className="dark:border-dark-border dark:text-white w-8/12 md:max-w-[280px] max-w-[100px] h-full text-xs lg:text-md">
+              <SelectTrigger className="dark:border-dark-border  dark:text-white w-8/12 md:max-w-[280px] max-w-[100px] h-full text-xs lg:text-md">
                 <SelectValue placeholder="Sort" />
               </SelectTrigger>
               <SelectContent>

@@ -2,15 +2,13 @@ import { Route, Routes, useRoutes } from "react-router-dom";
 
 import { AuthRouter, BookRouter, UserRouter } from "./routers";
 import ProfileRouter from "./routers/ProfileRouter";
-import { useAuth } from "./contexts/AuthContext";
 
 function App() {
   const UserRouting = useRoutes(UserRouter);
   const AuthRouting = useRoutes(AuthRouter);
   const BookRouting = useRoutes(BookRouter);
   const ProfileRouting = useRoutes(ProfileRouter);
-  const { getThemeInStorage } = useAuth();
-  const Theme = getThemeInStorage();
+  const Theme = localStorage.getItem("theme");
   return (
     <div className={`${Theme} font-Inter `}>
       <Routes>

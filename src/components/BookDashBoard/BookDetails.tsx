@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { useUpdateBook } from "@/hooks/useFetchABookAuthor";
 import ReactQuill from "react-quill";
 import { Label } from "@/components/ui/label";
-import { AiOutlineUser } from "react-icons/ai";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -64,7 +63,6 @@ const BookDetails = () => {
         description: fetchABookAuthor.description || "",
         keywords: fetchABookAuthor.keywords || [],
         slug: fetchABookAuthor.slug || "",
-
         status: fetchABookAuthor.status || "Draft",
       });
       setKeywords(fetchABookAuthor.keywords || []);
@@ -140,16 +138,10 @@ const BookDetails = () => {
     );
   };
 
-  const quillModules = {
-    toolbar: false,
-  };
-
   return (
-
-    <div className="m-0 p-0 w-full h-full container">
+    <div className="container w-full h-full p-0 m-0">
       <div className="flex justify-between border-slate-300 px-10 border-b h-[50px] md:h-[80px]">
-        <h1 className="font-extrabold md:text-2xl self-center">Book Details</h1>
-
+        <h1 className="self-center font-extrabold md:text-2xl">Book Details</h1>
 
         <div className="flex flex-col justify-center">
           {isEditing && (
@@ -159,11 +151,11 @@ const BookDetails = () => {
           )}
           <div className="flex items-center gap-1">
             {(!isOn && (
-              <span className="font-bold text-secondary-foreground text-xl">
+              <span className="text-xl font-bold text-secondary-foreground">
                 Draft
               </span>
             )) || (
-              <span className="font-bold text-primary text-xl">Public</span>
+              <span className="text-xl font-bold text-primary">Public</span>
             )}
             <Switch
               isOn={isOn}
@@ -173,15 +165,10 @@ const BookDetails = () => {
           </div>
         </div>
       </div>
-      <div className="lg:flex h-full">
+      <div className="h-full lg:flex">
         <div className="lg:flex lg:flex-row-reverse">
           <div className="flex lg:flex-col justify-center md:ml-[35px]">
             <div className="order-1 lg:order-none md:mx-8 mt-[32px] md:w-[232px] md:h-[289px]">
-
-      <div className="h-full md:flex">
-        <div className="md:flex md:flex-row-reverse">
-          <div className="flex md:flex-col justify-center md:ml-[35px]">
-            <div className="order-1 md:order-none md:mx-8 mt-[32px] md:w-[232px] md:h-[289px]">
               <h1 className="flex justify-center mb-[18.5px] font-bold text-[14px] md:text-xl">
                 Cover Image
               </h1>
@@ -241,205 +228,192 @@ const BookDetails = () => {
             </div>
           </div>
 
-          <div className="border-slate-300 order-3 md:order-none ml-[12px] lg:border-r lg:w-[667px]">
-            <div className="md:h-[581px]">
-              <div className="items-center gap-1.5 grid md:mx-[32px] pt-2 md:pt-[30px] md:h-[74px]">
-                <Label htmlFor="title" className="font-semibold md:text-[16px]">
-                  Title
-                </Label>
-                <div className="relative">
-                  {isEditing ? (
-                    <Input
-                      type="text"
-                      onChange={(
-                        event: React.ChangeEvent<HTMLInputElement>
-                      ) => {
-                        setUpdateData((prev) => ({
-                          ...prev,
-                          title: event.target.value,
-                        }));
-                      }}
-                      value={updateData.title}
-                      id="title"
-                      className="border-slate-300 border rounded-[5px] text-[12.5px] text-black md:text-[16px]"
-                    />
-                  ) : (
-                    <h1
-                      id="title"
-                      className="border-slate-300 py-2 md:py-[8.5px] pl-[16px] border rounded-[5px] w-full h-[35px] md:h-[45px] font-semibold text-[12.5px] text-black md:text-[16px]"
-                    >
-                      {fetchABookAuthor?.title}
-                    </h1>
-                  )}
-                  <AiOutlineUser className="top-[10px] md:top-[12.7px] right-2 absolute md:w-[21px] md:h-[21px] text-gray-400" />
-                </div>
-              </div>
-
-              <div className="items-center gap-1.5 grid md:mx-[32px] pt-6 md:pt-[60px]">
-                <Label
-                  htmlFor="category"
-                  className="font-semibold md:text-[16px]"
-                >
-                  Category
-                </Label>
-                <div className="relative">
-                  <h1
-                    id="category"
-                    className="border-slate-300 py-2 md:py-[8.5px] pl-[16px] border rounded-[5px] w-full h-[35px] md:h-[45px] font-semibold text-[12.5px] text-black md:text-[16px]"
+          <div className="border-slate-300 order-3 lg:order-none ml-[12px] lg:border-r lg:w-[667px]">
+            <div className="flex justify-end items-center mr-[21px] lg:h-[68px]">
+              {isEditing ? (
+                <>
+                  <Button
+                    variant="ghost"
+                    className="text-[14px] md:text-base"
+                    onClick={handleCancelClick}
                   >
-                    {fetchABookAuthor?.category?.title! ||
-                      "Category Not Available"}
-                  </h1>
-                </div>
-              </div>
-
-              <div className="items-center gap-1.5 grid md:mx-[32px] pt-6 md:pt-[30px] h-[74px]">
-                <Label
-                  htmlFor="keywords"
-                  className="font-semibold md:text-[16px]"
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    variant="default"
+                    className="text-[14px] md:text-base"
+                    onClick={handleSaveClick}
+                  >
+                    Save
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  variant="default"
+                  className="text-[14px] md:text-base"
+                  onClick={handleEditClick}
                 >
-                  Keywords
-                </Label>
-                {isEditing ? (
-                  <div className="w-full">
-                    <Input
-                      type="text"
-                      id="keywords"
-                      value={currentKeyword}
-                      onChange={handleKeywordChange}
-                      onKeyPress={handleKeyPress}
-                      className="py-[8.5px] rounded-[5px] h-[35px] md:h-[45px] font-semibold text-black"
-                    />
-                  </div>
-                ) : (
-                  <div className="border-slate-300 py-[2px] md:py-[8.5px] pl-[16px] border rounded-[5px] h-[35px] md:h-[45px] font-semibold text-black">
-                    {keywords.map((keyword, index) => (
-                      <span
-                        key={index}
-                        className="inline-block bg-gray-200 mr-2 mb-2 md:px-3 md:py-1 p-1 rounded-full font-semibold text-[12.5px] text-slate-950 md:text-sm"
-                      >
-                        {keyword}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                {isEditing && (
-                  <div className="flex">
-                    {keywords.map((keyword, index) => (
-                      <div key={index} className="flex items-center">
-                        <span className="flex px-3 py-1 mb-2 mr-2 text-sm font-semibold bg-gray-200 rounded-full text-slate-950">
-                          {keyword}
-                          <BsX
-                            onClick={() => handleDeleteKeyword(index)}
-                            className="mt-[5px] cursor-pointer"
-                          />
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="items-center gap-1.5 grid md:mx-[32px] pt-[30px] md:pt-[60px] h-[140px] md:h-[176px]">
-                <Label
-                  htmlFor="description"
-                  className="font-semibold md:text-[16px]"
-                >
-                  Description
-                </Label>
-
-                {isEditing ? (
-                  <ReactQuill
-                    value={updateData.description}
-                    onChange={(content) => {
-                      const sanitizedContent = DOMPurify.sanitize(content);
-                      setUpdateData((prev) => ({
-                        ...prev,
-                        description: sanitizedContent,
-                      }));
-                    }}
-                    className="pt-2 md:pt-[15px] rounded-[5px] h-[120px] md:h-[290px] text-[12.5px] md:text-[16px]"
-                    modules={quillModules}
-                  />
-                ) : (
-                  <div className="border-slate-300 pt-2 md:pt-[15px] pl-[25px] border rounded-[5px] h-[120px] md:h-[290px] text-[12.5px] md:text-[16px]">
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(
-                          fetchABookAuthor?.description!
-                        ),
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
+                  Edit
+                </Button>
+              )}
             </div>
+            <div className="mt-[30px]">
+              <div className="flex flex-col mx-[33px] lg:h-[620px]">
+                <div className="w-full">
+                  <Label
+                    htmlFor="title"
+                    className="text-sm font-bold md:text-lg"
+                  >
+                    Title
+                  </Label>
+                  <Input
+                    id="title"
+                    className="w-full md:w-[498px] md:h-[50px] text-base border border-gray-300 rounded-lg p-3"
+                    value={updateData.title}
+                    onChange={(e) =>
+                      setUpdateData({ ...updateData, title: e.target.value })
+                    }
+                    disabled={!isEditing}
+                  />
+                </div>
 
+                <div className="mt-[30px]">
+                  <Label
+                    htmlFor="author"
+                    className="text-sm font-bold md:text-lg"
+                  >
+                    Author
+                  </Label>
+                  <Input
+                    id="author"
+                    className="w-full md:w-[498px] md:h-[50px] text-base border border-gray-300 rounded-lg p-3"
+                    value={fetchABookAuthor?.user?.name}
+                    disabled
+                  />
+                </div>
 
-            <div className="flex justify-end mt-[50px] md:mt-[120px] lg:mt-[170px] md:mr-4 rounded-[8px] h-[43px]">
-            <div className="flex justify-end mt-[50px] md:mt-[170px] md:mr-4 rounded-[8px] h-[43px]">
-              <div className="">
-                {isEditing ? (
-                  <>
-                    <Button
-                      onClick={handleCancelClick}
-                      className="bg-white hover:bg-white text-slate-900 hover:text-slate-500"
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      onClick={handleSaveClick}
-                      className="bg-primary hover:bg-blue-400 rounded-[8px] text-slate-100 hover:text-slate-200"
-                    >
-                      Save
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button
-                          className="border-none md:w-[111px] text-red-600 md:text-md hover:text-red-400"
-                          variant="outline"
-                        >
-                          Delete
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className="rounded-none bg-slate-50">
-                        <AlertDialogHeader>
-                          <AlertDialogTitle className="text-xl font-extrabold text-red-600">
-                            Are you sure want to delete?
-                          </AlertDialogTitle>
-                          <AlertDialogDescription>
-                            The book will be deleted permanently and will not be
-                            recovered.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel className="border-none">
-                            Cancel
-                          </AlertDialogCancel>
-                          <AlertDialogAction
-                            onClick={() =>
-                              handleDeleteConfirm(fetchABookAuthor!.slug!)
-                            }
-                            className="hover:bg-blue-400 rounded-[8px] text-slate-100 hover:text-slate-200"
+                <div className="mt-[30px]">
+                  <Label
+                    htmlFor="description"
+                    className="text-sm font-bold md:text-lg"
+                  >
+                    Description
+                  </Label>
+                  <div className="w-full md:w-[600px] h-[265px]">
+                    {isEditing ? (
+                      <ReactQuill
+                        value={updateData.description}
+                        onChange={(value) =>
+                          setUpdateData({ ...updateData, description: value })
+                        }
+                        className="h-full md:h-[250px] border border-gray-300 rounded-lg p-3"
+                      />
+                    ) : (
+                      <div
+                        className="prose max-w-none"
+                        dangerouslySetInnerHTML={{
+                          __html: DOMPurify.sanitize(
+                            updateData.description || ""
+                          ),
+                        }}
+                      ></div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mt-[30px]">
+                  <Label
+                    htmlFor="category"
+                    className="text-sm font-bold md:text-lg"
+                  >
+                    Category
+                  </Label>
+                  <Input
+                    id="category"
+                    className="w-full md:w-[498px] md:h-[50px] text-base border border-gray-300 rounded-lg p-3"
+                    value={fetchABookAuthor?.category?.title}
+                    disabled
+                  />
+                </div>
+
+                <div className="mt-[30px] w-full md:w-[498px] md:h-[103px]">
+                  <Label
+                    htmlFor="keywords"
+                    className="text-sm font-bold md:text-lg"
+                  >
+                    Keywords
+                  </Label>
+                  <div className="flex flex-wrap items-center p-3 border border-gray-300 rounded-lg">
+                    {isEditing ? (
+                      <div className="flex flex-wrap gap-2">
+                        {keywords.map((keyword, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center px-2 py-1 text-blue-500 bg-blue-100 rounded-full"
                           >
-                            Yes! Delete
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
+                            {keyword}
+                            <BsX
+                              className="ml-1 cursor-pointer"
+                              onClick={() => handleDeleteKeyword(index)}
+                            />
+                          </div>
+                        ))}
+                        <Input
+                          id="keywords"
+                          className="p-0 text-sm border-0 outline-none md:text-base focus:outline-none"
+                          value={currentKeyword}
+                          onChange={handleKeywordChange}
+                          onKeyPress={handleKeyPress}
+                          placeholder="Add keyword"
+                        />
+                      </div>
+                    ) : (
+                      <div className="flex flex-wrap gap-2">
+                        {keywords.map((keyword, index) => (
+                          <div
+                            key={index}
+                            className="px-2 py-1 text-blue-500 bg-blue-100 rounded-full"
+                          >
+                            {keyword}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
 
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
                     <Button
-                      onClick={handleEditClick}
-                      className="bg-primary hover:bg-blue-400 rounded-[8px] text-slate-100 hover:text-slate-200"
+                      variant="ghost"
+                      className="text-red-500 font-bold mt-[30px] self-start"
                     >
-                      Edit
+                      Delete this book
                     </Button>
-                  </>
-                )}
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your book.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() =>
+                          handleDeleteConfirm(fetchABookAuthor!.slug)
+                        }
+                      >
+                        Delete
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </div>
           </div>
