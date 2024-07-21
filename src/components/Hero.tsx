@@ -24,6 +24,7 @@ import PopularBooks from "./PopularBooks";
 import LatestBooks from "./LatestBooks";
 import "../App.css"
 import { useState, useEffect } from "react";
+import HeroAnimation from "./Animation";
 
 const Hero = () => {
   const [animate, setAnimate] = useState(false);
@@ -67,7 +68,8 @@ const Hero = () => {
         </div>
 
         <div className="mr-[10px] p-5 md:p-0 w-full md:w-5/12">
-          <img src={Animation} alt="" className="w-full md:w-auto" />
+        <HeroAnimation/>
+          {/* <img src={Animation} alt="" className="w-full md:w-auto" /> */}
 
           <p className="flex justify-center items-center mt-4 font-medium md:text-2xl">
             Most Popular Books This Week
@@ -75,9 +77,9 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className={`flex md:flex-row flex-col md:justify-center items-center gap-4 md:gap-0 md:gap-x-4 md:mt-[60px] px-5 p-2 w-screen md:h-[220px] ${animate ? 'swipe-right-animation' : ''}`}>
+      <div className="flex md:flex-row flex-col md:justify-center items-center gap-4 md:gap-0 md:gap-x-4 md:mt-[60px] px-5 p-2 w-screen md:h-[220px]">
         <div
-          className="flex flex-col gap-1 md:gap-3 bg-opacity-88 bg-cover bg-no-repeat p-5 md:p-9 rounded-[10px] w-full md:w-[400px] h-full min-h-[150px] text-white"
+          className={`flex flex-col gap-1 md:gap-3 bg-opacity-88 bg-cover bg-no-repeat p-5 md:p-9 rounded-[10px] w-full md:w-[400px] h-full min-h-[150px] text-white ${animate ? 'swipe-right-animation' : ''}`}
           style={{ backgroundImage: `url(${About})` }}
         >
           <h1 className="font-semibold text-xl">About Us</h1>
@@ -87,7 +89,7 @@ const Hero = () => {
           </p>
         </div>
         <div
-          className="flex flex-col gap-1 md:gap-3 bg-opacity-88 bg-cover bg-no-repeat p-5 md:p-9 rounded-[10px] w-full md:w-[400px] h-full min-h-[120px] text-white"
+          className={`flex flex-col gap-1 md:gap-3 bg-opacity-88 bg-cover bg-no-repeat p-5 md:p-9 rounded-[10px] w-full md:w-[400px] h-full min-h-[120px] text-white ${animate ? 'swipe-right-animation' : ''}`}
           style={{ backgroundImage: `url(${FeatureBg})` }}
         >
           <h1 className="font-semibold text-xl">Feactured</h1>
@@ -97,7 +99,7 @@ const Hero = () => {
           </p>
         </div>
         <div
-          className="flex flex-col gap-1 md:gap-3 bg-opacity-88 bg-cover bg-no-repeat p-5 md:p-9 rounded-[10px] w-full md:w-[400px] h-full min-h-[120px] text-white"
+          className={`flex flex-col gap-1 md:gap-3 bg-opacity-88 bg-cover bg-no-repeat p-5 md:p-9 rounded-[10px] w-full md:w-[400px] h-full min-h-[120px] text-white ${animate ? 'swipe-right-animation' : ''}`}
           style={{ backgroundImage: `url(${Visit})` }}
         >
           <h1 className="font-semibold text-xl">Visit Now</h1>
