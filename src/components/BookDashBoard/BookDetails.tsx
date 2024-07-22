@@ -145,7 +145,6 @@ const BookDetails = () => {
   };
 
   return (
-
     <div className="m-0 p-0 w-full h-full container">
       <div className="flex justify-between border-slate-300 px-10 border-b h-[50px] md:h-[80px]">
         <h1 className="font-extrabold md:text-2xl self-center">Book Details</h1>
@@ -173,10 +172,10 @@ const BookDetails = () => {
           </div>
         </div>
       </div>
-      <div className="lg:flex h-full">
+      {/* <div className="lg:flex h-full">
         <div className="lg:flex lg:flex-row-reverse">
           <div className="flex lg:flex-col justify-center md:ml-[35px]">
-            <div className="order-1 lg:order-none md:mx-8 mt-[32px] md:w-[232px] md:h-[289px]">
+            <div className="order-1 lg:order-none md:mx-8 mt-[32px] md:w-[232px] md:h-[289px]"> */}
 
       <div className="h-full md:flex">
         <div className="md:flex md:flex-row-reverse">
@@ -445,6 +444,7 @@ const BookDetails = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

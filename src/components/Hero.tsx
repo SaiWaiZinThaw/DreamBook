@@ -1,5 +1,4 @@
 import {
-  Animation,
   AppStore,
   GooglePLay,
   About,
@@ -40,7 +39,7 @@ const Hero = () => {
 
   return (
 
-    <div className="px-0 mx-0 md:flex-none">
+    <div className="md:flex-none mx-0 px-0">
       <div
         className="flex md:flex-row flex-col items-center md:items-start gap-6 md:gap-0 bg-slate-100 bg-cover p-6 md:p-10 md:pt-20 w-screen md:h-[700px]"
         style={{ backgroundImage: `url(${HeroBg})` }}
@@ -124,30 +123,30 @@ const Hero = () => {
 
       <div className="p-6 md:p-10 w-screen md:h-[250px]">
         <div className="flex justify-between">
-          <h1 className="text-xl font-bold">Trending Category</h1>
+          <h1 className="font-bold text-xl">Trending Category</h1>
         </div>
         <div className="flex justify-center mt-11">
-          <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="gap-6 grid grid-cols-1 md:grid-cols-3 w-full">
             {isLoading ? (
               <>
                 <Skeleton
-                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  className="bg-gray-200 pt-[10px] border rounded-[10px] h-[64px]"
                   key="category1"
                 />
                 <Skeleton
-                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  className="bg-gray-200 pt-[10px] border rounded-[10px] h-[64px]"
                   key="category2"
                 />
                 <Skeleton
-                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  className="bg-gray-200 pt-[10px] border rounded-[10px] h-[64px]"
                   key="category3"
                 />
                 <Skeleton
-                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  className="bg-gray-200 pt-[10px] border rounded-[10px] h-[64px]"
                   key="category4"
                 />
                 <Skeleton
-                  className="  pt-[10px] border rounded-[10px] h-[64px] bg-gray-200"
+                  className="bg-gray-200 pt-[10px] border rounded-[10px] h-[64px]"
                   key="category5"
                 />
               </>
