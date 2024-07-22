@@ -18,7 +18,7 @@ const ChapterRead = () => {
     chapterId?: string;
   }>();
   const navigate = useNavigate();
-  const { data: getChapters, isLoading: chapterIsLoading } =
+  const { data: getChapters } =
     useFetchAllChapters(bookSlug!);
   const [parsedChapterId, setParsedChapterId] = useState<number | null>(null);
   const {
@@ -45,15 +45,19 @@ const ChapterRead = () => {
       setParsedChapterId(parseInt(chapterId, 10));
     }
   }, [getChapterProgress, chapterId]);
+  
 
   useEffect(() => {
-    if (getChapterProgress) {
-      navigate(`/${bookSlug}/chapter/${getChapterProgress}`);
+    if( getChapters && !parsedChapterId) {
+      const initialChapterId = getChapterProgress?.chapterId || getChapters[0]?.chapterId;
+
+      if(initialChapterId) {
+        navigate(`/${bookSlug}/chapter/${initialChapterId}`);
+        setParsedChapterId(initialChapterId);
+        setActiveChapterId(initialChapterId);
+      }
     }
-    if (!chapterIsLoading) {
-      navigate(`/${bookSlug}/chapter/${getChapters[0].chapterId}`);
-    }
-  }, [getChapter]);
+  }, [getChapters, getChapterProgress, navigate])
 
   useEffect(() => {
     if (
@@ -73,17 +77,14 @@ const ChapterRead = () => {
     setParsedChapterId(id);
     setActiveChapterId(id);
 
-    if (getChapterProgress?.chapterId === id) {
+    if (getChapterProgress?.chapterId !== id) {
       updateProgress.mutate({ bookSlug: bookSlug!, data: { chapterId: id } });
-    } else {
-      createChapterProgress.mutate({ slug: bookSlug!, chapterId: id });
-    }
+      console.log(updateProgress)
+      console.log({ chapterId: id });
+    } 
     setShowChapters(false);
 
-    if (
-      currentChapterIndex < totalChapters &&
-      id === getChapters[currentChapterIndex].chapterId
-    ) {
+    if (currentChapterIndex < totalChapters && id === getChapters[currentChapterIndex].chapterId) {
       const nextChapterId = getChapters[currentChapterIndex].chapterId;
       setParsedChapterId(nextChapterId);
       setActiveChapterId(nextChapterId);
@@ -93,12 +94,7 @@ const ChapterRead = () => {
           bookSlug: bookSlug!,
           data: { chapterId: nextChapterId },
         });
-      } else {
-        createChapterProgress.mutate({
-          slug: bookSlug!,
-          chapterId: nextChapterId,
-        });
-      }
+      } 
     }
   };
 

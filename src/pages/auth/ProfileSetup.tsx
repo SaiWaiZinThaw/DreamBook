@@ -25,6 +25,8 @@ const ProfileSetup = () => {
     phoneNumber: "",
     bio: "",
     gender: "male",
+    localNumber: "",
+    countryCode: ""
   });
 
   const [errors, setErrors] = useState<{ name?: string; localNumber?: string }>(
@@ -97,17 +99,17 @@ const ProfileSetup = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full pb-10">
+    <div className="flex flex-col items-center pb-10 w-full">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center md:gap-6 gap-3 w-[300px] md:w-[460px] font-Inter md:text-md text-sm"
+        className="flex flex-col items-center gap-3 md:gap-6 w-[300px] md:w-[460px] font-Inter text-sm md:text-md"
       >
-        <h1 className="text-2xl font-bold text-white">Create an account</h1>
+        <h1 className="font-bold text-2xl text-white">Create an account</h1>
         <FileUpload onFileChange={handleFileChange} />
-        <Label htmlFor="picture" className="text-white text-md font-Inter">
+        <Label htmlFor="picture" className="font-Inter text-md text-white">
           Upload Photo
         </Label>
-        <div className="flex items-center w-full gap-5">
+        <div className="flex items-center gap-5 w-full">
           <select
             className="flex justify-center items-center px-4 rounded-[5px] h-10 md:h-12 text-sm"
             value={countryCodeNumber}
@@ -124,7 +126,7 @@ const ProfileSetup = () => {
           <Input
             type="tel"
             id="phone"
-            className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
+            className="h-10 md:h-auto text-[13px] md:placeholder:text-md md:text-md placeholder:text-[13px]"
             placeholder="Phone"
             value={localPhoneNumber}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,13 +134,13 @@ const ProfileSetup = () => {
             }}
           />
           {errors.localNumber && (
-            <p className="text-sm text-red-500">{errors.localNumber}</p>
+            <p className="text-red-500 text-sm">{errors.localNumber}</p>
           )}
         </div>
         <Input
           type="text"
           id="name"
-          className="h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
+          className="h-10 md:h-auto text-[13px] md:placeholder:text-md md:text-md placeholder:text-[13px]"
           placeholder="Full Name"
           value={profileData.name}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,7 +150,7 @@ const ProfileSetup = () => {
             }));
           }}
         />
-        {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
+        {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
         <select
           className="flex justify-center items-center px-4 rounded-[5px] w-full h-10 md:h-12 text-sm"
           value={profileData.gender}
