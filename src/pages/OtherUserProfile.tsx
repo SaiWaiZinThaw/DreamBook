@@ -58,11 +58,11 @@ const OtherUserProfile = () => {
     }
   }, [userBookData]);
   return (
-    <div className="flex flex-col items-center w-full h-full gap-3 dark:bg-dark-bg">
+    <div className="flex flex-col items-center w-full min-h-screen gap-3 dark:bg-dark-bg">
       <Nav />
-      <div className="flex flex-col w-full h-full p-10 ">
+      <div className="flex flex-col w-full h-full p-10 dark:bg-dark-bg">
         {!ProfileIsLoading && (
-          <div className="flex items-center justify-center w-full gap-5 p-4 border-b rounded-sm shadow-sm md:gap-20 md:flex-row border-b-border shadow-border ">
+          <div className="flex items-center justify-center w-full gap-5 p-4 border-b rounded-sm shadow-sm dark:bg-dark-bg md:gap-20 md:flex-row border-b-border shadow-border ">
             <div className="flex flex-col items-center gap-2 ">
               <img
                 src={userData?.profilePicture}
