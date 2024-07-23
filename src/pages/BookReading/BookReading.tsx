@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import parse from "html-react-parser";
 import { useCreateComment } from "@/hooks/useComment";
@@ -48,9 +48,11 @@ const BookReading: React.FC = () => {
     }
   };
   const startReadingHandler = () => {
-    // if(token){
-    //   navigate(``)
-    // }
+    if(token){
+      navigate(`/${bookSlug}/chapter/${firstChapterId}`)
+    }else{
+      navigate("/auth/login")
+    }
     createBookHistory.mutate({ bookSlug: bookSlug! });
   };
 
@@ -156,12 +158,16 @@ const BookReading: React.FC = () => {
                 </div>
 
                 <div className="w-full md:h-5"></div>
-                <NavLink to={`/${bookSlug}/chapter/${firstChapterId}`}>
+                <Button onClick={startReadingHandler} size={"full"}>
+                    {" "}
+                    Start Reading
+                  </Button>
+                {/* <NavLink to={`/${bookSlug}/chapter/${firstChapterId}`}>
                   <Button onClick={startReadingHandler} size={"full"}>
                     {" "}
                     Start Reading
                   </Button>
-                </NavLink>
+                </NavLink> */}
               </div>
             </div>
             <div className="flex flex-col gap-5 md:px-20 border-b border-border min-h-[200px]">
