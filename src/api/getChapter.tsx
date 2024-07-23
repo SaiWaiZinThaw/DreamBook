@@ -63,6 +63,9 @@ export const getAllChapters = async (bookSlug: string) => {
   const response: Response = await fetch(
     `${BaseURL}/chapters/public?slug=${bookSlug}`,
     {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       mode: "cors",
       method: "GET",
       redirect: "follow",
@@ -81,6 +84,9 @@ export const getAChapter = async (chapterId: number) => {
   const response: Response = await fetch(
     `${BaseURL}/chapters/public/${chapterId}`,
     {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       mode: "cors",
       method: "GET",
       redirect: "follow",

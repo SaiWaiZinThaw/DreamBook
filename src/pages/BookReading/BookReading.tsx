@@ -48,6 +48,9 @@ const BookReading: React.FC = () => {
     }
   };
   const startReadingHandler = () => {
+    // if(token){
+    //   navigate(``)
+    // }
     createBookHistory.mutate({ bookSlug: bookSlug! });
   };
 
@@ -59,6 +62,14 @@ const BookReading: React.FC = () => {
     : 0;
   const progressPercentage = (currentChapterIndex / totalChapters) * 100;
   const firstChapterId = getChapters?.[0]?.id || "";
+
+  const RelatedBookHandler = (slug:string) => {
+    if(token) {
+      navigate(`/book/${slug}`)
+    }else {
+      navigate("/auth/login");
+    }
+  }
 
   useEffect(() => {
     if (createComment.isSuccess) {
@@ -194,12 +205,13 @@ const BookReading: React.FC = () => {
       <div className="flex flex-col mx-2">
         {
          relatedBook?.pages.map((page, i) => (
-          <div  className="flex flex-row md:flex-col gap-x-3 md:gap-x-0 overflow-x-auto md:overflow-x-hidden" key={i}>
+          <div  className="flex flex-row md:flex-col gap-x-3 md:gap-x-0 cursor-pointer overflow-x-auto md:overflow-x-hidden" key={i}>
             {
               page.items.map((book:any) => (
               <div
               key={book?.bookId}
-              className="flex flex-col flex-shrink-0 bg-slate-100 shadow-xl md:shadow-md my-4 border rounded-[8px] w-[232px] max-h-full"
+              onClick={() => RelatedBookHandler(book.slug)}
+              className="flex flex-col flex-shrink-0 bg-slate-100 shadow-xl md:shadow-md my-4 border rounded-[8px] w-[232px] max-h-full cursor-pointer"
               > 
                 <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
                   <img
