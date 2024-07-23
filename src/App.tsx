@@ -2,16 +2,15 @@ import { Route, Routes, useRoutes } from "react-router-dom";
 
 import { AuthRouter, BookRouter, UserRouter } from "./routers";
 import ProfileRouter from "./routers/ProfileRouter";
-import { useAuth } from "./contexts/AuthContext";
 
 function App() {
   const UserRouting = useRoutes(UserRouter);
   const AuthRouting = useRoutes(AuthRouter);
   const BookRouting = useRoutes(BookRouter);
   const ProfileRouting = useRoutes(ProfileRouter);
-  const { darkMode } = useAuth();
+  const Theme = localStorage.getItem("theme");
   return (
-    <div className={`${darkMode ? "dark" : ""} font-Inter `}>
+    <div className={`${Theme} font-Inter `}>
       <Routes>
         <Route path="/*" element={UserRouting} />
         <Route path="/auth/*" element={AuthRouting} />

@@ -13,6 +13,7 @@ export function login(token: string) {
 export function logout() {
   Cookies.remove(TOKEN_KEY);
   window.location.reload();
+  localStorage.removeItem("theme");
 }
 
 export function getToken() {

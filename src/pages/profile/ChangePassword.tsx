@@ -74,7 +74,7 @@ const ChangePassword = () => {
   return (
     <section className="flex items-center justify-center w-full">
       <div className="flex flex-col gap-3 p-6 w-full md:w-[544px]">
-        <h1 className="font-bold text-center text-md md:text-2xl">
+        <h1 className="font-bold text-center text-md md:text-2xl dark:text-white">
           Change Your Password
         </h1>
         <p className="font-normal text-[12px] text-center text-slate-500 md:text-sm">
@@ -96,14 +96,18 @@ const ChangePassword = () => {
               className={
                 oldPasswordError
                   ? "border-red-500"
-                  : "h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
+                  : "h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px] dark:bg-dark-bg dark:border-dark-border dark:placeholder:text-white dark:text-white"
               }
             />
             <div
               className="absolute transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
               onClick={() => setShowOldPassword(!showOldPassword)}
             >
-              {showOldPassword ? <FaEye /> : <FaEyeSlash />}
+              {showOldPassword ? (
+                <FaEye className="dark:text-white" />
+              ) : (
+                <FaEyeSlash className="dark:text-white" />
+              )}
             </div>
             {oldPasswordError && (
               <p className="mt-1 text-xs text-red-500">
@@ -116,7 +120,7 @@ const ChangePassword = () => {
             <Input
               required
               onChange={handleInputChange}
-              className="h-10 md:h-auto text-[13px] md:placeholder:text-md md:text-md placeholder:text-[13px]"
+              className="dark:bg-dark-bg dark:border-dark-border dark:placeholder:text-white dark:text-white h-10 md:h-auto text-[13px] md:placeholder:text-md md:text-md placeholder:text-[13px]"
               value={passwordData.newPassword}
               name="newPassword"
               type={showNewPassword ? "text" : "password"}
@@ -126,7 +130,11 @@ const ChangePassword = () => {
               className="absolute transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
               onClick={() => setShowNewPassword(!showNewPassword)}
             >
-              {showNewPassword ? <FaEye /> : <FaEyeSlash />}
+              {showNewPassword ? (
+                <FaEye className="dark:text-white" />
+              ) : (
+                <FaEyeSlash className="dark:text-white" />
+              )}
             </div>
           </div>
 
@@ -141,14 +149,18 @@ const ChangePassword = () => {
               className={
                 passwordMismatchError
                   ? "border-red-500"
-                  : "h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
+                  : "dark:bg-dark-bg dark:border-dark-border dark:placeholder:text-white dark:text-white h-10 md:h-auto md:placeholder:text-md md:text-md text-[13px] placeholder:text-[13px]"
               }
             />
             <div
               className="absolute transform -translate-y-1/2 cursor-pointer top-1/2 right-3"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
-              {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
+              {showConfirmPassword ? (
+                <FaEye className="dark:text-white" />
+              ) : (
+                <FaEyeSlash className="dark:text-white" />
+              )}
             </div>
             {passwordMismatchError && (
               <p className="mt-1 text-xs text-red-500">

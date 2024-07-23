@@ -1,5 +1,5 @@
-import { authService } from "@/services";
 import { createContext, useContext, useState } from "react";
+import { authService } from "@/services";
 
 interface AuthContextType {
   token: string | null;
@@ -7,8 +7,6 @@ interface AuthContextType {
   logout: () => void;
   showMenu: boolean;
   setShowMenu: (value: boolean) => void;
-  darkMode: boolean;
-  setDarkMode: (value: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -18,13 +16,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const initialToken = authService.getToken() || null;
   const [showMenu, setShowMenu] = useState<boolean>(false);
-  const [darkMode, setDarkMode] = useState<boolean>(false);
+
   const login = (token: string) => {
     authService.login(token);
   };
 
   const logout = () => {
     authService.logout();
+    localStorage.removeItem("theme");
   };
 
   return (
@@ -35,8 +34,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         logout,
         showMenu,
         setShowMenu,
-        darkMode,
-        setDarkMode,
       }}
     >
       {children}

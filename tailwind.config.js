@@ -103,6 +103,10 @@ module.exports = {
           negative: "var(--color-negative-lighter)",
           warning: "var(--color-warning-lighter)",
         },
+        dark: {
+          bg: "#1F1F1F",
+          border: "#666666",
+        },
       },
       borderRadius: {
         md: "var(--radius)",

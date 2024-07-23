@@ -15,11 +15,11 @@ const NavBar = () => {
   const { setShowMenu } = useAuth();
   const { data, isLoading } = useGetMe(token);
   return (
-    <div className="flex justify-between items-center bg-white shadow-slate-300 shadow-sm px-6 lg:px-40 py-2 lg:py-6 w-full h-[70px] font-Inter">
+    <div className="flex justify-between items-center dark:bg-dark-bg bg-white shadow-slate-300 shadow-sm px-6 lg:px-40 py-2 lg:py-6 w-full h-[70px] font-Inter">
       <div className="flex items-center gap-3">
         <button
           onClick={() => setShowMenu(true)}
-          className="lg:hidden font-bold text-xl"
+          className="text-xl font-bold lg:hidden dark:text-white"
         >
           <RxHamburgerMenu />
         </button>
@@ -29,12 +29,12 @@ const NavBar = () => {
           </div>
         </NavLink>
       </div>
-      <nav className="lg:flex items-center gap-5 hidden">
+      <nav className="items-center hidden gap-5 lg:flex">
         <NavLink
           className={({ isActive }) =>
             isActive
-              ? "bg-primary !text-primary-foreground h-10 w-32 rounded-md"
-              : "text-black"
+              ? "bg-primary  !text-primary-foreground h-10 w-32 rounded-md"
+              : "text-black dark:text-white"
           }
           to={"/"}
         >
@@ -44,7 +44,7 @@ const NavBar = () => {
           className={({ isActive }) =>
             isActive
               ? "bg-primary !text-primary-foreground h-10 w-32 rounded-md"
-              : "text-black"
+              : "text-black dark:text-white"
           }
           to={"/library"}
         >
@@ -54,7 +54,7 @@ const NavBar = () => {
           className={({ isActive }) =>
             isActive
               ? "bg-primary !text-primary-foreground h-10 w-32 rounded-md"
-              : "text-black"
+              : "text-black dark:text-white"
           }
           to={"/book-create"}
         >
@@ -64,7 +64,7 @@ const NavBar = () => {
 
       {!token ? (
         <div className="flex items-center gap-2">
-          <NavLink className="lg:block hidden" to="/auth/login">
+          <NavLink className="hidden lg:block" to="/auth/login">
             <Button variant={"ghost"} className="flex items-center gap-2">
               <HiMiniUserCircle className="text-2xl" /> Login
             </Button>
@@ -76,16 +76,18 @@ const NavBar = () => {
       ) : (
         <div className="flex items-center gap-4">
           <NavLink
-            className="lg:flex flex-col justify-end items-center hidden"
+            className="flex-col items-center justify-end hidden lg:flex"
             to="/me/fav"
           >
-            <FaHeart className="font-bold text-lg text-red-600" />
-            <span className="font-semibold text-sm">Fav Books</span>
+            <FaHeart className="text-lg font-bold text-red-600" />
+            <span className="text-sm font-semibold dark:text-white">
+              Fav Books
+            </span>
           </NavLink>
           {isLoading ? (
             <div className="flex items-center gap-2">
               <Skeleton className="w-10 h-10 bg-gray-200 rounded-full" />
-              <FaAngleDown />
+              <FaAngleDown className="dark:text-white" />
             </div>
           ) : (
             <ProfileDropdown data={data!} />

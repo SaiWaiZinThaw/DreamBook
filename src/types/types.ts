@@ -9,8 +9,8 @@ export type ProfileSetupData = {
   phoneNumber?: string;
   bio?: string;
   gender: string;
-  localNumber: string;
-  countryCode: string;
+  localNumber?: string;
+  countryCode?: string;
 };
 
 export type CreateBookData = {

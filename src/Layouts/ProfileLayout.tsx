@@ -27,10 +27,10 @@ const ProfileLayout = () => {
   }, [!token]);
 
   return (
-    <div className="w-full min-h-screen">
+    <div className="w-full min-h-screen dark:bg-dark-bg">
       <NavBar />
       <div className="flex w-full h-full">
-        <div className="min-h-screen flex flex-col lg:gap-10 border-2 shadow-sm pt-8 lg:p-8 lg:pt-16 shoadw-border border-r-border w-[90px] lg:w-[480px]">
+        <div className="min-h-screen flex flex-col lg:gap-10 border-2 shadow-sm pt-8 lg:p-8 lg:pt-16 shoadw-border dark:border-dark-border border-r-border w-[90px] lg:w-[480px]">
           {!isLoading && data && (
             <div className="flex flex-col items-center gap-2 py-4 lg:flex-row lg:gap-4 lg:px-5 profile">
               <img
@@ -38,7 +38,7 @@ const ProfileLayout = () => {
                 alt={data.profilePicture}
                 className="rounded-full w-[40px] lg:w-[65px] h-[40px] lg:h-[65px]"
               />
-              <span className="font-bold text-[10px] text-center lg:text-base">
+              <span className="font-bold text-[10px] text-center lg:text-base dark:text-white">
                 {data.name}
               </span>
             </div>
@@ -50,7 +50,7 @@ const ProfileLayout = () => {
               className={({ isActive }) =>
                 isActive
                   ? "bg-primary  lg:w-full w-[50px] !text-primary-foreground p-2 self-center lg:p-5 rounded-[8px] flex items-center justify-center lg:justify-between"
-                  : "text-black flex items-center justify-center lg:w-full w-[50px] lg:justify-between p-2 self-center lg:p-5 rounded-[8px]"
+                  : "text-black dark:text-white flex items-center justify-center lg:w-full w-[50px] lg:justify-between p-2 self-center lg:p-5 rounded-[8px]"
               }
             >
               <div className="flex items-center gap-3">
@@ -65,7 +65,7 @@ const ProfileLayout = () => {
               className={({ isActive }) =>
                 isActive
                   ? "bg-primary lg:w-full w-[50px] !text-primary-foreground p-2 self-center lg:p-5 rounded-[8px] flex items-center justify-center lg:justify-between"
-                  : "text-black flex items-center justify-center lg:w-full w-[50px] lg:justify-between p-2 self-center lg:p-5 rounded-[8px]"
+                  : "text-black dark:text-white flex items-center justify-center lg:w-full w-[50px] lg:justify-between p-2 self-center lg:p-5 rounded-[8px]"
               }
             >
               <div className="flex items-center gap-3">
@@ -80,7 +80,7 @@ const ProfileLayout = () => {
               className={({ isActive }) =>
                 isActive
                   ? "bg-primary lg:w-full w-[50px] !text-primary-foreground p-2 self-center lg:p-5 rounded-[8px] flex items-center justify-center lg:justify-between"
-                  : "text-black flex items-center justify-center lg:w-full w-[50px] lg:justify-between p-2 self-center lg:p-5 rounded-[8px]"
+                  : "text-black dark:text-white flex items-center justify-center lg:w-full w-[50px] lg:justify-between p-2 self-center lg:p-5 rounded-[8px]"
               }
             >
               <div className="flex items-center gap-3">
@@ -95,7 +95,7 @@ const ProfileLayout = () => {
               className={({ isActive }) =>
                 isActive
                   ? "bg-primary lg:w-full w-[50px] !text-primary-foreground p-2 self-center lg:p-5 rounded-[8px] flex items-center justify-center lg:justify-between"
-                  : "text-black flex items-center justify-center lg:w-full w-[50px] lg:justify-between p-2 self-center lg:p-5 rounded-[8px]"
+                  : "text-black dark:text-white flex items-center justify-center lg:w-full w-[50px] lg:justify-between p-2 self-center lg:p-5 rounded-[8px]"
               }
             >
               <div className="flex items-center gap-3">
@@ -110,7 +110,7 @@ const ProfileLayout = () => {
               className={({ isActive }) =>
                 isActive
                   ? "bg-primary lg:w-full w-[50px] !text-primary-foreground p-2 self-center lg:p-5 rounded-[8px] flex items-center justify-center lg:justify-between"
-                  : "text-black flex items-center justify-center lg:w-full w-[50px] lg:justify-between p-2 self-center lg:p-5 rounded-[8px]"
+                  : "dark:text-white text-black flex items-center justify-center lg:w-full w-[50px] lg:justify-between p-2 self-center lg:p-5 rounded-[8px]"
               }
             >
               <div className="flex items-center gap-3">
@@ -125,7 +125,7 @@ const ProfileLayout = () => {
               className={({ isActive }) =>
                 isActive
                   ? "bg-primary lg:w-full w-[50px] !text-primary-foreground p-2 self-center lg:p-5 rounded-[8px] flex items-center justify-center lg:justify-between"
-                  : "text-black flex items-center justify-center lg:w-full w-[50px] lg:justify-between p-2 self-center lg:p-5 rounded-[8px]"
+                  : "dark:text-white text-black flex items-center justify-center lg:w-full w-[50px] lg:justify-between p-2 self-center lg:p-5 rounded-[8px]"
               }
             >
               <div className="flex items-center gap-3">
@@ -138,10 +138,10 @@ const ProfileLayout = () => {
 
           <button
             onClick={LogOut}
-            className="flex items-center justify-center gap-3 px-4 py-10 font-bold border-t border-border text-secondary-foreground"
+            className="flex items-center justify-center gap-3 px-4 py-10 font-bold border-t border-border dark:text-white text-secondary-foreground"
           >
             <CiLogout className="text-2xl font-bold" />
-            <span className="hidden lg:block">Sign Out</span>
+            <span className="hidden lg:block ">Sign Out</span>
           </button>
         </div>
         <Outlet />

@@ -5,7 +5,7 @@ import {
   LatestBg,
   FeatureBg,
   Visit,
-  HeroBg,
+  // HeroBg,
 } from "@/assets";
 import {
   Accordion,
@@ -41,14 +41,15 @@ const Hero = () => {
 
     <div className="md:flex-none mx-0 px-0">
       <div
-        className="flex md:flex-row flex-col items-center md:items-start gap-6 md:gap-0 bg-slate-100 bg-cover p-6 md:p-10 md:pt-20 w-screen md:h-[700px]"
-        style={{ backgroundImage: `url(${HeroBg})` }}
+        className="flex md:flex-row flex-col items-center md:items-start gap-6 md:gap-0 bg-slate-100 dark:bg-[#3D3D3D] bg-cover p-6 md:p-10 md:pt-20 w-screen md:h-[700px]"
+        // style={{ backgroundImage: `url(${HeroBg})` }}
       >
         <div className="flex flex-col md:flex-none gap-3 md:ml-[125px] md:w-6/12">
-          <h1 className="font-bold text-4xl">
+          <h1 className="font-bold text-4xl dark:text-white">
+
             Discover <br /> Magic Of Books
           </h1>
-          <p className="md:pt-7 w-full md:w-auto font-normal text-md md:text-lg leading-[23px]">
+          <p className="md:pt-7 w-full md:w-auto font-normal text-md md:text-lg dark:text-white leading-[23px]">
             "Unlock worlds, one page at a time: Dive into the stories that{" "}
             <br /> shape us. Welcome to a sanctuary for book lovers, where{" "}
             <br /> words ignite passions and journeys never end."
@@ -74,7 +75,7 @@ const Hero = () => {
         <HeroAnimation/>
           {/* <img src={Animation} alt="" className="w-full md:w-auto" /> */}
 
-          <p className="flex justify-center items-center mt-4 font-medium md:text-2xl">
+          <p className="flex justify-center items-center mt-4 font-medium md:text-2xl dark:text-white">
             Most Popular Books This Week
           </p>
         </div>
@@ -92,6 +93,8 @@ const Hero = () => {
           </p>
         </div>
         <div
+         
+
           className={`flex flex-col gap-1 md:gap-3 bg-opacity-88 bg-cover bg-no-repeat p-5 md:p-9 rounded-[10px] w-full md:w-[400px] h-full min-h-[120px] text-white ${animate ? 'swipe-right-animation' : ''}`}
           style={{ backgroundImage: `url(${FeatureBg})` }}
         >
@@ -114,7 +117,8 @@ const Hero = () => {
       </div>
 
       <div className="p-6 md:p-10 w-screen h-[400px]">
-        <h1 className="flex justify-center items-center font-semibold text-2xl">
+        <h1 className="flex justify-center items-center font-semibold text-2xl dark:text-white">
+
           Popular Books
         </h1>
 
@@ -123,7 +127,10 @@ const Hero = () => {
 
       <div className="p-6 md:p-10 w-screen md:h-[250px]">
         <div className="flex justify-between">
-          <h1 className="font-bold text-xl">Trending Category</h1>
+          <h1 className="font-bold text-xl dark:text-white">
+            Trending Category
+          </h1>
+          <a className="font-medium text-md dark:text-white">View More &gt;</a>
         </div>
         <div className="flex justify-center mt-11">
           <div className="gap-6 grid grid-cols-1 md:grid-cols-3 w-full">
@@ -163,7 +170,7 @@ const Hero = () => {
                       `library?category_ids=${encodedCategoryIds}&sort_by=random&page=1`
                     );
                   }}
-                  className="flex border-slate-300 bg-slate-50 shadow-sm pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md cursor-pointer"
+                  className="flex border-slate-300 dark:border-dark-border bg-slate-50 dark:bg-dark-bg shadow-sm pt-[10px] border rounded-[10px] h-[64px] font-semibold text-md dark:text-white cursor-pointer"
                 >
                   <img
                     src={category.icon}
@@ -180,8 +187,12 @@ const Hero = () => {
 
       <div className="mt-[50px] p-6 md:p-10 w-screen md:h-[400px]">
         <div className="flex justify-between">
-          <h1 className="font-bold text-xl">Latest Books</h1>
-          <a href="" className="font-medium text-md">
+          <h1 className="font-bold text-xl dark:text-white">Latest Books</h1>
+          <a
+            href="/library?sort_by=latest"
+            className="font-medium text-md dark:text-white"
+          >
+
             View More &gt;
           </a>
         </div>
@@ -205,17 +216,22 @@ const Hero = () => {
       </div>
 
       <div className="flex flex-col justify-center gap-4 mt-4 w-screen">
-        <h1 className="flex justify-center items-center font-extrabold text-xl">
+        <h1 className="flex justify-center items-center font-extrabold text-xl dark:text-white">
+
           FAQs
         </h1>
         {faqItems.map((item, index) => (
           <Accordion
-            className="w-full md:max-w-[1400px] md:self-center"
+            className="border-border w-full md:max-w-[1400px] md:self-center"
+
             key={index}
             type="single"
             collapsible
           >
-            <AccordionItem value={item.question}>
+            <AccordionItem
+              value={item.question}
+              className="dark:border-white dark:text-white"
+            >
               <AccordionTrigger className="flex gap-0">
                 <div className="flex items-center gap-2">
                   <BsQuestionCircle />
