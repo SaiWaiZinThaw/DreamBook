@@ -99,7 +99,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
   }, [booksData]);
 
   return (
-    <div className="flex flex-col w-full min-h-[600px] lg:min-h-screen px-6 mx-0 lg:px-10">
+    <div className="flex flex-col w-full min-h-[600px] lg:min-h-screen px-4 mx-0 lg:px-10">
       <div className="flex justify-between lg:gap-0 gap-4 mt-4 h-[30px] lg:h-[50px] w-full">
         <div className="relative flex items-center w-8/12 gap-3 lg:w-full">
           <DropdownMenu>
