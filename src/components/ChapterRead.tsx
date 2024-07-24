@@ -107,17 +107,17 @@ const ChapterRead = () => {
   const totalChapters = getChapters?.length;
 
   return (
-    <div className="flex md:flex-row flex-col md:flex-grow">
+    <div className="flex md:flex-row flex-col md:flex-grow dark:bg-[#3D3D3D]">
       <div className="flex md:flex-row flex-col">
         <div className="flex border-slate-300 md:hidden shadow-md border-b w-screen h-[50px]">
           <FiAlignJustify
             onClick={() => setShowChapters(!showChapters)}
-            className="mt-3 ml-4 text-2xl cursor-pointer"
+            className="mt-3 ml-4 text-2xl dark:text-white cursor-pointer"
           />
           <img src={LogoBlue} className="ml-4 w-[160px] h-[50px]" />
         </div>
         <div
-          className={`md:pl-[26px] pl-2 md:border md:border-r-slate-300 w-[120px] h-screen md:w-[267px] ${
+          className={`md:pl-[26px] pl-2 md:border-r dark:border-r-gray-500 md:border-r-slate-300 w-[120px] h-screen md:w-[267px] ${
             showChapters ? "" : "hidden md:block"
           }`}
         >
@@ -129,12 +129,12 @@ const ChapterRead = () => {
             <h2>Back</h2>
           </div>
 
-          <h1 className="mb-2 md:mb-[24px] font-bold md:text-xl">Chapters</h1>
+          <h1 className="mb-2 md:mb-[24px] font-bold md:text-xl dark:text-white">Chapters</h1>
           <ol className="list-decimal list-inside">
             {getChapters &&
               getChapters.map((chapter: any) => (
                 <li
-                  className={`md:mb-[16px] text-[12px] md:text-[16px] mb-2 cursor-pointer ${
+                  className={`md:mb-[16px] dark:text-white text-[12px] md:text-[16px] mb-2 cursor-pointer ${
                     chapter.chapterId === activeChapterId
                       ? "text-primary font-semibold"
                       : ""
@@ -150,7 +150,7 @@ const ChapterRead = () => {
       </div>
 
       <div
-        className={`flex flex-col w-screen ${
+        className={`flex flex-col w-screen h-screen ${
           showChapters ? "hidden md:flex" : ""
         }`}
       >
@@ -162,7 +162,7 @@ const ChapterRead = () => {
               {getChapter.title}
             </h1>
             <div
-              className="mt-2 md:mt-[24px] md:ml-0 font-normal text-sm md:text-lg"
+              className="mt-2 md:mt-[24px] md:ml-0 font-normal text-sm md:text-lg dark:text-white"
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(getChapter.content),
               }}
@@ -170,7 +170,7 @@ const ChapterRead = () => {
           </div>
         )}
 
-        <div className="flex justify-between mt-auto border-t border-t-slate-300">
+        <div className="flex justify-between mt-auto border-t border-t-slate-300 dark:border-t-gray-500">
           {
             currentChapterIndex > 1 ? (
               <button
@@ -182,7 +182,7 @@ const ChapterRead = () => {
                   }
                 }}
                 disabled={currentChapterIndex <= 1}
-                className="flex justify-center items-center border-slate-300 my-4 md:my-[15.5px] ml-1 md:ml-2 border rounded-[8px] w-[80px] md:w-[113px] h-[40px] md:h-[42px] text-[14px] md:text-[16px]"
+                className="flex justify-center items-center border-slate-300 dark:border-gray-500 my-4 md:my-[15.5px] ml-1 md:ml-2 border rounded-[8px] w-[80px] md:w-[113px] h-[40px] md:h-[42px] text-[14px] md:text-[16px]"
               >
                 <SlArrowLeft className="mt-[2px] mr-1 md:mr-2 w-2 md:w-[20px]" />
                 Previous
@@ -194,7 +194,7 @@ const ChapterRead = () => {
           }
 
 
-          <div className="flex items-center text-[14px] md:text-[16px]">
+          <div className="flex items-center text-[14px] md:text-[16px] dark:text-white">
             {currentChapterIndex} / {totalChapters}
           </div>
 
@@ -207,14 +207,14 @@ const ChapterRead = () => {
                   }
                 }}
                 disabled={currentChapterIndex >= totalChapters}
-                className="flex justify-center items-center bg-primary my-4 md:my-[15.5px] mr-4 md:mr-2 border rounded-[8px] w-[80px] md:w-[113px] h-[40px] md:h-[42px] text-[14px] text-slate-50 md:text-[16px]"
+                className="flex justify-center items-center bg-primary my-4 md:my-[15.5px] mr-4 md:mr-2 rounded-[8px] w-[80px] md:w-[113px] h-[40px] md:h-[42px] text-[14px] text-slate-50 md:text-[16px]"
               >
                 Next
                 <SlArrowRight className="mt-[2px] ml-1 md:ml-2 w-2 md:w-[20px]" />
               </button>
             ): 
             (
-              <button onClick={CompleteButton} className="flex justify-center items-center bg-primary my-4 md:my-[15.5px] mr-4 md:mr-2 border rounded-[8px] w-[80px] md:w-[113px] h-[40px] md:h-[42px] text-[14px] text-slate-50 md:text-[16px]">Complete</button>
+              <button onClick={CompleteButton} className="flex justify-center items-center bg-primary my-4 md:my-[15.5px] mr-4 md:mr-2 rounded-[8px] w-[80px] md:w-[113px] h-[40px] md:h-[42px] text-[14px] text-slate-50 md:text-[16px]">Complete</button>
             )
           }
         </div>
