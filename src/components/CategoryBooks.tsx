@@ -11,7 +11,6 @@ import { BookFloatAnimation } from "@/assets";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router-dom";
 import { Book, fetchBookData } from "@/types/types";
-import { Sorting } from "@/assets";
 import { useAddFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
 import { useEffect, useState } from "react";
 import { getToken } from "@/services/authService";
