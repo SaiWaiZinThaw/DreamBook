@@ -475,6 +475,14 @@ const BookDetails = () => {
   });
 
   const handleToggle = () => {
+    if(!isEditing){
+      Swal.fire({
+        title: "Error",
+        text: "You need to click edit before changing the status.",
+        confirmButtonText: "Okay",
+      });
+      return;
+    }
     setIsOn((prevIsOn) => {
       const newIsOn = !prevIsOn;
       setUpdateData((prevData) => ({
@@ -600,10 +608,6 @@ const BookDetails = () => {
           </div>
         </div>
       </div>
-      {/* <div className="lg:flex h-full">
-        <div className="lg:flex lg:flex-row-reverse">
-          <div className="flex lg:flex-col justify-center md:ml-[35px]">
-            <div className="order-1 lg:order-none md:mx-8 mt-[32px] md:w-[232px] md:h-[289px]"> */}
 
       <div className="h-full md:flex">
         <div className="md:flex md:flex-row-reverse">
