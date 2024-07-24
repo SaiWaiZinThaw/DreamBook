@@ -20,14 +20,14 @@ const ChapterRead = () => {
   const navigate = useNavigate();
   const { data: getChapters } =
     useFetchAllChapters(bookSlug!);
-  const [parsedChapterId, setParsedChapterId] = useState<number | null>(null);
+  const [parsedChapterId, setParsedChapterId] = useState<number>();
   const {
     data: getChapter,
     isLoading,
     error,
-  } = useFetchAChapter(parsedChapterId!);
+  } = useFetchAChapter(parsedChapterId !== undefined ? parsedChapterId : 0);
 
-  const [activeChapterId, setActiveChapterId] = useState<number | null>(null);
+  const [activeChapterId, setActiveChapterId] = useState<number>();
   const createChapterProgress = useCreateChapterProgress();
   const { data: getChapterProgress, error: progressError } =
     useFetchCurrentChapter(bookSlug!);
@@ -55,19 +55,21 @@ const ChapterRead = () => {
         navigate(`/${bookSlug}/chapter/${initialChapterId}`);
         setParsedChapterId(initialChapterId);
         setActiveChapterId(initialChapterId);
+
+        if(getChapterProgress?.chapterId === initialChapterId){
+          updateProgress.mutate({bookSlug: bookSlug!, data:{chapterId: initialChapterId}})
+        }else {
+          createChapterProgress.mutate({slug: bookSlug!, chapterId: initialChapterId})
+        }
       }
     }
   }, [getChapters, getChapterProgress, navigate])
 
   useEffect(() => {
-    if (
-      progressError &&
-      (progressError as any).response?.status === 404 &&
-      chapterId
-    ) {
+    if (chapterId) {
       createChapterProgress.mutate({
         slug: bookSlug!,
-        chapterId: parseInt(chapterId, 10),
+        chapterId: Number(chapterId),
       });
     }
   }, [progressError, chapterId, bookSlug, createChapterProgress]);
