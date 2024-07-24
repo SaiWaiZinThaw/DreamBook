@@ -24,6 +24,7 @@ const Restore = () => {
   const [selectedBooks, setSelectedBooks] = useState<string[]>([]);
   const [allSelected, setAllSelected] = useState(false);
   const [viewMode, setViewMode] = useState<"card" | "list">("card");
+  const [showConfirmBox, setShowConfirmBox] = useState(false);
 
   const handleRestore = (bookSlugs: string[]) => {
     restoreBookMutation(bookSlugs, {
@@ -69,9 +70,21 @@ const Restore = () => {
   };
 
   const handleDeleteAll = () => {
-    if (selectedBooks.length > 0) {
+    setShowConfirmBox(true);
+    // if (selectedBooks.length > 0) {
+    //   handleDelete(selectedBooks);
+    // }
+  };
+
+  const handleCancel = () => {
+    setShowConfirmBox(false);
+  };
+
+  const handleConfirmDelete = () => {
+    if(selectedBooks.length > 0){
       handleDelete(selectedBooks);
     }
+    setShowConfirmBox(false);
   };
 
   const toggleViewMode = (mode: "card" | "list") => {
@@ -79,7 +92,7 @@ const Restore = () => {
   };
 
   return (
-    <div className="w-full mt-5">
+    <div className="mt-5 w-full">
       <div className="p-4 md:p-10">
         <div className="flex justify-between mx-4 mb-4">
           <DropdownMenu>
@@ -110,7 +123,7 @@ const Restore = () => {
 
         <div className="flex mx-4 my-5">
           <div
-            className="flex p-2 mr-2 rounded bg-slate-300 w-fit h-fit"
+            className="flex bg-slate-300 mr-2 p-2 rounded w-fit h-fit"
             onClick={handleRestoreAll}
           >
             <PiArrowClockwiseBold className="mt-[2.5px] md:mt-[3.5px] mr-1" />
@@ -118,7 +131,7 @@ const Restore = () => {
           </div>
 
           <div
-            className="flex p-2 bg-red-600 rounded w-fit h-fit text-slate-200"
+            className="flex bg-red-600 p-2 rounded w-fit h-fit text-slate-200"
             onClick={handleDeleteAll}
           >
             <FaTrashCan className="mt-[3px] md:mt-1 mr-1 w-3 md:w-4" />
@@ -126,8 +139,30 @@ const Restore = () => {
           </div>
         </div>
 
+        {showConfirmBox && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+          <div className="bg-white shadow-lg p-4 rounded">
+            <p className="mb-4 text-lg">Are you sure you want to delete all items?</p>
+            <div className="flex justify-end">
+              <button
+                className="bg-gray-300 mr-2 p-2 rounded"
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-red-600 p-2 rounded text-white"
+                onClick={handleConfirmDelete}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
         {viewMode === "card" ? (
-          <ul className="flex mx-4 gap-x-4">
+          <ul className="justify-center gap-x-11 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:mx-4">
             {fetchBooksAuthor?.items?.map((book: any) => (
               <div
                 key={book.id}
@@ -137,9 +172,10 @@ const Restore = () => {
                 }`}
               >
                 <div className="flex justify-between mt-2 mr-4">
-                  <p className="relative bottom-6 bg-gray-500 ml-2 p-[2.5px] md:p-1 rounded-[8px] font-medium text-[14px] text-slate-50 md:text-[16px]">
+                  {/* <p className="bottom-6 absolute bg-gray-500 ml-2 p-[2.5px] md:p-1 rounded-[8px] font-medium text-[14px] text-slate-50 md:text-[16px]">
                     {book.expireDayLeft} Days
-                  </p>
+                  </p> */}
+                  <span className="bg-slate-300 mx-4 p-2 rounded-[5px] text-white">{book.expireDayLeft} Days Left</span>
                   <input
                     className={`${
                       selectedBooks.includes(book.slug)
@@ -163,7 +199,7 @@ const Restore = () => {
                   <h2 className="px-3 font-semibold md:text-xl">
                     {book.title}
                   </h2>
-                  <div className="flex items-center justify-center">
+                  <div className="flex justify-center items-center">
                     <div
                       onClick={() => handleRestore([book.slug])}
                       className="flex my-2 mr-5 text-blue-600"
@@ -213,7 +249,7 @@ const Restore = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex ml-auto gap-x-4">
+                  <div className="flex gap-x-4 ml-auto">
                     <button
                       onClick={() => handleRestore([book.slug])}
                       className="text-blue-600 hover:text-blue-900"
