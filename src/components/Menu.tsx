@@ -30,7 +30,7 @@ const Menu = () => {
   return (
     <div
       ref={menuRef}
-      className={`fixed inset-0 z-50 w-[50%] flex flex-col items-center dark:bg-black bg-white p-6 transition-transform duration-300 ${
+      className={`fixed inset-0 z-50 w-[65%] flex flex-col items-center dark:bg-black bg-white p-6 transition-transform duration-300 ${
         showMenu ? "translate-x-0" : "-translate-x-full"
       }`}
     >

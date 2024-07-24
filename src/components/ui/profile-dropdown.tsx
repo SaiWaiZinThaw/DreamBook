@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,12 +18,44 @@ import { MdDarkMode } from "react-icons/md";
 import { logout } from "@/services/authService";
 import { CiLogout } from "react-icons/ci";
 import { NavLink, useNavigate } from "react-router-dom";
-import useLocalStorage from "react-use-localstorage";
 
 const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
   const navigate = useNavigate();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
-  const [theme, setTheme] = useLocalStorage("theme", "light");
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "system"
+  );
+  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  const element = document.documentElement;
+
+  function onWindowMatch() {
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) && darkQuery.matches)
+    ) {
+      element.classList.add("dark");
+    } else {
+      element.classList.remove("dark");
+    }
+  }
+
+  useEffect(() => {
+    switch (theme) {
+      case "dark":
+        element.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+        break;
+
+      case "light":
+        element.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+
+        break;
+      default:
+        onWindowMatch();
+        break;
+    }
+  }, [theme]);
 
   const logoutHandler = () => {
     setShowLogoutDialog(true);
@@ -59,14 +91,20 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
                 className="w-10 h-10 rounded-full"
               />
               <div className="flex flex-col">
-                <p className="text-lg font-bold text-black">{data.name}</p>
-                <p className="text-sm opacity-50">{data.email}</p>
+                <p className="text-lg font-bold text-black dark:text-white">
+                  {data.name}
+                </p>
+                <p className="text-sm opacity-50 dark:text-white">
+                  {data.email}
+                </p>
               </div>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuLabel className="!border-none">
-            <h3 className="px-2 font-bold text-[18px] text-black">Account</h3>
+            <h3 className="px-2 font-bold text-[18px] dark:text-white text-black">
+              Account
+            </h3>
           </DropdownMenuLabel>
           <NavLink to="/me/info">
             <DropdownMenuItem>
@@ -93,19 +131,20 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
             </DropdownMenuItem>
           </NavLink>
           <DropdownMenuLabel className="!border-none">
-            <h3 className="px-2 font-bold text-[18px] text-black">Theme</h3>
+            <h3 className="px-2 font-bold text-[18px] dark:text-white text-black">
+              Theme
+            </h3>
           </DropdownMenuLabel>
 
           <div className="flex flex-col gap-2 pb-2 text-sm">
             <div className="flex items-center gap-2 px-2 mx-4">
               <Input
-                className="w-1 h-1 rounded-none md:w-3 md:h-3"
+                className="w-3 h-3 rounded-none"
                 type="radio"
                 value="light"
                 checked={theme === "light"}
                 onChange={(event) => {
                   setTheme(event.currentTarget.value);
-                  window.location.reload();
                 }}
                 name="theme"
                 id="light"
@@ -117,14 +156,13 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
 
             <div className="flex items-center gap-2 px-2 mx-4">
               <Input
-                className="w-1 h-1 rounded-none md:w-3 md:h-3"
+                className="w-3 h-3 rounded-none"
                 type="radio"
                 name="theme"
                 value="dark"
                 checked={theme === "dark"}
                 onChange={(event) => {
                   setTheme(event.currentTarget.value);
-                  window.location.reload();
                 }}
                 id="dark"
               />
@@ -135,13 +173,12 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
 
             <div className="flex items-center gap-2 px-2 pb-2 mx-4 border-b border-border">
               <Input
-                className="w-1 h-1 rounded-none md:w-3 md:h-3"
+                className="w-3 h-3 rounded-none"
                 type="radio"
                 name="theme"
                 value="system"
                 onChange={(event) => {
                   setTheme(event.currentTarget.value);
-                  window.location.reload();
                 }}
                 id="system"
                 checked={theme === "system"}

@@ -1,4 +1,3 @@
-import { NavBar } from "@/components";
 import { useGetMe } from "@/hooks/useUser";
 import { getToken, logout } from "@/services/authService";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
@@ -9,6 +8,7 @@ import { GoHeart } from "react-icons/go";
 import { IoMdBookmarks } from "react-icons/io";
 import { CiLogout } from "react-icons/ci";
 import { useEffect } from "react";
+import Nav from "@/components/Nav";
 
 const ProfileLayout = () => {
   const token = getToken() || "";
@@ -24,13 +24,13 @@ const ProfileLayout = () => {
     if (!token) {
       navigate("/");
     }
-  }, [!token]);
+  }, [token]);
 
   return (
-    <div className="w-full min-h-screen dark:bg-dark-bg">
-      <NavBar />
-      <div className="flex w-full h-full">
-        <div className="min-h-screen flex flex-col lg:gap-10 border-2 shadow-sm pt-8 lg:p-8 lg:pt-16 shoadw-border dark:border-dark-border border-r-border w-[90px] lg:w-[480px]">
+    <div className="flex flex-col w-full min-h-screen dark:bg-dark-bg">
+      <Nav />
+      <div className="flex w-full h-full ">
+        <div className="h-dvh sticky top-0 dark:bg-dark-bg bg-white z-20 flex flex-col lg:gap-10 border-2 shadow-sm pt-8 lg:p-8 lg:pt-16 shoadw-border dark:border-dark-border border-r-border w-[90px] lg:w-[480px]">
           {!isLoading && data && (
             <div className="flex flex-col items-center gap-2 py-4 lg:flex-row lg:gap-4 lg:px-5 profile">
               <img
@@ -49,7 +49,7 @@ const ProfileLayout = () => {
               to={"/me/info"}
               className={({ isActive }) =>
                 isActive
-                  ? "bg-primary  lg:w-full w-[50px] !text-primary-foreground p-2 self-center lg:p-5 rounded-[8px] flex items-center justify-center lg:justify-between"
+                  ? "bg-primary lg:w-full w-[50px] !text-primary-foreground p-2 self-center lg:p-5 rounded-[8px] flex items-center justify-center lg:justify-between"
                   : "text-black dark:text-white flex items-center justify-center lg:w-full w-[50px] lg:justify-between p-2 self-center lg:p-5 rounded-[8px]"
               }
             >
@@ -130,7 +130,7 @@ const ProfileLayout = () => {
             >
               <div className="flex items-center gap-3">
                 <FaTrashAlt />
-                <span className="hidden lg:block">Recently Deleated</span>
+                <span className="hidden lg:block">Recently Deleted</span>
               </div>
               <FaAngleRight className="hidden lg:block" />
             </NavLink>
@@ -144,7 +144,9 @@ const ProfileLayout = () => {
             <span className="hidden lg:block ">Sign Out</span>
           </button>
         </div>
-        <Outlet />
+        <div className="w-full">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

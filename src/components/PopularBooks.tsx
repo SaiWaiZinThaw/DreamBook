@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { useFetchPopularBooks } from "@/hooks/useFetchBook";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "@/services/authService";
+import useMeasure from "react-use-measure";
 import BookCard from "./BookCard";
 import BookCardSkeleton from "./BookCardSkeleton";
+import { animate, useMotionValue, motion } from "framer-motion";
 
 const PopularBooks = () => {
   const { data: booksData, isLoading: isBooksLoading } = useFetchPopularBooks();
@@ -29,6 +31,40 @@ const PopularBooks = () => {
     }
   };
 
+  let [ref, { width }] = useMeasure();
+  const xTransition = useMotionValue(0);
+  const Fast_Duration = 15;
+  const Slow_Duration = 45;
+
+  const [duration, setDuration] = useState(Fast_Duration);
+  const [mustFinish, setMustFinish] = useState(false);
+  const [rerender, setRerender] = useState(false);
+
+  useEffect(() => {
+    let controls;
+    let finalPosition = -width / 4;
+    if (mustFinish) {
+      controls = animate(xTransition, [xTransition.get(), finalPosition], {
+        ease: "linear",
+        duration: duration * (1 - xTransition.get() / finalPosition),
+        onComplete() {
+          setMustFinish(false);
+          setRerender(!rerender);
+        },
+      });
+    } else {
+      controls = animate(xTransition, [0, finalPosition], {
+        ease: "linear",
+        duration: duration,
+        repeat: Infinity,
+        repeatType: "loop",
+        repeatDelay: 0,
+      });
+    }
+
+    return controls?.stop;
+  }, [xTransition, width, duration, rerender]);
+
   useEffect(() => {
     if (booksData) {
       const newFavorites: { [key: string]: boolean } = {};
@@ -45,10 +81,20 @@ const PopularBooks = () => {
     }
   }, [token]);
 
+  useEffect(() => {
+    if (booksData) {
+      const newFavorites: { [key: string]: boolean } = {};
+      booksData.items.forEach((book) => {
+        newFavorites[book.bookId] = Boolean(book.isFavorite);
+      });
+      setFavorites(newFavorites);
+    }
+  }, [booksData]);
+
   return (
-    <div className="w-full py-2 overflow-x-auto transition">
+    <div className="py-2 overflow-x-auto transition lg:overflow-hidden md:p-3">
       {isBooksLoading ? (
-        <div className="flex w-full mt-2 h-[280px]">
+        <div className="flex w-full h-[280px]">
           <BookCardSkeleton key="skeleton-1" />
           <BookCardSkeleton key="skeleton-2" />
           <BookCardSkeleton key="skeleton-3" />
@@ -58,16 +104,28 @@ const PopularBooks = () => {
         </div>
       ) : (
         booksData && (
-          <div className="flex w-full mt-2 h-[280px]">
-            {booksData.items.map((book) => (
+          <motion.div
+            onHoverStart={() => {
+              setMustFinish(true);
+              setDuration(Slow_Duration);
+            }}
+            onHoverEnd={() => {
+              setMustFinish(true);
+              setDuration(Fast_Duration);
+            }}
+            ref={ref}
+            style={{ x: xTransition }}
+            className="flex w-full h-[280px]"
+          >
+            {[...booksData.items].map((book) => (
               <BookCard
-                key={book.bookId}
+                key={book?.bookId}
                 book={book}
                 favorites={favorites}
                 toggleFavorite={toggleFavorite}
               />
             ))}
-          </div>
+          </motion.div>
         )
       )}
     </div>

@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { getToken } from "@/services/authService";
 import BookCard from "./BookCard";
 import { useFetchCategories } from "@/hooks/useFetchCategories";
+import { BiSolidCategory } from "react-icons/bi";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -104,7 +105,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
         <div className="relative flex items-center w-8/12 gap-3 lg:w-full">
           <DropdownMenu>
             <DropdownMenuTrigger className=" w-[45px]  h-full md:hidden">
-              <img src={Sorting} alt="sorting" className="w-full h-full" />
+              <BiSolidCategory className="w-full h-full text-black border dark:text-white dark:border-dark-border border-border rounded-[4px]" />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="dark:bg-dark-bg">
               <DropdownMenuLabel>Categories</DropdownMenuLabel>
@@ -122,6 +123,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
                             categoryHandler(item.categoryId);
                           }}
                           checked={selectedCategories.includes(item.categoryId)}
+                          className="flex items-center justify-center w-2 h-2"
                         />
                         {item.title}
                       </label>

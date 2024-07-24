@@ -70,7 +70,7 @@ export const fetchAllBook = async (params: FetchAllBookParams = {}) => {
 };
 
 export const fetchPopularBooks = async () => {
-  const response: Response = await fetch(`${BaseURL}/books/popular?limit=5`, {
+  const response: Response = await fetch(`${BaseURL}/books/popular?limit=10`, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -89,7 +89,7 @@ export const fetchPopularBooks = async () => {
 
 export const fetchLatestBooks = async () => {
   const response: Response = await fetch(
-    `${BaseURL}/books/public?sortBy=latest&limit=5`,
+    `${BaseURL}/books/public?sortBy=latest&limit=10`,
     {
       headers: {
         Accept: "application/json",

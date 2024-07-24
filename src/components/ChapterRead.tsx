@@ -18,8 +18,7 @@ const ChapterRead = () => {
     chapterId?: string;
   }>();
   const navigate = useNavigate();
-  const { data: getChapters } =
-    useFetchAllChapters(bookSlug!);
+  const { data: getChapters } = useFetchAllChapters(bookSlug!);
   const [parsedChapterId, setParsedChapterId] = useState<number>();
   const {
     data: getChapter,
@@ -35,8 +34,8 @@ const ChapterRead = () => {
   const [showChapters, setShowChapters] = useState(false);
 
   const CompleteButton = () => {
-    navigate(`/book/${bookSlug}`)
-  }
+    navigate(`/book/${bookSlug}`);
+  };
 
   useEffect(() => {
     if (getChapterProgress?.chapterId) {
@@ -45,25 +44,31 @@ const ChapterRead = () => {
       setParsedChapterId(parseInt(chapterId, 10));
     }
   }, [getChapterProgress, chapterId]);
-  
 
   useEffect(() => {
-    if( getChapters && !parsedChapterId) {
-      const initialChapterId = getChapterProgress?.chapterId || getChapters[0]?.chapterId;
+    if (getChapters && !parsedChapterId) {
+      const initialChapterId =
+        getChapterProgress?.chapterId || getChapters[0]?.chapterId;
 
-      if(initialChapterId) {
+      if (initialChapterId) {
         navigate(`/${bookSlug}/chapter/${initialChapterId}`);
         setParsedChapterId(initialChapterId);
         setActiveChapterId(initialChapterId);
 
-        if(getChapterProgress?.chapterId === initialChapterId){
-          updateProgress.mutate({bookSlug: bookSlug!, data:{chapterId: initialChapterId}})
-        }else {
-          createChapterProgress.mutate({slug: bookSlug!, chapterId: initialChapterId})
+        if (getChapterProgress?.chapterId === initialChapterId) {
+          updateProgress.mutate({
+            bookSlug: bookSlug!,
+            data: { chapterId: initialChapterId },
+          });
+        } else {
+          createChapterProgress.mutate({
+            slug: bookSlug!,
+            chapterId: initialChapterId,
+          });
         }
       }
     }
-  }, [getChapters, getChapterProgress, navigate])
+  }, [getChapters, getChapterProgress, navigate]);
 
   useEffect(() => {
     if (chapterId) {
@@ -81,12 +86,13 @@ const ChapterRead = () => {
 
     if (getChapterProgress?.chapterId !== id) {
       updateProgress.mutate({ bookSlug: bookSlug!, data: { chapterId: id } });
-      console.log(updateProgress)
-      console.log({ chapterId: id });
-    } 
+    }
     setShowChapters(false);
 
-    if (currentChapterIndex < totalChapters && id === getChapters[currentChapterIndex].chapterId) {
+    if (
+      currentChapterIndex < totalChapters &&
+      id === getChapters[currentChapterIndex].chapterId
+    ) {
       const nextChapterId = getChapters[currentChapterIndex].chapterId;
       setParsedChapterId(nextChapterId);
       setActiveChapterId(nextChapterId);
@@ -96,7 +102,7 @@ const ChapterRead = () => {
           bookSlug: bookSlug!,
           data: { chapterId: nextChapterId },
         });
-      } 
+      }
     }
   };
 
@@ -107,8 +113,8 @@ const ChapterRead = () => {
   const totalChapters = getChapters?.length;
 
   return (
-    <div className="flex md:flex-row flex-col md:flex-grow">
-      <div className="flex md:flex-row flex-col">
+    <div className="flex flex-col h-full md:flex-row md:flex-grow">
+      <div className="flex flex-col md:flex-row">
         <div className="flex border-slate-300 md:hidden shadow-md border-b w-screen h-[50px]">
           <FiAlignJustify
             onClick={() => setShowChapters(!showChapters)}
@@ -171,52 +177,52 @@ const ChapterRead = () => {
         )}
 
         <div className="flex justify-between mt-auto border-t border-t-slate-300">
-          {
-            currentChapterIndex > 1 ? (
-              <button
-                onClick={() => {
-                  if (currentChapterIndex > 1) {
-                    handleChapterSelect(
-                      getChapters[currentChapterIndex - 2].chapterId
-                    );
-                  }
-                }}
-                disabled={currentChapterIndex <= 1}
-                className="flex justify-center items-center border-slate-300 my-4 md:my-[15.5px] ml-1 md:ml-2 border rounded-[8px] w-[80px] md:w-[113px] h-[40px] md:h-[42px] text-[14px] md:text-[16px]"
-              >
-                <SlArrowLeft className="mt-[2px] mr-1 md:mr-2 w-2 md:w-[20px]" />
-                Previous
-              </button>
-            ):
-            (
-              <div></div>
-            )
-          }
-
+          {currentChapterIndex > 1 ? (
+            <button
+              onClick={() => {
+                if (currentChapterIndex > 1) {
+                  handleChapterSelect(
+                    getChapters[currentChapterIndex - 2].chapterId
+                  );
+                }
+              }}
+              disabled={currentChapterIndex <= 1}
+              className="flex justify-center items-center border-slate-300 my-4 md:my-[15.5px] ml-1 md:ml-2 border rounded-[8px] w-[80px] md:w-[113px] h-[40px] md:h-[42px] text-[14px] md:text-[16px]"
+            >
+              <SlArrowLeft className="mt-[2px] mr-1 md:mr-2 w-2 md:w-[20px]" />
+              Previous
+            </button>
+          ) : (
+            <div></div>
+          )}
 
           <div className="flex items-center text-[14px] md:text-[16px]">
             {currentChapterIndex} / {totalChapters}
           </div>
 
-          {
-            currentChapterIndex < totalChapters ? (
-              <button
-                onClick={() => {
-                  if (currentChapterIndex < totalChapters) {
-                    handleChapterSelect(getChapters[currentChapterIndex].chapterId);
-                  }
-                }}
-                disabled={currentChapterIndex >= totalChapters}
-                className="flex justify-center items-center bg-primary my-4 md:my-[15.5px] mr-4 md:mr-2 border rounded-[8px] w-[80px] md:w-[113px] h-[40px] md:h-[42px] text-[14px] text-slate-50 md:text-[16px]"
-              >
-                Next
-                <SlArrowRight className="mt-[2px] ml-1 md:ml-2 w-2 md:w-[20px]" />
-              </button>
-            ): 
-            (
-              <button onClick={CompleteButton} className="flex justify-center items-center bg-primary my-4 md:my-[15.5px] mr-4 md:mr-2 border rounded-[8px] w-[80px] md:w-[113px] h-[40px] md:h-[42px] text-[14px] text-slate-50 md:text-[16px]">Complete</button>
-            )
-          }
+          {currentChapterIndex < totalChapters ? (
+            <button
+              onClick={() => {
+                if (currentChapterIndex < totalChapters) {
+                  handleChapterSelect(
+                    getChapters[currentChapterIndex].chapterId
+                  );
+                }
+              }}
+              disabled={currentChapterIndex >= totalChapters}
+              className="flex justify-center items-center bg-primary my-4 md:my-[15.5px] mr-4 md:mr-2 border rounded-[8px] w-[80px] md:w-[113px] h-[40px] md:h-[42px] text-[14px] text-slate-50 md:text-[16px]"
+            >
+              Next
+              <SlArrowRight className="mt-[2px] ml-1 md:ml-2 w-2 md:w-[20px]" />
+            </button>
+          ) : (
+            <button
+              onClick={CompleteButton}
+              className="flex justify-center items-center bg-primary my-4 md:my-[15.5px] mr-4 md:mr-2 border rounded-[8px] w-[80px] md:w-[113px] h-[40px] md:h-[42px] text-[14px] text-slate-50 md:text-[16px]"
+            >
+              Complete
+            </button>
+          )}
         </div>
       </div>
     </div>
