@@ -1,6 +1,6 @@
 import { useAddFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
 import { useEffect, useState } from "react";
-import { useFetchPopularBooks } from "@/hooks/useFetchBook";
+import { useFetchRecommendBooks } from "@/hooks/useFetchBook";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "@/services/authService";
 import useMeasure from "react-use-measure";
@@ -8,8 +8,9 @@ import BookCard from "./BookCard";
 import BookCardSkeleton from "./BookCardSkeleton";
 import { animate, useMotionValue, motion } from "framer-motion";
 
-const PopularBooks = () => {
-  const { data: booksData, isLoading: isBooksLoading } = useFetchPopularBooks();
+const RecommendBooks = () => {
+  const { data: booksData, isLoading: isBooksLoading } =
+    useFetchRecommendBooks();
   const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({});
   const token = getToken();
   const addFavorite = useAddFavorite();
@@ -132,4 +133,4 @@ const PopularBooks = () => {
   );
 };
 
-export default PopularBooks;
+export default RecommendBooks;

@@ -28,20 +28,20 @@ const History = () => {
   };
 
   return (
-    <div className="w-full h-full">
-      <div className="flex flex-col justify-center w-full gap-2 p-4 md:gap-0 md:p-10">
+    <div className="flex flex-col items-center w-full h-full">
+      <div className="flex flex-col items-center w-full gap-2 p-4 md:gap-0 md:p-10">
         <h1 className="text-xl font-bold text-center lg:text-2xl dark:text-white">
           History
         </h1>
         {isLoading ? (
-          <div className="grid grid-cols-2 gap-2 py-4 md:gap-4 md:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 py-4 md:gap-4 md:grid-cols-4">
             <BookCardSkeleton />
             <BookCardSkeleton />
             <BookCardSkeleton />
             <BookCardSkeleton />
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-2 py-4 md:gap-4 md:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 py-4 md:gap-4 md:grid-cols-4">
             {getHistory?.map(
               (item) =>
                 item.book && (

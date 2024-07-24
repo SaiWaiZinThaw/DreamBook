@@ -3,6 +3,7 @@ import {
   fetchBook,
   fetchLatestBooks,
   fetchPopularBooks,
+  fetchRecommendBooks,
 } from "@/api/bookApi";
 import { useQuery } from "@tanstack/react-query";
 
@@ -33,3 +34,9 @@ export const useFetchPopularBooks = () =>
 
 export const usefetchLatestBooks = () =>
   useQuery({ queryKey: ["latest Books"], queryFn: () => fetchLatestBooks() });
+
+export const useFetchRecommendBooks = () =>
+  useQuery({
+    queryKey: ["Recommend Books"],
+    queryFn: () => fetchRecommendBooks(),
+  });
