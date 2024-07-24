@@ -31,7 +31,6 @@ const BookReading: React.FC = () => {
   const token = getToken();
   const { data: me } = useGetMe(token!);
   const { data: relatedBook } = useRelatedBook(bookSlug!);
-  console.log(relatedBook);
   const createCommentHandler = () => {
     if (token) {
       setComment({ comment: "", slug: bookSlug! });
@@ -63,13 +62,13 @@ const BookReading: React.FC = () => {
   const progressPercentage = (currentChapterIndex / totalChapters) * 100;
   const firstChapterId = getChapters?.[0]?.id || "";
 
-  const RelatedBookHandler = (slug:string) => {
-    if(token) {
-      navigate(`/book/${slug}`)
-    }else {
+  const RelatedBookHandler = (slug: string) => {
+    if (token) {
+      navigate(`/book/${slug}`);
+    } else {
       navigate("/auth/login");
     }
-  }
+  };
 
   useEffect(() => {
     if (createComment.isSuccess) {
@@ -78,14 +77,14 @@ const BookReading: React.FC = () => {
   }, [createComment.isSuccess]);
 
   return (
-    <div className="flex md:flex-row flex-col px-10 md:px-20 w-full min-h-screen">
+    <div className="flex flex-col w-full min-h-screen px-10 md:flex-row md:px-20 dark:bg-dark-bg">
       <div className="flex-col items-center md:px-10 pt-[30px] md:pt-20 md:border-r border-border md:w-10/12 h-full">
         {fetchABook && !isLoading && (
           <div className="flex flex-col gap-[20px] w-full h-full">
             <div className="flex md:flex-row flex-col md:gap-[100px] md:px-20 md:pb-20 w-full">
               <div
                 onClick={() => navigate(-1)}
-                className="flex md:hidden text-blue-700 text-sm"
+                className="flex text-sm text-blue-700 md:hidden"
               >
                 <FaArrowLeft className="mt-[2.5px] mr-1" />
                 <h1>Back</h1>
@@ -99,7 +98,7 @@ const BookReading: React.FC = () => {
                 />
               </div>
               <div className="flex flex-col justify-center gap-3 md:w-[400px]">
-                <h1 className="font-extrabold md:text-3xl">
+                <h1 className="font-extrabold md:text-3xl dark:text-white">
                   {fetchABook.title}
                 </h1>
 
@@ -112,28 +111,35 @@ const BookReading: React.FC = () => {
                     alt={fetchABook?.user?.name}
                     className="rounded-full w-[20px] md:w-[30px] h-[20px] md:h-[30px]"
                   />
-                  <span className="text-[12px] md:text-[15px]">
+                  <span className="text-[12px] md:text-[15px] dark:text-white">
                     By {fetchABook?.user?.name}
                   </span>
                 </div>
                 <div className="flex gap-3 mt-[15px] md:mt-[20px]">
-                  <span className="font-bold md:text-lg">Category:</span>
+                  <span className="font-bold md:text-lg dark:text-white">
+                    Category:
+                  </span>
                   <div className="flex items-center gap-2">
                     <img
                       src={fetchABook?.category?.icon}
                       alt={fetchABook?.category?.title}
                       className="rounded-full w-[15px] md:w-[25px] h-[15px] md:h-[25px]"
                     />
-                    <span className="text-[13px] md:text-sm">
+                    <span className="text-[13px] md:text-sm dark:text-white">
                       {fetchABook?.category?.title}
                     </span>
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <span className="font-bold md:text-lg">Keywords:</span>
+                  <span className="font-bold md:text-lg dark:text-white">
+                    Keywords:
+                  </span>
                   <div className="flex items-center gap-1">
                     {fetchABook.keywords.map((keyword, index) => (
-                      <span key={index} className="text-[13px] md:text-sm">
+                      <span
+                        key={index}
+                        className="text-[13px] md:text-sm dark:text-white"
+                      >
                         {keyword}
                         {index < fetchABook.keywords.length - 1 && ", "}
                       </span>
@@ -145,14 +151,14 @@ const BookReading: React.FC = () => {
                   <Progress
                     value={progressPercentage}
                     max={100}
-                    className="relative bg-gray-200 rounded-full w-full h-2 overflow-hidden"
+                    className="relative w-full h-2 overflow-hidden bg-gray-200 rounded-full"
                   >
                     <div
                       style={{ width: `${progressPercentage}%` }}
-                      className="bg-blue-600 h-full"
+                      className="h-full bg-blue-600"
                     />
                   </Progress>
-                  <div className="mt-2 text-[13px] md:text-sm">{`Chapter ${currentChapterIndex} of ${totalChapters}`}</div>
+                  <div className="mt-2 dark:text-white text-[13px] md:text-sm">{`Chapter ${currentChapterIndex} of ${totalChapters}`}</div>
                 </div>
 
                 <div className="w-full md:h-5"></div>
@@ -165,13 +171,15 @@ const BookReading: React.FC = () => {
               </div>
             </div>
             <div className="flex flex-col gap-5 md:px-20 border-b border-border min-h-[200px]">
-              <h1 className="font-bold md:text-2xl">Book Overview</h1>
-              <div className="md:text-lg">
+              <h1 className="font-bold md:text-2xl dark:text-white">
+                Book Overview
+              </h1>
+              <div className="dark:text-white md:text-lg">
                 {parse(fetchABook.description || "")}
               </div>
             </div>
             <div className="flex flex-col gap-5 md:px-20 md:py-5">
-              <h1 className="md:text-lg">Leave a comment</h1>
+              <h1 className="md:text-lg dark:text-white">Leave a comment</h1>
               <textarea
                 value={comment.comment}
                 onChange={(event) => {
@@ -181,7 +189,7 @@ const BookReading: React.FC = () => {
                   });
                 }}
                 placeholder="Type your comment"
-                className="flex justify-center items-center px-4 py-6 border border-border rounded-[12px] w-full placeholder:text-secondary-foreground placeholder:text-opacity-50 resize-none"
+                className="dark:bg-dark-bg dark:border-dark-border outline-none dark:text-white dark:placeholder:text-gray-400 flex justify-center items-center px-4 py-6 border border-border rounded-[12px] w-full placeholder:text-secondary-foreground placeholder:text-opacity-50 resize-none"
               ></textarea>
               <Button
                 onClick={createCommentHandler}
@@ -198,30 +206,31 @@ const BookReading: React.FC = () => {
       </div>
 
       <div className="md:mx-2">
-        <h1 className="mt-4 font-semibold text-center text-md">
+        <h1 className="mt-4 font-semibold text-center text-md dark:text-white">
           Related Books
         </h1>
 
-      <div className="flex flex-col mx-2">
-        {
-         relatedBook?.pages.map((page, i) => (
-          <div  className="flex flex-row md:flex-col gap-x-3 md:gap-x-0 cursor-pointer overflow-x-auto md:overflow-x-hidden" key={i}>
-            {
-              page.items.map((book:any) => (
-              <div
-              key={book?.bookId}
-              onClick={() => RelatedBookHandler(book.slug)}
-              className="flex flex-col flex-shrink-0 bg-slate-100 shadow-xl md:shadow-md my-4 border rounded-[8px] w-[232px] max-h-full cursor-pointer"
-              > 
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[160px]">
-                  <img
-                    src={book.coverImage}
-                    alt=""
-                    className="w-[86px] h-[129px]"
-                  />
-                </div>
+        <div className="flex flex-col mx-2">
+          {relatedBook?.pages.map((page, i) => (
+            <div
+              className="flex flex-row overflow-x-auto cursor-pointer md:flex-col gap-x-3 md:gap-x-0 md:overflow-x-hidden"
+              key={i}
+            >
+              {page.items.map((book: any) => (
+                <div
+                  key={book?.bookId}
+                  onClick={() => RelatedBookHandler(book.slug)}
+                  className="dark:text-white dark:bg-[#2F2F2F] dark:border-none flex flex-col flex-shrink-0 bg-slate-100 shadow-xl md:shadow-md my-4 border rounded-[8px] w-[232px] max-h-full cursor-pointer"
+                >
+                  <div className="flex justify-center items-center dark:bg-[#3D3D3D] bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                    <img
+                      src={book.coverImage}
+                      alt=""
+                      className="w-[86px] h-[129px]"
+                    />
+                  </div>
 
-                <div className="ml-2">
+                  <div className="ml-2">
                     <h1 className="font-bold text-[14px] md:text-[15px]">
                       {book.title}
                     </h1>
@@ -245,17 +254,11 @@ const BookReading: React.FC = () => {
                       By {book.user?.name}
                     </h2>
                   </div>
-
-              </div>
-
-               
-              ))
-            }
-          </div>
-         ))
-        }
-      </div>
-        
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

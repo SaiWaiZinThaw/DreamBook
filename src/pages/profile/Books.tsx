@@ -26,6 +26,7 @@ const Books = () => {
     category_ids: "[]",
     sortBy: "random",
   });
+  const Theme = localStorage.getItem("theme");
   const token = getToken();
   const { data: me } = useGetMe(token!);
   const [search, setSearch] = useState(searchParams.get("search") || "");
@@ -83,7 +84,7 @@ const Books = () => {
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="items-end self-end h-full">
       <div className="flex flex-col items-center gap-5 p-10">
         <div className="flex justify-between lg:gap-0 gap-4 mt-4 h-[45px] lg:h-[50px] w-full">
           <div className="relative flex items-center w-8/12 gap-3 md:max-w-[280px] lg:w-full max-w-[100px]">
@@ -119,14 +120,14 @@ const Books = () => {
         </button>
 
         {isLoading ? (
-          <div className="grid grid-cols-2 gap-2 md:gap-4 md:grid-cols-4 md:py-10">
+          <div className="grid grid-cols-1 gap-4 md:gap-4 md:grid-cols-4 md:py-10">
             <BookCardSkeleton />
             <BookCardSkeleton />
             <BookCardSkeleton />
             <BookCardSkeleton />
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-2 md:gap-4 md:grid-cols-4 md:py-10">
+          <div className="grid grid-cols-1 gap-4 md:gap-4 md:grid-cols-4 md:py-10">
             {data?.items.map((book) => (
               <div
                 key={book.bookId}
@@ -195,6 +196,14 @@ const Books = () => {
           <Stack className="self-center" spacing={1}>
             <Pagination
               color="primary"
+              sx={{
+                "& .MuiPaginationItem-root": {
+                  color: Theme === "dark" ? "white" : "inherit",
+                },
+                "& .MuiPaginationItem-ellipsis": {
+                  color: Theme === "dark" ? "white" : "inherit",
+                },
+              }}
               count={data?.meta.totalPages}
               defaultPage={1}
               boundaryCount={1}
