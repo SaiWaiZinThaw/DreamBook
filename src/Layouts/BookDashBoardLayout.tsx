@@ -24,14 +24,14 @@ const BookDashBoardLayout = () => {
   };
 
   return (
-    <div className="flex md:flex-row flex-col mx-0 px-0 w-full md:h-screen">
+    <div className="flex md:flex-row flex-col dark:bg-dark-bg mx-0 px-0 w-full md:h-screen">
       <div className="flex justify-between items-center md:hidden bg-primary p-4">
         <button className="text-white" onClick={toggleMenu}>
           <FiAlignJustify size={24} />
         </button>
       </div>
       <div
-        className={`flex flex-col bg-primary bg-opacity-90 w-full md:w-[296px] h-screen overflow-y-auto transition-transform transform ${
+        className={`flex flex-col dark:bg-[#163665] bg-primary bg-opacity-90 w-full md:w-[296px] h-screen overflow-y-auto transition-transform transform ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 absolute md:relative z-10 md:z-auto`}
       >
@@ -110,7 +110,7 @@ const BookDashBoardLayout = () => {
           isMenuOpen ? "hidden md:block" : "block"
         }`}
       >
-        <Outlet />
+        <Outlet/>
       </div>
     </div>
   );

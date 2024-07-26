@@ -29,36 +29,36 @@ const History = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="flex flex-col justify-center w-full gap-2 p-4 md:gap-0 md:p-10">
-        <h1 className="text-xl font-bold text-center lg:text-2xl dark:text-white">
+      <div className="flex flex-col justify-center gap-2 md:gap-0 p-4 md:p-10 w-full">
+        <h1 className="font-bold text-center text-xl lg:text-2xl dark:text-white">
           History
         </h1>
         {isLoading ? (
-          <div className="grid grid-cols-2 gap-2 py-4 md:gap-4 md:grid-cols-4">
+          <div className="gap-2 md:gap-4 grid grid-cols-2 md:grid-cols-4 py-4">
             <BookCardSkeleton />
             <BookCardSkeleton />
             <BookCardSkeleton />
             <BookCardSkeleton />
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-2 py-4 md:gap-4 md:grid-cols-4">
+          <div className="gap-2 md:gap-4 grid grid-cols-2 md:grid-cols-4 py-4">
             {getHistory?.map(
               (item) =>
                 item.book && (
                   <div
                     key={item.book.title}
                     id={item.book.title}
-                    className="relative dark:text-white dark:bg-[#2F2F2F] dark:border-none bg-slate-50 shadow-sm mr-[21px] border rounded-[8px] lg:w-[232px] min-w-[180px] max-w-[210px] h-[280px] book group"
+                    className="relative bg-slate-50 dark:bg-[#2F2F2F] shadow-sm mr-[21px] border dark:border-none rounded-[8px] lg:w-[232px] min-w-[180px] max-w-[210px] h-[280px] dark:text-white book group"
                   >
                     <div className="group-hover:right-[5px] top-[10px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                       <div
                         onClick={() => handleDelete(item.book.slug)}
-                        className="flex items-center justify-center w-8 h-8 border rounded-full cursor-pointer bg-slate-50 drop-shadow-xl"
+                        className="flex justify-center items-center bg-slate-50 dark:bg-[#2F2F2F] drop-shadow-xl border rounded-full w-8 h-8 cursor-pointer"
                       >
-                        <FaTrashCan className="text-red-500" />
+                        <FaTrashCan className="text-red-500 dark:text-red-400" />
                       </div>
                     </div>
-                    <div className="flex justify-center items-center dark:bg-[#3D3D3D] bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                    <div className="flex justify-center items-center bg-slate-300 dark:bg-[#3D3D3D] m-2 rounded-[8px] h-[160px]">
                       <img
                         src={item.book.coverImage}
                         alt={item.book.coverImage}
@@ -81,16 +81,16 @@ const History = () => {
                         </p>
                       </div>
                       <div
-                        onClick={() => profileNavigation(item.user.userId)}
-                        className="flex items-center gap-1 mt-1 cursor-pointer md:gap-3"
+                        onClick={() => profileNavigation(item?.book?.user?.userId)}
+                        className="flex items-center gap-1 md:gap-3 mt-1 cursor-pointer"
                       >
                         <img
-                          src={item.user.profilePicture}
-                          alt={item.user.name}
+                          src={item?.book?.user?.profilePicture}
+                          alt={item?.book?.user?.name}
                           className="rounded-full w-[18px] md:w-6 h-[18px] md:h-6"
                         />
                         <h2 className="font-semibold text-[12px] text-black md:text-[13px] dark:text-white">
-                          By {item.user.name}
+                          By {item?.book?.user?.name}
                         </h2>
                       </div>
                     </div>

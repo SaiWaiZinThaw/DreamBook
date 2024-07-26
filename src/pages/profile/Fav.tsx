@@ -58,42 +58,42 @@ const Fav = () => {
   };
   return (
     <div className="w-full h-full">
-      <div className="flex flex-col justify-center w-full gap-5 p-10 md:p-10">
-        <h1 className="text-xl font-bold text-center lg:text-2xl dark:text-white">
+      <div className="flex flex-col justify-center gap-5 p-10 md:p-10 w-full">
+        <h1 className="font-bold text-center text-xl lg:text-2xl dark:text-white">
           Favorite Books
         </h1>
 
         {isLoading ? (
-          <div className="grid grid-cols-2 gap-2 md:py-10 md:gap-4 md:grid-cols-4">
+          <div className="gap-2 md:gap-4 grid grid-cols-2 md:grid-cols-4 md:py-10">
             <BookCardSkeleton />
             <BookCardSkeleton />
             <BookCardSkeleton />
             <BookCardSkeleton />
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:p-10 md:gap-4 md:grid-cols-4">
+          <div className="md:gap-4 grid grid-cols-2 md:grid-cols-4 md:p-10">
             {data?.items.map((item: any) => (
               <div
                 key={item.book.title}
                 id={item.book.slug}
-                className="relative dark:text-white dark:bg-[#2F2F2F] dark:border-none bg-slate-50 shadow-sm mr-[21px] border rounded-[8px] lg:w-[232px] min-w-[180px] max-w-[210px] h-[280px] book group"
+                className="relative bg-slate-50 dark:bg-[#2F2F2F] shadow-sm mr-[21px] border dark:border-none rounded-[8px] lg:w-[232px] min-w-[180px] max-w-[210px] h-[280px] dark:text-white book group"
               >
                 <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                  <div className="flex justify-center items-center bg-slate-50 dark:bg-[#2F2F2F] drop-shadow-xl border rounded-full w-8 h-8">
                     <BsHeartFill
                       className="text-red-500 cursor-pointer"
                       onClick={(event) => hideBook(event, item.book.slug)}
                     />
                   </div>
 
-                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                  <div className="flex justify-center items-center bg-slate-50 dark:bg-[#2F2F2F] drop-shadow-xl border rounded-full w-8 h-8">
                     <BsEyeFill
-                      className="cursor-pointer text-slate-500"
+                      className="text-slate-500 dark:text-white cursor-pointer"
                       onClick={() => navigate(`/book/${item.book.slug}`)}
                     />
                   </div>
                 </div>
-                <div className="flex justify-center items-center dark:bg-[#3D3D3D] bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                <div className="flex justify-center items-center bg-slate-300 dark:bg-[#3D3D3D] m-2 rounded-[8px] h-[160px]">
                   <img
                     src={item.book.coverImage}
                     alt={item.book.coverImage}
@@ -105,7 +105,7 @@ const Fav = () => {
                   <h1 className="line-clamp-1 h-6 font-bold text-[15px]">
                     {item.book.title}
                   </h1>
-                  <div className="flex items-center gap-2 ">
+                  <div className="flex items-center gap-2">
                     <img
                       src={item.book.category.icon}
                       alt={item.book.category.title}
@@ -122,9 +122,9 @@ const Fav = () => {
                     <img
                       src={item.book.user.profilePicture}
                       alt={item.book.user.name}
-                      className="w-6 h-6 rounded-full"
+                      className="rounded-full w-6 h-6"
                     />
-                    <h2 className="font-medium text-[13px] text-black dark:text-white ">
+                    <h2 className="font-medium text-[13px] text-black dark:text-white">
                       By {item.book.user.name}
                     </h2>
                   </div>

@@ -114,15 +114,15 @@ const Chapters = () => {
   };
 
   return (
-    <div className="w-full h-full">
-      <div className="w-full px-0 mx-0">
+    <div className="w-full h-screen md:h-full">
+      <div className="mx-0 px-0 w-full">
         <div className="flex flex-col w-full">
           <div className="flex border-slate-300 border-b w-full h-[40px] md:h-[80px]">
-            <h1 className="md:my-[20px] md:pl-[40px] font-extrabold md:text-2xl">
+            <h1 className="md:my-[20px] md:pl-[40px] font-extrabold md:text-2xl dark:text-white">
               Chapters
             </h1>
           </div>
-          <div className="flex flex-col justify-center w-full md:px-8 md:py-4">
+          <div className="flex flex-col justify-center md:px-8 md:py-4 w-full">
             {data &&
               !isLoading &&
               data.map((chapter: any) => (
@@ -130,15 +130,15 @@ const Chapters = () => {
                   key={chapter.chapterId}
                   className="flex flex-col justify-center shadow-secondary-foreground shadow-sm m-3 p-4 border border-border rounded-[8px] chapter"
                 >
-                  <div className="flex items-center justify-between">
+                  <div className="flex justify-between items-center">
                     <span className="font-semibold text-[16px] text-primary md:text-[18px]">
                       {chapter.title}
                     </span>
                     <DropdownMenu>
                       <DropdownMenuTrigger>
-                        <HiOutlineDotsVertical className="text-xl" />
+                        <HiOutlineDotsVertical className="text-xl dark:text-white" />
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent className="flex flex-col items-center justify-center">
+                      <DropdownMenuContent className="flex flex-col justify-center items-center">
                         <DropdownMenuItem
                           className="border-b border-border text-primary"
                           onClick={() =>
@@ -158,7 +158,7 @@ const Chapters = () => {
                     </DropdownMenu>
                   </div>
                   <div
-                    className="md:px-4 line-clamp-1 text-[13px] md:text-[16px]"
+                    className="md:px-4 line-clamp-1 text-[13px] md:text-[16px] dark:text-white"
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(chapter?.content!),
                     }}
@@ -167,31 +167,31 @@ const Chapters = () => {
               ))}
           </div>
           {data?.length === 0 && !isLoading ? (
-            <div className="flex flex-col items-center ">
+            <div className="flex flex-col items-center">
               <div className="flex flex-col items-center gap-3">
                 <img
                   src={BookFloatAnimation}
                   alt=""
                   className="mb-[10px] w-[88px] h-[79px] book-animation"
                 />
-                <p className="text-lg font-normal text-opacity-75 text-slate-500">
+                <p className="font-normal text-[12px] text-slate-500 md:text-lg dark:text-slate-100 text-opacity-75">
                   Could you please draft a comprehensive chapter for the book?
                 </p>
 
                 <Dialog open={open} onOpenChange={setOpen}>
                   <DialogTrigger asChild>
                     <Button
-                      className="flex bg-primary hover:bg-blue-500 border-none rounded-[5px] md:w-[225px] md:h-[52px] text-slate-100 md:text-lg hover:text-slate-200"
+                      className="flex bg-primary hover:bg-blue-500 border-none rounded-[5px] w-[225px] md:h-[52px] text-[12px] text-slate-100 md:text-lg hover:text-slate-200"
                       onClick={() => setOpen(true)}
                     >
-                      <BsPlus className="md:text-4xl" />
+                      <BsPlus className="text-xl md:text-4xl" />
                       Create New Chapter
                     </Button>
                   </DialogTrigger>
 
                   <DialogContent className="bg-slate-50">
-                    <DialogHeader className="flex items-center justify-center">
-                      <DialogTitle className="text-xl font-bold">
+                    <DialogHeader className="flex justify-center items-center">
+                      <DialogTitle className="font-bold text-xl">
                         Creating A Chapter
                       </DialogTitle>
                     </DialogHeader>
@@ -199,7 +199,7 @@ const Chapters = () => {
                       chapterData={chapterData}
                       setChapterData={setChapterData}
                     />
-                    <DialogFooter className=" w-[135px] h-[43px]">
+                    <DialogFooter className="w-[135px] h-[43px]">
                       <Button
                         onClick={handleButton}
                         type="submit"
@@ -216,20 +216,20 @@ const Chapters = () => {
             !isLoading && (
               <div className="flex flex-col items-center">
                 <div className="flex flex-col items-center">
-                  <div className="flex items-center justify-center">
+                  <div className="flex justify-center items-center">
                     <Dialog open={open} onOpenChange={setOpen}>
                       <DialogTrigger asChild>
                         <Button
                           className="flex gap-1 bg-primary hover:bg-blue-500 mx-auto border-none rounded-[5px] md:w-[150px] md:h-[44px] text-slate-100 hover:text-slate-200"
                           variant="outline"
                         >
-                          <BsPlus className="md:text-xl" />
+                          <BsPlus className="text-lg md:text-xl" />
                           New Chapter
                         </Button>
                       </DialogTrigger>
 
                       <DialogContent className="bg-slate-50">
-                        <DialogHeader className="flex items-center justify-center">
+                        <DialogHeader className="flex justify-center items-center">
                           <DialogTitle className="font-bold md:text-xl">
                             Creating A Chapter
                           </DialogTitle>
@@ -251,8 +251,8 @@ const Chapters = () => {
                     </Dialog>
                     <Dialog open={editOpen} onOpenChange={setEditOpen}>
                       <DialogContent className="bg-slate-50">
-                        <DialogHeader className="flex items-center justify-center">
-                          <DialogTitle className="text-xl font-bold">
+                        <DialogHeader className="flex justify-center items-center">
+                          <DialogTitle className="font-bold text-xl">
                             Updating A Chapter
                           </DialogTitle>
                         </DialogHeader>
@@ -260,7 +260,7 @@ const Chapters = () => {
                           chapterData={chapterUpdateData}
                           setChapterData={setChapterUpdateData}
                         />
-                        <DialogFooter className=" w-[135px] h-[43px]">
+                        <DialogFooter className="w-[135px] h-[43px]">
                           <Button
                             onClick={handleEditSaveButton}
                             type="submit"
