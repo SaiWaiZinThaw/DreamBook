@@ -1,10 +1,13 @@
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+
 import {
   useFetchCategories,
   useInterestedCategories,
 } from "@/hooks/useFetchCategories";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 interface Category {
   categoryId: string;
@@ -53,6 +56,17 @@ const CategorySelect = () => {
     }
   }, [interestedCategories.isSuccess]);
 
+  useEffect(() => {
+    if (interestedCategories.isError) {
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "You need to select at least 3 categories",
+        timer: 2000,
+      });
+    }
+  }, [interestedCategories.isError]);
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -89,15 +103,21 @@ const CategorySelect = () => {
           </div>
         ))}
 
-      {showError && (
-        <div className="col-span-2 mt-2 text-red-500 text-sm">
-          Please select at least 3 categories.
-        </div>
+      {!interestedCategories.isPending ? (
+        <Button className="col-span-2 mt-4" size={"full"} type="submit">
+          Finish
+        </Button>
+      ) : (
+        <Button
+          size={"full"}
+          disabled
+          className="flex items-center justify-center h-10 col-span-2 mt-4 md:h-auto"
+        >
+          <Loader2 className="h-4 mr-2 animate-spin" />
+          Please wait
+        </Button>
       )}
 
-      <Button className="col-span-2 mt-4" size={"full"} type="submit">
-        Finish
-      </Button>
     </form>
   );
 };

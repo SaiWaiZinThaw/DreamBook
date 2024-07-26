@@ -157,7 +157,10 @@ const ChapterRead = () => {
       </div>
 
       <div
-        className={`flex flex-col w-screen h-screen ${
+
+        className={`flex flex-col w-screen h-full ${
+
+
           showChapters ? "hidden md:flex" : ""
         }`}
       >

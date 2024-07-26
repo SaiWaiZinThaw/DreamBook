@@ -24,6 +24,7 @@ import LightCommentOutline from "./light_comment-outline.png";
 import BookFloatAnimation from "./book-float.png";
 import AuthLogo from "./authLogo.png";
 import LogoBlue from "./LogoBlue.png";
+import Avatar from "./avatar.jpg";
 export {
   Logo,
   FooterLine,
@@ -51,4 +52,5 @@ export {
   LoginBackground,
   AuthLogo,
   LogoBlue,
+  Avatar,
 };

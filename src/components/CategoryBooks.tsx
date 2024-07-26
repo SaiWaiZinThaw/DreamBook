@@ -56,6 +56,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
   const handleSortChange = (value: string) => {
     setSortBy(value);
   };
+  const [selectAll, setSelectAll] = useState<boolean>(false);
   const { data, isLoading } = useFetchCategories();
   const categoryHandler = (categoryId: string) => {
     setSelectedCategories((prev) => {
@@ -65,6 +66,14 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
         return [...prev, categoryId];
       }
     });
+  };
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedCategories([]);
+    } else {
+      setSelectedCategories(data ? data.map((item) => item.categoryId) : []);
+    }
+    setSelectAll(!selectAll);
   };
   const toggleFavorite = (bookId: string, bookSlug: string) => {
     if (token) {
@@ -89,6 +98,13 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
   });
 
   useEffect(() => {
+    setSelectAll(
+      selectedCategories.length > 0 &&
+        data?.length === selectedCategories.length
+    );
+  }, [selectedCategories, data]);
+
+  useEffect(() => {
     if (booksData) {
       const newFavorites: { [key: string]: boolean } = {};
       booksData.items.forEach((book) => {
@@ -99,7 +115,7 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
   }, [booksData]);
 
   return (
-    <div className="flex flex-col w-full min-h-[600px] lg:min-h-screen px-6 mx-0 lg:px-10">
+    <div className="flex flex-col w-full min-h-[600px] lg:min-h-screen px-4 mx-0 lg:px-10">
       <div className="flex justify-between lg:gap-0 gap-4 mt-4 h-[30px] lg:h-[50px] w-full">
         <div className="relative flex items-center w-8/12 gap-3 lg:w-full">
           <DropdownMenu>
@@ -109,9 +125,22 @@ const CategoryBooks: React.FC<CategoryBooksProps> = ({
             <DropdownMenuContent className="dark:bg-dark-bg">
               <DropdownMenuLabel>Categories</DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                <label className="flex items-center gap-2 font-medium md:text-[16px] text-[10px]">
+                  <Checkbox
+                    onCheckedChange={handleSelectAll}
+                    checked={selectAll}
+                    className="flex items-center justify-center w-2 h-2"
+                  />
+                  All
+                </label>
+              </DropdownMenuItem>
               {!isLoading && data
                 ? data.map((item) => (
-                    <DropdownMenuItem key={item.categoryId}>
+                    <DropdownMenuItem
+                      key={item.categoryId}
+                      onSelect={(e) => e.preventDefault()}
+                    >
                       <label
                         key={item.categoryId}
                         id={item.categoryId}

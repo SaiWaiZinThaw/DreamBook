@@ -9,6 +9,7 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useDebounce } from "use-debounce";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const LibraryLayout = () => {
   const { data, isLoading } = useFetchCategories();
@@ -18,13 +19,12 @@ const LibraryLayout = () => {
     sortBy: "random",
   });
 
-  const Theme = localStorage.getItem("theme");
   const [search, setSearch] = useState(searchParams.get("search") || "");
   const [deBounceSearch] = useDebounce(search, 500);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     JSON.parse(searchParams.get("category_ids") || "[]")
   );
-  const [sortBy, setSortBy] = useState(searchParams.get("sortBy") || "random");
+  const [sortBy, setSortBy] = useState(searchParams.get("sort_by") || "random");
   const [pageCount, setPageCount] = useState<number>(
     parseInt(searchParams.get("page") || "1", 10)
   );
@@ -36,6 +36,8 @@ const LibraryLayout = () => {
     sortBy,
     pageCount,
   });
+
+  const { theme } = useTheme();
 
   useEffect(() => {
     setSelectAll(
@@ -92,7 +94,7 @@ const LibraryLayout = () => {
   return (
     <div className="w-full px-0 mx-0 ">
       <div
-        className="flex flex-col dark:text-white justify-center items-center gap-4 bg-cover bg-no-repeat w-screen h-[370px] text-white dark:bg-blend-multiply dark:bg-blue-300"
+        className="flex flex-col dark:text-white justify-center items-center gap-4 bg-cover bg-no-repeat w-full h-[370px]  text-white dark:bg-blend-multiply dark:bg-blue-300"
         style={{ backgroundImage: `url(${LibraryHero})` }}
       >
         <h1 className="text-4xl font-extrabold">Library</h1>
@@ -164,10 +166,10 @@ const LibraryLayout = () => {
                 color="primary"
                 sx={{
                   "& .MuiPaginationItem-root": {
-                    color: Theme === "dark" ? "white" : "inherit",
+                    color: theme === "dark" ? "white" : "inherit",
                   },
                   "& .MuiPaginationItem-ellipsis": {
-                    color: Theme === "dark" ? "white" : "inherit",
+                    color: theme === "dark" ? "white" : "inherit",
                   },
                 }}
                 count={booksData?.meta.totalPages}

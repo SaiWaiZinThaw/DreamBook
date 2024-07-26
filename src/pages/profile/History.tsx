@@ -48,11 +48,15 @@ const History = () => {
                   <div
                     key={item.book.title}
                     id={item.book.title}
-                    className="relative dark:text-white dark:bg-[#2F2F2F] dark:border-none bg-slate-50 shadow-sm mr-[21px] border rounded-[8px] lg:w-[232px] min-w-[180px] max-w-[210px] h-[280px] book group"
+                    className="relative dark:text-white dark:bg-[#2F2F2F] history dark:border-none bg-slate-50 shadow-sm mr-[21px] border rounded-[8px] lg:w-[232px] min-w-[180px] max-w-[210px] h-[280px] book group"
                   >
                     <div className="group-hover:right-[5px] top-[10px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
                       <div
-                        onClick={() => handleDelete(item.book.slug)}
+                        onClick={(e) => {
+                          console.log(e.currentTarget.closest("#history"));
+
+                          handleDelete(item.book.slug);
+                        }}
                         className="flex items-center justify-center w-8 h-8 border rounded-full cursor-pointer bg-slate-50 drop-shadow-xl"
                       >
                         <FaTrashCan className="text-red-500" />

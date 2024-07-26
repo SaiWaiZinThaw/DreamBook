@@ -9,6 +9,7 @@ import { IoMdBookmarks } from "react-icons/io";
 import { CiLogout } from "react-icons/ci";
 import { useEffect } from "react";
 import Nav from "@/components/Nav";
+import { Avatar } from "@/assets";
 
 const ProfileLayout = () => {
   const token = getToken() || "";
@@ -30,11 +31,11 @@ const ProfileLayout = () => {
     <div className="flex flex-col w-full min-h-screen dark:bg-dark-bg">
       <Nav />
       <div className="flex w-full h-full ">
-        <div className="h-dvh sticky top-0 dark:bg-dark-bg bg-white z-20 flex flex-col lg:gap-10 border-2 shadow-sm pt-8 lg:p-8 lg:pt-16 shoadw-border dark:border-dark-border border-r-border w-[90px] lg:w-[480px]">
+        <div className="h-dvh sticky top-0 dark:bg-dark-bg bg-white z-20 flex flex-col lg:gap-10  border-r-2 shadow-sm pt-8 lg:p-8 lg:pt-16  dark:border-dark-border border-r-border w-[90px] lg:w-[480px]">
           {!isLoading && data && (
             <div className="flex flex-col items-center gap-2 py-4 lg:flex-row lg:gap-4 lg:px-5 profile">
               <img
-                src={data.profilePicture}
+                src={data.profilePicture ? data.profilePicture : Avatar}
                 alt={data.profilePicture}
                 className="rounded-full w-[40px] lg:w-[65px] h-[40px] lg:h-[65px]"
               />
