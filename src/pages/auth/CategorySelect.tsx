@@ -24,8 +24,15 @@ const CategorySelect = () => {
   }>({ categoryIds: [] });
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    interestedCategories.mutate(selectedCategories);
+    if (selectedCategories.categoryIds.length < 3) {
+      setShowError(true);
+    } else {
+      setShowError(false);
+      interestedCategories.mutate(selectedCategories);
+    }
   };
+  const [showError, setShowError] = useState(false);
+
 
   const handleCheckboxChange = (categoryId: string) => {
     setSelectedCategories((prevSelected) => {
@@ -63,13 +70,13 @@ const CategorySelect = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="md:gap-6 gap-2 gap-x-3 md:gap-x-8 grid grid-cols-2 w-full md:w-[600px] py-4"
+      className="gap-2 gap-x-3 md:gap-6 md:gap-x-8 grid grid-cols-2 py-4 w-full md:w-[600px]"
     >
       {!isLoading &&
         data?.map((category: Category) => (
           <div
             key={category.categoryId}
-            className="flex justify-between items-center bg-white px-4 py-2 md:h-auto h-[50px] rounded-[5px]"
+            className="flex justify-between items-center bg-white px-4 py-2 rounded-[5px] h-[50px] md:h-auto"
           >
             <div className="flex items-center gap-3">
               <input
@@ -82,13 +89,13 @@ const CategorySelect = () => {
                 )}
               />
               <label
-                className="flex items-center gap-3 text-[12px] font-bold lg-text-lg font-Inter"
+                className="flex items-center gap-3 font-bold font-Inter lg-text-lg text-[12px]"
                 htmlFor={category.categoryId}
               >
                 <img
                   src={category.icon}
                   alt={category.title}
-                  className="md:w-auto w-[20px]"
+                  className="w-[20px] md:w-auto"
                 />
                 {category.title}
               </label>
@@ -110,6 +117,7 @@ const CategorySelect = () => {
           Please wait
         </Button>
       )}
+
     </form>
   );
 };

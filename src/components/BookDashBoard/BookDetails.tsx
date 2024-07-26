@@ -47,6 +47,14 @@ const BookDetails = () => {
   });
 
   const handleToggle = () => {
+    if(!isEditing){
+      Swal.fire({
+        title: "Error",
+        text: "You need to click edit before changing the status.",
+        confirmButtonText: "Okay",
+      });
+      return;
+    }
     setIsOn((prevIsOn) => {
       const newIsOn = !prevIsOn;
       setUpdateData((prevData) => ({
