@@ -29,7 +29,6 @@ import {
 } from "@/hooks/useFetchAuthorChapter";
 import DOMPurify from "dompurify";
 import Swal from "sweetalert2";
-import Switch from "../ui/toggle-switch";
 
 const Chapters = () => {
   const createChapterMutation = useChapterCreate();
@@ -114,20 +113,12 @@ const Chapters = () => {
     createChapterMutation.mutate(data);
   };
 
-  const handleStatusChange = (chapter: any) => {
-    const updatedChapter = {
-      ...chapter,
-      status: chapter.status === "Published" ? "Draft" : "Published",
-    };
-    updateChapter.mutate(updatedChapter);
-  };
-
   return (
     <div className="w-full h-full ">
       <div className="w-full px-0 mx-0">
         <div className="flex flex-col w-full">
           <div className="flex border-slate-300 border-b w-full h-[40px] md:h-[80px]">
-            <h1 className="md:my-[20px] md:pl-[40px] font-extrabold md:text-2xl">
+            <h1 className="dark:text-white md:my-[20px] md:pl-[40px] font-extrabold md:text-2xl">
               Chapters
             </h1>
           </div>
@@ -144,15 +135,9 @@ const Chapters = () => {
                       {chapter.title}
                     </span>
                     <div className="flex items-center gap-3">
-                      <Switch
-                        onClick={() => setCurrentEditChapter(chapter.chapterId)}
-                        isDisabled={false}
-                        isOn={chapter.status === "Published"}
-                        handleToggle={() => handleStatusChange(chapter)}
-                      />
                       <DropdownMenu>
                         <DropdownMenuTrigger>
-                          <HiOutlineDotsVertical className="text-xl" />
+                          <HiOutlineDotsVertical className="text-xl dark:text-white" />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="flex flex-col items-center justify-center">
                           <DropdownMenuItem
@@ -175,7 +160,7 @@ const Chapters = () => {
                     </div>
                   </div>
                   <div
-                    className="md:px-4 line-clamp-1 text-[13px] md:text-[16px]"
+                    className="md:px-4 line-clamp-1 text-[13px] md:text-[16px] dark:text-white"
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(chapter?.content!),
                     }}
