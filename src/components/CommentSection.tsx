@@ -134,7 +134,9 @@ const CommentSection = () => {
   return (
     <div className="flex flex-col gap-5 px-5 md:px-20 md:pb-8">
       <span className="flex items-center gap-2">
-        <h1 className="font-semibold md:text-lg">Reader's Review</h1>
+        <h1 className="font-semibold md:text-lg dark:text-white">
+          Reader's Review
+        </h1>
         {comments ? (
           <span className="flex items-center justify-center p-1 text-sm font-bold bg-blue-200 rounded-full md:px-2 md:py-1 min-w-8 min-h-6 text-primary">
             {comments.pages[0].meta.totalItems}
@@ -152,7 +154,7 @@ const CommentSection = () => {
               className="flex flex-col border-b border-b-border"
               key={comment.commentId}
             >
-              <div className="flex items-start gap-4 p-2">
+              <div className="flex items-start gap-2 p-2">
                 <img
                   src={comment.user.profilePicture}
                   alt={comment.user.name}
@@ -165,7 +167,7 @@ const CommentSection = () => {
                       onClick={() =>
                         navigate(`/profile/${comment.user.userId}`)
                       }
-                      className="font-medium text-[15px] md:text-[18px] cursor-pointer "
+                      className="dark:text-white font-medium text-[15px] md:text-[18px] cursor-pointer "
                     >
                       {comment.user.name}
                     </h3>
@@ -183,10 +185,10 @@ const CommentSection = () => {
                           [comment.commentId]: e.target.value,
                         }))
                       }
-                      className="md:m-2 p-2 border border-border rounded-[5px] w-full resize-none"
+                      className="dark:bg-dark-bg dark:text-white md:m-2 p-2 border border-border rounded-[5px] w-full resize-none"
                     />
                   ) : (
-                    <p className="text-[14px] md:text-[16px]">
+                    <p className="dark:text-white text-[14px] md:text-[16px]">
                       {comment.comment}
                     </p>
                   )}
@@ -203,7 +205,7 @@ const CommentSection = () => {
                         </Button>
                       )}
                     {isEditing[comment.commentId] ? (
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center w-full gap-3">
                         <Button
                           onClick={() => handleSaveComment(comment.commentId)}
                           className="!bg-primary px-8 rounded-[4px] w-8 md:w-10 h-6 md:h-8 text-[10px] !md:text-[12px]"
@@ -235,37 +237,41 @@ const CommentSection = () => {
                     )}
                   </div>
                   {isReplying[comment.commentId] && (
-                    <div className="flex gap-2 h-[100px]">
-                      <img
-                        src={userData?.profilePicture}
-                        alt={userData?.name}
-                        className="rounded-full w-[30px] md:w-[40px] h-[30px] md:h-[40px]"
-                      />
-                      <textarea
-                        placeholder="Reply here"
-                        value={replyText[comment.commentId] || ""}
-                        onChange={(e) =>
-                          handleReplyChange(comment.commentId, e.target.value)
-                        }
-                        className="p-2 border border-border rounded-[5px] w-[400px] h-[18] text-sm resize-none self-start"
-                      ></textarea>
-                      <Button
-                        className="!bg-primary px-8 rounded-[4px] w-8 md:w-10 h-6 md:h-8 text-[10px] !md:text-[12px] self-end"
-                        onClick={() => handleReplyComment(comment.commentId)}
-                      >
-                        Done
-                      </Button>
-                      <Button
-                        onClick={() =>
-                          setIsReplying((prev) => ({
-                            ...prev,
-                            [comment.commentId]: false,
-                          }))
-                        }
-                        className="!bg-primary px-8 rounded-[4px] w-8 md:w-10 h-6 md:h-8 text-[10px] !md:text-[12px] self-end"
-                      >
-                        Cancel
-                      </Button>
+                    <div className="flex flex-col gap-2 p-2">
+                      <div className="flex w-full gap-2 px-4">
+                        <img
+                          src={userData?.profilePicture}
+                          alt={userData?.name}
+                          className="rounded-full w-[30px] md:w-[40px] h-[30px] md:h-[40px]"
+                        />
+                        <textarea
+                          placeholder="Reply here"
+                          value={replyText[comment.commentId] || ""}
+                          onChange={(e) =>
+                            handleReplyChange(comment.commentId, e.target.value)
+                          }
+                          className="p-2 border bg-dark-bg dark:text-white border-border rounded-[5px] w-full h- h-18 text-sm resize-none self-start"
+                        ></textarea>
+                      </div>
+                      <div className="flex self-end gap-2">
+                        <Button
+                          className="!bg-primary px-8 rounded-[4px] w-8 md:w-10 h-6 md:h-8 text-[10px] !md:text-[12px] self-end"
+                          onClick={() => handleReplyComment(comment.commentId)}
+                        >
+                          Done
+                        </Button>
+                        <Button
+                          onClick={() =>
+                            setIsReplying((prev) => ({
+                              ...prev,
+                              [comment.commentId]: false,
+                            }))
+                          }
+                          className="!bg-primary px-8 rounded-[4px] w-8 md:w-10 h-6 md:h-8 text-[10px] !md:text-[12px] self-end"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
                     </div>
                   )}
                   <div className="pl-4 ml-8 border-l-2 border-gray-300">

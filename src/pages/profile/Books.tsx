@@ -26,6 +26,7 @@ const Books = () => {
     category_ids: "[]",
     sortBy: "random",
   });
+  const Theme = localStorage.getItem("theme");
   const token = getToken();
   const { data: me } = useGetMe(token!);
   const [search, setSearch] = useState(searchParams.get("search") || "");
@@ -83,7 +84,7 @@ const Books = () => {
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="items-end h-full self-end">
       <div className="flex flex-col items-center gap-5 p-10">
         <div className="flex justify-between gap-4 lg:gap-0 mt-4 w-full h-[45px] lg:h-[50px]">
           <div className="relative flex items-center gap-3 w-8/12 lg:w-full max-w-[100px] md:max-w-[280px]">
@@ -195,6 +196,14 @@ const Books = () => {
           <Stack className="self-center" spacing={1}>
             <Pagination
               color="primary"
+              sx={{
+                "& .MuiPaginationItem-root": {
+                  color: Theme === "dark" ? "white" : "inherit",
+                },
+                "& .MuiPaginationItem-ellipsis": {
+                  color: Theme === "dark" ? "white" : "inherit",
+                },
+              }}
               count={data?.meta.totalPages}
               defaultPage={1}
               boundaryCount={1}

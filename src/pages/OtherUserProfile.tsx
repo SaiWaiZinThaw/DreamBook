@@ -58,11 +58,11 @@ const OtherUserProfile = () => {
     }
   }, [userBookData]);
   return (
-    <div className="flex flex-col items-center gap-3 dark:bg-dark-bg w-full h-full">
+    <div className="flex flex-col items-center gap-3 dark:bg-dark-bg w-full min-h-screen">
       <Nav />
-      <div className="flex flex-col p-10 w-full h-full">
+      <div className="flex flex-col dark:bg-dark-bg p-10 w-full h-full">
         {!ProfileIsLoading && (
-          <div className="flex md:flex-row justify-center items-center gap-5 md:gap-20 shadow-border shadow-sm p-4 border-b border-b-border rounded-sm w-full">
+          <div className="flex md:flex-row justify-center items-center gap-5 md:gap-20 dark:bg-dark-bg shadow-border shadow-sm p-4 border-b border-b-border rounded-sm w-full">
             <div className="flex flex-col items-center gap-2">
               <img
                 src={userData?.profilePicture}
@@ -125,7 +125,7 @@ const OtherUserProfile = () => {
                     className="relative bg-slate-100 dark:bg-[#2F2F2F] shadow-md shadow-secondary-foreground mr-[21px] border dark:border-none rounded-[8px] min-w-[150px] max-w-[232px] h-[280px] dark:text-white book group"
                   >
                     <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                      <div className="flex justify-center items-center bg-slate-50 dark:bg-[#2F2F2F] drop-shadow-xl border rounded-full w-8 h-8">
+                      <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                         {favorites[book.bookId] ? (
                           <BsHeartFill
                             className="text-red-500 cursor-pointer"
@@ -135,7 +135,7 @@ const OtherUserProfile = () => {
                           />
                         ) : (
                           <BsHeart
-                            className="text-slate-500 dark:text-white cursor-pointer"
+                            className="text-slate-500 cursor-pointer"
                             onClick={() =>
                               toggleFavorite(book.bookId, book.slug)
                             }
@@ -143,9 +143,9 @@ const OtherUserProfile = () => {
                         )}
                       </div>
 
-                      <div className="flex justify-center items-center bg-slate-50 dark:bg-[#2F2F2F] drop-shadow-xl border rounded-full w-8 h-8">
+                      <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                         <BsEyeFill
-                          className="text-slate-500 dark:text-white cursor-pointer"
+                          className="text-slate-500 cursor-pointer"
                           onClick={() => navigate(`/book/${book.slug}`)}
                         />
                       </div>
@@ -159,7 +159,7 @@ const OtherUserProfile = () => {
                     </div>
 
                     <div className="flex flex-col justify-center gap-1 ml-2">
-                      <h1 className="line-clamp-1 h-6 font-bold text-[14px] md:text-[15px] dark:text-white">
+                      <h1 className="line-clamp-1 h-6 font-bold text-[14px] md:text-[15px]">
                         {book.title}
                       </h1>
                       <div className="flex items-center gap-1 md:gap-2">
@@ -168,7 +168,7 @@ const OtherUserProfile = () => {
                           alt={book.category.title}
                           className="w-[18px] md:w-6"
                         />
-                        <p className="line-clamp-1 font-Inter text-[12px] text-secondary-foreground dark:text-slate-200">
+                        <p className="line-clamp-1 font-Inter text-[12px] text-secondary-foreground">
                           {book.category.title}
                         </p>
                       </div>
@@ -181,7 +181,7 @@ const OtherUserProfile = () => {
                           alt={book.user.name}
                           className="rounded-full w-[18px] md:w-6 h-[18px] md:h-6"
                         />
-                        <h2 className="font-semibold text-[12px] text-black md:text-[13px] dark:text-white">
+                        <h2 className="font-semibold text-[12px] text-black md:text-[13px]">
                           By {book.user.name}
                         </h2>
                       </div>

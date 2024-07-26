@@ -18,8 +18,7 @@ const ChapterRead = () => {
     chapterId?: string;
   }>();
   const navigate = useNavigate();
-  const { data: getChapters } =
-    useFetchAllChapters(bookSlug!);
+  const { data: getChapters } = useFetchAllChapters(bookSlug!);
   const [parsedChapterId, setParsedChapterId] = useState<number>();
   const {
     data: getChapter,
@@ -35,8 +34,8 @@ const ChapterRead = () => {
   const [showChapters, setShowChapters] = useState(false);
 
   const CompleteButton = () => {
-    navigate(`/book/${bookSlug}`)
-  }
+    navigate(`/book/${bookSlug}`);
+  };
 
   useEffect(() => {
     if (getChapterProgress?.chapterId) {
@@ -45,25 +44,31 @@ const ChapterRead = () => {
       setParsedChapterId(parseInt(chapterId, 10));
     }
   }, [getChapterProgress, chapterId]);
-  
 
   useEffect(() => {
-    if( getChapters && !parsedChapterId) {
-      const initialChapterId = getChapterProgress?.chapterId || getChapters[0]?.chapterId;
+    if (getChapters && !parsedChapterId) {
+      const initialChapterId =
+        getChapterProgress?.chapterId || getChapters[0]?.chapterId;
 
-      if(initialChapterId) {
+      if (initialChapterId) {
         navigate(`/${bookSlug}/chapter/${initialChapterId}`);
         setParsedChapterId(initialChapterId);
         setActiveChapterId(initialChapterId);
 
-        if(getChapterProgress?.chapterId === initialChapterId){
-          updateProgress.mutate({bookSlug: bookSlug!, data:{chapterId: initialChapterId}})
-        }else {
-          createChapterProgress.mutate({slug: bookSlug!, chapterId: initialChapterId})
+        if (getChapterProgress?.chapterId === initialChapterId) {
+          updateProgress.mutate({
+            bookSlug: bookSlug!,
+            data: { chapterId: initialChapterId },
+          });
+        } else {
+          createChapterProgress.mutate({
+            slug: bookSlug!,
+            chapterId: initialChapterId,
+          });
         }
       }
     }
-  }, [getChapters, getChapterProgress, navigate])
+  }, [getChapters, getChapterProgress, navigate]);
 
   useEffect(() => {
     if (chapterId) {
@@ -81,12 +86,13 @@ const ChapterRead = () => {
 
     if (getChapterProgress?.chapterId !== id) {
       updateProgress.mutate({ bookSlug: bookSlug!, data: { chapterId: id } });
-      console.log(updateProgress)
-      console.log({ chapterId: id });
-    } 
+    }
     setShowChapters(false);
 
-    if (currentChapterIndex < totalChapters && id === getChapters[currentChapterIndex].chapterId) {
+    if (
+      currentChapterIndex < totalChapters &&
+      id === getChapters[currentChapterIndex].chapterId
+    ) {
       const nextChapterId = getChapters[currentChapterIndex].chapterId;
       setParsedChapterId(nextChapterId);
       setActiveChapterId(nextChapterId);
@@ -96,7 +102,7 @@ const ChapterRead = () => {
           bookSlug: bookSlug!,
           data: { chapterId: nextChapterId },
         });
-      } 
+      }
     }
   };
 
@@ -109,6 +115,7 @@ const ChapterRead = () => {
   return (
     <div className="flex md:flex-row flex-col md:flex-grow dark:bg-dark-bg">
       <div className="flex md:flex-row flex-col">
+
         <div className="flex border-slate-300 md:hidden shadow-md border-b w-screen h-[50px]">
           <FiAlignJustify
             onClick={() => setShowChapters(!showChapters)}
@@ -194,6 +201,7 @@ const ChapterRead = () => {
           }
 
 
+
           <div className="flex items-center text-[14px] md:text-[16px] dark:text-white">
             {currentChapterIndex} / {totalChapters}
           </div>
@@ -217,6 +225,7 @@ const ChapterRead = () => {
               <button onClick={CompleteButton} className="flex justify-center items-center bg-primary my-4 md:my-[15.5px] mr-4 md:mr-2 rounded-[8px] w-[80px] md:w-[113px] h-[40px] md:h-[42px] text-[14px] text-slate-50 md:text-[16px]">Complete</button>
             )
           }
+
         </div>
       </div>
     </div>

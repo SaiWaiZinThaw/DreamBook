@@ -72,7 +72,7 @@ const ChangePassword = () => {
   }, [passwordChange.isError]);
 
   return (
-    <section className="flex items-center justify-center w-full">
+    <section className="flex flex-col items-center justify-center w-full h-full">
       <div className="flex flex-col gap-3 p-6 w-full md:w-[544px]">
         <h1 className="font-bold text-center text-md md:text-2xl dark:text-white">
           Change Your Password

@@ -18,7 +18,7 @@ const Fav = () => {
   const { data, isLoading } = useGetFavorite({
     pageCount,
   });
-
+  const Theme = localStorage.getItem("theme");
   const removeFavorite = useRemoveFavorite();
   const navigate = useNavigate();
   const token = getToken();
@@ -137,6 +137,14 @@ const Fav = () => {
           <Stack className="self-center" spacing={1}>
             <Pagination
               color="primary"
+              sx={{
+                "& .MuiPaginationItem-root": {
+                  color: Theme === "dark" ? "white" : "inherit",
+                },
+                "& .MuiPaginationItem-ellipsis": {
+                  color: Theme === "dark" ? "white" : "inherit",
+                },
+              }}
               count={data?.meta.totalPages}
               defaultPage={1}
               boundaryCount={1}

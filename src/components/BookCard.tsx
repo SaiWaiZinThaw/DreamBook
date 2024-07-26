@@ -87,7 +87,6 @@ const BookCard: React.FC<BookCardProps> = ({
           <h2 className="text-[13px] text-black dark:text-white">
             By {book.user.name}
           </h2>
-
         </div>
       </div>
     </div>

@@ -70,7 +70,7 @@ export const fetchAllBook = async (params: FetchAllBookParams = {}) => {
 };
 
 export const fetchPopularBooks = async () => {
-  const response: Response = await fetch(`${BaseURL}/books/popular?limit=5`, {
+  const response: Response = await fetch(`${BaseURL}/books/popular?limit=10`, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -89,7 +89,28 @@ export const fetchPopularBooks = async () => {
 
 export const fetchLatestBooks = async () => {
   const response: Response = await fetch(
-    `${BaseURL}/books/public?sortBy=latest&limit=5`,
+    `${BaseURL}/books/public?sortBy=latest&limit=10`,
+    {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors",
+      method: "GET",
+      redirect: "follow",
+    }
+  );
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result.message || "Failed to fetch books data");
+  }
+  return result as fetchBookData;
+};
+
+export const fetchRecommendBooks = async () => {
+  const response: Response = await fetch(
+    `${BaseURL}/books/recommended?limit=10`,
     {
       headers: {
         Accept: "application/json",

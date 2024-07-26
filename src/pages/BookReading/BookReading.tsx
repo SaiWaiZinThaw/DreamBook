@@ -308,7 +308,6 @@ const BookReading: React.FC = () => {
   const token = getToken();
   const { data: me } = useGetMe(token!);
   const { data: relatedBook } = useRelatedBook(bookSlug!);
-  console.log(relatedBook);
   const createCommentHandler = () => {
     if (token) {
       setComment({ comment: "", slug: bookSlug! });
@@ -342,10 +341,10 @@ const BookReading: React.FC = () => {
   const progressPercentage = (currentChapterIndex / totalChapters) * 100;
   const firstChapterId = getChapters?.[0]?.id || "";
 
-  const RelatedBookHandler = (slug:string) => {
-    if(token) {
-      navigate(`/book/${slug}`)
-    }else {
+  const RelatedBookHandler = (slug: string) => {
+    if (token) {
+      navigate(`/book/${slug}`);
+    } else {
       navigate("/auth/login");
     }
   }
@@ -374,7 +373,7 @@ const BookReading: React.FC = () => {
   }, [createComment.isSuccess]);
 
   return (
-    <div className="flex md:flex-row flex-col px-10 md:px-20 w-full min-h-screen">
+    <div className="flex md:flex-row flex-col dark:bg-dark-bg px-10 md:px-20 w-full min-h-screen">
       <div className="flex-col items-center md:px-10 pt-[30px] md:pt-20 md:border-r border-border md:w-10/12 h-full">
         {fetchABook && !isLoading && (
           <div className="flex flex-col gap-[20px] w-full h-full">
@@ -395,7 +394,7 @@ const BookReading: React.FC = () => {
                 />
               </div>
               <div className="flex flex-col justify-center gap-3 md:w-[400px]">
-                <h1 className="font-extrabold md:text-3xl">
+                <h1 className="font-extrabold md:text-3xl dark:text-white">
                   {fetchABook.title}
                 </h1>
 
@@ -408,28 +407,35 @@ const BookReading: React.FC = () => {
                     alt={fetchABook?.user?.name}
                     className="rounded-full w-[20px] md:w-[30px] h-[20px] md:h-[30px]"
                   />
-                  <span className="text-[12px] md:text-[15px]">
+                  <span className="text-[12px] md:text-[15px] dark:text-white">
                     By {fetchABook?.user?.name}
                   </span>
                 </div>
                 <div className="flex gap-3 mt-[15px] md:mt-[20px]">
-                  <span className="font-bold md:text-lg">Category:</span>
+                  <span className="font-bold md:text-lg dark:text-white">
+                    Category:
+                  </span>
                   <div className="flex items-center gap-2">
                     <img
                       src={fetchABook?.category?.icon}
                       alt={fetchABook?.category?.title}
                       className="rounded-full w-[15px] md:w-[25px] h-[15px] md:h-[25px]"
                     />
-                    <span className="text-[13px] md:text-sm">
+                    <span className="text-[13px] md:text-sm dark:text-white">
                       {fetchABook?.category?.title}
                     </span>
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <span className="font-bold md:text-lg">Keywords:</span>
+                  <span className="font-bold md:text-lg dark:text-white">
+                    Keywords:
+                  </span>
                   <div className="flex items-center gap-1">
                     {fetchABook.keywords.map((keyword, index) => (
-                      <span key={index} className="text-[13px] md:text-sm">
+                      <span
+                        key={index}
+                        className="text-[13px] md:text-sm dark:text-white"
+                      >
                         {keyword}
                         {index < fetchABook.keywords.length - 1 && ", "}
                       </span>
@@ -448,7 +454,7 @@ const BookReading: React.FC = () => {
                       className="bg-blue-600 h-full"
                     />
                   </Progress>
-                  <div className="mt-2 text-[13px] md:text-sm">{`Chapter ${currentChapterIndex} of ${totalChapters}`}</div>
+                  <div className="mt-2 text-[13px] md:text-sm dark:text-white">{`Chapter ${currentChapterIndex} of ${totalChapters}`}</div>
                 </div>
 
                 <div className="w-full md:h-5"></div>
@@ -465,13 +471,15 @@ const BookReading: React.FC = () => {
               </div>
             </div>
             <div className="flex flex-col gap-5 md:px-20 border-b border-border min-h-[200px]">
-              <h1 className="font-bold md:text-2xl">Book Overview</h1>
-              <div className="md:text-lg">
+              <h1 className="font-bold md:text-2xl dark:text-white">
+                Book Overview
+              </h1>
+              <div className="md:text-lg dark:text-white">
                 {parse(fetchABook.description || "")}
               </div>
             </div>
             <div className="flex flex-col gap-5 md:px-20 md:py-5">
-              <h1 className="md:text-lg">Leave a comment</h1>
+              <h1 className="md:text-lg dark:text-white">Leave a comment</h1>
               <textarea
                 value={comment.comment}
                 onChange={(event) => {
@@ -481,7 +489,7 @@ const BookReading: React.FC = () => {
                   });
                 }}
                 placeholder="Type your comment"
-                className="flex justify-center items-center px-4 py-6 border border-border rounded-[12px] w-full placeholder:text-secondary-foreground placeholder:text-opacity-50 resize-none"
+                className="flex justify-center items-center dark:border-dark-border dark:bg-dark-bg px-4 py-6 border border-border rounded-[12px] w-full dark:text-white dark:placeholder:text-gray-400 placeholder:text-secondary-foreground placeholder:text-opacity-50 outline-none resize-none"
               ></textarea>
               <Button
                 onClick={createCommentHandler}
@@ -498,7 +506,7 @@ const BookReading: React.FC = () => {
       </div>
 
       <div className="md:mx-2">
-        <h1 className="mt-4 font-semibold text-center text-md">
+        <h1 className="mt-4 font-semibold text-center text-md dark:text-white">
           Related Books
         </h1>
 
