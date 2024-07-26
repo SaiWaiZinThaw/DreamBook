@@ -62,11 +62,10 @@ export const profileSetupApi = async ({ data }: { data: ProfileSetupData }) => {
   if (data.profilePicture) {
     formData.append("profilePicture", data.profilePicture);
   }
-  if (data.localNumber) {
-    formData.append("localNumber", data.localNumber);
+  if (data.phoneNumber) {
+    formData.append("phoneNumber", data.phoneNumber);
   }
 
-  formData.append("countryCode", data.countryCode!);
   if (data.bio) {
     formData.append("bio", data.bio);
   }
@@ -83,5 +82,9 @@ export const profileSetupApi = async ({ data }: { data: ProfileSetupData }) => {
     body: formData,
   });
 
-  return response;
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result.message);
+  }
+  return result;
 };

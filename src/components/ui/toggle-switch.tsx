@@ -4,20 +4,23 @@ const Switch = ({
   isOn,
   isDisabled,
   handleToggle,
+  onClick, // Optional onClick prop
 }: {
   isOn: boolean;
   isDisabled: boolean;
   handleToggle: any;
+  onClick?: () => void;
 }) => {
   return (
     <>
       <input
         checked={isOn}
         onChange={handleToggle}
-        disabled={!isDisabled}
+        disabled={isDisabled}
         className="react-switch-checkbox"
         id={`react-switch-new`}
         type="checkbox"
+        onClick={onClick}
       />
       <label
         style={{ background: isOn ? "#06D6A0" : undefined }}

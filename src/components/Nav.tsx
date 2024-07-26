@@ -3,7 +3,7 @@ import { NavBar } from "@/components";
 
 const Nav = () => {
   return (
-    <div className="w-full">
+    <div className="sticky top-0 z-50 w-full">
       <Menu />
       <NavBar />
     </div>

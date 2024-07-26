@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { FiAlignJustify } from "react-icons/fi";
 import {
@@ -24,8 +23,8 @@ const BookDashBoardLayout = () => {
   };
 
   return (
-    <div className="flex md:flex-row flex-col mx-0 px-0 w-full md:h-screen">
-      <div className="flex justify-between items-center md:hidden bg-primary p-4">
+    <div className="flex flex-col w-full px-0 mx-0 md:flex-row md:h-screen">
+      <div className="flex items-center justify-between p-4 md:hidden bg-primary">
         <button className="text-white" onClick={toggleMenu}>
           <FiAlignJustify size={24} />
         </button>
@@ -54,7 +53,7 @@ const BookDashBoardLayout = () => {
             <img
               src={LightMenuBook}
               alt=""
-              className="mr-2 w-4 md:w-6 h-6 md:h-8"
+              className="w-4 h-6 mr-2 md:w-6 md:h-8"
             />
             <h1 className="font-semibold text-slate-100 md:text-lg">
               Book Details
@@ -73,9 +72,11 @@ const BookDashBoardLayout = () => {
             <img
               src={ChapterOutline}
               alt=""
-              className="mr-2 w-4 md:w-6 h-4 md:h-8"
+              className="w-4 h-4 mr-2 md:w-6 md:h-8"
             />
-            <h1 className="font-semibold text-slate-100 md:text-lg">Chapters</h1>
+            <h1 className="font-semibold text-slate-100 md:text-lg">
+              Chapters
+            </h1>
           </NavLink>
 
           <NavLink
@@ -90,14 +91,16 @@ const BookDashBoardLayout = () => {
             <img
               src={LightCommentOutline}
               alt=""
-              className="mr-2 w-4 md:w-6 h-4 md:h-8"
+              className="w-4 h-4 mr-2 md:w-6 md:h-8"
             />
-            <h1 className="font-semibold text-slate-100 md:text-lg">Comments</h1>
+            <h1 className="font-semibold text-slate-100 md:text-lg">
+              Comments
+            </h1>
           </NavLink>
         </div>
 
         <div
-          className="flex border-slate-300 mt-auto pt-4 pl-4 border-t h-16 text-white cursor-pointer"
+          className="flex h-16 pt-4 pl-4 mt-auto text-white border-t cursor-pointer border-slate-300"
           onClick={() => navigate(`/me/books`)}
         >
           <FaArrowLeft className="mt-1 mr-2 md:w-5 md:h-5" />

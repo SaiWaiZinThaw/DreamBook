@@ -5,6 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useGetFavorite, useRemoveFavorite } from "@/hooks/useFavorites";
 import { getToken } from "@/services/authService";
+import { BookFloatAnimation } from "@/assets";
 import { useGetMe } from "@/hooks/useUser";
 import BookCardSkeleton from "@/components/BookCardSkeleton";
 
@@ -133,7 +134,17 @@ const Fav = () => {
             ))}
           </div>
         )}
-        {!isLoading && (
+        {!isLoading && data?.items.length === 0 && (
+          <div className="top-0 bottom-0 left-0 flex flex-col items-center justify-center w-full mx-auto my-auto ">
+            <img
+              src={BookFloatAnimation}
+              alt=""
+              className="mb-[10px] w-[88px] h-[79px] book-animation"
+            />
+            <span className="mt-2 text-2xl text-gray-300">No Book Found</span>
+          </div>
+        )}
+        {!isLoading && data?.items.length !== 0 && (
           <Stack className="self-center" spacing={1}>
             <Pagination
               color="primary"

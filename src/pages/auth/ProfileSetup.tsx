@@ -10,6 +10,7 @@ import { useGetMe } from "@/hooks/useUser";
 import { ButtonLoading } from "@/components/ui/loading-button";
 import { getToken } from "@/services/authService";
 import { ProfileSetupData } from "@/types/types";
+import Swal from "sweetalert2";
 
 const ProfileSetup = () => {
   const profileSetup = useProfileSetup();
@@ -26,7 +27,7 @@ const ProfileSetup = () => {
     bio: "",
     gender: "male",
     localNumber: "",
-    countryCode: ""
+    countryCode: "",
   });
 
   const [errors, setErrors] = useState<{ name?: string; localNumber?: string }>(
@@ -91,6 +92,16 @@ const ProfileSetup = () => {
     }
   }, [profileSetup.isSuccess]);
 
+  useEffect(() => {
+    if (profileSetup.isError) {
+      Swal.fire({
+        title: "Error",
+        text: profileSetup.error.message,
+        timer: 2000,
+      });
+    }
+  }, [profileSetup.isError]);
+
   const handleFileChange = (file: File) => {
     setProfileData((prev) => ({
       ...prev,
@@ -99,17 +110,17 @@ const ProfileSetup = () => {
   };
 
   return (
-    <div className="flex flex-col items-center pb-10 w-full">
+    <div className="flex flex-col items-center w-full pb-10">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center gap-3 md:gap-6 w-[300px] md:w-[460px] font-Inter text-sm md:text-md"
       >
-        <h1 className="font-bold text-2xl text-white">Create an account</h1>
+        <h1 className="text-2xl font-bold text-white">Create an account</h1>
         <FileUpload onFileChange={handleFileChange} />
-        <Label htmlFor="picture" className="font-Inter text-md text-white">
+        <Label htmlFor="picture" className="text-white font-Inter text-md">
           Upload Photo
         </Label>
-        <div className="flex items-center gap-5 w-full">
+        <div className="flex items-center w-full gap-5">
           <select
             className="flex justify-center items-center px-4 rounded-[5px] h-10 md:h-12 text-sm"
             value={countryCodeNumber}
@@ -124,8 +135,9 @@ const ProfileSetup = () => {
             ))}
           </select>
           <Input
-            type="tel"
+            type="number"
             id="phone"
+            required
             className="h-10 md:h-auto text-[13px] md:placeholder:text-md md:text-md placeholder:text-[13px]"
             placeholder="Phone"
             value={localPhoneNumber}
@@ -134,7 +146,7 @@ const ProfileSetup = () => {
             }}
           />
           {errors.localNumber && (
-            <p className="text-red-500 text-sm">{errors.localNumber}</p>
+            <p className="text-sm text-red-500">{errors.localNumber}</p>
           )}
         </div>
         <Input
@@ -150,7 +162,7 @@ const ProfileSetup = () => {
             }));
           }}
         />
-        {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+        {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
         <select
           className="flex justify-center items-center px-4 rounded-[5px] w-full h-10 md:h-12 text-sm"
           value={profileData.gender}

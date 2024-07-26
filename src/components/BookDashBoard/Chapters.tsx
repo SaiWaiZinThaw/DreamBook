@@ -29,6 +29,7 @@ import {
 } from "@/hooks/useFetchAuthorChapter";
 import DOMPurify from "dompurify";
 import Swal from "sweetalert2";
+import Switch from "../ui/toggle-switch";
 
 const Chapters = () => {
   const createChapterMutation = useChapterCreate();
@@ -113,8 +114,16 @@ const Chapters = () => {
     createChapterMutation.mutate(data);
   };
 
+  const handleStatusChange = (chapter: any) => {
+    const updatedChapter = {
+      ...chapter,
+      status: chapter.status === "Published" ? "Draft" : "Published",
+    };
+    updateChapter.mutate(updatedChapter);
+  };
+
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full ">
       <div className="w-full px-0 mx-0">
         <div className="flex flex-col w-full">
           <div className="flex border-slate-300 border-b w-full h-[40px] md:h-[80px]">
@@ -134,28 +143,36 @@ const Chapters = () => {
                     <span className="font-semibold text-[16px] text-primary md:text-[18px]">
                       {chapter.title}
                     </span>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger>
-                        <HiOutlineDotsVertical className="text-xl" />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="flex flex-col items-center justify-center">
-                        <DropdownMenuItem
-                          className="border-b border-border text-primary"
-                          onClick={() =>
-                            editHandler(chapter, chapter.chapterId)
-                          }
-                        >
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          id={chapter.chapterId}
-                          className="text-red-500 chapter"
-                          onClick={deleteHandler}
-                        >
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <div className="flex items-center gap-3">
+                      <Switch
+                        onClick={() => setCurrentEditChapter(chapter.chapterId)}
+                        isDisabled={false}
+                        isOn={chapter.status === "Published"}
+                        handleToggle={() => handleStatusChange(chapter)}
+                      />
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <HiOutlineDotsVertical className="text-xl" />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="flex flex-col items-center justify-center">
+                          <DropdownMenuItem
+                            className="border-b border-border text-primary"
+                            onClick={() =>
+                              editHandler(chapter, chapter.chapterId)
+                            }
+                          >
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            id={chapter.chapterId}
+                            className="text-red-500 chapter"
+                            onClick={deleteHandler}
+                          >
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </div>
                   <div
                     className="md:px-4 line-clamp-1 text-[13px] md:text-[16px]"

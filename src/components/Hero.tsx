@@ -39,7 +39,7 @@ const Hero = () => {
 
   return (
     <div className="px-0 mx-0 md:flex-none">
-      <div className="flex md:flex-row flex-col items-center md:items-start gap-6 md:gap-0 bg-slate-100 dark:bg-[#3D3D3D] bg-cover p-6 md:p-10 md:pt-20 w-screen md:h-[700px]">
+      <div className="flex md:flex-row flex-col items-center md:items-start gap-6 md:gap-0 bg-slate-100 dark:bg-[#3D3D3D] bg-cover p-6 md:p-10 md:pt-20 w-full md:h-[700px]">
         <div className="flex flex-col md:flex-none gap-3 md:ml-[125px] md:w-6/12">
           <h1 className="text-4xl font-bold dark:text-white">
             Discover <br /> Magic Of Books
@@ -75,7 +75,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="flex md:flex-row flex-col md:justify-center items-center gap-4 md:gap-0 md:gap-x-4 md:mt-[60px] px-5 p-2 w-screen md:h-[220px]">
+      <div className="flex md:flex-row flex-col md:justify-center items-center gap-4 md:gap-0 md:gap-x-4 md:mt-[60px] px-5 p-2 w-full md:h-[220px]">
         <div
           className={`flex flex-col gap-1 md:gap-3 bg-opacity-88 bg-cover bg-no-repeat p-5 md:p-9 rounded-[10px] w-full md:w-[400px] h-full min-h-[150px] text-white ${
             animate ? "swipe-right-animation" : ""
@@ -114,20 +114,19 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="p-6 md:p-10 w-screen h-[400px]">
-        <h1 className="flex items-center justify-center text-2xl font-semibold dark:text-white">
+      <div className="p-6 md:p-10 w-full h-[400px]">
+        <h1 className="flex items-center justify-center text-2xl font-semibold dark:text-white popularBooks">
           Popular Books
         </h1>
 
         <PopularBooks />
       </div>
 
-      <div className="p-6 md:p-10 w-screen md:h-[250px]">
+      <div className="p-6 md:p-10 w-full md:h-[250px]">
         <div className="flex justify-between">
           <h1 className="text-xl font-bold dark:text-white">
             Trending Category
           </h1>
-          <a className="font-medium text-md dark:text-white">View More &gt;</a>
         </div>
         <div className="flex justify-center mt-11">
           <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
@@ -182,11 +181,11 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="mt-[50px] p-6 md:p-10 w-screen md:h-[400px]">
+      <div className="mt-[50px] p-6 md:p-10 w-full md:h-[400px]">
         <div className="flex justify-between">
           <h1 className="text-xl font-bold dark:text-white">Latest Books</h1>
           <a
-            href="/library?sort_by=latest"
+            href="/library?sort_by=latest&page=1"
             className="font-medium text-md dark:text-white"
           >
             View More &gt;
@@ -197,7 +196,7 @@ const Hero = () => {
       </div>
 
       {token && (
-        <div className="mb-[50px] p-6 md:p-10 w-screen md:h-[400px]">
+        <div className="mb-[50px] p-6 md:p-10 w-full md:h-[400px] recommend">
           <div className="flex justify-between">
             <h1 className="text-xl font-bold dark:text-white">
               Recommended For You
@@ -209,7 +208,7 @@ const Hero = () => {
       )}
 
       <div
-        className="bg-slate-950 bg-cover bg-no-repeat bg-center opacity-60 p-10 w-screen md:h-[450px]"
+        className="bg-slate-950 bg-cover bg-no-repeat bg-center opacity-60 p-10 w-full md:h-[450px]"
         style={{ backgroundImage: `url(${LatestBg})`, opacity: `95%` }}
       >
         <div className="flex flex-col md:flex-none justify-center items-start gap-5 w-full md:w-[700px] h-[300px] text-slate-100">
@@ -223,13 +222,13 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center w-screen gap-4 mt-4">
-        <h1 className="flex items-center justify-center text-xl font-extrabold dark:text-white">
+      <div className="flex flex-col justify-center w-full gap-4 mt-4 ">
+        <h1 className="flex items-center justify-center text-xl font-extrabold dark:text-white ">
           FAQs
         </h1>
         {faqItems.map((item, index) => (
           <Accordion
-            className="border-border w-full md:max-w-[1400px] md:self-center"
+            className="border-border w-full md:max-w-[1400px] md:self-center FAQs"
             key={index}
             type="single"
             collapsible
