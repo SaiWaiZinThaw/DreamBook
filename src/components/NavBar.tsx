@@ -65,7 +65,7 @@ const NavBar = () => {
       {!token ? (
         <div className="flex items-center gap-2">
           <NavLink className="hidden lg:block" to="/auth/login">
-            <Button variant={"ghost"} className="flex items-center gap-2">
+            <Button variant={"ghost"} className="flex items-center gap-2 dark:text-white">
               <HiMiniUserCircle className="text-2xl" /> Login
             </Button>
           </NavLink>
