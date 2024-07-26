@@ -54,6 +54,7 @@ const History = () => {
                       <div
                         onClick={() => handleDelete(item.book.slug)}
                         className="flex justify-center items-center bg-slate-50 dark:bg-[#2F2F2F] drop-shadow-xl border rounded-full w-8 h-8 cursor-pointer"
+
                       >
                         <FaTrashCan className="text-red-500 dark:text-red-400" />
                       </div>

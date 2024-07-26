@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,44 +18,13 @@ import { MdDarkMode } from "react-icons/md";
 import { logout } from "@/services/authService";
 import { CiLogout } from "react-icons/ci";
 import { NavLink, useNavigate } from "react-router-dom";
+import { Avatar } from "@/assets";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
   const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
-  const [theme, setTheme] = useState(
-    localStorage.getItem("theme") ? localStorage.getItem("theme") : "system"
-  );
-  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
-  const element = document.documentElement;
-
-  function onWindowMatch() {
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) && darkQuery.matches)
-    ) {
-      element.classList.add("dark");
-    } else {
-      element.classList.remove("dark");
-    }
-  }
-
-  useEffect(() => {
-    switch (theme) {
-      case "dark":
-        element.classList.add("dark");
-        localStorage.setItem("theme", "dark");
-        break;
-
-      case "light":
-        element.classList.remove("dark");
-        localStorage.setItem("theme", "light");
-
-        break;
-      default:
-        onWindowMatch();
-        break;
-    }
-  }, [theme]);
 
   const logoutHandler = () => {
     setShowLogoutDialog(true);
@@ -76,17 +45,17 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
       <DropdownMenu>
         <DropdownMenuTrigger className="flex items-center gap-2">
           <img
-            src={data.profilePicture}
+            src={data.profilePicture ? data.profilePicture : Avatar}
             alt={data.name}
             className="w-10 h-10 rounded-full"
           />
           <FaAngleDown className="dark:text-white" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent className="w-[180px] md:w-[220px]">
           <DropdownMenuLabel>
             <div className="flex items-center gap-3">
               <img
-                src={data.profilePicture}
+                src={data.profilePicture ? data.profilePicture : Avatar}
                 alt={data.name}
                 className="w-10 h-10 rounded-full"
               />
@@ -94,7 +63,7 @@ const ProfileDropdown = ({ data }: { data: profileFetchData }) => {
                 <p className="text-lg font-bold text-black dark:text-white">
                   {data.name}
                 </p>
-                <p className="text-sm opacity-50 dark:text-white">
+                <p className="block w-[100px] md:w-[120px] overflow-hidden text-sm opacity-50 dark:text-white line-clamp-1 text-ellipsis">
                   {data.email}
                 </p>
               </div>

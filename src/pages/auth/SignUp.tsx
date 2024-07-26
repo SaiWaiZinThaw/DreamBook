@@ -7,6 +7,7 @@ import { login } from "@/services/authService";
 import React, { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 interface Errors {
   email?: string;
@@ -34,20 +35,13 @@ const SignUp = () => {
     }
   }, [createAccount.isSuccess]);
 
-  // useEffect(() => {
-  //   if (createAccount.isError) {
-  //     const errorResponse = createAccount.error?.response?.data;
-  //     if (errorResponse?.message === "Email already exists") {
-  //       setErrors({ email: "Email is already exists!" });
-  //     } else {
-  //       alert("Error");
-  //     }
-  //   }
-  // }, [createAccount.isError]);
-
   useEffect(() => {
     if (createAccount.isError) {
-      alert("Error");
+      Swal.fire({
+        title: "Error",
+        text: createAccount.error.message,
+        timer: 2000,
+      });
     }
   }, [createAccount.isError]);
 

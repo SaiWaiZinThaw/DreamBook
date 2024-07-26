@@ -114,11 +114,12 @@ const Chapters = () => {
   };
 
   return (
-    <div className="w-full h-screen md:h-full">
-      <div className="mx-0 px-0 w-full">
+
+    <div className="w-full h-full ">
+      <div className="w-full px-0 mx-0">
         <div className="flex flex-col w-full">
           <div className="flex border-slate-300 border-b w-full h-[40px] md:h-[80px]">
-            <h1 className="md:my-[20px] md:pl-[40px] font-extrabold md:text-2xl dark:text-white">
+            <h1 className="dark:text-white md:my-[20px] md:pl-[40px] font-extrabold md:text-2xl">
               Chapters
             </h1>
           </div>
@@ -134,28 +135,31 @@ const Chapters = () => {
                     <span className="font-semibold text-[16px] text-primary md:text-[18px]">
                       {chapter.title}
                     </span>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger>
-                        <HiOutlineDotsVertical className="text-xl dark:text-white" />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="flex flex-col justify-center items-center">
-                        <DropdownMenuItem
-                          className="border-b border-border text-primary"
-                          onClick={() =>
-                            editHandler(chapter, chapter.chapterId)
-                          }
-                        >
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          id={chapter.chapterId}
-                          className="text-red-500 chapter"
-                          onClick={deleteHandler}
-                        >
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+
+                    <div className="flex items-center gap-3">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <HiOutlineDotsVertical className="text-xl dark:text-white" />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="flex flex-col items-center justify-center">
+                          <DropdownMenuItem
+                            className="border-b border-border text-primary"
+                            onClick={() =>
+                              editHandler(chapter, chapter.chapterId)
+                            }
+                          >
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            id={chapter.chapterId}
+                            className="text-red-500 chapter"
+                            onClick={deleteHandler}
+                          >
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </div>
                   <div
                     className="md:px-4 line-clamp-1 text-[13px] md:text-[16px] dark:text-white"

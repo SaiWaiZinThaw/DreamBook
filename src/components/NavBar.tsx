@@ -15,7 +15,7 @@ const NavBar = () => {
   const { setShowMenu } = useAuth();
   const { data, isLoading } = useGetMe(token);
   return (
-    <div className="flex justify-between items-center dark:bg-dark-bg bg-white shadow-slate-300 shadow-sm px-6 lg:px-40 py-2 lg:py-6 w-full h-[70px] font-Inter">
+    <div className=" flex justify-between items-center dark:shadow-neutral-700 dark:bg-dark-bg bg-white shadow-slate-300 shadow-sm px-6 lg:px-40 py-2 lg:py-6 w-full h-[70px] font-Inter ">
       <div className="flex items-center gap-3">
         <button
           onClick={() => setShowMenu(true)}
@@ -65,7 +65,7 @@ const NavBar = () => {
       {!token ? (
         <div className="flex items-center gap-2">
           <NavLink className="hidden lg:block" to="/auth/login">
-            <Button variant={"ghost"} className="flex items-center gap-2">
+            <Button variant={"ghost"} className="flex items-center gap-2 dark:text-white">
               <HiMiniUserCircle className="text-2xl" /> Login
             </Button>
           </NavLink>

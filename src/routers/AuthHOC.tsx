@@ -19,7 +19,7 @@ const AuthHOC = ({ children }: { children: ReactNode }) => {
     Swal.fire({
       title: "Error!",
       text: "You need to complete your profile setup first!",
-      confirmButtonText: "Cool",
+      confirmButtonText: "OK",
     });
     return <Navigate to="/me" replace />;
   }

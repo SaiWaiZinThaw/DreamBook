@@ -24,7 +24,7 @@ const Info = () => {
     bio: "",
     gender: "male",
     localNumber: "",
-    countryCode: ""
+    countryCode: "",
   });
 
   useEffect(() => {
@@ -60,6 +60,14 @@ const Info = () => {
   };
 
   useEffect(() => {
+    if (profileSetup.isError) {
+      Swal.fire({
+        icon: "error",
+        title: profileSetup.error.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
     if (profileSetup.isSuccess) {
       Swal.fire({
         icon: "success",
@@ -69,7 +77,7 @@ const Info = () => {
       });
       window.location.reload();
     }
-  }, [profileSetup.isSuccess]);
+  }, [profileSetup.isSuccess, profileSetup.isError]);
 
   const handleFileChange = (file: File) => {
     setProfileData((prev) => ({
@@ -79,19 +87,19 @@ const Info = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full h-full">
+    <div className="flex items-center justify-center w-full h-full">
       <div className="flex flex-col items-center p-10">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center gap-6 p-4 md:p-0 w-full md:w-[460px] font-Inter"
         >
-          <h1 className="font-bold text-2xl text-black dark:text-white">
+          <h1 className="text-2xl font-bold text-black dark:text-white">
             Create an account
           </h1>
           <FileUpload onFileChange={handleFileChange} />
           <Label
             htmlFor="picture"
-            className="font-Inter text-black dark:text-white"
+            className="text-black font-Inter dark:text-white"
           >
             Upload Photo
           </Label>
@@ -112,7 +120,7 @@ const Info = () => {
           <div className="dark:border-dark-border bg-white dark:bg-dark-bg p-4 border border-border rounded-[5px] w-full h-12 font-Inter font-semibold text-secondary-foreground text-sm dark:placeholder:text-white text-opacity-50">
             {data?.email}
           </div>
-          <div className="flex items-center gap-5 w-full">
+          <div className="flex items-center w-full gap-5">
             <select
               className="flex justify-center items-center dark:border-dark-border dark:bg-dark-bg px-4 border border-border rounded-[5px] h-10 md:h-12 text-sm dark:text-white dark:placeholder:text-white"
               value={countryCodeNumber}
