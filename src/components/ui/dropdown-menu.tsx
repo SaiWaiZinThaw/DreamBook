@@ -26,7 +26,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <ChevronRight className="w-4 h-4 ml-auto" />
+    <ChevronRight className="ml-auto w-4 h-4" />
   </DropdownMenuPrimitive.SubTrigger>
 ));
 DropdownMenuSubTrigger.displayName =
@@ -75,7 +75,7 @@ const DropdownMenuItem = React.forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center text-center px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:text-white",
+      "relative flex  cursor-default select-none items-center text-center px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:text-white",
       inset && "pl-8",
       className
     )}
@@ -97,7 +97,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     checked={checked}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="left-2 absolute flex justify-center items-center w-3.5 h-3.5">
       <DropdownMenuPrimitive.ItemIndicator>
         <Check className="w-4 h-4" />
       </DropdownMenuPrimitive.ItemIndicator>
@@ -120,7 +120,7 @@ const DropdownMenuRadioItem = React.forwardRef<
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="left-2 absolute flex justify-center items-center w-3.5 h-3.5">
       <DropdownMenuPrimitive.ItemIndicator>
         <Circle className="w-2 h-2 fill-current" />
       </DropdownMenuPrimitive.ItemIndicator>

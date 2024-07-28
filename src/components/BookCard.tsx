@@ -31,10 +31,10 @@ const BookCard: React.FC<BookCardProps> = ({
     <div
       key={book.bookId}
       id={book.bookId}
-      className="relative dark:text-white dark:bg-[#2F2F2F] dark:border-none bg-slate-50 shadow-sm mr-[21px] border rounded-[8px]  lg:w-[232px] min-w-[160px] max-w-[210px] h-[280px] book group"
+      className="relative bg-slate-50 dark:bg-[#2F2F2F] shadow-sm mr-[21px] border dark:border-none rounded-[8px] lg:w-[232px] min-w-[160px] max-w-[210px] h-[280px] dark:text-white book group"
     >
       <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-        <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+        <div className="flex justify-center items-center bg-slate-50 dark:bg-[#2F2F2F] drop-shadow-xl border rounded-full w-8 h-8">
           {favorites[book.bookId] ? (
             <BsHeartFill
               className="text-red-500 cursor-pointer"
@@ -42,20 +42,20 @@ const BookCard: React.FC<BookCardProps> = ({
             />
           ) : (
             <BsHeart
-              className="cursor-pointer text-slate-500"
+              className="text-slate-500 dark:text-white cursor-pointer"
               onClick={() => toggleFavorite(book.bookId, book.slug)}
             />
           )}
         </div>
 
-        <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+        <div className="flex justify-center items-center bg-slate-50 dark:bg-[#2F2F2F] drop-shadow-xl border rounded-full w-8 h-8">
           <BsEyeFill
-            className="cursor-pointer text-slate-500"
+            className="text-slate-500 dark:text-white cursor-pointer"
             onClick={() => viewBook(book.slug)}
           />
         </div>
       </div>
-      <div className="flex justify-center items-center dark:bg-[#3D3D3D]  bg-slate-300 m-2 rounded-[8px] h-[160px]">
+      <div className="flex justify-center items-center bg-slate-300 dark:bg-[#3D3D3D] m-2 rounded-[8px] h-[160px]">
         <img
           src={book.coverImage}
           alt={book.title}
@@ -82,7 +82,7 @@ const BookCard: React.FC<BookCardProps> = ({
           <img
             src={book?.user?.profilePicture}
             alt={book?.user?.name}
-            className="w-6 h-6 rounded-full"
+            className="rounded-full w-6 h-6"
           />
           <h2 className="text-[13px] text-black dark:text-white">
             By {book.user.name}

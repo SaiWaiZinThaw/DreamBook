@@ -58,53 +58,53 @@ const OtherUserProfile = () => {
     }
   }, [userBookData]);
   return (
-    <div className="flex flex-col items-center w-full min-h-screen gap-3 dark:bg-dark-bg">
+    <div className="flex flex-col items-center gap-3 dark:bg-dark-bg w-full min-h-screen">
       <Nav />
-      <div className="flex flex-col w-full h-full p-10 dark:bg-dark-bg">
+      <div className="flex flex-col dark:bg-dark-bg p-10 w-full h-full">
         {!ProfileIsLoading && (
-          <div className="flex items-center justify-center w-full gap-5 p-4 border-b rounded-sm shadow-sm dark:bg-dark-bg md:gap-20 md:flex-row border-b-border shadow-border ">
-            <div className="flex flex-col items-center gap-2 ">
+          <div className="flex md:flex-row justify-center items-center gap-5 md:gap-20 dark:bg-dark-bg shadow-border shadow-sm p-4 border-b border-b-border rounded-sm w-full">
+            <div className="flex flex-col items-center gap-2">
               <img
                 src={userData?.profilePicture}
-                className="md:w-[200px] md:h-[200px] h-[80px] w-[80px] rounded-full"
+                className="rounded-full w-[80px] md:w-[200px] h-[80px] md:h-[200px]"
                 alt={userData?.name}
               />
-              <span className="text-xl font-bold md:text-3xl text-primary">
+              <span className="font-bold text-primary text-xl md:text-3xl">
                 {userData?.name}
               </span>
             </div>
             <div className="flex flex-col gap-5 md:gap-10">
-              <div className="flex h-full gap-5 md:gap-10">
+              <div className="flex gap-5 md:gap-10 h-full">
                 <div className="flex flex-col">
-                  <span className="text-sm font-bold md:text-lg dark:text-white">
+                  <span className="font-bold text-sm md:text-lg dark:text-white">
                     Joined
                   </span>
-                  <p className="text-sm font-medium dark:text-white">
+                  <p className="font-medium text-sm dark:text-white">
                     {format(parseISO(userData?.cratedAt!), " MMM, yyyy")}
                   </p>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-sm font-bold md:text-lg dark:text-white ">
+                  <span className="font-bold text-sm md:text-lg dark:text-white">
                     Gender
                   </span>
-                  <span className="text-sm font-medium dark:text-white">
+                  <span className="font-medium text-sm dark:text-white">
                     {userData?.gender}
                   </span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-sm font-bold md:text-lg dark:text-white ">
+                  <span className="font-bold text-sm md:text-lg dark:text-white">
                     Total Books
                   </span>
-                  <span className="text-sm font-medium text-center dark:text-white">
+                  <span className="font-medium text-center text-sm dark:text-white">
                     {userBookData?.pages[0].meta.totalItems}
                   </span>
                 </div>
               </div>
               <div className="flex flex-col">
-                <span className="text-sm font-bold md:text-lg dark:text-white">
+                <span className="font-bold text-sm md:text-lg dark:text-white">
                   Bio
                 </span>
-                <p className="text-sm font-medium line-clamp-1 dark:text-white">
+                <p className="line-clamp-1 font-medium text-sm dark:text-white">
                   {userData?.bio}
                 </p>
               </div>
@@ -113,19 +113,19 @@ const OtherUserProfile = () => {
         )}
         {!BookIsLoading && (
           <div className="flex flex-col items-center p-5 dark:text-white">
-            <h2 className="text-3xl font-bold text-bold dark:text-white">
+            <h2 className="font-bold text-3xl text-bold dark:text-white">
               Books
             </h2>
-            <div className="grid grid-cols-2 gap-5 p-3">
+            <div className="gap-5 grid grid-cols-2 p-3">
               {userBookData?.pages.map((item) =>
                 item.items.map((book) => (
                   <div
                     key={book.title}
                     id={book.slug}
-                    className="relative dark:text-white dark:bg-[#2F2F2F] dark:border-none bg-slate-100 shadow-md shadow-secondary-foreground mr-[21px] border rounded-[8px] min-w-[150px] max-w-[232px] h-[280px] book group"
+                    className="relative bg-slate-100 dark:bg-[#2F2F2F] shadow-md shadow-secondary-foreground mr-[21px] border dark:border-none rounded-[8px] min-w-[150px] max-w-[232px] h-[280px] dark:text-white book group"
                   >
                     <div className="group-hover:right-[10px] top-[20px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                      <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                      <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                         {favorites[book.bookId] ? (
                           <BsHeartFill
                             className="text-red-500 cursor-pointer"
@@ -135,7 +135,7 @@ const OtherUserProfile = () => {
                           />
                         ) : (
                           <BsHeart
-                            className="cursor-pointer text-slate-500"
+                            className="text-slate-500 cursor-pointer"
                             onClick={() =>
                               toggleFavorite(book.bookId, book.slug)
                             }
@@ -143,14 +143,14 @@ const OtherUserProfile = () => {
                         )}
                       </div>
 
-                      <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                      <div className="flex justify-center items-center bg-slate-50 drop-shadow-xl border rounded-full w-8 h-8">
                         <BsEyeFill
-                          className="cursor-pointer text-slate-500"
+                          className="text-slate-500 cursor-pointer"
                           onClick={() => navigate(`/book/${book.slug}`)}
                         />
                       </div>
                     </div>
-                    <div className="flex justify-center items-center dark:bg-[#3D3D3D] bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                    <div className="flex justify-center items-center bg-slate-300 dark:bg-[#3D3D3D] m-2 rounded-[8px] h-[160px]">
                       <img
                         src={book.coverImage}
                         alt={book.coverImage}
@@ -174,7 +174,7 @@ const OtherUserProfile = () => {
                       </div>
                       <div
                         onClick={() => profileNavigation(book.user.userId)}
-                        className="flex items-center gap-1 mt-1 cursor-pointer md:gap-3"
+                        className="flex items-center gap-1 md:gap-3 mt-1 cursor-pointer"
                       >
                         <img
                           src={book.user.profilePicture}

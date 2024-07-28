@@ -47,14 +47,6 @@ const BookDetails = () => {
   });
 
   const handleToggle = () => {
-    if(!isEditing){
-      Swal.fire({
-        title: "Error",
-        text: "You need to click edit before changing the status.",
-        confirmButtonText: "Okay",
-      });
-      return;
-    }
     setIsOn((prevIsOn) => {
       const newIsOn = !prevIsOn;
       setUpdateData((prevData) => ({
@@ -155,17 +147,20 @@ const BookDetails = () => {
   return (
     <div className="container w-full h-full p-0 m-0">
       <div className="flex justify-between border-slate-300 px-10 border-b h-[50px] md:h-[80px]">
-        <h1 className="self-center font-extrabold md:text-2xl">Book Details</h1>
+        <h1 className="font-extrabold dark:text-white md:text-2xl self-center">Book Details</h1>
+
+
 
         <div className="flex flex-col justify-center">
           {isEditing && (
-            <span className="font-semibold text-[#6E8894] text-lg self-end">
+            <span className="font-semibold  text-[#6E8894] sm:text-[14px] md:text-md lg:text-lg self-end">
               *Unsaved
             </span>
           )}
           <div className="flex items-center gap-1">
             {(!isOn && (
-              <span className="text-xl font-bold text-secondary-foreground">
+              <span className="font-bold dark:text-slate-100 text-secondary-foreground sm:text-md md:text-lg lg:text-xl">
+
                 Draft
               </span>
             )) || (
@@ -184,11 +179,11 @@ const BookDetails = () => {
         <div className="md:flex md:flex-row-reverse">
           <div className="flex md:flex-col justify-center md:ml-[35px]">
             <div className="order-1 md:order-none md:mx-8 mt-[32px] md:w-[232px] md:h-[289px]">
-              <h1 className="flex justify-center mb-[18.5px] font-bold text-[14px] md:text-xl">
+              <h1 className="flex dark:text-white justify-center mb-[18.5px] font-bold text-[14px] md:text-xl">
                 Cover Image
               </h1>
 
-              <div className="flex justify-center items-center border-slate-500 border border-dotted rounded-[8px] md:w-[232px] md:h-[252px]">
+              <div className="flex justify-center items-center dark:border-slate-100 border-slate-500 border border-dotted rounded-[8px] md:w-[232px] md:h-[252px]">
                 {isEditing ? (
                   <BookCoverChange
                     onFileChange={handleFileChange}
@@ -205,12 +200,12 @@ const BookDetails = () => {
             </div>
 
             <div className="order-2 mx-8 mt-[30px] lg:none-order lg:mt-[84px] md:w-[232px] md:h-[314px]">
-              <h1 className="flex justify-center mb-[11px] font-bold text-[14px] md:text-xl">
+              <h1 className="flex dark:text-white justify-center mb-[11px] font-bold text-[14px] md:text-xl">
                 Preview Card Design
               </h1>
 
-              <div className="bg-slate-100 shadow-xl border rounded-[8px] md:w-[232px] md:max-h-full">
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] h-[100px] md:h-[160px]">
+              <div className="bg-slate-100 dark:bg-[#2F2F2F] shadow-xl border rounded-[8px] md:w-[232px] md:max-h-full">
+                <div className="flex justify-center items-center dark:bg-[#3D3D3D] bg-slate-300 m-2 rounded-[8px] h-[100px] md:h-[160px]">
                   <img
                     src={fetchABookAuthor?.coverImage}
                     alt=""
@@ -219,10 +214,10 @@ const BookDetails = () => {
                 </div>
 
                 <div className="ml-2">
-                  <h1 className="font-bold text-[13px] md:text-[15px]">
+                  <h1 className="font-bold dark:text-white text-[13px] md:text-[15px]">
                     {fetchABookAuthor?.title}
                   </h1>
-                  <p className="flex mt-[1.5px] md:mt-1 font-Inter font-normal text-[10px] text-gray-500 md:text-[12px]">
+                  <p className="flex mt-[1.5px] dark:text-slate-200 md:mt-1 font-Inter font-normal text-[10px] text-gray-500 md:text-[12px]">
                     <img
                       src={fetchABookAuthor?.category?.icon}
                       alt=""
@@ -230,7 +225,7 @@ const BookDetails = () => {
                     />
                     {fetchABookAuthor?.category?.title}
                   </p>
-                  <h2 className="flex my-2 font-bold text-[11.5px] md:text-[13px]">
+                  <h2 className="flex my-2 dark:text-white font-bold text-[11.5px] md:text-[13px]">
                     <img
                       src={fetchABookAuthor?.user?.profilePicture}
                       alt=""
@@ -246,7 +241,7 @@ const BookDetails = () => {
           <div className="border-slate-300 order-3 md:order-none ml-[12px] lg:border-r lg:w-[667px]">
             <div className="md:h-[581px]">
               <div className="items-center gap-1.5 grid md:mx-[32px] pt-2 md:pt-[30px] md:h-[74px]">
-                <Label htmlFor="title" className="font-semibold md:text-[16px]">
+                <Label htmlFor="title" className="font-semibold dark:text-white md:text-[16px]">
                   Title
                 </Label>
                 <div className="relative">
@@ -263,12 +258,12 @@ const BookDetails = () => {
                       }}
                       value={updateData.title}
                       id="title"
-                      className="border-slate-300 border rounded-[5px] text-[12.5px] text-black md:text-[16px]"
+                      className="border-slate-300 border dark:bg-dark-bg dark:text-white rounded-[5px] text-[12.5px] text-black md:text-[16px]"
                     />
-                  ) : (
+                  ) : ( 
                     <h1
                       id="title"
-                      className="border-slate-300 py-2 md:py-[8.5px] pl-[16px] border rounded-[5px] w-full h-[35px] md:h-[45px] font-semibold text-[12.5px] text-black md:text-[16px]"
+                      className="border-slate-300 dark:text-white py-2 md:py-[8.5px] pl-[16px] border rounded-[5px] w-full h-[35px] md:h-[45px] font-semibold text-[12.5px] text-black md:text-[16px]"
                     >
                       {fetchABookAuthor?.title}
                     </h1>
@@ -280,14 +275,14 @@ const BookDetails = () => {
               <div className="items-center gap-1.5 grid md:mx-[32px] pt-6 md:pt-[60px]">
                 <Label
                   htmlFor="category"
-                  className="font-semibold md:text-[16px]"
+                  className="font-semibold dark:text-white md:text-[16px]"
                 >
                   Category
                 </Label>
                 <div className="relative">
                   <h1
                     id="category"
-                    className="border-slate-300 py-2 md:py-[8.5px] pl-[16px] border rounded-[5px] w-full h-[35px] md:h-[45px] font-semibold text-[12.5px] text-black md:text-[16px]"
+                    className="border-slate-300 dark:text-white py-2 md:py-[8.5px] pl-[16px] border rounded-[5px] w-full h-[35px] md:h-[45px] font-semibold text-[12.5px] text-black md:text-[16px]"
                   >
                     {fetchABookAuthor?.category?.title! ||
                       "Category Not Available"}
@@ -298,7 +293,7 @@ const BookDetails = () => {
               <div className="items-center gap-1.5 grid md:mx-[32px] pt-6 md:pt-[30px] h-[74px]">
                 <Label
                   htmlFor="keywords"
-                  className="font-semibold md:text-[16px]"
+                  className="font-semibold dark:text-white md:text-[16px]"
                 >
                   Keywords
                 </Label>
@@ -310,7 +305,7 @@ const BookDetails = () => {
                       value={currentKeyword}
                       onChange={handleKeywordChange}
                       onKeyPress={handleKeyPress}
-                      className="py-[8.5px] rounded-[5px] h-[35px] md:h-[45px] font-semibold text-black"
+                      className="py-[8.5px] dark:bg-dark-bg dark:text-white rounded-[5px] h-[35px] md:h-[45px] font-semibold text-black"
                     />
                   </div>
                 ) : (
@@ -343,10 +338,10 @@ const BookDetails = () => {
                 )}
               </div>
 
-              <div className="items-center gap-1.5 grid md:mx-[32px] pt-[30px] md:pt-[60px] h-[140px] md:h-[176px]">
+              <div className="items-center gap-1.5 grid md:mx-[32px] pt-[60px] h-[140px] md:h-[176px]">
                 <Label
                   htmlFor="description"
-                  className="font-semibold md:text-[16px]"
+                  className="font-semibold dark:text-white md:text-[16px]"
                 >
                   Description
                 </Label>
@@ -361,11 +356,11 @@ const BookDetails = () => {
                         description: sanitizedContent,
                       }));
                     }}
-                    className="pt-2 md:pt-[15px] rounded-[5px] h-[120px] md:h-[290px] text-[12.5px] md:text-[16px]"
+                    className="pt-2 md:pt-[15px] dark:text-white rounded-[5px] h-[120px] md:h-[290px] text-[12.5px] md:text-[16px]"
                     modules={quillModules}
                   />
                 ) : (
-                  <div className="border-slate-300 pt-2 md:pt-[15px] pl-[25px] border rounded-[5px] h-[120px] md:h-[290px] text-[12.5px] md:text-[16px]">
+                  <div className="border-slate-300 dark:text-white pt-2 md:pt-[15px] pl-[25px] border rounded-[5px] h-[120px] md:h-[290px] text-[12.5px] md:text-[16px]">
                     <div
                       dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(
@@ -378,17 +373,19 @@ const BookDetails = () => {
               </div>
             </div>
 
-            <div className="flex justify-end mt-[50px] md:mt-[120px] lg:mt-[170px] md:mr-4 rounded-[8px] h-[43px]">
-              {/* <div className="flex justify-end mt-[50px] md:mt-[170px] md:mr-4 rounded-[8px] h-[43px]"> */}
+
+            <div className="flex justify-end mt-[90px] md:mt-[120px] lg:mt-[120px] md:mr-4 rounded-[8px] h-[43px]">
+            {/* <div className="flex justify-end mt-[50px] md:mt-[170px] md:mr-4 rounded-[8px] h-[43px]"> */}
+
               <div className="">
                 {isEditing ? (
                   <>
-                    <Button
+                    <button
                       onClick={handleCancelClick}
-                      className="bg-white hover:bg-white text-slate-900 hover:text-slate-500"
+                      className="mr-4 dark:text-white md:text-[16px] text-[14px] text-slate-900 hover:text-slate-500"
                     >
                       Cancel
-                    </Button>
+                    </button>
                     <Button
                       onClick={handleSaveClick}
                       className="bg-primary hover:bg-blue-400 rounded-[8px] text-slate-100 hover:text-slate-200"

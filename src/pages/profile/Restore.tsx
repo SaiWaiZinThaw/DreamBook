@@ -96,10 +96,10 @@ const Restore = () => {
       <div className="p-4 md:p-10">
         <div className="flex justify-between mx-4 mb-4">
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex font-bold text-[14px] md:text-[16px]">
-              <BiCog className="mt-1 mr-1 md:w-[19px] md:h-[19px] text-slate-700" />
+            <DropdownMenuTrigger className="flex font-bold text-[14px] md:text-[16px] dark:text-white">
+              <BiCog className="mt-1 mr-1 md:w-[19px] md:h-[19px] text-slate-700 dark:text-white" />
               Style Settings{" "}
-              <BiSolidChevronDown className="md:w-[24px] h-[24px] text-black" />
+              <BiSolidChevronDown className="md:w-[24px] h-[24px] text-black dark:text-white" />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>View Mode</DropdownMenuLabel>
@@ -127,7 +127,7 @@ const Restore = () => {
             onClick={handleRestoreAll}
           >
             <PiArrowClockwiseBold className="mt-[2.5px] md:mt-[3.5px] mr-1" />
-            <button className="text-[14px] md:text-[16px]">Restore All</button>
+            <button className="text-[14px] md:text-[16px]">Restore</button>
           </div>
 
           <div
@@ -135,7 +135,7 @@ const Restore = () => {
             onClick={handleDeleteAll}
           >
             <FaTrashCan className="mt-[3px] md:mt-1 mr-1 w-3 md:w-4" />
-            <button className="text-[14px] md:text-[16px]">Delete All</button>
+            <button className="text-[14px] md:text-[16px]">Delete</button>
           </div>
         </div>
 
@@ -167,7 +167,7 @@ const Restore = () => {
               <div
                 key={book.id}
                 onClick={() => handleSelect(book.slug)}
-                className={`mt-5 bg-slate-100 shadow-xl border rounded-[8px] w-[190px] md:w-[232px] h-fit ${
+                className={`mt-5 bg-slate-100 dark:bg-[#2F2F2F] shadow-xl rounded-[8px] w-[190px] md:w-[232px] cursor-pointer h-full ${
                   selectedBooks.includes(book.slug) ? "border-blue-500" : ""
                 }`}
               >
@@ -175,7 +175,7 @@ const Restore = () => {
                   {/* <p className="bottom-6 absolute bg-gray-500 ml-2 p-[2.5px] md:p-1 rounded-[8px] font-medium text-[14px] text-slate-50 md:text-[16px]">
                     {book.expireDayLeft} Days
                   </p> */}
-                  <span className="bg-slate-300 mx-4 p-2 rounded-[5px] text-white">{book.expireDayLeft} Days Left</span>
+                  <span className="bg-slate-300 dark:bg-[#464545] mx-4 p-[3px] rounded-[5px] text-[12px] text-white md:text-[14px]">{book.expireDayLeft} Days Left</span>
                   <input
                     className={`${
                       selectedBooks.includes(book.slug)
@@ -188,7 +188,7 @@ const Restore = () => {
                     readOnly
                   />
                 </div>
-                <div className="flex justify-center items-center bg-slate-300 m-2 rounded-[8px] md:h-[160px]">
+                <div className="flex justify-center items-center bg-slate-300 dark:bg-[#3D3D3D] m-2 rounded-[8px] md:h-[160px]">
                   <img
                     src={book.coverImage}
                     alt=""
@@ -196,7 +196,7 @@ const Restore = () => {
                   />
                 </div>
                 <li className="mb-4">
-                  <h2 className="px-3 font-semibold md:text-xl">
+                  <h2 className="px-3 font-semibold md:text-xl dark:text-white">
                     {book.title}
                   </h2>
                   <div className="flex justify-center items-center">
@@ -224,7 +224,7 @@ const Restore = () => {
                 <li
                   key={book.id}
                   onClick={() => handleSelect(book.slug)}
-                  className={`py-4 flex ${
+                  className={`py-4 flex cursor-pointer ${
                     selectedBooks.includes(book.slug) ? "bg-blue-100 px-2" : ""
                   }`}
                 >
@@ -241,10 +241,10 @@ const Restore = () => {
                       alt=""
                     />
                     <div className="ml-2">
-                      <div className="font-medium text-[14px] text-gray-900 md:text-[16px]">
+                      <div className="font-medium text-[14px] text-gray-900 md:text-[16px] dark:text-white">
                         {book.title}
                       </div>
-                      <div className="font-medium text-[12px] text-gray-500 md:text-[14px]">
+                      <div className="font-medium text-[12px] text-gray-500 md:text-[14px] dark:text-slate-400">
                         {book.expireDayLeft} Days Left
                       </div>
                     </div>

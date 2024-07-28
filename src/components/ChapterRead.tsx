@@ -113,7 +113,7 @@ const ChapterRead = () => {
   const totalChapters = getChapters?.length;
 
   return (
-    <div className="flex md:flex-row flex-col md:flex-grow dark:bg-[#3D3D3D]">
+    <div className="flex md:flex-row flex-col md:flex-grow dark:bg-dark-bg">
       <div className="flex md:flex-row flex-col">
 
         <div className="flex border-slate-300 md:hidden shadow-md border-b w-screen h-[50px]">

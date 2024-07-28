@@ -94,15 +94,15 @@ const LatestBooks = () => {
   }, [booksData]);
 
   return (
-    <div className="py-2 overflow-x-auto transition lg:overflow-hidden md:p-3">
+    <div className="py-2 md:p-3 transition lg:overflow-hidden overflow-x-auto">
       {isBooksLoading ? (
         <div className="flex w-full h-[280px]">
           <BookCardSkeleton key="skeleton-1" />
           <BookCardSkeleton key="skeleton-2" />
           <BookCardSkeleton key="skeleton-3" />
-          <BookCardSkeleton className="hidden lg:block" key="skeleton-4" />
-          <BookCardSkeleton className="hidden lg:block" key="skeleton-5" />
-          <BookCardSkeleton className="hidden lg:block" key="skeleton-6" />
+          <BookCardSkeleton className="lg:block hidden" key="skeleton-4" />
+          <BookCardSkeleton className="lg:block hidden" key="skeleton-5" />
+          <BookCardSkeleton className="lg:block hidden" key="skeleton-6" />
         </div>
       ) : (
         booksData && (

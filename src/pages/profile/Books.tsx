@@ -84,12 +84,12 @@ const Books = () => {
   };
 
   return (
-    <div className="items-end self-end h-full">
+    <div className="items-end h-full self-end">
       <div className="flex flex-col items-center gap-5 p-10">
-        <div className="flex justify-between lg:gap-0 gap-4 mt-4 h-[45px] lg:h-[50px] w-full">
-          <div className="relative flex items-center w-8/12 gap-3 md:max-w-[280px] lg:w-full max-w-[100px]">
+        <div className="flex justify-between gap-4 lg:gap-0 mt-4 w-full h-[45px] lg:h-[50px]">
+          <div className="relative flex items-center gap-3 w-8/12 lg:w-full max-w-[100px] md:max-w-[280px]">
             <Select onValueChange={handleSortChange}>
-              <SelectTrigger className="dark:border-dark-border  dark:text-white w-8/12 md:max-w-[280px] max-w-[100px] h-full text-xs lg:text-md">
+              <SelectTrigger className="dark:border-dark-border w-8/12 max-w-[100px] md:max-w-[280px] h-full text-xs lg:text-md dark:text-white">
                 <SelectValue placeholder="Sort" />
               </SelectTrigger>
               <SelectContent>
@@ -105,44 +105,44 @@ const Books = () => {
             icon={<IoIosSearch className="lg:text-2xl" />}
             placeholder="Search"
             value={search}
-            className="dark:text-white dark:placeholder:text-white dark:bg-dark-bg dark:!border-dark-border !border-black rounded-[8px] max-w-[200px] md:max-w-[280px] h-full lg:h-[42px] text-xs lg:text-md placeholder:text-xs"
+            className="dark:!border-dark-border dark:bg-dark-bg !border-black rounded-[8px] max-w-[200px] md:max-w-[280px] h-full lg:h-[42px] text-xs lg:text-md dark:text-white dark:placeholder:text-white placeholder:text-xs"
             onChange={(event) => {
               setSearch(event.target.value);
               setPageCount(1);
             }}
           />
         </div>
-        <button className="self-end flex items-center gap-2 p-2 h-[40px] rounded-[8px] bg-primary">
-          <FaPlus className="text-[13px] md:text-sm text-white" />
-          <span className="hidden md:block text-[12px] md:text-[14px] text-bold text-white">
+        <button className="flex items-center gap-2 bg-primary p-2 rounded-[8px] h-[40px] self-end">
+          <FaPlus className="text-[13px] text-white md:text-sm" />
+          <span className="md:block hidden text-[12px] text-bold text-white md:text-[14px]">
             Create New Book
           </span>
         </button>
 
         {isLoading ? (
-          <div className="grid grid-cols-1 gap-4 md:gap-4 md:grid-cols-4 md:py-10">
+          <div className="gap-2 md:gap-4 grid grid-cols-2 md:grid-cols-4 md:py-10">
             <BookCardSkeleton />
             <BookCardSkeleton />
             <BookCardSkeleton />
             <BookCardSkeleton />
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 md:gap-4 md:grid-cols-4 md:py-10">
+          <div className="gap-2 md:gap-4 grid grid-cols-2 md:grid-cols-4 md:py-10">
             {data?.items.map((book) => (
               <div
                 key={book.bookId}
                 id={book.bookId}
-                className="relative dark:text-white dark:bg-[#2F2F2F] dark:border-none bg-slate-50 shadow-sm mr-[21px] border-border rounded-[8px] border lg:w-[232px] min-w-[160px] max-w-[210px] h-[280px] book group"
+                className="relative bg-slate-50 dark:bg-[#2F2F2F] shadow-sm mr-[21px] border border-border dark:border-none rounded-[8px] lg:w-[232px] min-w-[160px] max-w-[210px] h-[280px] dark:text-white book group"
               >
                 <div className="group-hover:right-[10px] top-[40px] -right-3 absolute flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 p-2 transition-all duration-300">
-                  <div className="flex items-center justify-center w-8 h-8 border rounded-full bg-slate-50 drop-shadow-xl">
+                  <div className="flex justify-center items-center bg-slate-50 dark:bg-[#2F2F2F] drop-shadow-xl border rounded-full w-8 h-8">
                     <HiPencil
-                      className="cursor-pointer text-slate-500"
+                      className="text-slate-500 dark:text-white cursor-pointer"
                       onClick={() => editHandler(book.slug)}
                     />
                   </div>
                 </div>
-                <div className="flex justify-center items-center dark:bg-[#3D3D3D] bg-slate-300 m-2 rounded-[8px] h-[160px]">
+                <div className="flex justify-center items-center bg-slate-300 dark:bg-[#3D3D3D] m-2 rounded-[8px] h-[160px]">
                   <img
                     src={book.coverImage}
                     alt={book.title}
@@ -171,7 +171,7 @@ const Books = () => {
                     <img
                       src={book.user.profilePicture}
                       alt={book.user.name}
-                      className="w-6 h-6 rounded-full"
+                      className="rounded-full w-6 h-6"
                     />
                     <h2 className="text-[13px] text-black dark:text-white">
                       By {book.user.name}
@@ -183,7 +183,7 @@ const Books = () => {
           </div>
         )}
         {!isLoading && data?.items.length === 0 && (
-          <div className="top-0 bottom-0 left-0 flex flex-col items-center justify-center w-full mx-auto my-auto ">
+          <div className="top-0 bottom-0 left-0 flex flex-col justify-center items-center mx-auto my-auto w-full">
             <img
               src={BookFloatAnimation}
               alt=""

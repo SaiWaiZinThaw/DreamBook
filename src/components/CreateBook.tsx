@@ -205,6 +205,7 @@ const CreateBook = () => {
         categoryId: selectedId,
       }));
       setSelectedCategory(selectRef.current.value);
+      setCategoryError(false);
     } else {
       setCategoryError(true);
     }
@@ -296,7 +297,7 @@ const CreateBook = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center w-full h-full dark:bg-dark-bg">
+    <div className="flex flex-col justify-center dark:bg-dark-bg w-full h-full">
       <div className="flex gap-2 mx-9 my-[10px] md:mt-[45px] md:ml-[110px] w-full md:w-[660px] h-[53px] text-md">
         <div
           className="flex items-center md:mt-[19.5px] md:w-[83px] md:h-[28px] text-blue-700 text-opacity-60 cursor-pointer"
@@ -381,7 +382,7 @@ const CreateBook = () => {
               <div className="relative">
                 <Input
                   onChange={handleTitleChange}
-                  className="w-full md:w-[603px] h-[25px] md:h-[45px] text-[12px] dark:text-white dark:placeholder:text-white md:text-[14px] dark:bg-dark-bg"
+                  className="dark:bg-dark-bg w-full md:w-[603px] h-[25px] md:h-[45px] text-[12px] md:text-[14px] dark:text-white dark:placeholder:text-white"
                   value={formData.title}
                   name="title"
                   type="text"
@@ -410,7 +411,7 @@ const CreateBook = () => {
                 <select
                   name="category"
                   id="category"
-                  className={`border-slate-300 pl-[16px] border dark:bg-dark-bg rounded h-[35px] w-full md:w-[603px] lg:h-[45px] font-extrabold ${
+                  className={`border-slate-300 dark:text-white pl-[16px] border dark:bg-dark-bg rounded h-[35px] w-full md:w-[603px] lg:h-[45px] font-extrabold ${
                     selectedCategory === "" ? "text-slate-300" : ""
                   }`}
                   ref={selectRef}
@@ -427,7 +428,7 @@ const CreateBook = () => {
                   {fetchCategories?.map((category: any) => (
                     <option
                       key={category.categoryId}
-                      className="font-extrabold"
+                      className="font-extrabold dark:text-white"
                       id={category.categoryId}
                     >
                       {category.title}
@@ -438,7 +439,7 @@ const CreateBook = () => {
 
               {categoryError && (
                 <p className="ml-[10px] font-bold text-[12px] text-red-500 md:text-sm">
-                  * Choose One Category
+                  * Choose Category
                 </p>
               )}
             </div>
@@ -452,7 +453,7 @@ const CreateBook = () => {
               </Label>
               <Input
                 onChange={handleKeywordChange}
-                className="w-full md:w-[603px] h-[25px] md:h-[45px] dark:bg-dark-bg dark:text-white "
+                className="dark:bg-dark-bg w-full md:w-[603px] h-[25px] md:h-[45px] dark:text-white"
                 value={currentKeyword}
                 onKeyPress={handleKeyPress}
                 name="keywords"
@@ -460,16 +461,16 @@ const CreateBook = () => {
                 id="keywords"
               />
               <div>
-                <ul className="absolute flex ml-4 space-x-2">
+                <ul className="absolute flex space-x-2 ml-4">
                   {formData.keywords.map((keyword, index) => (
                     <li
                       key={index}
-                      className="flex px-2 py-1 border rounded-md border-primary border-opacity-55 text-slate-600"
+                      className="flex border-primary dark:border-slate-200 px-2 py-1 border border-opacity-55 rounded-md text-slate-600 dark:text-slate-300"
                     >
                       {keyword}
                       <BsX
                         onClick={() => handleDeleteKeyword(index)}
-                        className="mt-[5px] cursor-pointer"
+                        className="mt-[5px] dark:text-slate-200 cursor-pointer"
                       />
                     </li>
                   ))}
