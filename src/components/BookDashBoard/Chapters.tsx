@@ -91,16 +91,32 @@ const Chapters = () => {
 
   useEffect(() => {
     if (createChapterMutation.isError) {
-      alert(createChapterMutation.error);
+      Swal.fire({
+        icon: "error",
+        text: createChapterMutation.error.message,
+        timer: 2000,
+      });
     }
   }, [createChapterMutation.isError]);
+
+  useEffect(() => {
+    if (createChapterMutation.isSuccess) {
+      setOpen(false);
+      Swal.fire({
+        icon: "success",
+        text: "Chapter Created",
+        timer: 2000,
+      });
+      refetch();
+    }
+  }, [createChapterMutation.isSuccess]);
 
   useEffect(() => {
     if (updateChapter.isSuccess) {
       setEditOpen(false);
       Swal.fire({
         icon: "success",
-        text: "Chapter Updated  ",
+        text: "Chapter Updated",
         timer: 2000,
       });
       refetch();

@@ -94,6 +94,9 @@ const CommentSection = () => {
   };
 
   const handleReplyToggle = (commentId: number) => {
+    if (!token) {
+      navigate("/auth/login");
+    }
     setIsReplying((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
   };
 
@@ -277,7 +280,7 @@ const CommentSection = () => {
                   <div className="pl-4 ml-8 border-l-2 border-gray-300">
                     {comment.replies.map((reply) => (
                       <div
-                        className="flex gap-2 md:min-h-[100px]"
+                        className="flex gap-2 md:min-h-[100px] dark:bg-dark-bg"
                         key={reply.id}
                       >
                         <img
@@ -292,7 +295,7 @@ const CommentSection = () => {
                               onClick={() =>
                                 profileNavigation(reply.user.userId)
                               }
-                              className="font-medium text-[10px] md:text-[13px] cursor-pointer"
+                              className="dark:text-white font-medium text-[10px] md:text-[13px] cursor-pointer"
                             >
                               {reply.user.name}
                             </h3>
@@ -313,10 +316,10 @@ const CommentSection = () => {
                                   [reply.id]: e.target.value,
                                 }))
                               }
-                              className="m-2 p-2 border border-border rounded-[5px] text-[10px] md:text-[13px] resize-none"
+                              className="m-2 p-2 border dark:text-white dark:bg-dark-bg border-border rounded-[5px] text-[10px] md:text-[13px] resize-none"
                             />
                           ) : (
-                            <p className="text-[13px] md:text-[16px]">
+                            <p className="text-[13px] dark:text-white md:text-[16px]">
                               {reply.comment}
                             </p>
                           )}
